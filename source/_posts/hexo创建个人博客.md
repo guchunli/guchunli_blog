@@ -44,6 +44,55 @@ $ hexo new"postName"
 $ hexo new page"pageName" 
 ```
 
-问题：ERROR Deployer not found: git
-解决：npm install hexo-deployer-git --save 
-重新 deploy 即可
+## hexo填坑历程
+(1)坑一：hexo命令找不到
+```
+ERROR Local hexo not found in E:\blog
+ERROR Try running: 'npm install hexo --save'
+```
+
+解决：按照提示输入`npm install hexo --save`，如果不可以，可能是：
+因为安装包中有些内容在墙外，所以可以换淘宝源，或者用
+> $ npm install -g hexo-cli --no-optional(**很重要**)
+有时候只写`npm install --no-optional`也不行，只能以上命令
+
+如果还是不可以，可能是由于：
+.gitignore文件里面忽略了node_modules文件夹，所以这个文件夹没有更新上去。所以用npm重新安装即可，输入以下命令：
+```
+cd ...\blog
+npm install
+hexo server
+```
+
+(2)坑二：ERROR Deployer not found: git
+> $ npm install hexo-deployer-git --save 
+然后重新 deploy 即可
+
+(3)坑三：hexo deploy成功，但是页面不显示
+解决：
+到仓库下的settings下修改GitHub Pages，source选择master分支，显示 `Your site is published at https://XXX.github.io/`即可
+
+(4)坑四：
+```
+fatal: Not a git repository (or any of the parent directories): .git
+FATAL Something's wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html
+Error: fatal: Not a git repository (or any of the parent directories): .git
+```
+
+解决：
+检查_config.yml文件deploy的配置如下：
+```
+type: git
+repo: https://github.com/XXX/XXX.github.io.git
+```
+
+如果还是不可以，请看下一解决方案。
+
+(5)坑五：Permission to  XXX.github.io.git denied 
+解决：
+```
+$ git config --global user.name "yourname"
+$ git config --global user.email "youremail"
+```
+
+如果以上做完还是出不来，删掉根目录下的文件夹：.deploy_git，重新deploy就可以了。 
