@@ -56,8 +56,9 @@ alipay: /assets/blogImg/zhifubao.png
 weixin: /assets/blogImg/weixin.png
 
 # Miscellaneous
-baidu_analytics: ''
-google_analytics: ''
+# baidu_analytics: e2bbbeff887c44473655288d77c51a13
+# 百度统计
+baidu_tongji: true
 favicon: /assets/blogImg/favicon.jpg
 
 #你的头像url
@@ -76,8 +77,8 @@ duoshuo: false
 wangyiyun: false
 
 #3、畅言
-changyan_appid: cyt2A5mvP
-changyan_conf: 4e620c3a92ad38e1c8f7a6c5282e2b12
+# changyan_appid: cyt2A5mvP
+# changyan_conf: 4e620c3a92ad38e1c8f7a6c5282e2b12
 
 #4、Disqus 在hexo根目录的config里也有disqus_shortname字段，优先使用yilia的
 disqus: false
@@ -101,7 +102,7 @@ slider:
 #  friends: false
 smart_menu:
   innerArchive: '所有文章'
-  friends: '友链'
+  # friends: '友链'
   aboutme: '关于我'
 
 friends:
@@ -109,4 +110,4 @@ friends:
   友情链接2: https://guchunli.github.io
   友情链接3: https://guchunli.github.io
 
-aboutme: 谷春丽<br><br>iOS开发
+aboutme: 谷春丽<br><br>从事iOS开发<br>

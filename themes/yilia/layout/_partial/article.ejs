@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<%- config.root %>js/gitment-theme-default.css">
+<script src="<%- config.root %>js/gitment.browser.js"></script>
 <article id="<%= post.layout %>-<%= post.slug %>" class="article article-type-<%= post.layout %> <%if(index){%> article-index<%}%>" itemscope itemprop="blogPost">
   <div class="article-inner">
     <% if (post.link || post.title){ %>
@@ -92,6 +94,7 @@
 
 
 <% if (!index && post.comments){ %>
+
   <% if (theme.duoshuo){ %>
   <%- partial('post/duoshuo', {
       key: post.slug,
@@ -133,4 +136,11 @@
       <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </section>
   <% } %>
+<% } %>
+
+
+<% if( page.comments) { %>
+<section id="comments"  class="comment">
+  <div id="commentContainer"></div>
+</section>
 <% } %>

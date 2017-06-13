@@ -2,7 +2,7 @@
 title: Apple Pay学习
 date: 2017-03-15 16:37:17
 categories: 笔记
-tags: [Apple Pay]
+tags: [iOS,Apple Pay]
 ---
 ## 概述
 ### 1.支付方式：Touch ID/ Passcode
@@ -288,4 +288,4 @@ NSLog(@"取消或者交易完成");
 }
 ```
 
-参考原文：[Apple Pay--iOS开发](http://www.cnblogs.com/dashunzi/archive/2016/02/23/ApplePay.html#undefined)
+转自：[Apple Pay--iOS开发](http://www.cnblogs.com/dashunzi/archive/2016/02/23/ApplePay.html#undefined)

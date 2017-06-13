@@ -44,6 +44,19 @@ $ hexo new"postName"
 $ hexo new page"pageName" 
 ```
 
+### 8.添加统计数据
+在themes/yilia/layout/_partial/footer.ejs文件<style>上添加以下代码：
+```
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+```
+
+<style>下添加以下代码：
+```
+本站总访问量<span id="busuanzi_value_site_pv"></span>次
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+```
+
 ## hexo填坑历程
 (1)坑一：hexo命令找不到
 ```

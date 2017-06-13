@@ -1,3 +1,7 @@
+
+<link rel="stylesheet" href="<%- config.root %>js/gitment-theme-default.css">
+<script src="<%- config.root %>js/gitment.browser.js"></script>
+
 <script>
 	var yiliaConfig = {
 		mathjax: <%=theme.mathjax%>,
@@ -18,3 +22,20 @@
 <% if (theme.mathjax){ %>
 <%- partial('mathjax') %>
 <% } %>
+
+<!-- Gitment Start -->
+<% if( page.comments) { %>
+<script>
+
+var gitment = new Gitment({
+  owner: 'guchunli',
+  repo: 'gcl_gitment',
+  oauth: {
+    client_id: '9aba59a9b11145204555',
+    client_secret: '5fa76f24cf718ab244e46b1ec60148114554f56a',
+  },
+});
+gitment.render('commentContainer');
+</script>
+<% } %>
+<!-- Gitment End -->
