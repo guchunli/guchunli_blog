@@ -1,5 +1,5 @@
 ---
-title: Markdown的使用
+title: Markdown学习笔记
 date: 2017-02-19 09:48:39
 categories: 笔记
 tags: [markdown]
@@ -61,3 +61,18 @@ tags: [markdown]
 >![百度](baidu.png "百度图片")
 
 ### 10.注意：反斜杠\实现转义效果
+
+### 11.表格
+```
+| title1 | title2 |   title3  |
+|--------|--------|-----------|
+|   a    |   aa   |    aaa    |
+|   b    |   bb   |    bbb    |
+|   c    |   cc   |    ccc    |
+```
+
+| title1 | title2 |   title3  |
+|--------|--------|-----------|
+|   a    |   aa   |    aaa    |
+|   b    |   bb   |    bbb    |
+|   c    |   cc   |    ccc    |

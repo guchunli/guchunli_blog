@@ -1,5 +1,5 @@
 ---
-title: Apple Pay学习
+title: Apple Pay学习笔记
 date: 2017-03-15 16:37:17
 categories: 笔记
 tags: [iOS,Apple Pay]

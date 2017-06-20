@@ -1,6 +1,6 @@
 ---
-title: RAC使用入门
-date: 2017-06-13 11:30:03
+title: RAC与Target-Action、通知、代理、KVO
+date: 2017-04-23 11:30:03
 categories: 笔记
 tags: [iOS,RAC]
 ---
@@ -17,19 +17,19 @@ rac_textSignal rac_gestureSignal
 1.target-action
 ```
 //1.1 监听textfield文字更改
-//    [[self.textfiled rac_signalForControlEvents:UIControlEventEditingChanged] subscribeNext:^(id x){
-//        NSLog(@"change");
-//    }];
+[[self.textfiled rac_signalForControlEvents:UIControlEventEditingChanged] subscribeNext:^(id x){
+    NSLog(@"change");
+}];
 
 //简写
 [[self.textfiled rac_textSignal] subscribeNext:^(id x) {
-NSLog(@"%@",x);
+    NSLog(@"%@",x);
 }];
 
 //1.2
 UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
-[[tap rac_gestureSignal] subscribeNext:^(id x) {
-NSLog(@"tap");
+    [[tap rac_gestureSignal] subscribeNext:^(id x) {
+    NSLog(@"tap");
 }];
 //注意：如果给label添加手势，需要打开userInteractionEnabled
 self.lab.userInteractionEnabled = YES;
@@ -40,25 +40,26 @@ self.lab.userInteractionEnabled = YES;
 *** 注意：只能实现返回值为void的代理方法
 ```
 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"title" message:@"rac test" delegate:self cancelButtonTitle:@"no" otherButtonTitles:@"yes", nil];
-//    [[self rac_signalForSelector:@selector(alertView:clickedButtonAtIndex:) fromProtocol:@protocol(UIAlertViewDelegate)] subscribeNext:^(RACTuple *tuple) {
-//        //tuple为点击按钮的各个参数
-//        NSLog(@"%ld",tuple.count);
-//        NSLog(@"%@",tuple.first);
-//        NSLog(@"%@",tuple.second);
-//        NSLog(@"%@",tuple.third);
-//    }];
+    [[self rac_signalForSelector:@selector(alertView:clickedButtonAtIndex:) fromProtocol:@protocol(UIAlertViewDelegate)] subscribeNext:^(RACTuple *tuple) {
+        //tuple为点击按钮的各个参数
+        NSLog(@"%ld",tuple.count);    //参数个数 2 
+        NSLog(@"%@",tuple.first);     //alertView
+        NSLog(@"%@",tuple.second);    //buttonIndex
+        NSLog(@"%@",tuple.third);     //null
+    }];
 //简写
 [[alertView rac_buttonClickedSignal] subscribeNext:^(id x) {
-NSLog(@"%@",x);
+    NSLog(@"%@",x);     //buttonIndex
 }];
 [alertView show];
 ```
 
 3.通知 rac_addObserverForName
+点击一个页面可以更新另一个页面数据
 ```
 [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"postData" object:nil] subscribeNext:^(NSNotification *notification) {
-NSLog(@"%@", notification.name);
-NSLog(@"%@", notification.object);
+    NSLog(@"%@", notification.name);
+    NSLog(@"%@", notification.object);
 }];
 
 [self presentViewController:[[SecondViewController alloc]init] animated:YES completion:nil];

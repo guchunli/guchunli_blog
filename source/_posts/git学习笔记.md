@@ -1,5 +1,5 @@
 ---
-title: git使用
+title: git学习笔记
 date: 2017-03-03 10:49:42
 categories: 笔记
 tags: [Git]
@@ -23,6 +23,8 @@ toc: true
 -change something
 +change
 ```
+> $ git diff > 1.diff
+将diff修改写到1.diff文件中
 
 ## 查看提交历史
 > $ git log
@@ -134,6 +136,10 @@ git reset --hard ***慎重使用***
     + 普通模式：禁用”fast forward” 使用普通模式，合并后的历史可以看出曾经做过合并，在merge时生成一个新的commit。
     禁用”fast forward”并且加上了commit描述：
     > $ git merge --no-ff -m "merge with no-ff" second
+* 如果出现冲突:git status->修改冲突->git add->git commit
+
+* git rebase origin master
+如果出现冲突:git status->修改冲突->git add->`git rebase --continue`
 
 ### 查看分支
 > $ git log  
@@ -308,6 +314,38 @@ Omit --global to set the identity only in this repository.
 ### 配置文件
 每个仓库的Git配置文件都放在.git/config文件中，查看配置文件
 > $ cat .git/config
+```
+[core]
+repositoryformatversion = 0
+filemode = false
+bare = false
+logallrefupdates = true
+symlinks = false
+ignorecase = true
+hideDotFiles = dotGitOnly
+[remote "origin"]
+url = git@xxx
+fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+remote = origin
+merge = refs/heads/master
+```
+
+> $ cat ~/gitconfig
+```
+[user]
+email = xxx
+name = xxx
+[color]
+ui = true
+[alias]
+st = status
+co = checkout
+br = branch
+[gui]
+encoding = gbk
+
+```
 
 要删除别名，直接把对应的行删掉即可
 改错了，可以删掉文件重新通过命令配置

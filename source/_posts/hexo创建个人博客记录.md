@@ -1,5 +1,5 @@
 ---
-title: hexo创建个人博客
+title: hexo创建个人博客记录
 date: 2017-02-18 16:43:01
 categories: 笔记
 tags: [hexo,个人博客]

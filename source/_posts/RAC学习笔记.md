@@ -1,15 +1,16 @@
 ---
-title: RAC使用进阶
-date: 2017-06-13 10:31:47
+title: RAC学习笔记
+date: 2017-05-20 10:31:47
 categories: 笔记
 tags: [iOS,RAC]
 toc: true
 ---
 
-ReactiveCocoa(RAC):函数响应式编程（FRP）框架
+ReactiveCocoa(RAC):是函数响应式编程(Functional Reactive Programming:FRP)框架，高聚合、低耦合思想。
+使用cocoapods导入时加上`use_frameworks!`
 
 ## ReactiveCocoa常见类
-### RACSiganl:信号类
+### RACSiganl:信号类(核心)
 一般表示将来有数据传递，只要有数据改变，信号内部接收到数据，就会马上发出数据。
 #### 注意：
 * 信号类(RACSiganl)，只是表示当数据改变时，信号内部会发出数据，它本身不具备发送信号的能力，而是交给内部一个订阅者去发出。
@@ -37,7 +38,7 @@ $ - (void)sendNext:(id)value
 * 1.创建信号，首先把didSubscribe保存到信号中，还不会触发。
 * 2.当信号被订阅，也就是调用signal的subscribeNext:nextBlock
     + 2.1 subscribeNext内部会创建订阅者subscriber，并且把nextBlock保存到subscriber中。
-    + 2.2 subscribeNext内部会调用siganl的didSubscribe
+    + 2.2 subscribeNext内部会调用signal的didSubscribe
 * 3.siganl的didSubscribe中调用[subscriber sendNext:@1];
     + 3.1 sendNext底层其实就是执行subscriber的nextBlock
 ```
@@ -495,10 +496,10 @@ RACTuple *tuple = RACTuplePack(@10,@20);
 ### RACTupleUnpack：把RACTuple（元组类）解包成对应的数据。
 ```
 // 把参数中的数据包装成元组
-RACTuple *tuple = RACTuplePack(@"xmg",@20);
+RACTuple *tuple = RACTuplePack(@"abc",@20);
 
 // 解包元组，会把元组的值，按顺序给参数里面的变量赋值
-// name = @"xmg" age = @20
+// name = @"abc" age = @20
 RACTupleUnpack(NSString *name,NSNumber *age) = tuple;
 ```
 
