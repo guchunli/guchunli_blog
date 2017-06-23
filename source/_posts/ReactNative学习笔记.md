@@ -1,11 +1,13 @@
 ---
-title: ReactiveNative学习笔记
+title: ReactNative学习笔记
 date: 2017-05-21 11:39:45
 categories: 笔记
-tags: [iOS,ReactiveNative]
+tags: [iOS,ReactNative]
+toc: true
 ---
 
-# 安装
+# 直接通过ReactNative方式创建项目
+## 安装
 必须安装：Xcode，Homebrew，node,npm
 npm其实是Node.js的包管理工具,已经在Node.js安装的时候顺带装好了。
 可选：React Native的命令行工具,IDE(Atom/Nuclide/Webstorm/Sublime),watchman,Flow
@@ -23,15 +25,21 @@ brew install watchman
 brew install flow
 ```
 
-# 创建项目
+<!--more-->
+## 创建项目
 ```
-$ react-native init AwesomeProject
+$ react-native init RNDemo
 ```
 
 运行项目:使用命令行或Xcode
 ```
-react-native run-ios
-react-native run-android
+$ react-native run-ios
+$ react-native run-android
+
+......
+
+React packager ready.
+Loading dependency graph, done.
 ````
 
 运行项目时如果遇到`<React/RCTBundleURLProvider.h>” file not found`问题，可按如下方法试着解决：
@@ -40,9 +48,7 @@ react-native run-android
 * react-native upgrade
 * clean,run
 
-
-# 基础
-## JavaScript
+# JavaScript基础
 (1){}表示定义一个对象
 (2)var,let,function,弱类型,typeof(),isNaN()
 数据类型：Boolean,null,undefined,Number,String,Symbol,Object
@@ -80,8 +86,8 @@ var tpl = '公司名：' + name + '\n'+
 '简介：'+ desc;
 ```
 
-## React基础
-### 组件（component）
+# React基础
+## 组件（component）
 是React类的基类，进行视图展示。
 * 组件的属性(prop)：组件之前通过标签的属性来传递数据，由父组件传递给子组件(单向的属性传递)
 * 组件的状态(state)
@@ -95,7 +101,7 @@ var tpl = '公司名：' + name + '\n'+
 * getDefaultProps()：在Class 创建的时候，调用一次，这个方法在调用的时候，任何实例还没有被创建
 返回的任何Object 对象，在各个实例中是共享的
 
-* 生命周期
+## 组件的生命周期
 ![组件生命周期](http://o8cfktdb3.bkt.clouddn.com/componentLifeCycle.png)
 
 (1)创建：getDefaultProps(ES6:defaultProps)->
@@ -142,7 +148,7 @@ shouldComponentUpdate->
 注意：绝对不要在componentWillUpdate和componentDidUpdate中调用this.setState方法，否则将导致无限循环调用。
 ```
 
-组件更新的四种方式：
+## 组件更新的四种方式
 (1)首次Initial Render，即首次加载组件
 (2)调用this.setState
 (3)父组件发生更新
@@ -153,10 +159,148 @@ shouldComponentUpdate->
 
 
 # RN与原生项目
-启动开发服务器
+## 先创建iOS项目，再集成React Native到原生项目
+(1) 先通过Xcode创建项目
+(2) 在项目目录下创建一个reactivenative文件夹存放react native相关文件，再创建一个package.json文件，用于初始化react-native
+package.json内容如下：
 ```
-react-native start
+{
+"name": "RNDemo",
+"version": "1.0.0",
+"private": true,
+"dependencies": {
+"react": "^0.14.8",
+"react-native": "^0.22.2"
+}
+}
 ```
+
+(3) 在reactivenative目录下执行命令
+```
+$ npm install
+```
+
+(4) 创建index.ios.js文件
+注意当前项目名称为`RNDemo`，修改为实际项目名称。
+```
+'use strict';
+
+var React = require('react-native');  
+var {  
+Text,
+View
+} = React;
+
+var styles = React.StyleSheet.create({  
+container: {
+flex: 1,
+backgroundColor: 'red'
+}
+});
+
+class RNDemo extends React.Component {  
+render() {
+return (
+<View style={styles.container}>
+<Text>This is a simple application.</Text>
+</View>
+)
+}
+}
+
+React.AppRegistry.registerComponent('RNDemo', () => RNDemo);  
+```
+
+(5) Cocoapods集成react-native
+在工程目录下创建Podfile文件，内容如下：
+```
+# 请将:path后面的内容为node_modules文件夹路径。
+plateform :ios, '8.0'
+target "RNDemo" do
+pod 'React', :path => './reactivenative/node_modules/react-native', :subspecs => [
+'Core',
+'RCTImage',
+'RCTNetwork',
+'RCTText',
+'RCTWebSocket',
+# 添加其他你想在工程中使用的依赖。
+]
+end
+```
+
+执行`pod install`即可
+如果出现如下问题：
+```
+The dependency `React/Core (from `./reactivenative/node_modules/react-native`)` is not used in any concrete target.
+```
+
+在项目首尾请添加上target即可
+```
+target "RNDemo" do 
+end
+```
+
+(6)添加react native应用
+创建一个ReactView视图文件
+```
+- (instancetype)initWithFrame:(CGRect)frame
+{
+if (self = [super initWithFrame:frame]) {
+NSString * strUrl = @"http://localhost:8081/index.ios.bundle?platform=ios&dev=true";
+NSURL * jsCodeLocation = [NSURL URLWithString:strUrl];
+
+RCTRootView * rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+moduleName:@"SimpleApp"
+initialProperties:nil
+launchOptions:nil];
+
+[self addSubview:rootView];
+
+rootView.frame = self.bounds;
+}
+return self;
+}
+```
+
+ReactView.m 中通过 http://localhost:8081/index.ios.bundle?platform=ios&dev=true 加载bundle文件
+
+在ViewController中加载这个视图
+```
+ReactView * reactView = [[ReactView alloc] initWithFrame:CGRectMake(0, 40, CGRectGetWidth(self.view.bounds), 100)];
+
+[self.view addSubview:reactView];
+```
+
+(7)启动开发服务器
+```
+$ cd reactivenative
+$ react-native start
+```
+
+(8)Info.list中修改NSAppTransportSecurity配置
+(9)在Xcode中运行项目，完成
+
+### 升级Xcode8后遇到的错误
+Q1:'React/RCTBundleURLProvider.h' file not found
+A1:进入react native所在目录，将node_modules文件夹删除，执行
+```
+$ npm install
+$ react-native upgrade
+```
+
+clean，重新运行
+
+Q2:RCTSCrollView.m 中_refreshControl找不到
+A2:在@implementation RCTCustomScrollView下添加如下代码：
+```
+@implementation RCTCustomScrollView
+{
+RCTRefreshControl *_refreshControl;
+}
+```
+
+Q3:控制台不断输出`[] nw_connection_get_connected_socket_block_invoke 710 Connection has no connected handler`
+A3:edit scheme->arguments->Environment Variables->添加Name: "OS_ACTIVITY_MODE", Value:"disable"
 
 ## 原生和React Native之间的通信方式
 主要包括三部分：
@@ -165,17 +309,25 @@ react-native start
 * 原生UI组件封装
 
 ### 属性
-(1)原生组件传递属性到React Native（原生->rn）
 原生给JS传数据，主要依靠属性。
+(1)原生->React Native 传递属性
 initialProperties必须是NSDictionary的一个实例。这一字典参数会在内部被转化为一个可供JS组件调用的JSON对象。
-(2)从原生组件更新属性到React Native（原生->rn）
-RCTRootView同样提供了一个可读写的属性appProperties。在appProperties设置之后，React Native应用将会根据新的属性重新渲染。当然，只有在新属性和之前的属性有区别时更新才会被触发。
-你可以随时更新属性，但是更新必须在主线程中进行，读取则可以在任何线程中进行。
-更新属性时并不能做到只更新一部分属性。我们建议你自己封装一个函数来构造属性。
-注意：目前，最顶层的RN组件（即registerComponent方法中调用的那个）的componentWillReceiveProps和componentWillUpdateProps方法在属性更新后不会触发。但是，你可以通过componentWillMount访问新的属性值。
-(3)从React Native传递属性到原生组件（rn->原生）
+(2)原生->React Native 更新属性
+RCTRootView同样提供了一个可读写的属性appProperties,可以通过componentWillMount访问新的属性值。
+* 更新必须在主线程中进行，读取则可以在任何线程中进行。
+* 更新属性时并不能做到只更新一部分属性。建议自己封装一个函数来构造属性。
+(3)React Native->原生
+宏RCT_CUSTOM_VIEW_PROPERTY
+
+### 原生模块
+原生模块是JS中也可以使用的Objective-C类。一个“原生模块”就是一个实现了“RCTBridgeModule”协议的Objective-C类。
+
+### 原生UI组件封装
+
+
 
 
 参考链接：[React Native开发](http://www.lcode.org/【react-native开发】react-native-for-android环境配置以及第一个实例/)
 [React Native 简介与入门](http://www.jianshu.com/p/5b185df2d11a)
+[reactnative集成到原生ios项目](http://www.tuicool.com/articles/BfInEv)
 
