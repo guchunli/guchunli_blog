@@ -169,8 +169,8 @@ package.json内容如下：
 "version": "1.0.0",
 "private": true,
 "dependencies": {
-"react": "^0.14.8",
-"react-native": "^0.22.2"
+"react": "^15.6.1",
+"react-native": "^0.45.1"
 }
 }
 ```
@@ -180,6 +180,11 @@ package.json内容如下：
 $ npm install
 ```
 
+或者安装指定版本的react/react-native
+```
+$ npm install --save react-native@0.45.1
+$ npm install --save react@15.6.1
+```
 (4) 创建index.ios.js文件
 注意当前项目名称为`RNDemo`，修改为实际项目名称。
 ```
@@ -325,9 +330,197 @@ RCTRootView同样提供了一个可读写的属性appProperties,可以通过comp
 ### 原生UI组件封装
 
 
+## FlexBox
+1.flexDirection:row|row-reverse|column|column-reverse
+2.flexWrap:wrap|no-wrap
+3.justifyContent:flex-start|flex-end|center|space-between|space-around
+4.alignItems:flex-start|flex-end|center|stretch
+5.alignSelf:auto|flex-start|flex-end|center|stretch
+6.flex:子控件在主轴中占据几等分
+
+## props,state
+props:在父组件中指定，而且一经指定，在整个组件的生命周期中都不再改变。
+state:constructor中声明(ES6)，在setState中修改数据
+定义state:
+```
+this.state = {
+num:1,
+};
+```
+
+修改state:
+```
+this.setState({
+num : number
+})
+```
+
+## 父子组件传值
+1.父传子
+(1)props:this.props.name
+(2)ref:this.refs.son.receiveMsg("msg")
+2.子传父
+(1)方法回调
+父组件：定义一个处理接收到值的方法，把这个方法传递给子组件，并且绑定this
+子组件：通过this.props拿到这个方法调用
+3.无关联组件间传值
+(1)通知:组件1传值给组件2
+组件1：
+```
+<Text onPress={()=>{
+DeviceEventEmitter.emit('NotificationName',123);
+}}></Text>
+```
+
+组件2：
+```
+this.lister = DeviceEventEmitter.addListener('NotificationName',(value)=>{
+this.setState({
+value:value
+});
+})
+```
+
+## 组件生命周期
+实例化
+1.constructor:初始化state（只调用一次）
+2.componentWillMount:即将加载组件调用，render前（只调用一次）
+3.render:渲染组件
+4.componentDidMount:组件加载完成调用，render后（只调用一次）
+运行
+5.componentWillReceiveProps:props改变调用
+6.shouldComponentUpdate:props/state改变调用，可控制是否刷新界面
+7.componentWillUpdate:组件即将更新调用（调用this.setState会循环）
+8.render
+9.componentDidUpdate:组件更新完成（调用this.setState会循环）
+销毁
+10.componentWillUnmount:组件即将销毁，可移除观察者，清空数据等
+
+## propTypes
+必须要用static修饰，否则无效
+static：用来定义类方法或者类属性，定义类的方法和属性，生成的对象就自动有这样的属性了。
+1.类型检查：当传入错误的属性值，会报警告，但是不会报错
+>
+# 数组类型
+PropTypes.array
+
+# 布尔类型
+PropTypes.bool
+
+# 函数类型
+PropTypes.func
+
+# 数值类型
+PropTypes.number
+
+# 对象类型
+PropTypes.object
+
+# 字符串类型
+PropTypes.string
+
+# 规定prop为必传字段
+PropTypes.func.isRequired
+
+# prop可为任意类型
+PropTypes.any.isRequired
+>
+
+```
+// 定义属性
+static propTypes = {
+    name:PropTypes.string,
+    age:PropTypes.number
+}
+```
+
+2.设置初始化值
+```
+static defaultProps = {
+    name:'xiaoming',
+    age:20
+}
+```
+
+## 基本组件
+1.View
+2.TouchableOpacity
+默认点击区域是所有子控件的区域,因为默认一个组件的尺寸由子控件决定
+* 点击事件：onPress|onLongPress|onPressIn|onPressOut
+* disabled:true|false
+3.Text
+* numberOfLines
+* selectable:true|false 是否允许长按选择文本
+* suppressHighlighting:true|false 是否允许按下时有灰色阴影
+* onPress:文字点击事件
+
+
+## ListView
+1.创建数据源，给数据源设置数据
+使用state保存数据源
+* 不分组使用：cloneWithRows
+* 分组使用：cloneWithRowsAndSections
+```
+var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+this.state = {
+ds: dataSource.cloneWithRows(['row 1', 'row 2']),
+};
+```
+
+```
+var dataSource = new ListView.DataSource({
+rowHasChanged:(r1,r2)=>r1 !== r2,
+sectionHeaderHasChanged:(s1,s2)=>s1 !== s2
+});
+var sectionData = {};
+this.state = {
+ds : dataSource.cloneWithRowsAndSections(sectionData)
+};
+```
+
+2.实现数据源方法
+```
+<ListView dataSource={this.state.ds}
+renderRow={this._renderRow.bind(this)}
+renderSectionHeader={this._renderSectionHeader.bind(this)}
+//renderSeparator={this._renderSeparator.bind(this)}
+/>
+
+_renderRow(rowData, sectionID, rowID, highlightRow) {
+return (
+<View>
+<Text>{rowData}</Text>
+</View>
+);
+}
+//如果是组视图，设置组数据
+_renderSectionHeader(sectionData, sectionID) {
+return (
+<View>
+<Text>{sectionID}</Text>
+</View>
+)
+}
+```
+
+## 导航Navigator
+如果找不到Navigator，安装Navigator所在的库：
+```
+npm install react-native-deprecated-custom-components --save
+//yarn add react-native-deprecated-custom-components
+```
+
+项目导入：
+```
+import {Navigator} from 'react-native-deprecated-custom-components'
+```
+
+
+
 
 
 参考链接：[React Native开发](http://www.lcode.org/【react-native开发】react-native-for-android环境配置以及第一个实例/)
 [React Native 简介与入门](http://www.jianshu.com/p/5b185df2d11a)
 [reactnative集成到原生ios项目](http://www.tuicool.com/articles/BfInEv)
+[袁峥-系列](http://www.jianshu.com/p/504a26d094b2)
 
