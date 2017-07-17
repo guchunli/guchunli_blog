@@ -9,9 +9,10 @@ tags: [iOS,app store]
 * 接口改成线上服务器
 * 极光推送环境改为生产环境等
 
+<!--more-->
 2.版本号
 target -> general：`Version`和`Build`版本号
-<!--more-->
+
 3.签名
 target -> general -> signing
 

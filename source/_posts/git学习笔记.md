@@ -9,11 +9,11 @@ toc: true
 ## 初始化仓库
 > $ git init
 
+<!--more-->
 ## 提交代码
 > $ git add .
 > $ git commit -m “”
 
-<!--more-->
 ## 查看状态
 > $ git status
 

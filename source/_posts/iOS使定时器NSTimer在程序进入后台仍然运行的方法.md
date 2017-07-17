@@ -6,8 +6,8 @@ tags: [iOS,NSTimer,后台]
 ---
 
 1.Info.plist中，`Required background modes`添加`App plays audio or streams audio/video using AirPlay`
-2.`- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions`中添加以下代码：
 <!--more-->
+2.`- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions`中添加以下代码：
 ```
 NSError *setCategoryErr = nil;
 NSError *activationErr  = nil;

@@ -15,8 +15,8 @@ $ ssh -T git@git.oschina.net  (oschina)
 $ Welcome to Git@OSC, nickname!
 ```
 
-### 2.gitignore
 <!--more-->
+### 2.gitignore
 ``` 
 cd /Users/apple/Desktop/code
 git clone git地址

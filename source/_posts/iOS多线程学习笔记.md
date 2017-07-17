@@ -6,6 +6,7 @@ tags: [iOS,多线程]
 ---
 
 多线程的三种使用方式：NSThread，NSOperationQueue和NSOperation，GCD。
+<!--more-->
 一、NSThread
 1.创建线程的三种方式
 （1）创建、启动线程
@@ -14,7 +15,7 @@ NSThread* myThread = [[NSThread alloc] initWithTarget:self selector:@selector(do
 //设置线程优先级、线程名称等信息
 [myThread start];
 ```
-<!--more-->
+
 （2）创建线程后自动启动线程
 ```
 [NSThread detachNewThreadSelector:@selector(doSomething:) toTarget:self withObject:nil];  

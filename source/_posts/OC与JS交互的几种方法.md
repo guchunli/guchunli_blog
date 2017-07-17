@@ -8,8 +8,8 @@ tags: [OC,JS]
 OC与JS交互的几种方法
 1.JavaScriptCore
 2.WebViewJavascriptBridge
-
 <!--more-->
+
 # JavaScriptCore
 ## 通过JSContext实现OC与JS的交互
 1.在webViewDidFinishLoad方法中创建JSContext对象,获取该UIWebview的javascript执行环境

@@ -8,9 +8,9 @@ tags: [iOS,MVVM]
 ## MVVM的四个组件：
 * view ：由 MVC 中的 view 和 controller 组成，负责 UI 的展示，绑定 viewModel 中的属性，触发 viewModel 中的命令；
 * viewModel ：从 MVC 的 controller 中抽取出来的展示逻辑，负责从 model 中获取 view 所需的数据，转换成 view 可以展示的数据，并暴露公开的属性和命令供 view 进行绑定；
+<!--more-->
 * model ：与 MVC 中的 model 一致，包括数据模型、访问数据库的操作和网络请求等；
 * binder ：在 MVVM 中，声明式的数据和命令绑定是一个隐含的约定，它可以让开发者非常方便地实现 view 和 viewModel 的同步，避免编写大量繁杂的样板化代码。在微软的 MVVM 实现中，使用的是一种被称为 XAML 的标记语言。
-<!--more-->
 总结：在 iOS 的 MVVM 实现中，我们可以使用 RAC 来在 view 和 viewModel 之间充当 binder 的角色，优雅地实现两者之间的同步。此外，我们还可以把 RAC 用在 model 层，使用 Signal 来代表异步的数据获取操作，比如读取文件、访问数据库和网络请求等。
 
 ## 实现MVC到MVVM的转变

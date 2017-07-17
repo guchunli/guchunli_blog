@@ -10,13 +10,14 @@ tags: [podspec]
 pod spec create spec文件名
 ```
 
+<!--more-->
 2.创建工程
 (1)将组件代码放到Classes中
 (2)
 ```
 pod lib create 组件代码名称
 ```
-<!--more-->
+
 需要重新`pod install`
 
 3.验证spec文件

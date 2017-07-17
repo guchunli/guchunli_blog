@@ -12,12 +12,12 @@ tags: [markdown]
 >line1  
 >line2  
 
+<!--more-->
 ### 2.段落： 段落之间空一行  
 >p1
 
 >p2
 >p3  
-<!--more-->
 ### 3.标题：
 + （1）Setext形式：= 大标题 - 中标题  
 + （2）atx形式：#  

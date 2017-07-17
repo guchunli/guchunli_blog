@@ -7,10 +7,10 @@ tags: [iOS,test]
 
 1.新建项目时注意勾选`Unit Tests`,`UI Tests`
 如果忘记勾选，File-->new-->target-->iOS-->Cocoa Unit Testing Bundle/Cocoa UI Testing Bundle 添加
+<!--more-->
 2.setUp是每个测试方法调用前执行，tearDown是每个测试方法调用后执行
 3.测试方法必须testXXX的格式，且不能有参数
 4.测试方法的执行顺序是字典序排序,cmd + U进行单元测试，这个快捷键是全部测试，在代码左侧就是平常打断点的地方，有个菱形按钮是单独测试这个方法
-<!--more-->
 5.iOS9的http安全问题：现在进行异步请求的网络测试，由于测试方法主线程执行完就会结束，所以需要设置一下，否则没法查看异步返回结果。在方法结束前设置等待，调回回来的时候再让它继续执行。
 ```
 //waitForExpectationsWithTimeout是等待时间，超过了就不再等待往下执行。

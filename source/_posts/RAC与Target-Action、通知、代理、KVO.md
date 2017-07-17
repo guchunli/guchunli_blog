@@ -9,9 +9,9 @@ ReactiveCocoa作用
 1.target-action:rac_signalForControlEvents 
 rac_textSignal rac_gestureSignal
 2.代理 rac_signalForSelector:@selector() fromProtocol:()
+<!--more-->
 3.通知 rac_addObserverForName
 4.KVO RACObserve(object, value)
-<!--more-->
 
 代码示例：
 1.target-action

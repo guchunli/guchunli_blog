@@ -12,13 +12,13 @@ toc: true
 create database db;
 ```
 
+<!--more-->
 ### 删除数据库
 ```
 drop database db;
 ```
 
 ### 查看数据库
-<!--more-->
 ```
 show databases;
 ```

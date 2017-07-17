@@ -10,12 +10,12 @@ toc: true
 * Browser.js:作用是将 JSX 语法转为 JavaScript 语法
 * JSX 中不能使用 if else 语句，但可以使用 conditional (三元运算) 表达式来替代
 * 注释需要写在花括号中:`{/*注释...*/}`
+<!--more-->
 * JSX 允许在模板中插入数组，数组会自动展开所有成员
 * 要渲染 HTML 标签，只需在 JSX 里使用小写字母的标签名,要渲染 React 组件，只需创建一个大写字母开头的本地变量
 * class->className  for->htmlFor
 * 使用{}的情况：表达式，变量，对象，字典
 * {{}}:第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象
-<!--more-->
 
 ```
 <View style={{flex:1}}></View>
@@ -218,15 +218,19 @@ age:20
 * clear()
 * 事件：onBlur/onFocus/onChange/onChangeText/onEndEditing/onKeyPress/onSubmitEditing
 6.Image
+iOS中的2x,3x图片同样适用，如果存在a@2x.png与a@3x.png，写a.png即可。
+同时兼容iOS和安卓平台的图片，如果存在a.ios.png与a.android.png，同样写a.png即可。
 * source/defaultSource
 本地图片放在与index.ios.js同目录下的Img文件夹
 ```
 <Image source={require('./Img/chaolan.jpeg')} style={styles.imageSytle}/>
+//Xcode的asset类目中，或是放置在Android的drawable目录
 <Image source={{uri:'wukong'}} style={styles.imageSytle}/>
-<Image source={{uri:'http://img01.youxiaoshuo.com/portal/201703/21/083647y43dl1j14s8s3g99.jpg'}} style={styles.imageSytle}/>
+<Image source={{uri:'http://img01.youxiaoshuo.com/portal/201703/21/083647y43dl1j14s8s3g99.jpg', cache: 'only-if-cached'}} style={styles.imageSytle}/>
 ```
 
-* 通过URI加载资源必须设置图片尺寸，否则不显示
+* 通过URI加载网络图片，必须设置图片尺寸，否则不显示
+* 通过URI加载网络图片，iOS端可以添加缓存策略(default/reload/force-cache/only-if-cached)
 * blurRadius
 * resizeMode:cover|contain|stretch|repeat|center
 * 事件:onLoad/onLoadStart/onLoadEnd/onProgress/onError
@@ -530,5 +534,119 @@ import Common from 'Common'
 var item0 = new Common.GroupListView();
 ```
 
+## 动画
+### Animated
+Animated封装了四个可以动画化的组件：View、Text、Image和ScrollView。
+* 配置动画
+* 组合动画
+parallel
+sequence
+stagger
+delay
+* 联动多个动画值
+* 插值：interpolate({inputRange:[0,1],outputRange:[0,100],})
+* 跟踪动态值:leader,follower,ValueXY
+* 输入事件：Animated.event
+* 使用原生动画驱动：`useNativeDriver:true`
+
+### LayoutAnimation
+```
+LayoutAnimation.spring();
+this.setState({w: this.state.w + 15, h: this.state.h + 15})
+```
+
+## 定时器
+* setTimeout,clearTimeout
+* setInterval,clearInterval
+* setImmediate,clearImmediate
+* requestAnimationFrame,cancelAnimationFrame
+
+requestAnimationFrame():用来执行在一段时间内控制视图动画的代码
+setTimeout/setInterval/setImmediate:稍后执行代码，可能会延迟当前正在进行的动画
+runAfterInteractions():稍后执行代码，不会延迟当前进行的动画
+```
+InteractionManager.runAfterInteractions(() => {
+// ...需要长时间同步执行的任务...
+});
+```
+
+> *** 注意：在unmount方法中清除定时器
+
+## setNativeProps
+
+## 调试
+iOS模拟器上，`cmd+D`为摇晃手势
+启动模拟器：
+```
+react-native run-ios --simulator "iPhone 7"
+```
+
+* Reload:刷新JS文件
+* Debug JS Remotely：在Chrome中调试JS代码
+会自动打开`http://localhost:8081/debugger-ui`，打开开发者工具可以查看console输出，以及打断点调试JS脚本。
+* Enable Live Reload：自动刷新，实时加载，应用更新时需要刷新当前页面，可以看到明显的全局刷新效果。
+* Enable Hot Reloading：热加载，基本上看不出刷新的效果，类似于局部刷新。
+* Start Systrace
+* Show Inspector
+* Show Pert Monitor
+
+必须重新编译应用才能生效：
+* 增加了新的资源，如图片
+* 更改了原生代码
+
+* console.error()可触发红屏报错
+* 屏蔽指定警告：ignoreWarnings(['Warning:']);
+
+* 访问控制台日志：
+```
+react-native log-ios
+react-native log-android
+```
+
+还可以通过Debug->Open System Log查看日志
+
+* React Developer Tools
+```
+npm install -g react-devtools  //安装
+react-devtools  //启动
+```
+
+* 真机调试
+(1)退出所有终端打开的页面
+(2)手机与电脑连到同一无线网下
+(3)将AppDelegate中jsCodeLocation的URL地址中的`localhost`改成电脑的IP地址，然后打开`Debug JS Remotely`
+(4)解决https问题
+(5)更新node,npm版本到最新
+(6)关闭防火墙
+
+## 自动化测试
+```
+$ cd react-native
+$ npm test
+$ npm run flow
+$ ./scripts/objc-test-ios.sh
+$ ./scripts/test-manual-e2e.sh
+```
+
+## 性能
+只在开发环境时打印日志
+```
+if (!__DEV__) {
+    global.console = {
+        info: () => {},
+        log: () => {},
+        warn: () => {},
+        debug: () => {},
+        error: () => {},
+    };
+}
+```
+
+## 发布应用
+1.edit scheme->Run->release release版本会自动禁用开发者菜单，同事讲JS文件和静态图片打包压缩后放到包中
+2.热更新：[pushy](https://github.com/reactnativecn/react-native-pushy/blob/master/docs/guide.md)
+
+
 [袁峥讲ReactNative-系列](http://www.jianshu.com/p/504a26d094b2)
 [React学习资源汇总](http://blog.xieliqun.com/2016/11/06/react-study/#more)
+[React Native开发错误警告处理总结（已解决 ！持续更新](http://www.jianshu.com/p/98c8f2a970eb)

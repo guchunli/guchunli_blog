@@ -10,7 +10,7 @@ toc: true
 ### 1.public类
 * 一个源文件中只能有一个public类
 * 一个源文件可以有多个非public类
-
+<!--more-->
 ### 2.package/import
 编译java包：
 > $ javac -d directory javafilename
@@ -20,11 +20,12 @@ E:\sources> javac -d c:\classes Simple.java
 e:\sources> set classpath=c:\classes;.;
 e:\sources> java mypack.Simple
 ```
+
 OR
 ```
 e:\sources> java -classpath c:\classes mypack.Simple
 ```
-<!--more-->
+
 加载类文件或jar文件的方式:
 * 加载临时类文件
     + 通过在命令提示符中设置类路径

@@ -7,3 +7,5 @@ comments: true
 ---
 
 cookies 存储在浏览器。而会话存储在服务器端
+<!--more-->
+待补充

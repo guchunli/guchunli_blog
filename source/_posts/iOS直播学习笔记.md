@@ -9,12 +9,13 @@ tags: [iOS,直播]
 ## 推流
 //LFLiveKit,librtmp
 
+<!--more-->
 1.安装Homebrew
 查看是否已经安装了Homebrew
 ```
 man brew
 ```
-<!--more-->
+
 安装Homebrew
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

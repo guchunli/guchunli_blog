@@ -1,5 +1,5 @@
 ---
-title: RAC学习笔记
+title: ReactiveCocoa学习笔记
 date: 2017-05-20 10:31:47
 categories: 笔记
 tags: [iOS,RAC]
@@ -8,13 +8,13 @@ toc: true
 
 ReactiveCocoa(RAC):是函数响应式编程(Functional Reactive Programming:FRP)框架，高聚合、低耦合思想。
 使用cocoapods导入时加上`use_frameworks!`
+<!--more-->
 
 ## ReactiveCocoa常见类
 ### RACSiganl:信号类(核心)
 一般表示将来有数据传递，只要有数据改变，信号内部接收到数据，就会马上发出数据。
 #### 注意：
 * 信号类(RACSiganl)，只是表示当数据改变时，信号内部会发出数据，它本身不具备发送信号的能力，而是交给内部一个订阅者去发出。
-<!--more-->
 * 默认一个信号都是冷信号，也就是值改变了，也不会触发，只有订阅了这个信号，这个信号才会变为热信号，值改变了才会触发。
 * 如何订阅信号：调用信号RACSignal的subscribeNext就能订阅。
 

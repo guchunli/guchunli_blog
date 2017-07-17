@@ -7,10 +7,10 @@ tags: [iOS,优化]
 
 1.全局断点
 2.条件断点 condational
+<!--more-->
 3.符号断点 symbolic  -[NSObject(NSObject) doesNotRecognizeSelector:]
 4.NSLog
 5.僵尸对象
-<!--more-->
 6.lldb LLVM GCC:p po expr call
 image lookup --address 0x0000000100004af8
 7.instruments-profile:

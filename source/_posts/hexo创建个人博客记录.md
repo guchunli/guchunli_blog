@@ -12,11 +12,12 @@ keywords:
 $ sudo npm install -g hexo
 ```
 
+<!--more-->
 ###  2.初始化
 ``` 
 $ hexo init
 ```
-<!--more-->
+
 ###  3.生成静态页面
 ``` 
 $ hexo generate（hexo g也可以）

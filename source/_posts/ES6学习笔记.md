@@ -7,8 +7,8 @@ tags: [ReactNative,ES6]
 
 ## let
 ES5只有全局作用域和函数作用域，没有块级作用域，而let声明的变量，只在let命令所在的代码块内有效
-ES5产生的问题：
 <!--more-->
+ES5产生的问题：
 ```
 var a = [];
 for (var i = 0; i < 10; i++) {

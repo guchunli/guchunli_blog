@@ -10,6 +10,7 @@ Java开发需要：
 1.JDK (Java Deverlopment Kit)
 Java开发工具包(JDK)是一个用于开发Java应用程序和小程序的软件开发环境。
 它包括Java运行时环境(JRE)，编译器/加载程序(JAVA)，编译器(javac)，归档器(jar)，文档生成(Javadoc)以及 Java 开发的其他工具。
+<!--more-->
 2.IDE (Integrated Development Environment)
 集成开发环境：MyEclipse,IDEA
 
@@ -21,7 +22,6 @@ sudo chmod 755 xxx/bin/*.sh  (xxx表示你tomcat放至的路径)
 ```
 
 ## 3.将Tomcat写入系统的环境变量PATH中。
-<!--more-->
 ```
 $ pico .bash_profile 
 ```

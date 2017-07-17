@@ -10,7 +10,7 @@ tags: [ReactNative,Babel]
 npm install babel@5 --save  //安装ES5
 npm install babel-core --save  //安装ES6
 ```
-
+<!--more-->
 安装插件：
 ```
 npm install babel-preset-es2015
@@ -22,6 +22,6 @@ npm install babel-preset-es2015
 "presets": ["es2015"]
 }
 ```
-<!--more-->
+
 ## 
 待补充

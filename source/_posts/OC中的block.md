@@ -7,11 +7,11 @@ tags: [OC,block]
 
 ## 1.block定义：returnType(^blockName)(parameterTypes) = ^(parameters) {};
 ## 2.block用copy修饰，delegate用weak修饰
+<!--more-->
 ## 3.MRC环境下：
 ### (1)block引用局部变量
 局部变量a:block代码块中使用局部变量,会自动拷贝一份到常量区,所以不可改变量
 如果要修改局部变量，需要加__block修饰变量
-<!--more-->
 ```
 __block int number = 10;
 void (^myBlock)(void) = ^(void) {

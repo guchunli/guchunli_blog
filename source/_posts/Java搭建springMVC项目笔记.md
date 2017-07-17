@@ -11,7 +11,6 @@ tags: [Java,springMVC,项目]
 * 添加tomcat,jdk
 * 运行
 * 访问：http://localhost:8080/project_name/
-
 <!--more-->
 
 ```

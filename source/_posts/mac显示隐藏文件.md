@@ -6,6 +6,7 @@ tags: [技巧,隐藏文件]
 ---
 
 1.显示隐藏文件
+<!--more-->
 ```
 defaults write com.apple.finder AppleShowAllFiles Yes && killall Finder 
 ```
