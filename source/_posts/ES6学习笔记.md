@@ -169,4 +169,138 @@ console.log(name);  //lwy
 (1)直接调用时，在严格模式下，this会被设为undefined，非严格模式下，this会被设为全局对象window
 (2)作为方法调用时，this指方法所属的对象
 
+
+
+# ES6基础知识
+## Babel
+ES6转码器
+* 配置文件.babelrc：用于配置转码规则和插件
+```
+{
+"presets": ["latest","react","stage-2"],
+"plugins": []
+}
+```
+
+```
+# 最新转码规则
+$ npm install --save-dev babel-preset-latest
+# react 转码规则
+$ npm install --save-dev babel-preset-react
+# 不同阶段语法提案的转码规则（0-3)
+$ npm install --save-dev babel-preset-stage-2
+```
+
+* 命令行转码babel-cli
+```
+$ npm install --global babel-cli
+```
+
+将babel-cli安装在项目中
+```
+$ npm install --save-dev babel-cli
+```
+
+改写package.json
+```
+{
+// ...
+"devDependencies": {
+"babel-cli": "^6.0.0"
+},
+"scripts": {
+"build": "babel src -d lib"
+},
+}
+```
+
+执行命令：
+```
+$ npm run build
+```
+
+## 变量
+###let
+* let：类似于var,声明的变量只在let命令所在的代码块中有效
+* for语句设置循环变量部分与循环体是两个作用域
+* 不存在变量提升：var声明的变量在声明前使用已经存在，但没有值；let声明的变量在声明前是不存在的
+* 暂时性死区：let声明的变量在块级作用域内被绑定，不受外部影响
+* let在同一作用域中不可重复声明变量
+
+### 块级作用域{}
+> var声明的变量存在的问题：1.变量升级 2.for语句中的循环变量为全局变量
+* 块级作用域中可以声明函数，在浏览器中行为类似于var(会提升)，其他环境类似于let
+
+### do
+使块级作用域变为表达式，可以用变量接收do{}的返回值
+
+### const
+* 声明只读常量，只声明不赋值会报错
+* 同let相同的块级作用域内有效，不提升，窜仔暂时性死区，不可重复声明
+
+### ES6声明变量的六中方法
+var,function,let,const,import,class
+
+### 顶层对象
+浏览器环境，顶层对象指window，Node指glocal。
+var,function声明的全局变量是顶层对象属性，let,const,class声明的不属于。
+
+### global
+system.global可以在所有环境拿到global。
+
+### 解构赋值
+1.数组的解构赋值
+* 模式匹配，解构不成功，变量值为undefined；
+* 设置默认值，当成员等于undefined时默认值生效
+
+2.对象的解构赋值
+* 允许取别名
+
+3.字符串的解构赋值
+* 可对length进行解构赋值
+
+4.使用
+* 交换变量值
+* 函数返回多个值
+* 提取json数据
+* for...of遍历Map结构
+* 加载模块
+
+## 字符串
+* includes(),startsWith(),endsWith(),repeat(),padStart().padEnd()
+* 模板字符串：\'\'  
+* &{变量/表达式、函数}
+
+## 函数
+
+## 数组
+
+## 对象
+
+## Map
+
+## Promise
+
+## Iterator for...of
+
+## aync
+
+## Class
+
+## Module
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 参考文章：(30分钟掌握ES6/ES2015核心内容)[http://www.jianshu.com/p/ebfeb687eb70]
+[ECMAScript 6 入门](http://es6.ruanyifeng.com/#docs/promise)

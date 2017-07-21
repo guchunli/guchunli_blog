@@ -24,9 +24,11 @@ target -> general -> signing
 如果后台使用了位置，提交信息中应用描述添加免责声明
 > 温馨提示：GPS在后台持续运行，会大大降低电池的寿命。
 
-7.edit scheme: run,archive -> `debug` 改为 `release`
+7.设备选择`Generic iOS Device`，注意不要选择真机或模拟器。
 
-8.打包ad-hoc，进行内测：clean -> build -> archive
+8.edit scheme: run,archive -> `debug` 改为 `release`
+
+9.打包ad-hoc，进行内测：clean -> build -> archive
 
 最后，打正式包，提交APP Store。
 

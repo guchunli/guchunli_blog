@@ -5,7 +5,13 @@ categories: 笔记
 tags: [iOS,优化]
 ---
 
-1.全局断点
+# 断点
+## Exception Breakpoint
+* 异常断点：项目crash时，添加异常断点运行，会定位到出错的代码行
+
+## 
+
+
 2.条件断点 condational
 <!--more-->
 3.符号断点 symbolic  -[NSObject(NSObject) doesNotRecognizeSelector:]
@@ -23,8 +29,9 @@ leaks:自动加载Allocations，监控程序运行过程中的内存变化
 《About LLDB and Xcode》：https://developer.apple.com/library/mac/documentation/IDEs/Conceptual/gdb_to_lldb_transition_guide/document/Introduction.html
 http://www.cnblogs.com/daiweilai/p/4234336.html
 8.Debug View Hierarchy
-9.预编译指令:
-//swift语言
+9.预编译指令
+```
+//swift
 #if DEBUG
 func dlog<T>(object: T) {
 println(object)
@@ -36,4 +43,5 @@ func dlog<T>(object: T) {}
 #warning
 #error
 #pragma message
+```
 
