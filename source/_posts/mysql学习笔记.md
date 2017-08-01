@@ -1,7 +1,7 @@
 ---
 title: mysql学习笔记
 date: 2017-06-08 13:41:17
-categories: 笔记
+categories: 学习
 tags: [Java,mysql]
 toc: true
 ---

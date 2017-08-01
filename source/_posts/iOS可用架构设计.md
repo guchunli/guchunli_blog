@@ -1,7 +1,7 @@
 ---
 title: iOS可用架构设计
 date: 2017-07-21 10:43:44
-categories: 笔记
+categories: 学习
 tags: [架构]
 ---
 
@@ -9,6 +9,7 @@ tags: [架构]
 * AppDelegate：应用入口
     - AppDelegate：生命周期
     - AppDelegate+AppService：推送，IM，支付等
+<!--more-->
 * Base：基类
     - TabbarController
     - NavigationController

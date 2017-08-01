@@ -1,7 +1,7 @@
 ---
 title: Babel学习笔记
 date: 2017-07-11 10:24:51
-categories: 笔记
+categories: 学习
 tags: [ReactNative,Babel]
 ---
 

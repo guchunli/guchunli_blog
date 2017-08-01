@@ -1,7 +1,7 @@
 ---
 title: iOS多媒体学习笔记
 date: 2017-05-06 11:41:05
-categories: 笔记
+categories: 学习
 tags: [iOS,音频,视频,播放,录制]
 toc: true
 ---

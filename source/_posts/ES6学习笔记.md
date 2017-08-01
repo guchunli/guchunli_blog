@@ -1,7 +1,7 @@
 ---
 title: ES6学习笔记
 date: 2017-07-11 09:13:09
-categories: 笔记
+categories: 学习
 tags: [ReactNative,ES6]
 ---
 
@@ -289,17 +289,7 @@ system.global可以在所有环境拿到global。
 
 ## Module
 
-
-
-
-
-
-
-
-
-
-
-
+待补充
 
 
 参考文章：(30分钟掌握ES6/ES2015核心内容)[http://www.jianshu.com/p/ebfeb687eb70]

@@ -1,7 +1,7 @@
 ---
 title: 将.c文件打包成库文件
 date: 2017-03-06 18:43:09
-categories: 笔记
+categories: 学习
 tags: [.c,.a,.so]
 toc: true
 ---

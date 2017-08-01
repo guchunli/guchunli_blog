@@ -1,7 +1,7 @@
 ---
 title: MVVM学习笔记
 date: 2017-05-20 11:38:51
-categories: 笔记
+categories: 学习
 tags: [iOS,MVVM]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Java语言学习笔记
 date: 2017-06-09 09:59:09
-categories: 笔记
+categories: 学习
 tags: [Java,语法]
 toc: true
 ---

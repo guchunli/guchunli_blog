@@ -25,8 +25,9 @@ tag_dir: tags
 archive_dir: archives
 category_dir: categories
 
-note_dir: note
+study_dir: study
 other_dir: other
+# photo_dir: photos
 
 code_dir: downloads/code
 i18n_dir: :lang
@@ -51,7 +52,7 @@ highlight:
 # Category & Tag
 default_category: uncategorized
 category_map:
-             笔记: note
+             学习: study
              随笔: other
 tag_map:
 

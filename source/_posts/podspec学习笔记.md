@@ -1,7 +1,7 @@
 ---
 title: podspec学习笔记
 date: 2017-07-11 13:56:12
-categories: 笔记
+categories: 学习
 tags: [podspec]
 ---
 

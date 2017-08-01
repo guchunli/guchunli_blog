@@ -1,7 +1,7 @@
 ---
 title: iOS面试知识点总结
 date: 2017-06-30 14:31:59
-categories: 笔记
+categories: 学习
 tags: [iOS,面试]
 ---
 

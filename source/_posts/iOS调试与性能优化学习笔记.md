@@ -1,9 +1,21 @@
 ---
 title: iOS调试与性能优化学习笔记
 date: 2017-06-05 18:31:25
-categories: 笔记
-tags: [iOS,优化]
+categories: 学习
+tags: [iOS,优化,待补充]
 ---
+
+## Instruments
+1.内存泄露 Leaks
+
+2.僵尸对象 Zoombies
+<!--more-->
+3.被遗弃的内存 Generational Analysis
+
+4.Allocations
+
+5.Time Profile
+
 
 # 断点
 ## Exception Breakpoint
@@ -13,7 +25,7 @@ tags: [iOS,优化]
 
 
 2.条件断点 condational
-<!--more-->
+
 3.符号断点 symbolic  -[NSObject(NSObject) doesNotRecognizeSelector:]
 4.NSLog
 5.僵尸对象

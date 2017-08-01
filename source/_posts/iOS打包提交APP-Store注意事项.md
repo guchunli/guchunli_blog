@@ -1,7 +1,7 @@
 ---
 title: iOS打包提交APP Store注意事项
 date: 2017-04-13 12:20:22
-categories: 笔记
+categories: 学习
 tags: [iOS,app store]
 ---
 

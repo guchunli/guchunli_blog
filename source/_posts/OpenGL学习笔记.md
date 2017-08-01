@@ -1,8 +1,8 @@
 ---
 title: OpenGL学习笔记
 date: 2017-07-03 18:23:19
-categories: 笔记
-tags: [iOS,OpenGL]
+categories: 学习
+tags: [iOS,OpenGL,待补充]
 ---
 
 1.GPUImage底层使用的是OPENGL,操控GPU来实现屏幕展示

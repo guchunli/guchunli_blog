@@ -1,7 +1,7 @@
 ---
 title: git学习笔记
 date: 2017-03-03 10:49:42
-categories: 笔记
+categories: 学习
 tags: [Git]
 toc: true
 ---

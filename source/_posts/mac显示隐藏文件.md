@@ -1,7 +1,7 @@
 ---
 title: mac显示隐藏文件
 date: 2017-03-21 18:37:39
-categories: 笔记
+categories: 学习
 tags: [技巧,隐藏文件]
 ---
 

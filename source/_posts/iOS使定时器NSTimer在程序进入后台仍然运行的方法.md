@@ -1,7 +1,7 @@
 ---
 title: iOS使定时器NSTimer在程序进入后台仍然运行的方法
 date: 2017-07-05 16:16:46
-categories: 笔记
+categories: 学习
 tags: [iOS,NSTimer,后台]
 ---
 

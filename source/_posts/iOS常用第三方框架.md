@@ -1,14 +1,15 @@
 ---
 title: iOS常用第三方框架
 date: 2017-07-21 10:26:37
-categories: 笔记
-tags: [框架]
+categories: 学习
+tags: [框架,待补充]
 ---
 
 ## 网络
 1.PPNetworkHelper
 * 对AFNetworking 3.x 与YYCache的二次封装
 * 简单易用，包含了缓存机制，控制台可以直接打印json中文字符
+<!--more-->
 
 2.YTKNetwork
 * 猿题库研发团队基于AFNetworking封装的iOS网络库
@@ -31,5 +32,11 @@ tags: [框架]
 1.MBProgressHUD
 
 2.SVProgressHUD
+
+## LFLiveKit
+
+## IJKMediaFramework
+
+待补充
 
 

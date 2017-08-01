@@ -1,7 +1,7 @@
 ---
 title: Markdown学习笔记
 date: 2017-02-19 09:48:39
-categories: 笔记
+categories: 学习
 tags: [markdown]
 ---
 
