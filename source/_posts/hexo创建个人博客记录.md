@@ -33,16 +33,21 @@ $ hexo server（hexo s也可以）
 $ hexo deploy（hexo d也可以）
 ```
 
+`deploy`之前进行`build`，可以对博客进行优化，提高网站访问速度。
+```
+$ gulp build     //压缩js、css、img文件
+```
+
 每次部署的步骤，可按以下三步来进行: `hexo clean`，`hexo generate`，`hexo deploy`，或者 `hexo d -g`
 
 ###  6.新建文章
 ``` 
-$ hexo new"postName" 
+$ hexo new "postName" 
 ```
 
 ###  7.新建页面
 ``` 
-$ hexo new page"pageName" 
+$ hexo new page "pageName" 
 ```
 
 ### 8.添加统计数据

@@ -2,9 +2,10 @@
 
 menu:
   主页: /
+  归档: /archives/
   学习: /categories/study/
   随笔: /categories/other/
-  相册: /photos/
+  相册: photos
 
 # SubNav
 subnav:
