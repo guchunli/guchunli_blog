@@ -438,6 +438,8 @@ git config --global alias.st status
 如果文件不存在，touch指令会在当前目录下新建一个空白文件
 （7）vi/vim：打开文件后可以编辑
 （8）echo：输出
+（9）删除文件夹，如果文件夹为空，使用`rmdir dir`即可，如果文件夹不为空，使用`rm -rf dir`删除该目录以及该目录下的所有文件 ，`-r`--是删除目录，`-f`意思是--强制删除，不提示。(-f:force -r:recursive)
+> `man -k rmdir`查看rmdir命令作用，`info rmdir`查看rmdir命令详细信息
 
 [Git的官方网站](http://git-scm.com)
 
