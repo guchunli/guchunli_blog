@@ -11,15 +11,14 @@ toc: true
 let，var分别声明常量，变量
 <!--more-->
 `代码中有不需要改变的值，使用 let 关键字将它声明为常量`
+> 使用 let 修饰 `view` 并且赋值，表示该常量的内存地址不允许修改，但是可以修改其内部的属性
 
 ## 类型标注
-很少需要标注，swift会进行类型推断
+很少需要标注，swift会进行类型推断，根据右边的代码，推导出变量的准确类型
+> Option + Click 可以查看变量的类型
 ```
 let a:Float = 3.0
 ```
-
-## 输出
-插值，值转换成字符串：\()
 
 ## 注释
 多行注释可嵌套
@@ -28,7 +27,7 @@ let a:Float = 3.0
 swift语句，最后分号可写可不写
 
 ## 类型转换
-值永远不会被隐式转换为其他类型，需要显示类型转换
+值永远不会被隐式转换为其他类型，如果要对不同类型的数据进行计算，必须要显式的转换
 ```
 let a = "abc"
 let b = 9
@@ -58,14 +57,27 @@ nil是一个确定的值，表示值缺失，任何类型的可选状态都可�
 ## if 语句以及强制解析
 if语句中的条件必须是一个布尔表达式
 当一个可选常量或变量确定包含值时，可用`!`强制解析
+> `()` 可以省略，但是 `{}` 不能省略
+* 当 if 的嵌套层次很深，可用where
+```
+if let u = url where u.host == "www.baidu.com" {}
+```
+
+解包：
+(1)!强行解包,如果 变量 为空，运行时会崩溃
+(2)判断是否为空
 ```
 if str != nil {
 print(str!)
 }
 ```
 
+(3)`if let`可选绑定
+
 ## 可选绑定
 可以用在if或while语句中
+可以判断多个可选项是否为空，用`,`隔开
+> `if let` 不能与使用 `&`、`|` 等条件判断,可以使用 `where` 子句
 ```
 if let constantName = someOptional {
 //constantName
@@ -166,11 +178,35 @@ str.characters.count
 * 前缀相等：`hasPrefix(_:)`
 * 后缀相等：`hasSuffix(_:)`
 
+## 插值
+值转换成字符串：\()
+> 如果变量是可选项，拼接的结果中会有 `Optional`，`??` 操作符用于检测可选项是否为 `nil`， 如果不是 `nil`，使用当前值，如果是 `nil`，使用后面的值替代
+
+## 格式化字符串
+* 在实际开发中，如果需要指定字符串格式，可以使用 `String(format:...)` 的方式
+```swift
+let h = 8
+let m = 23
+let s = 9
+//后面的参数需要放在一个数组中
+let timeString = String(format: "%02d:%02d:%02d", arguments: [h, m, s])
+```
+
 # 集合类型
 ## 集合的可变性
 变量可变，常量不可变
 ## 数组
-只可存放相同数据类型的数据
+* 数组的类型
+    * 如果初始化时，所有内容类型一致，择数组中保存的是该类型的内容
+    * 如果初始化时，所有内容类型不一致，择数组中保存的是 `NSObject`
+* 数字可以直接添加到集合，不需要再转换成 `NSNumber`
+* 如果将结构体对象添加到集合，仍然需要转换成 `NSValue`
+```
+var array2 = ["zhangsan", 18]
+array2.append(100)
+array2.append(NSValue(CGPoint: CGPoint(x: 10, y: 10)))
+```
+
 最后一个元素后面允许有个逗号
 * 创建空数组
 ```
@@ -191,6 +227,8 @@ arr1 = []
 ```
 for (index, value) in arr.enumerated() {}
 ```
+
+* 必须是相同类型的数组才能够合并
 
 ## 集合
 * 存储在集合中的数据必须是可哈希化的。
@@ -216,9 +254,15 @@ let oldValue = dic.updateValue("lisi", forKey: "name")
 let keysArr = [String](dic.keys)
 ```
 
+* 遍历字典时候需要明确指明数组中的数据类型
+for dict in dictArray  as! [[String:String]]{}
+
 # 控制流
 ## For-In 循环
 * index 可直接使用，无序声明，不需要的时候可用`_`忽略
+* 省略下标
+    * `_` 能够匹配任意类型
+    * `_` 表示忽略对应位置的值
 ```
 for index in 1...5 {}
 ```
@@ -229,7 +273,8 @@ for index in 1...5 {}
 * switch支持任意类型的数据比较 
 * switch不会隐式贯穿，匹配到后会退出switch语句，所以不用在每个子句结尾写break
 * 每一个 case 分支都必须包含至少一条语句,没有可用break
-* 必须有default语句
+* 必须有default语句,要保证处理所有可能的情况，不然编译器直接报错
+* 每一个 `case` 中定义的变量仅在当前 `case` 中有效
 * 复合匹配，可以用逗号隔开匹配多个值
 * 区间匹配
 * 元组匹配
@@ -768,5 +813,7 @@ required override init() {
 # 访问控制
 
 # 高级运算符
+
+
 
 参考资料：(The Swift Programming Language中文版)[http://wiki.jikexueyuan.com/project/swift]
