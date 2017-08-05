@@ -11,7 +11,7 @@ toc: true
 $ svn help  //svn命令帮助
 $ svn htlp add  //svn具体功能帮助
 ```
-
+<!--more-->
 ## 创建svn版本库
 (1)创建仓库路径
 ```
