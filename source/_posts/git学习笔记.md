@@ -370,6 +370,11 @@ git clone git@server:/srv/sample.git
 （7）要方便管理公钥，用Gitosis；
 　　要像SVN那样变态地控制权限，用Gitolite。
 
+
+## 安装可视化工具gitk
+gitk是需要tcl/tk支持的，所以安装gitk之前必须安装tcl/tk。
+tcl/tk下载：http://www.tcl.tk/software/tcltk/download.html
+
 ## git命令汇总
 git init 
 
