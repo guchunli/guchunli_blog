@@ -9,6 +9,7 @@ toc: true
 ## 命令行方式
 ### 1.在Xcode的Windows->Orgnizer->Archives可以看到每次的打包，找到要查看的错误报告所在的版本。
  * /Users/<用户名>/Library/Developer/Xcode/Archives 路径下是所有打包文件
+ 
 <!--more-->
 ### 2.show in Finder，查看包内容，将`.dSYM`文件和`.app`复制保存到一个新的文件夹crash。
 
@@ -24,10 +25,28 @@ xcrun atos -arch arm64 -o XXX.app/XXX 0x1000e7068
 
 使用以上命令即可得到错误代码所在的文件以及出错代码的具体行数。
 
-参考文章：[如何通过友盟的错误分析报告，定位到错误代码的位置](http://www.jianshu.com/p/17fd659df460?open_source=weibo_search)
-
 ## 使用工具软件
 下载地址：[dSYMTools](https://github.com/answer-huang/dSYMTools)
 
+如何将文件一一对应
+
+每一个 xx.app 和 xx.app.dSYM 文件都有对应的 UUID，crash 文件也有自己的 UUID，只要这三个文件的 UUID 一致，我们就可以通过他们解析出正确的错误函数信息了。
+
+1.查看 xx.app 文件的 UUID，terminal 中输入命令 ：
+```
+dwarfdump --uuid xx.app/xx (xx代表你的项目名)
+```
+
+2.查看 xx.app.dSYM 文件的 UUID ，在 terminal 中输入命令：
+```
+dwarfdump --uuid xx.app.dSYM
+```
+
+3.crash 文件内第一行 Incident Identifier 就是该 crash 文件的 UUID。
+
 ## 使用xcode自带的工具symbolicatecrash
+
+参考文章：[如何通过友盟的错误分析报告，定位到错误代码的位置](http://www.jianshu.com/p/17fd659df460?open_source=weibo_search)
+
+[dSYM 文件分析工具](http://www.cocoachina.com/ios/20141219/10694.html)
 
