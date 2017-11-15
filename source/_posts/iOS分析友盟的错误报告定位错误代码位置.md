@@ -28,21 +28,19 @@ xcrun atos -arch arm64 -o XXX.app/XXX 0x1000e7068
 ## 使用工具软件
 下载地址：[dSYMTools](https://github.com/answer-huang/dSYMTools)
 
-如何将文件一一对应
+* 如何将文件一一对应：xxx.app 、 xxx.app.dSYM 和crash 文件都有自己的 UUID，只要这三个文件的 UUID 一致，就可以解析出正确的错误函数信息。
 
-每一个 xx.app 和 xx.app.dSYM 文件都有对应的 UUID，crash 文件也有自己的 UUID，只要这三个文件的 UUID 一致，我们就可以通过他们解析出正确的错误函数信息了。
-
-1.查看 xx.app 文件的 UUID，terminal 中输入命令 ：
+1.查看 xx.app 文件的 UUID：
 ```
-dwarfdump --uuid xx.app/xx (xx代表你的项目名)
+dwarfdump --uuid xxx.app/xxx (xxx代表项目名)
 ```
 
-2.查看 xx.app.dSYM 文件的 UUID ，在 terminal 中输入命令：
+2.查看 xx.app.dSYM 文件的 UUID：
 ```
-dwarfdump --uuid xx.app.dSYM
+dwarfdump --uuid xxx.app.dSYM
 ```
 
-3.crash 文件内第一行 Incident Identifier 就是该 crash 文件的 UUID。
+3.crash 文件内第一行 Incident Identifier 就是 crash 文件的 UUID。
 
 ## 使用xcode自带的工具symbolicatecrash
 
