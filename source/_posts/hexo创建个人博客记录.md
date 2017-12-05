@@ -114,4 +114,10 @@ $ git config --global user.name "yourname"
 $ git config --global user.email "youremail"
 ```
 
-如果以上做完还是出不来，删掉根目录下的文件夹：.deploy_git，重新deploy就可以了。 
+如果以上做完还是出不来，删掉根目录下的文件夹：.deploy_git，重新deploy就可以了。
+
+* 添加动态背景效果代码：
+```
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+```
