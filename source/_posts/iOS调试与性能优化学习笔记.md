@@ -6,6 +6,7 @@ tags: [iOS,优化,待补充]
 ---
 
 ## Instruments
+选择真机运行APP，模拟器使用的是电脑的CPU
 1.内存泄露 Leaks
 
 2.僵尸对象 Zoombies
@@ -14,15 +15,18 @@ tags: [iOS,优化,待补充]
 
 4.Allocations
 
-5.Time Profile
+### 5.Time Profile
+5.1 在底部的Call Tree中勾选：
+* Separate by Thread：按照线程分割监听结果
+* Hide system Libraries：隐藏系统函数
 
+5.2 配置项目
+scheme：debug
+project->debug information format->debug：DWARF with dSYM File
 
 # 断点
 ## Exception Breakpoint
-* 异常断点：项目crash时，添加异常断点运行，会定位到出错的代码行
-
-## 
-
+1.异常断点：项目crash时，添加异常断点运行，会定位到出错的代码行
 
 2.条件断点 condational
 

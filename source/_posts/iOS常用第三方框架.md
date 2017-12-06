@@ -6,17 +6,19 @@ tags: [框架,待补充]
 ---
 
 ## 网络
-1.PPNetworkHelper
+1.AFNetworking
+
+2.PPNetworkHelper
 * 对AFNetworking 3.x 与YYCache的二次封装
 * 简单易用，包含了缓存机制，控制台可以直接打印json中文字符
 <!--more-->
 
-2.YTKNetwork
+3.YTKNetwork
 * 猿题库研发团队基于AFNetworking封装的iOS网络库
 * 适合稍微复杂一些的项目，不适合个人的小项目
 
 ## 基础组件库
-1.YYKit
+### YYKit
 * YYModel— 高性能的 iOS JSON 模型框架。
 * YYCache— 高性能的 iOS 缓存框架。
 * YYImage— 功能强大的 iOS 图像框架。
@@ -28,14 +30,30 @@ tags: [框架,待补充]
 * YYCategories— 功能丰富的 Category 类型工具库。
 > 图像异步加载使用的NSURLConnection，还是建议使用SDWebImage。
 
-## 提示框
-1.MBProgressHUD
+## 等待加载提示
+* MBProgressHUD
+* SVProgressHUD
+* UAProgressView
 
-2.SVProgressHUD
+## 键盘监听管理工具
+* IQKayboardManager
 
-## LFLiveKit
+## Badge
+* WZLBadge
 
-## IJKMediaFramework
+## 日历
+* GFCalendar
+* FSCalendar
+
+## 直播
+* LFLiveKit
+* IJKMediaFramework
+
+## 视频播放
+* VIMVideoPlayer
+
+## VR播放器
+* MDVRLibrary
 
 待补充
 

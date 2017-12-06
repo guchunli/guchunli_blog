@@ -5,11 +5,40 @@ categories: 学习
 tags: [OC,block]
 ---
 
-## 1.block定义：returnType(^blockName)(parameterTypes) = ^(parameters) {};
-## 2.block用copy修饰，delegate用weak修饰
+## block的定义
+
+* 用作本地变量
+```
+returnType (^blockName)(parameterTypes) = ^returnType(parameters) {...};
+```
 <!--more-->
-## 3.MRC环境下：
-### (1)block引用局部变量
+* 用作属性
+```
+@property (nonatomic, copy, nullability) returnType (^blockName)(parameterTypes);
+As a method parameter:
+```
+
+* 用作方法参数
+```
+- (void)someMethodThatTakesABlock:(returnType (^nullability)(parameterTypes))blockName;
+```
+
+* 调用参数为block的方法
+```
+[someObject someMethodThatTakesABlock:^returnType (parameters) {...}];
+```
+
+* 用作类型
+```
+typedef returnType (^TypeName)(parameterTypes);
+TypeName blockName = ^returnType(parameters) {...};
+```
+
+
+## block的使用
+### block用copy修饰，delegate用weak修饰，枚举用assign修饰
+### MRC环境下：
+(1)block引用局部变量
 局部变量a:block代码块中使用局部变量,会自动拷贝一份到常量区,所以不可改变量
 如果要修改局部变量，需要加__block修饰变量
 ```
@@ -21,7 +50,7 @@ NSLog(@"%d",number);;
 
 ```
 
-### (2)block中引用一个局部OC对象
+ (2)block中引用一个局部OC对象
 该对象会被retain，如果局部变量使用__block修饰，则不会retain
 ```
 __block NSObject *obj = [[NSObject alloc]init];
@@ -31,17 +60,17 @@ NSLog(@"%ld",obj.retainCount);  //不用__block，则为2
 myBlock();
 ```
 
-### (3)block中引用一个全局变量
+(3)block中引用一个全局变量
 在block代码块中使用全局变量或方法时,会将这个变量或方法所在的对象self引用计数加1,引起循环引用
 解决方法:使用__block修饰self
 ```
 __block SecondViewController *weakSelf =self;
 ```
 
-## 4.ARC环境下：
-### (1)在block中引用局部变量，同MRC需要__block修饰
-### (2)在block中引用局部对象，不用加__block
-### (3)在block中引用全局变量，
+### ARC环境下：
+(1)在block中引用局部变量，同MRC需要__block修饰
+(2)在block中引用局部对象，不用加__block
+(3)在block中引用全局变量，
 ```
 _index = 1;
 __weak SecondViewController *weakThis = self;
@@ -63,7 +92,7 @@ NSLog(@"index:%ld",strongThis->_index);
 
 ```
 
-## 5.__weak与__block区别
+### __weak与__block区别
 MRC，__block 修饰，可以避免循环引用；ARC，__block 修饰，同样会引起循环引用问题；
 __block不管是ARC还是MRC模式下都可以使用，可以修饰对象，还可以修饰基本数据类型；
 __weak只能在ARC模式下使用，也只能修饰对象，不能修饰基本数据类型；
@@ -76,4 +105,5 @@ __block会持有该对象，即使超出了该对象的作用域，该对象还�
 __block可以让block修改局部变量，而__weak不能。
 另外，MRC中__block是不会引起retain；但在ARC中__block则会引起retain。所以ARC中应该使用__weak。
 
+参考：[How Do I Declare A Block in Objective-C?](http://fuckingblocksyntax.com)
 
