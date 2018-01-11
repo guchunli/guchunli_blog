@@ -6,11 +6,11 @@ tags: [bug,崩溃,报错]
 toc:
 ---
 
-## clang: error: linker command failed with exit code 1 (use -v to see invocation)
+## duplicate symbols for architecture x86_64
 
-* 原因：链接问题，有重名的文件
+* 原因：1.在工程中不同路径下重复导入了某个类或文件；  2.引用了.m文件，#import "XXX.m"； 3.多个文件中重复定义了相同的枚举等
 
-* 解决：查找，删除
+* 解决：1.查找，删除； 2.查找，修改； 3.查找，删除。 如果还是不能解决，试着删除该文件，重新添加。
 
 <!--more-->
 ## invalid mode 'kCFRunLoopCommonModes' provided to CFRunLoopRunSpecific - break on _CFRunLoopError_RunCalledWithInvalidMode to debug. This message will only appear once per execution.
