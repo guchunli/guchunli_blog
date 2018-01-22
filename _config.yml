@@ -98,14 +98,33 @@ jsonContent:
       title: true
       date: true
       path: true
-      text: true
+      text: false
       raw: false
       content: false
       slug: false
       updated: false
-      comments: true
+      comments: false
       link: false
       permalink: false
       excerpt: false
-      categories: true
+      categories: false
       tags: true
+
+# jsonContent:
+#     meta: false
+#     pages: false
+#     posts:
+#       title: true
+#       date: true
+#       path: true
+#       text: true
+#       raw: false
+#       content: false
+#       slug: false
+#       updated: false
+#       comments: true
+#       link: false
+#       permalink: false
+#       excerpt: false
+#       categories: true
+#       tags: true
