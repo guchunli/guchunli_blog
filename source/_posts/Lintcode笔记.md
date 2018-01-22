@@ -7,3 +7,5 @@ toc: true
 ---
 
 <!--more-->
+
+参考代码：https://github.com/awangdev/LintCode

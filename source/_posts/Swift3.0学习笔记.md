@@ -6,6 +6,8 @@ tags: [Swift3.0,待补充]
 toc: true
 ---
 
+在线swift编辑器：IBM Swift Sandbox
+
 # 基础知识
 ## 常量和变量
 let，var分别声明常量，变量
@@ -145,20 +147,20 @@ let str = String[chars]
 变量可变，常量不可变
 
 ## 连接字符串和字符
-* +
+* +：只能连接字符串
 * append
 
 ## 插入和删除
 以下方法也可使用在Array,Dictionary,Set中。
 * str.characters.indices所有索引
-* 在某个索引值之前插入字符：`insert(_:at:)`
+* 在某个索引值之前插入字符：`insert(_:at:)`，不能越界
 * 插入字符串：`insert(contentsOf:at:)`
 ```
 var hello = "hello";
 hello.insert(contentsOf:" world!".characters, at: hello(before: welcome.endIndex))
 ```
 
-* 删除字符：`remove(at:)`
+* 删除字符：`remove(at:)`，越界返回nil
 * 删除字符串`removeSubrange(_:)`
 ```
 var hello = "hello world!"
@@ -217,6 +219,8 @@ var arr1 = [Int]()
 * 给数组赋空值
 ```
 arr1 = []
+arr = [Int](repeatElement(3, count: 10))
+arr = Array(repeatElement(2, count: 10))
 ```
 
 * 判断是否是空数组：isEmpty
@@ -242,16 +246,67 @@ for (index, value) in arr.enumerated() {}
 var set1 = Set<String>()
 ```
 
+* 集合转数组
+```
+let arr = set1.sorted()
+```
+
+* 集合的交差并补
+```
+let x:Set = [1,2,3]
+let y:Set = [3,4,5]
+x.intersection(y)
+x.subtract(y)
+x.union(y)
+x.symmetricDifference(y)
+```
+
+* 集合相等：有完全相同的元素
+```
+let set1:Set = [1,2,3]
+let set2:Set = [3,2,1]
+set1 == set2
+```
+
+* 子集（可以相等），严格子集
+```
+let set1:Set = [1,2,3,4]
+let set2:Set = [3,4]
+set2.isSuperset(of: set1)
+set2.isStrictSuperset(of: set1)
+```
+
+* 父集（可以相等），严格父集
+```
+set1.isSubset(of: set2)
+set1.isStrictSubset(of: set2)
+```
+
+* 无交集
+```
+let set1:Set = [1,2]
+let set2:Set = [3,4]
+set1.isDisjoint(with: set2)
+```
+
 ## 字典
+* 创建
+```
+var dict = ["a":"b"]
+var dict1 : Dictionary<String,String>
+var dict2 : [String:String]
+```
+
 * `updateValue(_:forKey:)`:设置或更新值，但是返回更新值之前的原值
 ```
 let oldValue = dic.updateValue("lisi", forKey: "name")
 ```
 
 * `dic["akey"] = nil`:移除键值对
-* dic.kets,dic.values
+* dic.keys,dic.values
 ```
-let keysArr = [String](dic.keys)
+var keyArr = [String](dict.keys)
+var valueArr = Array(dict.values)
 ```
 
 * 遍历字典时候需要明确指明数组中的数据类型
@@ -355,6 +410,20 @@ swapTwoInts(&someInt, &anotherInt)
 
 ## 函数类型
 * 可作为参数类型或返回值类型
+```
+func calculate(x: Int,y: Int,method: (Int,Int)->Int) -> Int{
+return method(x,y)
+}
+
+func add(x: Int,y: Int)->Int{
+return x+y
+}
+func multiply(x: Int,y: Int)->Int{
+return x*y
+}
+calculate(x: 3, y: 4, method: add)
+calculate(x: 3, y: 4, method: multiply)
+```
 
 # 闭包
 闭包的三种形式：
@@ -817,3 +886,5 @@ required override init() {
 
 
 参考资料：(The Swift Programming Language中文版)[http://wiki.jikexueyuan.com/project/swift]
+(https://github.com/yagamis/swift2basic)[https://github.com/yagamis/swift2basic]
+
