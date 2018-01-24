@@ -35,6 +35,9 @@ tags: [框架,待补充]
 * SVProgressHUD
 * UAProgressView
 
+## 空白页面占位图
+* [LYEmptyView](https://github.com/yangli-dev/LYEmptyView)
+
 ## 键盘监听管理工具
 * IQKayboardManager
 

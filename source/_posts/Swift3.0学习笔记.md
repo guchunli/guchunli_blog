@@ -15,6 +15,17 @@ let，var分别声明常量，变量
 `代码中有不需要改变的值，使用 let 关键字将它声明为常量`
 > 使用 let 修饰 `view` 并且赋值，表示该常量的内存地址不允许修改，但是可以修改其内部的属性
 
+## 字面量
+* 字面量是指像特定的数字，字符串或者是布尔值这样能够直接了当地指出自己的类型并对变量进行赋值的值。
+```
+let aNumber = 3
+let astring = "Hello"
+let aBool = true
+
+let anArray = [1,2,3]
+let aDictionary = ["key1": "value1", "key2": "value2"]
+```
+
 ## 类型标注
 很少需要标注，swift会进行类型推断，根据右边的代码，推导出变量的准确类型
 > Option + Click 可以查看变量的类型
@@ -46,6 +57,7 @@ typealias Example = Int
 * 可在定义元组的时候给元素命名
 * 不需要访问的元素可用`_`代替
 * 元组可作为函数返回值返回多个值
+
 
 ## 可选类型
 可以是任何类型值的缺失
@@ -79,6 +91,7 @@ print(str!)
 ## 可选绑定
 可以用在if或while语句中
 可以判断多个可选项是否为空，用`,`隔开
+* 一旦进入if分支，变量就不再是可选项
 > `if let` 不能与使用 `&`、`|` 等条件判断,可以使用 `where` 子句
 ```
 if let constantName = someOptional {
@@ -114,6 +127,14 @@ try canThrowAnError()
 release配置时，断言被禁用。
 ```
 assert()
+```
+
+## fatalError
+* 断言只会在 Debug 环境中有效，而在 Release 编译中所以变得断言都将被禁用。所以我们会考虑以产生致命错误(fatalError)的方式来种植程序。
+```
+required init?(coder aDecoder: NSCoder) {
+fatalError("init(coder:) has not been implemented")
+}
 ```
 
 # 基本运算符
@@ -194,6 +215,12 @@ let s = 9
 let timeString = String(format: "%02d:%02d:%02d", arguments: [h, m, s])
 ```
 
+```
+let name = "Tom"
+let date = NSDate()
+let string = NSString(format: "Hello %@. Date: %@", name, date)
+```
+
 # 集合类型
 ## 集合的可变性
 变量可变，常量不可变
@@ -204,12 +231,18 @@ let timeString = String(format: "%02d:%02d:%02d", arguments: [h, m, s])
 * 数字可以直接添加到集合，不需要再转换成 `NSNumber`
 * 如果将结构体对象添加到集合，仍然需要转换成 `NSValue`
 ```
-var array2 = ["zhangsan", 18]
+//var array2 = ["zhangsan", 18]  //会报错:Heterogeneous collection literal could only be inferred to '[Any]'; add explicit type annotation if this is intentional
+let array2 = ["zhangsan", 18] as [Any]
 array2.append(100)
 array2.append(NSValue(CGPoint: CGPoint(x: 10, y: 10)))
 ```
 
 最后一个元素后面允许有个逗号
+* 定义数组
+```
+var arr1:[Int]
+```
+
 * 创建空数组
 ```
 var arr1 = [Int]()
@@ -357,6 +390,11 @@ if #available(iOS 10, macOS 10.12, *) {
 ```
 
 # 函数
+* MARK
+```
+// MARK: - mark something
+```
+
 ## 函数定义与调用
 ```
 func hello(name:String) -> String{
@@ -475,13 +513,47 @@ reversedNames = names.sorted { $0 > $1 }
 * Swift 中，可以捕获值的闭包的最简单形式是嵌套函数
 * 如果一个值不会被闭包改变，或者在闭包创建后不会改变，Swift 可能会改为捕获并保存一份对值的拷贝。
 > 如果你将闭包赋值给一个类实例的属性，并且该闭包通过访问该实例或其成员而捕获了该实例，你将在闭包和该实例间创建一个循环强引用。Swift 使用捕获列表来打破这种循环强引用
+
 ## 函数和闭包都是引用类型
+
 ## 逃逸闭包 @escaping
 * 逃逸闭包：当一个闭包作为参数传到一个函数中，但是这个闭包在函数返回之后才被执行
 * 如何逃逸：将闭包保存在一个函数外部定义的变量中，因为闭包需要在函数返回之后被调用
-> 将一个闭包标记为 @escaping 意味着必须在闭包中显式地引用 self，非逃逸闭包可以隐式引用 self
+> 将一个闭包标记为 @escaping 意味着必须在闭包中显式地引用 self，非逃逸闭包可以隐式引用self
+
 ## 自动闭包 @ autoclosure
 * 自动闭包让你能够延迟求值，因为直到你调用这个闭包，代码段才会被执行
+
+## 解除循环引用
+1.与OC类似的方法
+```
+weak var weakSelf = self
+loadData{
+print("\(weakSelf?.view)")
+}
+```
+
+2.swift推荐的方法
+```
+loadData{ [weak self] in
+    print("\(self?.view)")
+}
+```
+
+3.unowned
+```
+loadData{ [unowned self] in
+    print("\(self.view)")
+}
+```
+
+* 循环引用总结
+    * swift
+        * `[weak self]`：self是可选项，如果self已经被释放，则为nil
+        * `[unowned self]`：self不是可选项，如果self已经被释放，则为野指针访问
+    * Objc
+        * `__weak typeof(self) weakSelf;`：如果self已经被释放，则为nil
+        * `__unsafe_unretained typeof(self) weakSelf;`：如果self已经被释放，则为野指针访问
 
 # 枚举
 ## 枚举语法
@@ -496,7 +568,7 @@ var directionToHead = CompassPoint.west
 //var directionToHead = .west
 ```
 
-## 使用 Switch 语句匹配枚举值
+## 使用 Switch 语句匹配枚举值，如果变量是枚举值，可省略枚举名，还可以在case中加上元组变量
 
 ## 原始值 rawValue
 当使用整数作为原始值时，如果第一个枚举成员没有设置原始值，其原始值将为0,隐式赋值的值依次递增1
@@ -549,7 +621,7 @@ struct SomeStructure {
 
 # 属性
 ## 存储属性
-* 定义：存储在特定类或结构体实例里的一个常量或变量
+* 定义：存储在特定类或结构体实例里的一个常量或变量，保存单个类型的变量。
 * 常量结构体的存储属性：如果创建了一个结构体的实例并将其赋值给一个常量，则无法修改该实例的任何属性，即使有属性被声明为变量也不行(由于结构体（struct）属于值类型。当值类型的实例被声明为常量的时候，它的所有属性也就成了常量；属于引用类型的类（class）则不一样。把一个引用类型的实例赋给一个常量后，仍然可以修改该实例的变量属性。)
 * 延迟存储属性
 定义：在第一次被访问的时候创建
@@ -576,7 +648,7 @@ struct SomeStructure {
 ## 全局变量和局部变量
 * 都属于存储型变量，跟存储属性类似。
 * 都可以定义计算型变量和为存储型变量定义观察器，与计算属性类似。
-* 全局变量或常量都是延迟计算的嗯，与延迟存储属性相似，不需要声明lazy。
+* 全局变量或常量都是延迟计算的，与延迟存储属性相似，不需要声明lazy。
 * 局部变量或常量从不延迟计算。
 
 ## 类型属性
@@ -786,20 +858,25 @@ do {
     - 定义下标
     - 定义和使用新的嵌套类型
     - 使一个已有类型符合某个协议
+    
 ## 扩展语法
 extension SomeType {
 // 为 SomeType 添加的新功能写到这里
 }
-> 通过为一个已有类型添加新功能，则新功能对该类型的所有实例都有效，即使它们实在扩展定义之前创建的
+> 通过为一个已有类型添加新功能，则新功能对该类型的所有实例都有效，即使它们是在扩展定义之前创建的
+
 ## 计算型属性
 * 扩展可以添加新的计算属性，但是不可以添加存储型属性，也不可以为已有属性添加属性观察器。
+
 ## 构造器
 * 扩展可以为类添加新的便利构造器，不可以添加新的指定构造器或析构器。指定构造器和析构器必须由原始类提供。
+
 ## 方法
 通过扩展添加的实例方法可以修改该实例本身，结构体和枚举类型中修改self或器属性的方法必须将该实例方法标注为mutating
 
 # 协议
 类、枚举、结构体都可以实现协议
+
 ## 协议语法
 定义协议：
 ```
@@ -818,9 +895,11 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
 ## 属性要求
 * 协议可以要求遵循协议的类型提供的实例属性或类型属性的`名称和类型`，还可指定`读写性`。
 > 用`var`声明变量属性，用`{set get}`声明属性是可读可写的。
+
 ## 方法要求
 * 方法不需要大括号和方法体
 * 不支持为协议中的方法的参数提供默认值
+
 ## Mutating 方法要求
 * 实现协议中的mutating方法时，若是类类型，则不用写`mutating`，对于结构体和枚举必须写。
 
@@ -884,7 +963,10 @@ required override init() {
 # 高级运算符
 
 
+# 常用代码
+try-catch,assert,extension,fatalError,柯里化,mutating,
 
-参考资料：(The Swift Programming Language中文版)[http://wiki.jikexueyuan.com/project/swift]
-(https://github.com/yagamis/swift2basic)[https://github.com/yagamis/swift2basic]
+
+参考资料：[The Swift Programming Language中文版](http://wiki.jikexueyuan.com/project/swift)
+[https://github.com/yagamis/swift2basic](https://github.com/yagamis/swift2basic)
 
