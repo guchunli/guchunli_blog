@@ -1,8 +1,8 @@
 ---
-title: Swift3.0学习笔记
+title: Swift学习笔记
 date: 2017-07-14 17:13:04
 categories: 学习
-tags: [Swift3.0,待补充]
+tags: [Swift,待补充]
 toc: true
 ---
 
@@ -26,6 +26,19 @@ let anArray = [1,2,3]
 let aDictionary = ["key1": "value1", "key2": "value2"]
 ```
 
+* 数值型字面量
+```
+let a = 11
+let b = 0b11
+let c = 0o11
+let d = 0x11
+let e = 2e2
+let f = 2e-2
+let g = 0xFp2
+let h = 0xFp-2
+let i = 1_000_000
+```
+
 ## 类型标注
 很少需要标注，swift会进行类型推断，根据右边的代码，推导出变量的准确类型
 > Option + Click 可以查看变量的类型
@@ -41,6 +54,7 @@ swift语句，最后分号可写可不写
 
 ## 类型转换
 值永远不会被隐式转换为其他类型，如果要对不同类型的数据进行计算，必须要显式的转换
+* 与字面量的加减无关
 ```
 let a = "abc"
 let b = 9
@@ -57,16 +71,26 @@ typealias Example = Int
 * 可在定义元组的时候给元素命名
 * 不需要访问的元素可用`_`代替
 * 元组可作为函数返回值返回多个值
-
+```
+let (color,price,_) = ("red",80,true)
+print(color)
+let pen = ("red",80,true)
+let (color,price,_) = pen
+print(color)
+print(pen.0)
+let some = (color:"red",price:80)
+print(some.color)
+```
 
 ## 可选类型
 可以是任何类型值的缺失
-显示类型转换结果是可选类型
+显式类型转换结果是可选类型
 
 ## nil
 nil是一个确定的值，表示值缺失，任何类型的可选状态都可以被设置为nil
 不可用于非可选的常量和变量
 可选常量或变量不赋值，自动设值为nil
+* 在OC中nil是指针，在swift中nil是可选类型。
 
 ## if 语句以及强制解析
 if语句中的条件必须是一个布尔表达式
@@ -89,6 +113,7 @@ print(str!)
 (3)`if let`可选绑定
 
 ## 可选绑定
+* 需要改变，用`if var`
 可以用在if或while语句中
 可以判断多个可选项是否为空，用`,`隔开
 * 一旦进入if分支，变量就不再是可选项
@@ -125,8 +150,15 @@ try canThrowAnError()
 ## 断言
 当前面表达式的结果为false时显示后面的消息，应用终止。后面的断言消息也可省略。
 release配置时，断言被禁用。
+* 一般以下情况使用：
+    * 下标越界
+    * 传递给函数的参数不符合类型
+    * 解析可选类型
+    
 ```
-assert()
+let age = 17
+assert(age>=18,"未成年人")
+//Assertion failed: 未成年人
 ```
 
 ## fatalError
@@ -138,11 +170,27 @@ fatalError("init(coder:) has not been implemented")
 ```
 
 # 基本运算符
-## 空合运算符??
+
+```
+let a = 3
+let b = 3.3
+let c = Double(a)*b //或 let c = a*Int(b)
+```
+## 不可自增自减
+
+## 取余
+```
+10 % 6  //4
+10 % -6 //4
+-10 % 6 //-4
+```
+
+## 空值合并(空合)运算符??
 可对可选类型a进行空判断，如果包含值就解封，否则返回默认值b，此默认值b也为可选类型
 ```
-let 
-let c = a ?? b
+let a = Int("aaa")
+let b = 2
+let c = a ?? b  //等同于 let c = a != nil ? a! : b
 ```
 
 ## 区间运算符
@@ -156,20 +204,34 @@ let s1 = ""
 let s2 = String()
 ```
 
-## 字符串是值类型
-
 ## 字符
 str.characters
 ```
+let c = "a"
+
 let chars:[Character] = ["a","b","c"]
 let str = String[chars]
+for char in are{
+print(char)
+}
 ```
 ## 字符串可变性
 变量可变，常量不可变
 
 ## 连接字符串和字符
-* +：只能连接字符串
+* +：只能连接字符串，不能连接字符
 * append
+```
+var str1 = "12"
+let str2 = "34"
+let char1:Character = "5"
+str1 += str2
+//str1 += char1     //+：只能连接字符串，不能连接字符
+str1.append(char1)
+str1.append(str2)
+//str1.append(contentsOf: char1)    //contentsOf：只能连接字符串，不能连接字符
+str1.append(contentsOf: str2)
+```
 
 ## 插入和删除
 以下方法也可使用在Array,Dictionary,Set中。
@@ -182,6 +244,7 @@ hello.insert(contentsOf:" world!".characters, at: hello(before: welcome.endIndex
 ```
 
 * 删除字符：`remove(at:)`，越界返回nil
+* removeFirst(2),removeLast()
 * 删除字符串`removeSubrange(_:)`
 ```
 var hello = "hello world!"
@@ -323,6 +386,7 @@ set1.isDisjoint(with: set2)
 ```
 
 ## 字典
+* 存储在集合中的key必须是可哈希化的。
 * 创建
 ```
 var dict = ["a":"b"]
@@ -335,7 +399,7 @@ var dict2 : [String:String]
 let oldValue = dic.updateValue("lisi", forKey: "name")
 ```
 
-* `dic["akey"] = nil`:移除键值对
+* `dic["akey"] = nil`，`dic.removeValue(forKey: "akey")`：移除键值对
 * dic.keys,dic.values
 ```
 var keyArr = [String](dict.keys)
@@ -344,6 +408,29 @@ var valueArr = Array(dict.values)
 
 * 遍历字典时候需要明确指明数组中的数据类型
 for dict in dictArray  as! [[String:String]]{}
+
+## 其他
+### 生成器（Generator）
+* 生成器允许遍历所有元素
+```
+protocol GeneratorType {
+typealias Element
+mutating func next() -> Element?
+}
+
+```
+
+### 序列（Sequence）
+* 序列可以反复遍历集合中的元素，可以使用for循环来遍历所有元素
+```
+protocol SequenceType {
+    typealias Generator: GeneratorType
+    func generate() -> Generator
+}
+```
+
+### 集合(Collection)
+
 
 # 控制流
 ## For-In 循环
@@ -360,14 +447,13 @@ for index in 1...5 {}
 ## switch
 * switch支持任意类型的数据比较 
 * switch不会隐式贯穿，匹配到后会退出switch语句，所以不用在每个子句结尾写break
-* 每一个 case 分支都必须包含至少一条语句,没有可用break
-* 必须有default语句,要保证处理所有可能的情况，不然编译器直接报错
+* 每一个 case 分支都必须包含至少一条语句,没有可用break；必须有default语句,要保证处理所有可能的情况，不然编译器直接报错
 * 每一个 `case` 中定义的变量仅在当前 `case` 中有效
 * 复合匹配，可以用逗号隔开匹配多个值
-* 区间匹配
-* 元组匹配
-* 值匹配
-* where添加额外条件
+* 区间匹配：`case 1...10:`
+* 元组匹配：`case (_,0):`
+* 值绑定：`case (let x,0):`
+* where添加额外条件：`case let(x,y) where x==y:`
 
 ## 控制转移语句
 * continue
@@ -376,8 +462,19 @@ for index in 1...5 {}
 * fallthrough：贯穿到下一个case中的代码
 * return
 * throw
-
 * guard:提前退出，后面必须有一个else语句，else中必须包含控制转移语句
+* 标签语句
+```
+where labName{
+    if(){
+        break labName
+    }else if(){
+        continue labName
+    }else{
+        ///
+    }
+}
+```
 
 ## 检测API可用性
 *是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，if语句的代码块将会运行。
@@ -390,7 +487,7 @@ if #available(iOS 10, macOS 10.12, *) {
 ```
 
 # 函数
-* MARK
+* swift中MARK的使用
 ```
 // MARK: - mark something
 ```
@@ -436,7 +533,7 @@ func getMiddle(_ numbers: Double...) -> Double{}
 * 输入输出参数：可以在函数中修改的参数，并且这些修改在参数调用的时候仍然存在
 > 只能传递变量给输入输出参数，不能传入常量或者字面量，并且在传入的时候在参数名前添加`&`。
 ```
-func swapTwoInts(_ a: inout Int, _ b: inout Int) {
+func swapTwoInts(a: inout Int, b: inout Int) {
 let temporaryA = a
 a = b
 b = temporaryA
@@ -461,6 +558,22 @@ return x*y
 }
 calculate(x: 3, y: 4, method: add)
 calculate(x: 3, y: 4, method: multiply)
+```
+
+## 嵌套函数
+```
+func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+func stepForward(input: Int) -> Int { return input + 1 }
+func stepBackward(input: Int) -> Int { return input - 1 }
+return backward ? stepBackward : stepForward
+}
+var currentValue = 4
+let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
+while currentValue != 0 {
+print("\(currentValue)... ")
+currentValue = moveNearerToZero(currentValue)
+}
+print("zero!")
 ```
 
 # 闭包
@@ -524,38 +637,7 @@ reversedNames = names.sorted { $0 > $1 }
 ## 自动闭包 @ autoclosure
 * 自动闭包让你能够延迟求值，因为直到你调用这个闭包，代码段才会被执行
 
-## 解除循环引用
-1.与OC类似的方法
-```
-weak var weakSelf = self
-loadData{
-print("\(weakSelf?.view)")
-}
-```
-
-2.swift推荐的方法
-```
-loadData{ [weak self] in
-    print("\(self?.view)")
-}
-```
-
-3.unowned
-```
-loadData{ [unowned self] in
-    print("\(self.view)")
-}
-```
-
-* 循环引用总结
-    * swift
-        * `[weak self]`：self是可选项，如果self已经被释放，则为nil
-        * `[unowned self]`：self不是可选项，如果self已经被释放，则为野指针访问
-    * Objc
-        * `__weak typeof(self) weakSelf;`：如果self已经被释放，则为nil
-        * `__unsafe_unretained typeof(self) weakSelf;`：如果self已经被释放，则为野指针访问
-
-# 枚举
+# 枚举enum
 ## 枚举语法
 ```
 enum CompassPoint {
@@ -572,6 +654,8 @@ var directionToHead = CompassPoint.west
 
 ## 原始值 rawValue
 当使用整数作为原始值时，如果第一个枚举成员没有设置原始值，其原始值将为0,隐式赋值的值依次递增1
+
+## 相关值：枚举成员可以是不同数据类型
 
 # 类和结构体
 ## 类和结构体对比
@@ -600,7 +684,7 @@ struct SomeStructure {
 
 * 结构体类型的成员逐一构造器，类实例没有
 
-* 结构体和枚举是值类型
+* 结构体和枚举是值类型，函数和闭包是引用类型
 > 值类型：被赋予给一个变量、常量或者被传递给一个函数的时候，其值会被拷贝。
 > 在 Swift 中，Integer、floating-point、Boolean、string、array、dictionary 都是值类型，并且在底层都是以结构体的形式所实现。
 > 结构体和枚举类型都是值类型。这意味着它们的实例，以及实例中所包含的任何值类型属性，在代码中传递的时候都会被复制。两者相互独立，是不同的。
@@ -622,14 +706,18 @@ struct SomeStructure {
 # 属性
 ## 存储属性
 * 定义：存储在特定类或结构体实例里的一个常量或变量，保存单个类型的变量。
-* 常量结构体的存储属性：如果创建了一个结构体的实例并将其赋值给一个常量，则无法修改该实例的任何属性，即使有属性被声明为变量也不行(由于结构体（struct）属于值类型。当值类型的实例被声明为常量的时候，它的所有属性也就成了常量；属于引用类型的类（class）则不一样。把一个引用类型的实例赋给一个常量后，仍然可以修改该实例的变量属性。)
-* 延迟存储属性
-定义：在第一次被访问的时候创建
+* 常量结构体的存储属性：如果创建了一个结构体的实例并将其赋值给一个常量，则无法修改该实例的任何属性，即使有属性被声明为变量也不行(由于结构体（struct）属于值类型。`当值类型的实例被声明为常量的时候，它的所有属性也就成了常量`。属于引用类型的类（class）则不一样，`把一个引用类型的实例赋给一个常量后，仍然可以修改该实例的变量属性`。)
+* 延迟存储属性lazy
+    * 定义：在第一次被访问的时候创建
+    * 一般用于：
+        - 延迟对象的创建
+        - 当属性的值依赖于其他未知类
 > 必须将延迟存储属性声明成变量（使用 var 关键字），而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性
 
 ## 计算属性
 * 定义：计算属性不直接存储值，而是提供一个 getter 和一个可选的 setter，来间接获取和设置其他属性或变量的值。
-> 计算属性可以用于类、结构体和枚举，存储属性只能用于类和结构体。
+`存储属性只能用于类和结构体，计算属性可以用于类、结构体和枚举。`
+
 * 新值的参数名默认为newValue
 > 必须使用var定义计算属性，包括只读计算属性
 * 只读计算属性的声明可以去掉get关键字和花括号，直接return
@@ -638,9 +726,10 @@ struct SomeStructure {
 * 属性被设置值的时候会调用属性观察器（即使新值与当前值相同）
 * 可添加观察器的情况：
     - 定义的存储属性（除延迟存储属性之外）
-    - 从父类继承的存储属性或计算属性（通过重写属性的方式）
+    - 从父类继承的存储属性或计算属性（通过重写属性的方式），不需要为无法重载的计算属性添加属性观察器，因为可以通过setter直接监控和响应值的变化
 * willSet：传入新属性值，默认为newValue，常量参数
 * didSet：传入旧属性值，默认为oldValue
+* willSet和didSet在属性初始化过程中不会被调用
 * 继承：
     - 父类属性在子类的构造器中赋值，会先调用父类观察器，再调用子类观察器。
     - 在父类初始化方法调用之前，子类给属性赋值时，不会调用观察器方法。
@@ -648,10 +737,32 @@ struct SomeStructure {
 ## 全局变量和局部变量
 * 都属于存储型变量，跟存储属性类似。
 * 都可以定义计算型变量和为存储型变量定义观察器，与计算属性类似。
-* 全局变量或常量都是延迟计算的，与延迟存储属性相似，不需要声明lazy。
-* 局部变量或常量从不延迟计算。
+* 全局变量或常量都是延迟计算的，与延迟存储属性相似，不需要声明lazy。局部变量或常量从不延迟计算。
 
 ## 类型属性
+> 使用 `static`来定义值类型的类型属性，`class`来为类定义类型属性
+```
+struct Structname {
+    static var storedTypeProperty = " "
+    static var computedTypeProperty: Int {
+    // 这里返回一个 Int 值
+    }
+}
+
+enum Enumname {
+    static var storedTypeProperty = " "
+    static var computedTypeProperty: Int {
+    // 这里返回一个 Int 值
+    }
+}
+
+class Classname {
+    class var computedTypeProperty: Int {
+    // 这里返回一个 Int 值
+    }
+}
+```
+
 * 存储型类型属性可以是变量或常量，计算型类型属性跟实例的计算型属性一样只能定义成变量属性。
 * 在为类定义计算型类型属性时，可以改用关键字 class 来支持子类对父类的实现进行重写。
 
@@ -660,12 +771,35 @@ struct SomeStructure {
 * self
     - 在一个方法中使用一个已知的属性或者方法名称，可省略self。
     - 实例方法的某个参数名称与实例的某个属性名称相同的时候，参数名称享有优先权，可以使用self属性来区分参数名称和属性名称。
-* mutating
-    - 不能在结构体类型的常量上调用可变方法，因为其属性不能被改变，即使属性是变量属性
-    - 赋给隐含属性self一个全新的实例
+* 变异mutating
+    - 结构体和枚举是值类型，一般情况下，值类型的属性不能在它的实例方法中被修改，即使属性是变量属性。
+    - 赋给隐含属性self一个全新的实例，新实例在方法结束后将替换原来的实例
+
+```
+struct area {
+var length = 1
+var breadth = 1
+
+func area() -> Int {
+return length * breadth
+}
+
+mutating func scaleBy(res: Int) {
+self.length *= res
+self.breadth *= res
+print(length)
+print(breadth)
+}
+}
+var val = area(length: 3, breadth: 5)
+val.scaleBy(res: 13)
+```
+
 * 类型方法：类型方法的方法体中，self指向这个类型本身，而不是类型的某个实例
+    > 使用 `static`来定义值类型的类型方法，`class`来为类定义类型方法
 
 # 下标
+可以定义在类，结构体，枚举中，是访问对象、集合、序列的快捷方式
 ```
 subscript(index: Int) -> Int {
     get {
@@ -710,28 +844,102 @@ init() {
 * 如果一个属性总是使用相同的初始值，为其设置默认值比每次在构造器中赋值要好。
 
 ## 存储属性的初始赋值
-* 需要为存储属性在定义时设置默认值或者在构造器中赋值，不会触发属性观察器。
-
-* 可以使用下划线(_)来显式描述它的外部名
-* 可以在构造过程中的任意时间点给常量属性指定一个值
-* 如果结构体或类的所有属性都有默认值，同时没有自定义的构造器，swift会自动提供默认构造器
-* 结构体自动获得一个逐一成员构造器
+* 存储属性在构造器中赋值时，它们的值是被直接设置的，不会触发任何属性观察器。
+* 存储属性在构造器中赋值流程
+    * 创建初始值
+    * 在属性定义中指定默认属性值
+    * 初始化实例，并调用init()方法
+    
+* 可选属性类型：当存储属性声明为可选时，将自动初始化为空 nil
+* 修改常量属性：`在init里可以对let的实例常量进行赋值`，可以在构造过程中的任意时间点给常量属性指定一个值，但是它的常量属性只能在定义它的类的构造过程中修改；不能在子类中修改
+* 外部参数名：Swift 会为每个构造器的参数自动生成一个跟内部名字相同的外部名，如果不想提供外部名称可以使用下划线(_)来显式描述它的外部名
+* 默认构造器：如果结构体或类的所有属性都有默认值，且它是没有父类的基类，同时没有自定义的构造器，swift会自动提供默认构造器，默认构造器将简单的创建一个所有属性值都设置为默认值的实例
+* 逐一成员构造器：结构体自动获得一个逐一成员构造器
+* 构造器代理规则
+    * 值类型：不支持继承，可以使用self.init在自定义的构造器中引用其它的属于相同值类型的构造器
+    * 类类型：支持集成，类有责任保证其所有继承的存储型属性在构造时也能正确的初始化
 
 ## 类的继承和构造过程
 * 类里面的所有存储型属性——包括所有继承自父类的属性——都必须在构造过程中设置初始值，可以通过指定构造器或便利构造器实现。
 ### 指定构造器
-* 每一个类都必须拥有至少一个指定构造器
+* 初始化类中提供的所有属性，并根据父类链往上调用父类的构造器来实现父类的初始化，每一个类都必须拥有至少一个指定构造器
 ```
 init(parameters) {
 statements
 }
 ```
 
-### 便利构造器
-* 便利构造器可以调用同一个类中的指定构造器，并为其参数提供默认值。
+### 便利构造器convenience
+* 便利构造器可以调用同一个类中的指定构造器，并为其参数提供默认值，必要是创建
 ```
 convenience init(parameters) {
 statements
+}
+```
+
+### 构造器的继承和重载：当重写一个父类指定构造器时，子类不会默认继承父类的构造器，需要写override，`override convenience`
+
+## 可失败构造器（init?,init!）
+* 非可失败构造器（init），可失败构造器（init?），隐式解包可失败构造器（init!）
+* 可失败构造器：可失败构造器会创建一个类型为自身的可选类型的对象，在init关键字后面添加问号(init?)，通过`return nil`来表明可失败构造器在何种情况下应该失败。
+* 可失败构造器的参数名和参数类型，`不能与其它非可失败构造器的参数名，及其参数类型相同`。
+* 变量初始化失败可能的原因有：
+    * 传入无效的参数值
+    * 缺少某种所需的外部资源
+    * 没有满足特定条件
+
+```
+struct Animal {
+    let species: String
+    init?(species: String) {
+    if species.isEmpty { return nil }
+        self.species = species
+    }
+}
+```
+
+* 枚举类型的可失败构造器
+```
+enum TemperatureUnit {
+    // 开尔文，摄氏，华氏
+    case Kelvin, Celsius, Fahrenheit
+    init?(symbol: Character) {
+        switch symbol {
+            case "K":
+            self = .Kelvin
+            case "C":
+            self = .Celsius
+            case "F":
+            self = .Fahrenheit
+            default:
+            return nil
+        }
+    }
+}
+```
+
+* 何时触发：值类型的可失败构造器何时触发没有限制，类的可失败构造器只能在所有的类属性被初始化后和所有类之间的代理调用发生完后触发失败行为
+* 覆盖一个可失败构造器：可以用子类的可失败构造器或非失败构造器覆盖基类的可失败构造器
+* 但一个非失败构造器永远不能代理调用一个可失败构造器
+* init!
+```
+struct StudRecord {
+    let stname: String
+
+    init!(stname: String) {
+    if stname.isEmpty {return nil }
+    self.stname = stname
+    }
+}
+
+let stmark = StudRecord(stname: "Runoob")
+if let name = stmark {
+    print("指定了学生名")
+}
+
+let blankname = StudRecord(stname: "")
+if blankname == nil {
+    print("学生名为空")
 }
 ```
 
@@ -751,14 +959,8 @@ statements
 * 安全检查4
 构造器在第一阶段构造完成之前，不能调用任何实例方法，不能读取任何实例属性的值，不能引用self作为一个值。
 
-## 构造器的继承和重写
-
-
-可失败构造器
-必要构造器
-通过闭包或函数设置属性的默认值
-
 # 析构过程
+*
 ```
 deinit {
 // 执行析构过程
@@ -766,18 +968,55 @@ deinit {
 ```
 
 # 自动引用计数
+
 > 引用计数仅仅应用于类的实例。结构体和枚举类型是值类型。
+
 ## 类实例之间的循环强引用
 
-> 解决实例之间的循环强引用:弱引用（weak reference）和无主引用（unowned reference）
 ### 弱引用 weak
-> 当其他的实例有更短的生命周期时，使用弱引用(当其他实例析构在先)
+
 * 当 ARC 设置弱引用为nil时，属性观察不会被触发
+
+1.与OC类似的方法
+```
+weak var weakSelf = self
+loadData{
+print("\(weakSelf?.view)")
+}
+```
+
+2.swift推荐的方法
+```
+loadData{ [weak self] in
+print("\(self?.view)")
+}
+```
+
 ### 无主引用 unowned
-> 当其他实例有相同的或者更长生命周期时，请使用无主引用
-* 使用无主引用，必须确保引用始终指向一个未销毁的实例
+
+```
+loadData{ [unowned self] in
+print("\(self.view)")
+}
+```
+
+### 循环引用总结
+* `对于生命周期中会变为nil的实例使用弱引用。相反的，对于初始化赋值后再也不会被赋值为nil的实例，使用无主引用。` 当其他的实例有更短的生命周期时，使用弱引用(当其他实例析构在先)，当其他实例有相同的或者更长生命周期时，请使用无主引用
+* swift
+* `[weak self]`：self是可选项，如果self已经被释放，则为nil
+* `[unowned self]`：self不是可选项，如果self已经被释放，则为野指针访问，使用无主引用，必须确保引用始终指向一个未销毁的实例
+* Objc
+* `__weak typeof(self) weakSelf;`：如果self已经被释放，则为nil
+* `__unsafe_unretained typeof(self) weakSelf;`：如果self已经被释放，则为野指针访问
+
 ## 闭包引起的循环强引用
-> 解决闭包引起的循环强引用:闭包捕获列表
+
+> 解决闭包引起的循环强引用:闭包捕获列表，在定义闭包时同时定义捕获列表作为闭包的一部分
+
+* 当闭包和捕获的实例总是互相引用时并且总是`同时销毁`时，将闭包内的捕获定义为`无主引用`。
+相反的，当捕获引用有时`可能会是nil`时，将闭包内的捕获定义为`弱引用`。
+如果捕获的引用`绝对不会置为nil`，应该用`无主引用`，而不是弱引用。
+
 ```
 lazy var someClosure: (Int, String) -> String = {
 [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -> String in
@@ -786,34 +1025,66 @@ lazy var someClosure: (Int, String) -> String = {
 ```
 
 # 可选链
+
 > 可以应用于任意类型，并且能检查调用是否成功。
+> `多次请求或调用可以被链接成一个链，如果任意一个节点为nil将导致整条链失效`
 
-使用可选链式调用代替强制展开
-为可选链式调用定义模型类
-通过可选链式调用访问属性
-通过可选链式调用调用方法
-通过可选链式调用访问下标
-连接多层可选链式调用
-在方法的可选返回值上进行可选链式调用
+* 通过可选链访问属性，返回两个值：
+    * 如果目标有值，调用成功，返回该值
+    * 如果目标为nil，调用返回nil
+* 通过可选链调用方法，返回两个值：
+    * 如果调用成功，返回Void
+    * 如果没有称，返回nil
 
-处理变量的可选值时，可以在操作之前加?，如果？之前的值是nil,?后面的操作会被忽略，整个表达式返回nil，否则运行?后面的操作，这两种情况，整个表达式的值也是可选值
+* 可选链可代替强制解析：
+    * ?：当可选为nil，输出预定的错误信息
+    * ! ：当可选为nil，强制展开执行错误
+    
+* 连接多层可选链：如果试图通过可选链获得Int值，不论使用了多少层链接返回的总是Int?。
+* 可以通过可选链调用返回为可空值的方法，并且可以继续对可选值进行链接。
 
 # 错误处理
-处理错误的四种方式：
-* 把函数抛出的错误传递给调用此函数的代码
-* do-catch语句
-* 将错误作为可选类型处理
-* 断言此错误根本不会发生
-
-* throw：抛出错误
-* try(try?,try!)：识别错误
-* do-catch：处理错误
+## 表示并抛出错误(throw)
+```
+//枚举构建一组相关的错误状态，枚举的关联值还可以提供错误状态的额外信息
+enum VendingMachineError: Error {
+case invalidSelection                    //选择无效
+case insufficientFunds(coinsNeeded: Int) //金额不足
+case outOfStock                          //缺货
+}
+//抛出一个错误
+throw VendingMachineError. insufficientFunds(coinsNeeded: 5)
+```
 
 ## throwing函数
-* `throws`写在函数声明的参数列表后,`->`前。
+* `throws`写在函数声明的参数列表后，`->`前。
 > throwing函数可在其内部抛出错误，将错误传递到函数被调用时的作用域，非throwing函数内部抛出的错误只能在函数内部处理。
 
-## 将错误转换成可选值 try?
+```
+func canThrowErrors() throws -> String
+```
+
+## 处理错误
+* 处理错误的四种方式：
+    * 把函数抛出的错误传递给调用此函数的代码
+    * do-catch语句
+    * 将错误作为可选类型：`try?`
+    * 断言此错误根本不会发生
+    
+### do-catch
+```
+do {
+    try expression
+    statements
+} catch pattern 1 {
+    statements
+} catch pattern 2 where condition {
+    statements
+}
+```
+
+### 将错误转换成可选值 try?
+* 如果在评估try?表达式时一个错误被抛出，那么表达式的值就是nil。
 ```
 let y = try? someThrowingFunction()
 等价于
@@ -825,32 +1096,51 @@ do {
 }
 ```
 
-## 禁用错误传递 try!
-会把调用包装在一个不会有错误抛出的运行时断言中，如果真的抛出，则会发生运行时错误。
+### 禁用错误传递 try!
+* 会把调用包装在一个不会有错误抛出的运行时断言中，如果真的抛出，则会发生运行时错误。
 
-## 指定清理操作
+## 指定清理操作 defer
 * defer语句在即将离开当前代码块时（throw,return,break等）执行一系列语句。
 将代码的执行延迟到当前作用域退出之前，延时执行的操作会按照被指定时的顺序的相反顺序执行，即第一条defer语句中的代码会在第二条defer语句中的代码被执行之后才执行，以此类推。
+* `即使没有涉及到错误处理，也可以使用defer语句`
 
 # 类型转换
-## 检查类型 is
+## 检查值的类型：is
 * 用类型检查操作符（is）来检查一个实例是否属于特定子类型。
-## 向下转型 as
+
+## 向下转型：as
 * 某类型的一个常量或变量可能在幕后实际上属于一个子类，用`as`向下转到它的子类型。
 * 转换没有真的改变实例或它的值
-> 当不确定向下转型是否成功，使用`as?`，当确定一定会成功，使用`as!`
+* 类型转换的条件转换：as? as!
+
 ## Any 和 AnyObject 的类型转换
-* Any 可以表示任何类型，包括函数类型。
+* Any 可以表示任何类型，包括函数类型、可选类型。
 * AnyObject 可以表示任何类型的实例。
 > Any类型可以表示所有类型的值，包括可选类型。Swift 会在你用Any类型来表示一个可选值的时候，给你一个警告。如果你确实想使用Any类型来承载可选值，你可以使用as操作符显式转换为Any。
+```
+// 可以存储Any类型的数组
+var arr1 = [Any]()
+// [AnyObject] 类型的数组
+var arr2: [AnyObject]
+```
 
 # 嵌套类型
 * 类、枚举、结构体之间可相互嵌套
 
 # 扩展 Extensions
+
+```
+extension SomeType {
+// 为 SomeType 添加的新功能写到这里
+}
+extension SomeType: SomeProtocol, AnotherProctocol {
+// 协议实现写到这里
+}
+```
+
 * 与OC中的分类类似，但是swift中的扩展没有名字
-* 可用于已有的类、结构体、枚举或协议
-* 可以为一个类添加新功能，但是不能重写已有的功能
+* 可用于向已有的类、结构体、枚举或协议添加新功能，但是不能重写已有的功能。
+* 通过为一个已有类型添加新功能，则`新功能对该类型的所有实例都有效`，即使它们是在扩展定义之前创建的
 * 可以实现的功能：
     - 添加计算型属性和计算型类型属性
     - 定义实例方法和类型方法
@@ -858,21 +1148,15 @@ do {
     - 定义下标
     - 定义和使用新的嵌套类型
     - 使一个已有类型符合某个协议
-    
-## 扩展语法
-extension SomeType {
-// 为 SomeType 添加的新功能写到这里
-}
-> 通过为一个已有类型添加新功能，则新功能对该类型的所有实例都有效，即使它们是在扩展定义之前创建的
 
 ## 计算型属性
-* 扩展可以添加新的计算属性，但是不可以添加存储型属性，也不可以为已有属性添加属性观察器。
+* 扩展可以添加新的计算属性，但是不可以添加`存储型属性`，也不可以为已有属性添加`属性观察器`。
 
 ## 构造器
 * 扩展可以为类添加新的便利构造器，不可以添加新的指定构造器或析构器。指定构造器和析构器必须由原始类提供。
 
 ## 方法
-通过扩展添加的实例方法可以修改该实例本身，结构体和枚举类型中修改self或器属性的方法必须将该实例方法标注为mutating
+通过扩展添加的实例方法可以修改该实例本身，结构体和枚举类型中修改self或其属性的方法必须将该实例方法标注为mutating
 
 # 协议
 类、枚举、结构体都可以实现协议
@@ -881,92 +1165,339 @@ extension SomeType {
 定义协议：
 ```
 protocol SomeProtocol {
-// 这里是协议的定义部分
+// 协议的定义部分
 }
 ```
 
 遵循协议：
 ```
 struct SomeStructure: FirstProtocol, AnotherProtocol {
-// 这里是结构体的定义部分
+// 结构体的定义部分
+}
+class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
+// 类的内容
 }
 ```
 
 ## 属性要求
-* 协议可以要求遵循协议的类型提供的实例属性或类型属性的`名称和类型`，还可指定`读写性`。
-> 用`var`声明变量属性，用`{set get}`声明属性是可读可写的。
+* 协议可以要求遵循协议的类型提供的实例属性或类型属性的`名称和类型`，还可指定`读写性`，但不用指定是存储型属性或计算型属性。
+> 用`var`声明变量属性，用`{set get}`声明属性是可读可写的，`{get}`表示只读属性。
 
 ## 方法要求
 * 方法不需要大括号和方法体
 * 不支持为协议中的方法的参数提供默认值
 
+```
+protocol classa {
+var marks: Int { get set }
+var result: Bool { get }
+
+func attendance() -> String
+func markssecured() -> String
+}
+```
+
 ## Mutating 方法要求
+* 表示可以在该方法中修改它所属的实例及其实例属性的值
 * 实现协议中的mutating方法时，若是类类型，则不用写`mutating`，对于结构体和枚举必须写。
 
-## 构造器要求
-* 必须为构造器实现标上`required`修饰符，可以确保所有子类也必须提供此构造器实现。
 ```
-class SomeClass: SomeProtocol {
-required init(someParameter: Int) {
-// 这里是构造器的实现部分
-}
+protocol SomeProtocal {
+    mutating func show()
+    }
 }
 ```
 
-* 如果一个子类重写了父类的指定构造器，并且该构造器满足了某个协议的要求，则构造器的实现需要标上`mutating`和`override`。
+## 构造器要求
+* 协议构造器在类中的实现：在遵循该协议的类中实现构造器，并指定其为类的指定构造器或便利构造器，这时必须为构造器实现标上`required`修饰符，可以确保遵循该协议的子类也能提供此构造器的显式实现或继承实现。
+```
+class SomeClass: SomeProtocol {
+    required init(someParameter: Int) {
+    // 构造器实现
+    }
+}
+```
+
+* 如果一个子类重写了父类的指定构造器，并且该构造器满足了某个协议的要求，则构造器的实现需要标上`required`和`override`。
 ```
 protocol SomeProtocol {
-init()
+    init()
 }
 
 class SomeSuperClass {
-init() {
-// 这里是构造器的实现部分
-}
+    init() {
+    // 这里是构造器的实现部分
+    }
 }
 
 class SomeSubClass: SomeSuperClass, SomeProtocol {
-// 因为遵循协议，需要加上 required
-// 因为继承自父类，需要加上 override
-required override init() {
-// 这里是构造器的实现部分
-}
+    // 因为遵循协议，需要加上 required
+    // 因为继承自父类，需要加上 override
+    required override init() {
+    // 这里是构造器的实现部分
+    }
 }
 ```
-
-## 可是白构造器要求
-非可失败构造器（init）
-可失败构造器（init?）
-隐式解包可失败构造器（init!）
 
 ## 协议作为类型
 * 作为函数、方法或构造器中的参数类型或返回值类型
 * 作为常量、变量或属性的类型
 * 作为数组、字典或其他容器中的元素类型
 
-## 委托（代理）模式
+## 协议可以继承
+```
+protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
+// 协议定义
+}
+```
 
-通过扩展添加协议一致性
-通过扩展遵循协议
-协议类型的集合
-协议的继承
-类类型专属协议
-协议合成
-检查协议一致性
-可选的协议要求
-协议扩展
+## 类专属协议
+* 在协议继承列表添加`class`关键字，可以限制协议只能适配到类类型
+* `该class关键字必须是第一个出现在协议的继承列表中，其后才是其他集继承协议`
+
+```
+protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
+// 协议定义
+}
+```
+
+## 协议的合成
+```
+protocol Stname {
+var name: String { get }
+}
+
+protocol Stage {
+var age: Int { get }
+}
+
+struct Person: Stname, Stage {
+var name: String
+var age: Int
+}
+
+func show(celebrator: Stname & Stage) {
+print("\(celebrator.name) is \(celebrator.age) years old")
+}
+
+let studname = Person(name: "Priya", age: 21)
+print(show(celebrator: studname))   //Priya is 21 years old
+
+```
+
+## 检查协议一致性
+* is：检查实例湿度遵循了某个协议
+* as?：当实例遵循了协议时，返回该协议类型，否则返回nil
+* as! ：强制向下转换类型，如果失败，会引起运行时错误
 
 # 泛型
+* 泛型使用占位类型名（在这里用字母 T 来表示）来代替实际类型名（例如 Int、String 或 Double）。
+```
+// 定义一个交换两个变量的函数
+func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
+
+//泛型的栈
+struct Stack<Element> {
+    var items = [Element]()
+    mutating func push(_ item: Element) {
+        items.append(item)
+    }
+    mutating func pop() -> Element {
+        return items.removeLast()
+    }
+}
+var stackOfStrings = Stack<String>()
+```
+
+## 扩展泛型类型
+```
+extension Stack {
+    //扩展了一个只读计算型属性
+    var topItem: Element? {
+        return items.isEmpty ? nil : items[items.count - 1]
+    }
+}
+```
+
+## 类型约束
+```
+//T 必须是 SomeClass 子类的类型约束,要求 U 必须符合 SomeProtocol 协议的类型约束
+func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
+// 这里是泛型函数的函数体部分
+}
+```
+
+## 关联类 associatedtype
+```
+// Container 协议
+protocol Container {
+    associatedtype ItemType
+    // 添加一个新元素到容器里
+    mutating func append(_ item: ItemType)
+    // 获取容器中元素的数
+    var count: Int { get }
+    // 通过索引值类型为 Int 的下标检索到容器中的每一个元素
+subscript(i: Int) -> ItemType { get }
+}
+
+// Stack 结构体遵从 Container 协议
+struct Stack<Element>: Container {
+// Stack<Element> 的原始实现部分
+    var items = [Element]()
+    mutating func push(_ item: Element) {
+    items.append(item)
+    }
+    mutating func pop() -> Element {
+    return items.removeLast()
+    }
+    // Container 协议的实现部分
+    mutating func append(_ item: Element) {
+    self.push(item)
+    }
+    var count: Int {
+    return items.count
+    }
+    subscript(i: Int) -> Element {
+    return items[i]
+    }
+}
+```
+
+## where语句
+```
+//用来检查两个Container实例是否包含相同顺序的相同元素
+func allItemsMatch<C1: Container, C2: Container>
+(_ someContainer: C1, _ anotherContainer: C2) -> Bool
+where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
+
+    // 检查两个容器含有相同数量的元素
+    if someContainer.count != anotherContainer.count {
+        return false
+    }
+
+    // 检查每一对元素是否相等
+    for i in 0..<someContainer.count {
+        if someContainer[i] != anotherContainer[i] {
+            return false
+        }
+    }
+
+    // 所有元素都匹配，返回 true
+    return true
+}
+```
 
 # 访问控制
+* 可以给单个类型（类、结构体、枚举）设置访问级别，也可以给这些类型的属性、函数、初始化方法、基本类型、下标、协议等设置访问级别
+* 访问控制基于模块与源文件
+    * 模块：独立单元构建和发布的framework或application
+    * 源文件：通常属于一个模块，源文件可以包含多个类和函数的定义
+
+## 四种访问级别
+* 四种访问级别，从高到低，默认为`internal`：
+| 访问级别 | 权限  |
+|:--------:|----------|
+|   public    | 可以访问自己模块中源文件里的任何实体，别人也可以通过引入该模块来访问源文件里的所有实体   |
+|   internal   | 可以访问自己模块中源文件里的任何实体，别人不能   |
+|   fileprivate    | 文件内私有，只能在当前源文件中使用   |
+|   private    | 只能在类中访问，离开了这个类或者结构体的作用域外面就无法访问   |
+
+## 访问级别的原则
+* `元组`的访问级别与元组中访问级别`最低的类型`一致（元组 = min（元组中元素））
+```
+internal class SomeInternalClass {}
+private class SomePrivateClass {}
+//该函数返回类型的访问级别是 private，必须使用 private 修饰符，明确的声明该函数
+func someFunction() -> (SomeInternalClass, SomePrivateClass) {
+// 函数实现
+}
+```
+
+* 枚举中`成员`的访问级别`继承自该枚举`，不能为枚举中的成员单独声明不同的访问级别（枚举成员 = 枚举）
+```
+public enum Student {
+    case Name(String)
+    case Mark(Int,Int,Int)
+}
+```
+
+* 子类的访问级别`不得高于父类`的访问级别。（子类 <= 父类）
+```
+public class SuperClass {
+    fileprivate func show() {
+    print("超类")
+    }
+}
+
+// 访问级别不能低于超类 internal > public
+internal class SubClass: SuperClass  {
+    override internal func show() {
+    print("子类")
+    }
+}
+```
+
+* 常量、变量、属性`不能拥有比它们的类型更高`的访问级别，下标也不能拥有比索引类型或返回类型更高的访问级别（常量、变量、属性、下标 <= 它的类型）
+
+* 常量、变量、属性、下标索引的getter和setter的访问级别`继承自他们所属成员`的访问级别，setter的访问级别可以低于对应的getter的访问级别，这样可以控制常量、变量、下标的读写权限（getter和setter = 常量、变量、属性、下标索引，getter >= setter）
+
+* 构造器和默认构造器访问级别：
+    * 自定义的初始化方法 <= 它所属类
+    * 必要构造器 = 所属类
+    * 函数中，初始化方法参数 >= 初始化方法
+    * 默认构造器 = 所属类型
+
+* 协议访问级别（请确保该协议只在声明的访问级别作用域中使用）：实现协议的必要函数 = 协议
+
+* 扩展访问级别：扩展成员 = 原始类成员，单独成员所声明的访问级别可以覆盖扩展的默认访问级别。
+
+* 泛型访问级别 = min（泛型类型、函数本身、泛型类型参数）
+```
+public struct TOS<T> {
+    var items = [T]()
+    private mutating func push(item: T) {
+        items.append(item)
+    }
+
+    mutating func pop() -> T {
+        return items.removeLast()
+    }
+}
+```
+
+* 类型别名 <= 原类型
 
 # 高级运算符
+## 位运算符
+* 按位取反：~
+* 按位与：&
+* 按位或：|
+* 按位异或：^
+* 按位左移：<<(乘2)
+* 按位右移：>>(除2)
+* 有符号整数的移位运算：0代表证书，1代表负数，负数表示用二进制补码
 
+## 溢出运算符
+* 溢出加法：&+
+* 溢出减法：&-
+* 溢出乘法：&*
 
-# 常用代码
+## 优先级和结合性
+* 乘法与取余运算都是左结合
+
+## 运算符函数
+
+## 自定义运算符
+
+# 常用代码总结
 try-catch,assert,extension,fatalError,柯里化,mutating,
 
 
 参考资料：[The Swift Programming Language中文版](http://wiki.jikexueyuan.com/project/swift)
+[菜鸟教程-swift教程](http://www.runoob.com/swift/swift-tutorial.html)
 [https://github.com/yagamis/swift2basic](https://github.com/yagamis/swift2basic)
 
