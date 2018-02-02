@@ -8,7 +8,8 @@ tags: [iOS,面试]
 1.category与extension的区别
 * category可以不用继承系统类，直接给系统类添加方法，最大程度的体现了Objective-C的动态语言特性。可以用来定义私有方法。
 * extension为一个类增加私有方法,属性或成员变量,并且新添加的方法一定要予以实现。Extension都是放在.m文件中@implementation的上方。
-区别：Extension可以添加属性。另外Extension添加的方法是必须要实现的。
+区别：Extension可以添加属性，category不可以。另外Extension添加的方法是必须要实现的。
+
 <!--more-->
 2.OC中的私有变量用@private修饰，私有方法用category
 3.NSInteger是基本数据类型Int或者Long的别名(NSInteger的定义typedef long NSInteger)，它的区别在于，NSInteger会根据系统是32位还是64位来决定是本身是int还是Long。
