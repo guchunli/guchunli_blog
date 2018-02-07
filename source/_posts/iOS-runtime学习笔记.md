@@ -7,6 +7,7 @@ toc: true
 ---
 
 Objective-C 是一门动态语言，它把很多静态语言在编译和链接时做的事情放到了运行时去处理，它在运行时实现了对类、方法、成员变量、属性等信息的管理机制。
+* 需要`#import <objc/runtime.h>`
 
 <!--more-->
 ## 运行时的类与对象
@@ -84,6 +85,7 @@ void objc_removeAssociatedObjects(id object)
 ```
 
 ## 方法与消息
+* 需要`#import <objc/message.h>`
 1. IMP 其实就是 implementation 的缩写，表示方法实现的代码块地址
 > IMP定义：`id (*IMP)(id, SEL,...)`
 
@@ -228,7 +230,7 @@ NSLog(@"unresolved method ：%@", NSStringFromSelector(aSelector));
 }
 ```
 
-[demo](https://github.com/guchunli/RuntimeDemo)
+[demo传送门](https://github.com/guchunli/RuntimeDemo)
 
 参考：[Objective-C 的 Runtime](http://www.samirchen.com/objective-c-runtime/)
 [iOS Runtime 几种基本用法简记](http://www.jianshu.com/p/99af00237cb8)

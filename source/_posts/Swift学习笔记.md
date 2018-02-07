@@ -32,10 +32,10 @@ let a = 11
 let b = 0b11
 let c = 0o11
 let d = 0x11
-let e = 2e2
-let f = 2e-2
-let g = 0xFp2
-let h = 0xFp-2
+let e = 2e2     //200
+let f = 2e-2    //0.02
+let g = 0xFp2   //60
+let h = 0xFp-2  //3.75
 let i = 1_000_000
 ```
 
@@ -159,9 +159,36 @@ do {
 }
 ```
 
+举个栗子：
+```
+enum LoginError : Error {
+case UserNotFound, UserPasswordNotMatch
+}
+func login(user: String, password: String) throws {
+
+if 2 > 1 {
+throw LoginError.UserPasswordNotMatch
+}
+if 1 < 2 {
+throw LoginError.UserNotFound
+}
+print("Login successfully.")
+}
+
+do {
+try login(user: "onevcat", password: "123")
+} catch LoginError.UserNotFound {
+print("UserNotFound")
+} catch LoginError.UserPasswordNotMatch {
+print("UserPasswordNotMatch")
+} catch{
+//加入一个空的catch，用于关闭catch。否则会报错：Errors thrown from here are not handled because the enclosing catch is not exhaustive
+}
+```
+
 ## 断言
 当前面表达式的结果为false时显示后面的消息，应用终止。后面的断言消息也可省略。
-release配置时，断言被禁用。
+release配置时，断言被禁用。在代码发布时，我们也不需要刻意去把这些断言手动清除。
 * 一般以下情况使用：
     * 下标越界
     * 传递给函数的参数不符合类型
@@ -174,11 +201,31 @@ assert(age>=18,"未成年人")
 ```
 
 ## fatalError
-* 断言只会在 Debug 环境中有效，而在 Release 编译中所以变得断言都将被禁用。所以我们会考虑以产生致命错误(fatalError)的方式来种植程序。
+* 因为断言只会在 Debug 环境中有效，而在 Release 编译中所以变得断言都将被禁用。所以我们会考虑以产生致命错误(fatalError)的方式来种植程序。
 ```
 required init?(coder aDecoder: NSCoder) {
-fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
 }
+```
+
+```
+class MyClass {
+func methodMustBeImplementedInSubclass() {
+fatalError("这个方法必须在子类中被重写") }
+}
+class YourClass: MyClass {
+override func methodMustBeImplementedInSubclass() {
+print("YourClass 实现了该方法")
+}
+}
+class TheirClass: MyClass {
+func someOtherMethod() {
+}
+//    override func methodMustBeImplementedInSubclass() {
+//        print("TheirClass 实现了该方法")
+//    }
+}
+YourClass().methodMustBeImplementedInSubclass()
 ```
 
 # 基本运算符
@@ -561,6 +608,13 @@ switch i {
 * return
 * throw
 * guard:提前退出，后面必须有一个else语句，else中必须包含控制转移语句
+```
+//只有numOfMyFriend >0 的时候，才可以执行下面的程序。否则(else)就抛出一个异常。
+guard numOfMyFriend > 0 else {
+    throw errorGame.noFriendToGether
+}
+```
+
 * label标签语句
 ```
 where labName{
@@ -630,15 +684,15 @@ func getMiddle(_ numbers: Double...) -> Double{}
 > 函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误
 * 输入输出参数：可以在函数中修改的参数，并且这些修改在参数调用的时候仍然存在
 > 只能传递变量给输入输出参数，不能传入常量或者字面量，并且在传入的时候在参数名前添加`&`。
+
 ```
-func swapTwoInts(a: inout Int, b: inout Int) {
-let temporaryA = a
-a = b
-b = temporaryA
+func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
+    //可以不使用额外空间而使用多元组特性直接交换 a 和 b 的值
+    (a, b) = (b, a)
 }
-var someInt = 3
-var anotherInt = 107
-swapTwoInts(&someInt, &anotherInt)
+var a = 5, b = 6
+swapTwoValues(&a, &b)
+print(a, b)
 ```
 
 ## 函数类型
@@ -673,6 +727,57 @@ currentValue = moveNearerToZero(currentValue)
 }
 print("zero!")
 ```
+
+## 柯里化
+> 把接受多个参数的方法变换成接受第一个参数的方法，并且返回接受余下的参数并且返回结果的新方法。
+
+<!--
+* 不使用柯里化
+```
+func addTwoNumbers(a: Int, num: Int) -> Int {
+return a + num
+}
+let result = addTwoNumbers(a:4, num: 6)
+print(result)
+
+func greaterThan(comparator: Int, input: Int) -> Bool {
+return input > comparator;
+}
+
+let greaterThan10 = greaterThan(comparator: 10, input: 13)
+print(greaterThan10)
+let littleThan10 = greaterThan(comparator: 10, input: 9)
+print(littleThan10)
+```
+
+* 使用柯里化
+```
+func addTwoNumbers(a: Int)(num: Int) -> Int {
+return a + num
+}
+
+//等同于
+//func addTwoNumbers(a: Int)->((Int) -> Int) {
+//    func incrementor(num: Int) -> Int {
+//        return a + num
+//    }
+//    return incrementor
+//}
+
+
+let addToFour = addTwoNumbers(a: 4)
+let result = addToFour(num: 6)
+
+
+func greaterThan(comparator: Int)(input: Int) -> Bool {
+return input > comparator;
+}
+
+let greaterThan10 = greaterThan(comparator:10)
+greaterThan10(input: 13)    //true
+greaterThan10(input: 9)     //false
+```
+-->
 
 # 闭包
 闭包的三种形式：
@@ -754,6 +859,38 @@ a() //30
 
 ## 自动闭包 @autoclosure
 > 自动闭包是一种自动创建的用来把作为实际参数传递给函数的表达式打包的闭包。它不接受任何实际参数，并且当它被调用时，它会返回内部打包的表达式的值。这个语法的好处在于通过写普通表达式代替显式闭包而使你省略包围函数形式参数的括号。
+
+```
+// 在不使用autoclosure的情况下
+func logIfTrue(predicate: () -> Bool) {
+    if predicate() {
+        print("True")
+    } else {
+        print("False")
+    }
+}
+// 第一种调用方式
+logIfTrue { () -> Bool in
+    return 1 > 2
+}
+// 第二种调用方式
+logIfTrue{return 1 > 2}
+// 第三种调用方式
+logIfTrue{1 > 2}
+
+
+// 使用autoclosure
+func logIfTrue( _ predicate: @autoclosure () -> Bool) {
+    if predicate() {
+        print("True")
+    } else {
+        print("False")
+    }
+}
+// 调用方式
+logIfTrue(2 > 1)
+logIfTrue(1 > 2)
+```
 
 # 枚举enum
 ## 枚举语法
@@ -1280,7 +1417,7 @@ init() {
 
 ## 类的继承和构造过程
 * 类里面的所有存储型属性——包括所有继承自父类的属性——都必须在构造过程中设置初始值，可以通过指定构造器或便利构造器实现。
-### 指定构造器
+### 指定构造器 designated
 * 初始化类中提供的所有属性，并根据父类链往上调用父类的构造器来实现父类的初始化，每一个类都必须拥有至少一个指定构造器
 ```
 init(parameters) {
@@ -1288,8 +1425,9 @@ statements
 }
 ```
 
-### 便利构造器convenience
-* 便利构造器可以调用同一个类中的指定构造器，并为其参数提供默认值，必要是创建
+### 便利构造器 convenience
+* 便利构造器可以调用同一个类中的指定构造器，并为其参数提供默认值，必要时创建。
+* `convenience 的初始化方法是不能被子类重写或者从子类中以 super 的方式被调用的。`
 ```
 convenience init(parameters) {
 statements
@@ -1297,6 +1435,83 @@ statements
 ```
 
 ### 构造器的继承和重载：当重写一个父类指定构造器时，子类不会默认继承父类的构造器，需要写override，`override convenience`
+
+### 初始化方法的顺序
+* 设置子类自己需要初始化的参数
+* 调用父类相应的初始化方法，`super.init()`
+* 对父类中需要改变的成员进行设定
+```
+class Animal {
+    var name: String?
+    init() {
+        name = "Animal"
+    }
+}
+let animal = Animal()
+print(animal.name!)
+
+class Dog: Animal {
+    let age: Int
+    override init() {
+        age = 10
+        // 如果不先把子类的成员初始化完成，下面就无法调用父类的初始化方法会报错,Swift 会自动的对父类的对应 init 方法进行调用
+        super.init() // Property 'self.age' not initialized at super.init call
+        name = "a dog"  // 根据实际情况修改，如果不需要改变父类属性的话，可以不写
+    }
+}
+print(Dog().name!)
+```
+
+### 初始化方法需要遵循的两个原则
+* 初始化路径必须保证对象`完全初始化`，这可以通过调用本类型的 designated 初始化方法得到保证。
+* 子类的 designated 初始化方法`必须调用父类的 designated 方法`，以保证`父类成员也完成初始化`。
+
+```
+class ClassAA {
+let numA: Int
+init(num: Int) {
+numA = num
+}
+convenience init(bigNum: Bool) {
+self.init(num: bigNum ? 10000 : 1) // 所有的 convenience 初始化方法都必须调用同一个类中的 designated 初始化完成设置
+}
+}
+
+class ClassBB: ClassAA {
+let numB: Int
+override init(num: Int) {
+numB = num + 1
+//只要在子类中实现重写了父类 convenience 方法所需要的 init 方法的话，我们在子类中就可以使用父类的 convenience 初始化方法了
+super.init(num: num)
+}
+}
+let anObj = ClassBB(bigNum: true)
+print(anObj.numA, anObj.numB)
+```
+
+### required
+* 对于某些我们希望子类中一定实现的 designated 初始化方法，我们可以通过添加`required`关键字进行限制，强制子类对这个方法重写实现。这样做的最大的好处是可以保证依赖于某个 designated 初始化方法的 convenience 一直可以被使用。
+* 如果希望初始化方法对于子类一定可用，就将 init(num: Int) 声明为必须。对于 convenience 的初始化方法我们也可以加上 required 以确保子类对其进行实现。
+```
+class ClassAAA {
+let numA: Int
+required init(num: Int) {
+numA = num
+}
+required convenience init(bigNum: Bool) {
+self.init(num: bigNum ? 10000 : 1)
+}
+}
+class ClassBBB: ClassAAA {
+let numB: Int
+required init(num: Int) {
+numB = num + 1
+super.init(num: num)
+}
+}
+let sencondObj = ClassBBB(bigNum: true)
+print(sencondObj.numA, sencondObj.numB)
+```
 
 ## 可失败构造器（init?,init!）
 * 非可失败构造器（init），可失败构造器（init?），隐式解包可失败构造器（init!）
@@ -1554,7 +1769,7 @@ print(type(of: someStr))    //String
 
 ## Any 和 AnyObject 的类型转换
 * Any 可以表示任何类型，包括函数类型、可选类型。
-* AnyObject 可以表示任何类型的实例。
+* AnyObject 可以表示任何类型的实例，AnyObject 也是Optional类型的。
 > Any类型可以表示所有类型的值，包括可选类型。Swift 会在你用Any类型来表示一个可选值的时候，给你一个警告。如果你确实想使用Any类型来承载可选值，你可以使用as操作符显式转换为Any。
 ```
 // 可以存储Any类型的数组
@@ -1731,7 +1946,14 @@ print("\(celebrator.name) is \(celebrator.age) years old")
 
 let studname = Person(name: "Priya", age: 21)
 print(show(celebrator: studname))   //Priya is 21 years old
+```
 
+## 协议的组合使用
+```
+protocol<ProtocolA, ProtocolB, ProtocolC> 等价于
+protocol ProtocolD: ProtocolA, ProtocolB, ProtocolC {
+//...
+}
 ```
 
 ## 检查协议一致性
@@ -1744,10 +1966,12 @@ print(show(celebrator: studname))   //Priya is 21 years old
 ```
 // 定义一个交换两个变量的函数
 func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
-    let temporaryA = a
-    a = b
-    b = temporaryA
+    //可以不使用额外空间而使用多元组特性直接交换 a 和 b 的值
+    (a, b) = (b, a)
 }
+var a = 5, b = 6
+swapTwoValues(&a, &b)
+print(a, b)
 
 //泛型的栈
 struct Stack<Element> {
@@ -1940,8 +2164,48 @@ public struct TOS<T> {
 
 ## 运算符函数
 
-## 自定义运算符
+## 重载/自定义运算符
+* 重载运算符
+```
+func +(left: Vector2D, right:Vector2D) -> Vector2D {
+    return Vector2D(x: left.x + right.x, y: left.y + right.y)
+}
 
+let v1 = Vector2D(x: 2, y: 3)
+let v2 = Vector2D(x: 1, y: 4)
+let v3 = Vector2D(x: v1.x+v2.x, y: v1.y+v2.y)
+let v4 = v1 + v2 + v3
+```
+
+* 自定义运算符
+```
+func +*(left: Vector2D, right:Vector2D) -> Double {
+return left.x * right.x + left.y * right.y
+}
+let result1 = v1 +* v2
+```
+
+# 命名空间
+```
+// FirstClass.swift
+// 这个文件存在于 MyFramework.framework 中
+public class FirstClass {
+    public class func hello() {
+        print("hello from first")
+    }
+}
+// SecondClass.swift
+// 这个文件存在于 app 的主 target 中
+class SecondClass {
+    class func hello() {
+        print("hello from second")
+    }
+}
+FirstClass.MyClass.hello()
+// hello from firsst
+SecondClass.MyClass.hello()
+// hello from second
+```
 
 # Swift UI部分
 
@@ -1972,6 +2236,31 @@ print("register click")
 }
 ```
 
+## 单例
+* swift中单例
+```
+//swift中的let是线程安全的
+static let instance: NetworkTools = NetworkTools()
+class func shareNetworkTools() -> NetworkTools{
+    return instance
+
+}
+```
+
+* OC中单例
+```
++(instancetype)shareNetworkTools{
+    static id instance;
+    static dispatch_once_t onceToken;
+        //onceToken默认等于0，如果是0就执行block，如果不是就不执行
+        NSLog(@"%ld",onceToken);
+        dispatch_once(&onceToken, ^{
+        instance = [[self alloc] init];
+    });
+    return instance;
+}
+```
+
 # swift的常用内置函数总结
 * abs
 * assert
@@ -1992,19 +2281,14 @@ print("register click")
 * maxElement(sequence)：返回序列sequence中的最大值。  minElements(sequence)：返回序列sequence中的最小值。
 * reverse(sequence)：返回逆序的序列sequence。
 
-# 常用有用知识点总结
-* try-catch
-* assert
-* extension
-* fatalError
-* 柯里化：把接受多个参数的方法变换成接受第一个参数的方法，并且返回接受余下的参数并且返回结果的新方法。
-* mutating
-
 
 参考资料：[The Swift Programming Language中文版](http://wiki.jikexueyuan.com/project/swift)
 [菜鸟教程-swift教程](http://www.runoob.com/swift/swift-tutorial.html)
 [Swift的74个常用内置函数介绍](http://blog.csdn.net/banma2008/article/details/46360333)
 [深入探究Swift数组背后的协议、方法、拓展](http://www.cocoachina.com/ios/20151218/14716.html)
 [swift常用代码](http://www.cnblogs.com/Jepson1218/p/5277677.html)
+[Swift编程](http://www.swift51.com/openSource.htm)
+[30个swift项目源码](https://github.com/allenwong/30DaysofSwift)
+[50个swift项目源码](https://github.com/cjiong/LearnSwift)
 [https://github.com/yagamis/swift2basic](https://github.com/yagamis/swift2basic)
 [https://github.com/KeyJohn/Swift](https://github.com/KeyJohn/Swift)
