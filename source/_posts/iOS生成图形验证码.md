@@ -7,6 +7,7 @@ toc:
 ---
 
 1.创建一个图形验证码视图
+<!--more-->
 ```
 #import <UIKit/UIKit.h>
 
