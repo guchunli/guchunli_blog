@@ -38,8 +38,14 @@ tags: [框架,待补充]
 ## 空白页面占位图
 * [LYEmptyView](https://github.com/yangli-dev/LYEmptyView)
 
+## 状态栏顶部通知
+* [JDStatusBarNotification](https://github.com/jaydee3/JDStatusBarNotification)
+
 ## 键盘监听管理工具
 * IQKayboardManager
+
+## 相册选择图片
+* KSPhotoBrowser
 
 ## Badge
 * WZLBadge
@@ -47,6 +53,40 @@ tags: [框架,待补充]
 ## 日历
 * GFCalendar
 * FSCalendar
+
+## 状态栏上方显示手机状态
+* [GDPerformanceView-Swift](https://github.com/dani-gavrilov/GDPerformanceView-Swift)
+
+## 跑马灯广告无线轮播
+* [TXScrollLabelView](https://github.com/tingxins/TXScrollLabelView)
+* CCPScrollView
+
+## FAQ视图
+* [FAQView](https://github.com/mukeshthawani/FAQView)
+
+## 卡片界面
+* [DMSwipeCards](https://github.com/D-32/DMSwipeCards)
+
+## 模仿Airbnb首页过渡动画
+* [JPAnimation](https://github.com/newyjp/JPAnimation)
+
+## iOS的CSS
+* [StyleKit](https://github.com/146BC/StyleKit)
+
+## 动画加号按钮
+* [YGPulseView](https://github.com/YGeorge/YGPulseView)
+
+## Swift 3快速异步助手
+* [Do.this](https://github.com/BarakRL/Do.this)
+
+## 密码输入切换框
+* [UXPasscodeField](https://github.com/eddy-lau/UXPasscodeField)
+
+## 美颜相机（仿faceU）
+* [MARFaceBeauty](https://github.com/Maru-zhang/MARFaceBeauty)
+
+## 多功能数据pickerView
+* [DLPickerView](https://github.com/coder-zwz/DLPickerView)
 
 ## 直播
 * LFLiveKit
