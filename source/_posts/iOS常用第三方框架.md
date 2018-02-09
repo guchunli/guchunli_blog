@@ -70,6 +70,9 @@ tags: [框架,待补充]
 ## 模仿Airbnb首页过渡动画
 * [JPAnimation](https://github.com/newyjp/JPAnimation)
 
+## 界面转场动画集
+* [WXSTransition](https://github.com/alanwangmodify/WXSTransition)
+
 ## iOS的CSS
 * [StyleKit](https://github.com/146BC/StyleKit)
 
