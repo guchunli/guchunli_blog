@@ -608,6 +608,7 @@ switch i {
 * return
 * throw
 * guard:提前退出，后面必须有一个else语句，else中必须包含控制转移语句
+`防止代码嵌套过多，if满足条件需要return时就可以用guard，相当于if let`
 ```
 //只有numOfMyFriend >0 的时候，才可以执行下面的程序。否则(else)就抛出一个异常。
 guard numOfMyFriend > 0 else {

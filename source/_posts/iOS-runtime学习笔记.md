@@ -1,11 +1,12 @@
 ---
-title: iOS runtime学习笔记
+title: iOS runtime与runloop学习笔记
 date: 2017-03-22 11:39:18
 categories: 学习
 tags: [iOS,runtime]
 toc: true
 ---
 
+# runtime
 Objective-C 是一门动态语言，它把很多静态语言在编译和链接时做的事情放到了运行时去处理，它在运行时实现了对类、方法、成员变量、属性等信息的管理机制。
 * 需要`#import <objc/runtime.h>`
 
@@ -148,6 +149,11 @@ return [super resolveInstanceMethod:sel];
 ```
 
 ## 消息转发
+Method Swizzling就是在运行时将一个方法的实现代替为另一个方法的实现。Runtime提供三种方式来将原来的方法实现代替掉，那该怎样选择它们呢？
+1.Method Resolution：由于Method Resolution不能像消息转发那样可以交给其他对象来处理，所以只适用于在原来的类中代替掉。
+2.Fast Forwarding：它可以将消息处理转发给其他对象，使用范围更广，不只是限于原来的对象。
+3.Normal Forwarding：它跟Fast Forwarding一样可以消息转发，但它能通过NSInvocation对象获取更多消息发送的信息，例如：target、selector、arguments和返回值等信息。
+
 消息转发机制基本上分为三个步骤：
 第一步：动态方法解析。
 第二步：备用接收者。
@@ -232,6 +238,57 @@ NSLog(@"unresolved method ：%@", NSStringFromSelector(aSelector));
 
 [demo传送门](https://github.com/guchunli/RuntimeDemo)
 
+# runloop运行循环
+* 保持程序的持续运行。
+* 处理App中的各类事件（触摸事件、定时器事件、Selector事件）
+* 节省CPU资源，提高程序性能：没有事件时就进行睡眠状态
+
+## 内部实现：do-while循环，在这个循环内部不断地处理各种任务（Source\Timeer\Observer）,Source和Timer这两个是主动向RunLoop发送消息的，Observer是被动接收消息的。
+
+## 注意点
+### 一个线程对应一个RunLoop（采用字典存储，线程号为key，RunLoop为value），RunLoop在第一次获取时创建，在线程结束时销毁
+### 主线程的RunLoop默认已经启动，子线程的RunLoop需要手动启动
+### RunLoop只能选择一个Mode启动，如果当前Mode没有任何Source、Timer、Observer，那么就不会进入RunLoop
+
+## iOS中访问和使用RunLoop的API
+* Foundation--NSRunLoop
+* Core Foundation--CFRunLoopRef(开源)
+因为后者是开源的，且前者是在后者上针对OC的封装，所以一般是对CFRunLoopRef进行研究。
+
+### 两套API对应获取RunLoop对象的方式：
+> 值得注意的是，获取当前RunLoop都是进行懒加载的，也就是调用时自动创建线程对应的RunLoop。
+* Foundation
+```
+[NSRunLoop currentRunLoop]; // 当前runloop
+[NSRunLoop mainRunLoop];// 主线程runloop
+```
+
+* Core Foundation
+```
+CFRunLoopGetCurrent();// 当前runloop
+CFRunLoopGetMain();// 主线程runloop
+```
+
+## runloop的运行模式
+* CFRunLoopModeRef代表RunLoop的运行模式，一个RunLoop可以包含多个Mode，每个Mode可以包含多个Source、Timer、Observer。
+* 每次RunLoop启动时，只能指定其中一个Mode，这个Mode就变成了CurrentMode
+* 当启动RunLoop时，如果所在Mode中没有Source、Timer、Observer，那么将不会进入RunLoop，会直接结束
+* 如果要切换Mode，只能退出Loop，再重新制定一个Mode进入
+
+### 系统默认注册了5个Mode
+* NSDefaultRunLoopMode：App的默认Mode，通常主线程是在这个Mode下运行
+* UITrackingRunLoopMode：界面跟踪 Mode，用于 ScrollView 追踪触摸滑动，保证界面滑动时不受其他 Mode 影响
+* UIInitializationRunLoopMode: 在刚启动 App 时第进入的第一个 Mode，启动完成后就不再使用
+* GSEventReceiveRunLoopMode: 接受系统事件的内部 Mode，通常用不到
+* NSRunLoopCommonModes: 这是一个占位用的Mode，不是一种真正的Mode
+
+### NSRunLoopCommonModes
+* 一个Mode可以将自己标记为“Common”属性，每当 RunLoop 的内容发生变化时，RunLoop会对标记有“Common”属性的Mode进行相适应的切换，并同步Source/Observer/Timer
+* 在主线程中，kCFRunLoopDefaultMode 和 UITrackingRunLoopMode这两个Mode都是被默认标记为“Common”属性的，从输出的主线程RunLoop可以查看。
+
 参考：[Objective-C 的 Runtime](http://www.samirchen.com/objective-c-runtime/)
 [iOS Runtime 几种基本用法简记](http://www.jianshu.com/p/99af00237cb8)
 [iOS运行时(Runtime)详解+Demo](http://www.jianshu.com/p/adf0d566c887)
+
+[iOS runtime和runloop](https://www.jianshu.com/p/ebc6e20b84cf)
+[深入理解RunLoop](https://blog.ibireme.com/2015/05/18/runloop/#more-41710)

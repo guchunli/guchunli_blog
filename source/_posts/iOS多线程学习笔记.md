@@ -265,8 +265,27 @@ dispatch_semaphore_signal(_semaphore);
 
 ### iOS中的其他类型锁
 NSRecursiveLock ：递归锁，有时候“加锁代码”中存在递归调用，递归开始前加锁，递归调用开始后会重复执行此方法以至于反复执行加锁代码最终造成死锁，这个时候可以使用递归锁来解决。使用递归锁可以在一个线程中反复获取锁而不造成死锁，这个过程中会记录获取锁和释放锁的次数，只有最后两者平衡锁才被最终释放。
+```
+NSRecursiveLock *theLock = [[NSRecursiveLock alloc] init];
+void MyRecursiveFunction(int value)
+{
+[theLock lock];
+if (value != 0)
+<span style="font-size:14px;"> </span>{
+–value;
+MyRecursiveFunction(value);
+}
+[theLock unlock];
+}
+
+MyRecursiveFunction(5);
+
+```
+
 NSDistributedLock：分布锁，它本身是一个互斥锁，基于文件方式实现锁机制，可以跨进程访问。
 pthread_mutex_t：同步锁，基于C语言的同步锁机制，使用方法与其他同步锁机制类似。
+互斥锁：如果共享数据已经有其他线程加锁了，线程会进入休眠状态等待锁。一旦被访问的资源被解锁，则等待资源的线程会被唤醒。
+自旋锁：如果共享数据已经有其他线程加锁了，线程会以死循环的方式等待锁，一旦被访问的资源被解锁，则等待资源的线程会立即执行。
 
 注意：调用dispatch_suspend会增加队列挂起的引用计数，而调用dispatch_resume则会减少引用计数，当引用计数大于0时，队列会保持挂起状态。因此，这队列的挂起和恢复中，我们需要小心使用以避免引用计数计算错误的出现。
 

@@ -32,3 +32,22 @@ target -> general -> signing
 
 最后，打正式包，提交APP Store。
 
+
+## iOS的各种结果文件：
+（1）app
+iOS编译以后生成的原始文件，实际是一个文件夹，里面包含各种资源文件（图片，第三方bundle，plist等文件），程序的可执行文件(二进制格式)以及对所有文件的签名记录（_CodeSignature）
+不能上传AppStore
+
+（2）dSYM
+生成.app时的附属产物。本质是一个文件夹，其中只有一个最大的文件，作用是对iOS程序闪退后产生的log文件进行符号化（desymbolicate）；通俗的说，就是把无意义的内存地址变成可读的程序中的类和方法以及代码行数
+不能上传AppStore
+
+（3）ipa
+实际上就是把.app放到Payload文件夹后，对Payload进行了zip操作，最后改了下扩展名。
+可通过Application Loader上传AppStore
+
+（4）xcarchive
+实际上也是一个文件夹，包含.ipa和.dSYM文件
+可通过Xcode上传AppStore
+
+[BuildSettings所有选项的官方说明](https://developer.apple.com/legacy/library/documentation/DeveloperTools/Reference/XcodeBuildSettingRef/0-Introduction/introduction.html)

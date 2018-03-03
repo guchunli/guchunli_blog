@@ -141,6 +141,16 @@ git reset --hard ***慎重使用***
 * git rebase origin master
 如果出现冲突:git status->修改冲突->git add->`git rebase --continue`
 
+```
+git merge：用于合并分支
+git rebase：用于合并commit
+git fetch：用于更新所有分支状态，如远程仓库已添加一个分支，可通过git fetch -p将新分支拉取下来
+git pull：用于取回远程主机分支的更新
+git pull = git fetch ＋ git merge
+```
+git rebase：会把本分支的commits顶到最顶端，比如合并feature分支到master上，会把整个 feature 分支移动到 master 分支的后面，有效地把所有 master 分支上新的提交并入过来。但是，rebase 为原分支上每一个提交创建一个新的提交，重写了项目历史，并且不会带来合并提交。
+rebase最大的好处是你的项目历史会非常整洁。首先，它不像 git merge 那样引入不必要的合并提交。其次，如上图所示，rebase 导致最后的项目历史呈现出完美的线性——你可以从项目终点到起点浏览而不需要任何的 fork。这让你更容易使用 git log、git bisect 和 gitk 来查看项目历史。
+
 ### 查看分支
 > $ git log  
 * 查看分支合并图
