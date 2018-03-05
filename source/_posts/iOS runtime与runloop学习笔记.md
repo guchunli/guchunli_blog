@@ -10,6 +10,10 @@ toc: true
 Objective-C 是一门动态语言，它把很多静态语言在编译和链接时做的事情放到了运行时去处理，它在运行时实现了对类、方法、成员变量、属性等信息的管理机制。
 * 需要`#import <objc/runtime.h>`
 
+* 基于C，为C添加类面向对象的特性。
+对象方法：保存到类对象的方法列表。
+类方法：保存到元类(Meta Class)的方法列表。
+
 <!--more-->
 ## 运行时的类与对象
 类与对象相关的函数
@@ -149,7 +153,7 @@ return [super resolveInstanceMethod:sel];
 ```
 
 ## 消息转发
-Method Swizzling就是在运行时将一个方法的实现代替为另一个方法的实现。Runtime提供三种方式来将原来的方法实现代替掉，那该怎样选择它们呢？
+Method Swizzling（俗称黑魔法）就是在运行时将一个方法的实现代替为另一个方法的实现。Runtime提供三种方式来将原来的方法实现代替掉，那该怎样选择它们呢？
 1.Method Resolution：由于Method Resolution不能像消息转发那样可以交给其他对象来处理，所以只适用于在原来的类中代替掉。
 2.Fast Forwarding：它可以将消息处理转发给其他对象，使用范围更广，不只是限于原来的对象。
 3.Normal Forwarding：它跟Fast Forwarding一样可以消息转发，但它能通过NSInvocation对象获取更多消息发送的信息，例如：target、selector、arguments和返回值等信息。
@@ -243,12 +247,23 @@ NSLog(@"unresolved method ：%@", NSStringFromSelector(aSelector));
 * 处理App中的各类事件（触摸事件、定时器事件、Selector事件）
 * 节省CPU资源，提高程序性能：没有事件时就进行睡眠状态
 
-## 内部实现：do-while循环，在这个循环内部不断地处理各种任务（Source\Timeer\Observer）,Source和Timer这两个是主动向RunLoop发送消息的，Observer是被动接收消息的。
+## 内部实现
+do-while循环，在这个循环内部不断地处理各种任务（Source\Timeer\Observer）,Source和Timer这两个是主动向RunLoop发送消息的，Observer是被动接收消息的。CDRunLoopRunSpecific具体处理runloop的运行情况。
 
-## 注意点
+## runloop与线程
 ### 一个线程对应一个RunLoop（采用字典存储，线程号为key，RunLoop为value），RunLoop在第一次获取时创建，在线程结束时销毁
 ### 主线程的RunLoop默认已经启动，子线程的RunLoop需要手动启动
 ### RunLoop只能选择一个Mode启动，如果当前Mode没有任何Source、Timer、Observer，那么就不会进入RunLoop
+
+* runloop生命周期：第一次获取时创建（currentRunloop），每条线程对应唯一的runloop，线程结束runloop销毁
+* 主runloop：在applicationMain中自动创建runloop，主runloop与主线程相关，主线程中runloop自动启动运行，子线程中需要手动创建
+* 获取runloop：mainRunloop,currentRunloop（懒加载）
+```
+//    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+NSRunLoop *currentRunloop = [NSRunLoop currentRunLoop];
+[NSTimer scheduledTimerWithTimeInterval:1.f target:self selector:@selector(run) userInfo:nil repeats:YES];
+[currentRunloop run];
+```
 
 ## iOS中访问和使用RunLoop的API
 * Foundation--NSRunLoop
@@ -269,6 +284,11 @@ CFRunLoopGetCurrent();// 当前runloop
 CFRunLoopGetMain();// 主线程runloop
 ```
 
+NSRunLoop转化为CFRunLoop：runloop.getCFRunloop
+
+### 相关类
+CFRunLoopRef,mode,source（set）,timer（array）,observer（array），每个runloop中至少要有一个source或timer
+
 ## runloop的运行模式
 * CFRunLoopModeRef代表RunLoop的运行模式，一个RunLoop可以包含多个Mode，每个Mode可以包含多个Source、Timer、Observer。
 * 每次RunLoop启动时，只能指定其中一个Mode，这个Mode就变成了CurrentMode
@@ -277,16 +297,67 @@ CFRunLoopGetMain();// 主线程runloop
 
 ### 系统默认注册了5个Mode
 * NSDefaultRunLoopMode：App的默认Mode，通常主线程是在这个Mode下运行
-* UITrackingRunLoopMode：界面跟踪 Mode，用于 ScrollView 追踪触摸滑动，保证界面滑动时不受其他 Mode 影响
+* NSRunLoopCommonModes: 这是一个占位用的Mode，不是一种真正的Mode，mode集合
+* UITrackingRunLoopMode：界面跟踪 Mode，追踪触摸滑动，保证界面滑动时不受其他 Mode 影响
 * UIInitializationRunLoopMode: 在刚启动 App 时第进入的第一个 Mode，启动完成后就不再使用
 * GSEventReceiveRunLoopMode: 接受系统事件的内部 Mode，通常用不到
-* NSRunLoopCommonModes: 这是一个占位用的Mode，不是一种真正的Mode
 
 ### NSRunLoopCommonModes
 * 一个Mode可以将自己标记为“Common”属性，每当 RunLoop 的内容发生变化时，RunLoop会对标记有“Common”属性的Mode进行相适应的切换，并同步Source/Observer/Timer
 * 在主线程中，kCFRunLoopDefaultMode 和 UITrackingRunLoopMode这两个Mode都是被默认标记为“Common”属性的，从输出的主线程RunLoop可以查看。
 
-参考：[Objective-C 的 Runtime](http://www.samirchen.com/objective-c-runtime/)
+### source（timer,input）
+* 根据函数调用栈分为：
+source0：不基于port，用户主动触发的
+source1：基于Port，系统的
+
+### observer
+* 监听runloop的状态改变
+```
+/*
+第一个参数：分配空间
+第一个参数：监听哪个状态
+第一个参数：是否持续监听
+第一个参数：优先级
+第一个参数：回调
+*/
+CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(CFAllocatorGetDefault(), kCFRunLoopAfterWaiting, YES, 0, ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) {
+
+/*
+kCFRunLoopEntry = (1UL << 0),
+kCFRunLoopBeforeTimers = (1UL << 1),
+kCFRunLoopBeforeSources = (1UL << 2),
+kCFRunLoopBeforeWaiting = (1UL << 5),
+kCFRunLoopAfterWaiting = (1UL << 6),
+kCFRunLoopExit = (1UL << 7),
+kCFRunLoopAllActivities = 0x0FFFFFFFU
+*/
+switch (activity) {
+case kCFRunLoopAfterWaiting:
+NSLog(@"即将进入休眠");
+break;
+
+default:
+break;
+}
+});
+```
+
+### runloop的应用
+1.timer
+2.imageView的显示
+3.performSelector
+4.常驻线程：线程完成任务自动挂掉，如果在完成任务后保持runloop，则不会挂掉。
+```
+[[NSRunLoop currentRunLoop]addPort:[NSPort port] forMode:NSDefaultRunLoopMode];
+```
+5.自动释放池
+什么时候创建：启动runloop
+最后一次销毁：退出runloop
+其他时候的创建和销毁：runloop即将进入休眠时会销毁之前的，重新创建一个新的
+
+参考：[iOS 模块详解—「Runtime面试、工作」](https://www.jianshu.com/p/19f280afcb24)
+[Objective-C 的 Runtime](http://www.samirchen.com/objective-c-runtime/)
 [iOS Runtime 几种基本用法简记](http://www.jianshu.com/p/99af00237cb8)
 [iOS运行时(Runtime)详解+Demo](http://www.jianshu.com/p/adf0d566c887)
 

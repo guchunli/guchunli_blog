@@ -8,6 +8,7 @@ toc: true
 
 # 基础
 ## 运算符优先级
+<!--more-->
 <table>
 <tr>
 <td>优先级</td>
@@ -244,6 +245,12 @@ toc: true
 * 弱类型：仅能区分指令和数据。
 * 强类型：在编译期进行检查，在没有强制类型转换前，不允许两种不同类型的变量相互操作。
 
+多态：不同对象以自己的方式响应相同的消息的能力叫做多态。子类指针可以赋值给父类对象。
+主要是将数据类型的确定由编译时，推迟到了运行时。
+(1)对于语句NSString*obj = [[NSData alloc] init]; obj在编译时和运行时分别时什么类型的对象?
+答：编译时是NSString的类型;运行时是NSData类型的对象。
+(2)id声明的对象具有运行时的特性，即可以指向任意类型的objcetive-c的对象.
+
 ## 属性
 ### @property本质
 1.属性的实质：ivar实例变量+getter+setter
@@ -327,6 +334,11 @@ copy：建立一个引用计数为1的对象，与 strong 类似，然而在设�
 
 * @synthesize：编译期间，让编译器自动生成getter／setter方法，当有自定义的存或取方法时屏蔽自动生成的方法
 * @dynamic：不自动生成getter／setter方法，避免编译期间产生警告，自己实现存取方法
+
+#### assign/weak
+* 用assign声明的变量在栈中可能不会自动赋值为nil，就会造成野指针错误
+* 用weak声明的变量在栈中会自动清空，赋值为nil
+assigin 可以用非OC对象,而weak必须用于OC对象
 
 #### copy
 1.使用场景
@@ -414,26 +426,25 @@ MRC(manual retain-release)手动内存管理
 ARC(automatic reference counting)自动引用计数： 在iOS5.0 (Xcode4) 版本后推出的。
 Garbage collection (垃圾回收)：iOS不支持
 
+* 栈/堆
+栈：由操作系统自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈(先进后出)，非OC对象一般放在操作系统的栈里面。
+堆：一般由程序员分配释放，若程序员不释放，程序结束时可能由OS回收，分配方式类似于链表，继承了NSObject的对象的存储在操作系统的堆里边。
+`任何继承了NSObject的对象需要进行内存管理，非对象类型(int、char、float、double、struct、enum等) 不需要进行内存管理`
+
 ### 内存管理规律
-1.MRC：当调用这个对象的alloc、retain、new、copy方法之后引用计数器自动在原来的基础上加1（ObjC中调用一个对象的方法就是给这个对象发送一个消息），当调用这个对象的release，autorelease方法之后它的引用计数器减1，如果一个对象的引用计数器为0，则系统会自动调用这个对象的dealloc方法来销毁这个对象。
+1.MRC：当调用这个对象的alloc、new、retain、copy、mutableCopy方法之后引用计数器自动在原来的基础上加1（ObjC中调用一个对象的方法就是给这个对象发送一个消息），当调用这个对象的release，autorelease方法之后它的引用计数器减1，如果一个对象的引用计数器为0，则系统会自动调用这个对象的dealloc方法来销毁这个对象。
 2.ARC：编译器会管理好对象的内存，会在何时的地方插入retain, release和autorelease。
 ARC的判断准则：ARC判断一个对象是否需要释放不是通过引用计数来进行判断的，而是通过强指针来进行判断的。只要还有一个强指针变量指向对象，对象就会保持在内存中, 否则就会被释放。
 
 * 强指针/弱指针
 强指针：被__strong修饰的指针，默认所有对象的指针变量都是强指针
-弱指针：被__weak修饰的指针
+弱指针：被__weak修饰的指针，不要使用弱指针保存新创建的对象，否则对象会被立即释放
 ```
 __strong  Person *p1 = [[Person alloc] init];
 __weak  Person *p2 = [[Person alloc] init];
 ```
 
-（1）单个对象内存管理规律
-* 局部变量释放，对象被释放
-* 清空指针，对象被释放
-* 不要使用弱指针保存新创建的对象，否则对象会被立即释放
-（2）多个对象内存管理规律
-
-### AutoreleasePool
+### AutoreleasePool（队列）
 * 只要给对象发送一条autorelease消息，会将对象放到一个自动释放池中，当该pool被释放时,该pool中的所有对象会被调用一次release。
 * 动释放池是以栈的形式存在，栈顶就是离调用autorelease方法最近的自动释放池
 
@@ -455,7 +466,7 @@ Person *p = [[Person new] autorelease];
 
 
 * autorelease
-只是把对release的调用延迟了，调用完autorelease方法后，对象的计数器不变
+返回对象本身，只是把对release的调用延迟了，调用完autorelease方法后，对象的计数器不变
 
 * dealloc
 ```
@@ -475,17 +486,13 @@ p=nil;
 [p release];
 ```
 
-* 栈/堆
-栈：由操作系统自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈(先进后出)，非OC对象一般放在操作系统的栈里面。
-堆：一般由程序员分配释放，若程序员不释放，程序结束时可能由OS回收，分配方式类似于链表，继承了NSObject的对象的存储在操作系统的堆里边。
-
 * NSString *name，非ARC下重写setter,getter方法
 `一旦重写了getter.setter方法,必须使用@synthesize variable = _variable来区分属性名与方法名.`
 ```
 -(void)setName:(NSString *)name{
     if (_name != name) {    //首先判断要赋值的变量和当前成员变量是不是同一个变量
-    [_name release];        //释放之前的对象
-    _name = [name retain];    //赋值时重新retain
+    [_name release];        //释放之前的对象(换房间操作，释放之前的房间)
+    _name = [name copy];    //赋值时重新retain（对房间进行持有）
     }
 }
 - (NSString *)name{
@@ -494,70 +501,226 @@ p=nil;
 ```
 
 
-## 多线程
+## 多线程（多线程编程指南）
 ### 进程/线程的区别？同步/异步的区别？并行/并发的区别？
-进程：有独立的地址空间，进程中包含的一个或多个执行单元称为线程。
-线程：有自己的堆栈和局部变量，一个线程死掉就等于整个进程死掉。
+* 进程：正在运行的应用程序，是CPU调度的最小单位，有独立的地址空间，进程中包含的一个或多个执行单元称为线程。
+* 线程：是进程中的一条执行路径，共享进程的资源，有自己的堆栈和局部变量，一个线程死掉就等于整个进程死掉。
+每条线程可以并行执行不同的任务。
+多线程间并发执行，其实是CPU在多条线程间调度（切换）。
 
-* 同步和异步的区别：请求发出后，是否需要等待结果，才能继续执行其他操作。
-同步：指那些需要其他端协作或者需要一定时间完成的任务，发出一个功能调用时，在没有得到结果之前，该调用就不返回或继续执行后续操作。（同步就是必须一件一件事做，等前一件做完了才能做下一件事。）
-异步：当一个异步过程调用发出后，调用者在没有得到结果之前，就可以继续执行后续操作。
-阻塞：
-非阻塞：
+* 主线程：
+number=1
+作用：显示/刷新UI，处理UI事件（点击、拖拽、滚动）
+禁止将比较耗时的操作放在主线程，会卡顿
+
+* pthread：跨平台，C，程序员管理生命周期
+* NSThread：面向对象，OC，程序员管理生命周期
+* GCD：充分利用设备的多核，C，自动管理生命周期
+* NSOperation：基于GCD，面向对象，OC，自动管理生命周期
+
+* 执行任务，函数：
+同步和异步的区别：能不能开启新线程
+同步：只能在当前线程中执行任务，不具备开启新线程的能力。（同步就是必须一件一件事做，等前一件做完了才能做下一件事。）
+异步：可以在新线程中执行任务，具备开启新线程的能力。`延迟加载可以避免内存过高，异步加载可以避免线程堵塞。`
+
+* 队列：
+串行和并行的区别：任务的执行方式
+串行：任务只能一个接一个执行
+并行：允许任务同时执行，只在异步函数下才有效，不创建新线程无法并行
+全局并发队列：global
+主队列：系统给每一个应用程序提供了三个concurrent dispatch queues，主队列中的任务都会在主线程中执行
+
+* 异步函数+并行队列：开启多条（不确定几条）子线程，任务并发执行
+* 异步函数+串行队列：开启一条子线程，任务顺序执行
+* 同步函数+并发队列：不开启子线程，在主线程执行，任务顺序执行
+* 同步函数+串行队列：不开启子线程，在主线程执行，任务顺序执行
+* 异步函数+主队列：不开启子线程，在主线程执行，任务顺序执行
+* 同步函数+主队列：默认主线程中会死锁，子线程中不会死锁。
+
+* 开启新线程条件：1.异步 2.队列不是主队列，并发队列：开多条，串行：开一条子线程
 
 * 并行和并发的区别：`是否是『同时』`
-并行:两个或多个事件在同一时刻发生。（`你吃饭吃到一半，电话来了，你一边打电话一边吃饭，这说明你支持并行。`）
+并行（同时）:两个或多个事件在同一时刻发生。（`你吃饭吃到一半，电话来了，你一边打电话一边吃饭，这说明你支持并行。`）提高效率，资源利用率。
 关键是你有`同时`处理多个任务的能力。
 并发:两个或者多个事件在同一时间间隔发生。（`你吃饭吃到一半，电话来了，你停了下来接了电话，接完后继续吃饭，这说明你支持并发。`）
 关键是你有处理多个任务的能力，不一定要同时。
 
+#### NSThread
+* 创建线程
+```
+1.initWithTarget
+NSThread* myThread = [[NSThread alloc] initWithTarget:self selector:@selector(doSomething:) object:nil];
+//设置线程优先级、线程名称等信息
+[myThread start];
+
+2.detachNewThreadSelector
+[NSThread detachNewThreadSelector:@selector(doSomething:) toTarget:self withObject:nil];
+
+3.performSelectorInBackground
+[self performSelectorInBackground:@selector(doSomething) withObject:nil];
+```
+
+* 其他用法：延迟/休眠/死亡
+```
+//延迟
+[self performSelector:@selector(run) withObject:nil afterDelay:2.0];
+//休眠
+[NSThread sleepForTimeInterval:2.0];
+[NSThread sleepUntilDate:(NSDate*)date];
+//死亡
+[NSThread exit];
+```
+
+* 线程间通信
+1.通知主线程更新UI界面
+```
+waitUntilDone参数：
+* YES:当前线程要被阻塞，直到主线程将我们制定的代码块执行完，即优先执行updateUI方法
+* NO:当前线程不阻塞，会直接向下运行代码，不会立即进入updateUI方法，
+- (void)performSelectorOnMainThread:(SEL)aSelector withObject:(nullable id)arg waitUntilDone:(BOOL)wait;
+```
+
+2.通知其他线程：
+```
+- (void)performSelector:(SEL)aSelector onThread:(NSThread *)thr withObject:(nullable id)arg waitUntilDone:(BOOL)wait;
+```
+
+#### GCD
+* 延迟执行实现：1.performSelector  2.timer  3.GCD after
+```
+dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 3*NSEC_PER_SEC);
+dispatch_after(time, dispatch_get_main_queue(), ^{
+NSLog(@"3秒后执行");
+});
+```
+
+* onece：整个应用程序中只执行一次，不能在懒加载中使用
+```
+static SingleClass *instance;
+static dispatch_once_t onceToken;
+dispatch_once(&onceToken, ^{
+instance = [[SingleClass alloc]init];
+});
+return instance;
+```
+
+* GCD定时器的特点
+    * GCD的定时器不会受到RunLoop运行模式的影响
+    * 可以控制任务在主线程还是子线程执行
+    * GCD定时器比NSTimer更加准确是因为单位不同，GCD单位是纳秒
+    
+```
+dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 3*NSEC_PER_SEC);
+dispatch_after(time, dispatch_get_main_queue(), ^{
+NSLog(@"3秒后执行");
+});
+```
+    
+```
+@property (nonatomic,strong)dispatch_source_t timer;    //防止timer被释放
+
+dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(0, 0));
+dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+dispatch_source_set_event_handler(timer, ^{
+NSLog(@"run...");
+});
+dispatch_resume(timer);
+self.timer = timer;
+```
+
+* dispatch_group_async
+可以实现监听一组任务是否完成，完成后得到通知执行其他的操作
+```
+dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+dispatch_group_t group = dispatch_group_create();
+dispatch_group_async(group, queue, ^{
+[NSThread sleepForTimeInterval:1];
+NSLog(@"group1");
+});
+dispatch_group_async(group, queue, ^{
+[NSThread sleepForTimeInterval:2];
+NSLog(@"group2");
+});
+dispatch_group_async(group, queue, ^{
+[NSThread sleepForTimeInterval:3];
+NSLog(@"group3");
+});
+dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+NSLog(@"updateUI");
+});
+```
+
+* dispatch_barrier_async
+在前面的任务执行结束后它才执行，而且等它执行完成之后后面的任务才会执行。
+```
+dispatch_queue_t queue = dispatch_queue_create("barrier", DISPATCH_QUEUE_CONCURRENT);
+dispatch_async(queue, ^{
+[NSThread sleepForTimeInterval:2];
+NSLog(@"dispatch_async1");
+});
+dispatch_async(queue, ^{
+[NSThread sleepForTimeInterval:4];
+NSLog(@"dispatch_async2");
+});
+dispatch_barrier_async(queue, ^{
+NSLog(@"dispatch_barrier_async");
+[NSThread sleepForTimeInterval:4];
+
+});
+dispatch_async(queue, ^{
+[NSThread sleepForTimeInterval:1];
+NSLog(@"dispatch_async3");
+});
+```
+
+* dispatch_apply：执行某个代码片段N次。
+注意：这个方法没有办法异步执行（为了不阻塞线程可以使用dispatch_async()包装一下再执行）
+```
+dispatch_apply(5, queue, ^(size_t index) {
+// 执行5次
+});
+```
+
+* dispatch_suspend(myQueue)： 挂起队列
+* dispatch_resume(myQueue)：恢复队列
+注意：调用dispatch_suspend会增加队列挂起的引用计数，而调用dispatch_resume则会减少引用计数，当引用计数大于0时，队列会保持挂起状态。因此，这队列的挂起和恢复中，我们需要小心使用以避免引用计数计算错误的出现。
+
+#### NSOperation
+* NSOperation本身是抽象类，只能只有它的子类，三个子类分别是：NSBlockOperation、NSInvocationOperation以及自定义继承自NSOperation的类
+
+* 队列
+1.主队列：通过mainQueue获得，凡是放到主队列中的任务都将在主线程执行
+2.非主队列：直接alloc init出来的队列。非主队列同时具备了并发和串行的功能，通过设置最大并发数属性来控制任务是并发执行还是串行执行
+```
+//1.创建队列
+NSOperationQueue *queue = [[NSOperationQueue alloc]init];
+//2.设置最大并发数
+//注意点：该属性需要在任务添加到队列中之前进行设置
+//该属性控制队列是串行执行还是并发执行
+//如果最大并发数等于1，那么该队列是串行的，如果大于1那么是并行的
+//系统的最大并发数有个默认的值，为-1，如果该属性设置为0，那么不会执行任何任务
+queue.maxConcurrentOperationCount = 2;
+```
+
+* 线程通信：设置依赖关系
+```
+//操作A依赖于操作B，线程操作队列在启动线程时就会首先执行B操作，然后执行A。
+[operationA addDependency:operationB];
+```
+
 ### 多线程下，NSMutableArray需不需要开启线程保护
+待解决
 
-### 线程间通信
-
-### 线程同步
-1.dispatch_group 线程组
-2.dispatch_barrier
-3.dispatch_semaphore 信号量
-
-## 锁（解决抢夺资源问题）
-1.@synchronized
-```
-@synchronized(self)
-{
-// 这段代码对其他 @synchronized(self) 都是互斥的
-// self 指向同一个对象
-}
-```
-
-2.NSLock
+## 锁
+1.NSLock
 ```
 NSLock *theLock = [[NSLock alloc] init];
-if ([theLock lock])
-{
-//do something here
-[theLock unlock];
-}
-```
-
-3.NSRecursiveLock 递归锁
-```
-NSRecursiveLock *theLock = [[NSRecursiveLock alloc] init];
-void MyRecursiveFunction(int value)
-{
 [theLock lock];
-if (value != 0)
-<span style="font-size:14px;"> </span>{
-–value;
-MyRecursiveFunction(value);
-}
+//dosomething
 [theLock unlock];
-}
-
-MyRecursiveFunction(5);
 ```
 
-4.NSConditionLock 条件锁
+2.NSConditionLock 条件锁
 ```
 //公共部分
 id condLock = [[NSConditionLock alloc] initWithCondition:NO_DATA];
@@ -577,35 +740,99 @@ while (true) {
 }
 ```
 
-5.分布锁
-文件方式实现，可以跨进程
-用tryLock方法获取锁。
-用unlock方法释放锁。
-如果一个获取锁的进程在释放锁之前挂了，那么锁就一直得不到释放了，此时可以通过breakLock强行获取锁。
+3.@synchronized(锁对象){}
+锁对象必须是全局唯一的
+加锁的前提条件：抢夺资源
+作用：线程同步，使多线程按顺序执行
+注意：加锁的位置，加锁会耗费CPU资源
+```
+@synchronized(self)
+{
+// 这段代码对其他 @synchronized(self) 都是互斥的
+}
+```
+
+4.GCD
+```
+/*初始化信号量
+参数是信号量初始值
+*/
+_semaphore=dispatch_semaphore_create(1);
+/*信号等待
+第二个参数：等待时间
+*/
+dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+//dosomething
+}
+//信号通知
+dispatch_semaphore_signal(_semaphore);
+```
+
+* 其他锁
+递归锁：NSRecursiveLock
+分布锁：NSDistributedLock，它本身是一个互斥锁，基于文件方式实现锁机制，可以跨进程访问。
+互斥锁：如果共享数据已经有其他线程加锁了，线程会进入休眠状态等待锁。一旦被访问的资源被解锁，则等待资源的线程会被唤醒。
+自旋锁：如果共享数据已经有其他线程加锁了，线程会以死循环的方式等待锁，一旦被访问的资源被解锁，则等待资源的线程会立即执行。
+
+## runtime与runloop
+[iOS runtime与runloop学习笔记](https://guchunli.github.io/2017/03/22/iOS-runtime学习笔记/)
 
 ## 数据持久化
 ### plist文件（属性列表）
 ### preference（偏好设置）
 ### NSKeyedArchiver（归档）
+#### 实现NSCoding的自动归档和解档
+
 ### SQLite 3
 ### CoreData
 
 ## 网络请求
+### http与https
+https：HTTP下加入SSL层
+区别：
+1.https协议需要到ca申请证书。
+2.http是超文本传输协议，信息是明文传输，https 则是具有安全性的ssl加密传输协议。
+3.http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。
 
-### SDWebImage缓存机制
+### ATS
+NSAppTransportSecurity：ATS配置的根节点，配置了节点表示告诉系统要走自定义的ATS设置。
+NSAllowsAritraryLoads：是否禁用ATS特性，设置YES就是禁用ATS功能。
 
-### NSCache优于NSDictionary的地方
-1.当系统资源将要耗尽时，NSCache可以自动删减缓存
-2.NSCache是线程安全的，而NSDictionary则绝对不具备此优势
+### 加密
+1.对称加密
+1）加密/解密使用相同的密钥
+2）加密和解密的过程是可逆的
+3）经典算法：AES,DES
+
+2.非对称加密
+1）使用公钥加密，使用私钥解密，公钥是公开的，私钥保密
+2）加密处理安全，但是性能极差
+3）经典算法：RSA
+
+
+### 为什么会废弃NSURLConnection而使用NSURLSession这个网络类呢?
 
 ## 设计模式
 
 ### block
+实质是OC对象
+
+* 为什么在默认情况下无法修改被block捕获的变量？
+Block只捕获Block中会用到的变量。由于只捕获了自动变量(自动变量是以值传递方式传递到Block的构造函数里面)的值，并非内存地址，所以Block内部不能改变自动变量的值。Block捕获的外部变量可以改变值的是静态变量，静态全局变量，全局变量。
+
+#### 函数指针与指针函数
 
 ### 为什么代理用weak，delegate和dataSource有什么区别，delegate和block的区别
 1.weak指明该对象不会保持delegate，delegate这个对象的销毁由外部控制，strong会强引用delegate，外界不能销毁delegate，会导致循环引用。
 2.datasource是关于数据的，都有哪些属性，值等；delegate时关于操作的，有什么方法可以调用。
 3.delegate和block都可以回调。delegate是个对象，调用代理协议函数完成操作。block是传递一个函数指针，利用函数指针执行来进行回调。内存管理上，delegate不需要保存引用，block对数据又copy的处理。
+
+### KVO
+
+###
+* 协议有控制链(has-a)的关系，通知没有。
+* 通知：一对多。代理/block：一对一。
+* OC中的多继承用委托代理实现
 
 ### MVC/MVP/MVVM
 1.MVC
@@ -668,7 +895,28 @@ while (true) {
 2.前台到后台：WillResignActive->DidEnterBackground
 3.后台到前台：WillEnterForeground->DidBecomeActive
 
+### 事件传递/事件响应
+传递：application->window->controller->view
+响应：view->controller->window->application
+```
+//作用：返回一个view来响应事件
+//如果调用了父类的这个方法，那系统就要调用方法pointInside方法，通过这个方法的返回值，来判断当前这个view能不能响应消息。
+//如果没有调用父类的方法，那就根据这个方法返回的view，作为响应事件的view。（当然返回nil，就是这个view不响应）
+- (nullableUIView *)hitTest:(CGPoint)point withEvent:(nullableUIEvent *)event；
+
+//作用：返回的值可以用来判断是否继续遍历子视图（返回的根据是触摸的point是否在view的frame范围内）
+//如果返回的是no，那就不用再去遍历它的子视图，hitTest方法返回的view就是可以响应事件的view。
+//如果返回的是YES，那就去遍历它的子视图
+- (BOOL)pointInside:(CGPoint)point withEvent:(nullableUIEvent *)event；
+```
+
 # 中级
+## category分类与extension
+1.category与extension的区别
+* category可以不用继承系统类，直接给系统类添加方法，最大程度的体现了Objective-C的动态语言特性。可以用来定义私有方法。
+* extension为一个类增加私有方法,属性或成员变量,并且新添加的方法一定要予以实现。Extension都是放在.m文件中@implementation的上方。
+区别：Extension可以添加属性，category不可以。另外Extension添加的方法是必须要实现的。
+2.OC中的私有变量用@private修饰，私有方法用category
 
 ## 动画
 
@@ -678,15 +926,13 @@ while (true) {
 2.性能
 3.错误定位困难
 
-## application，view／controller加载顺序
-
-## runtime
-
-## runloop
-
 ## 类结构
 
-## UICollectionViewLayout
+## UICollectionView
+### UICollectionViewLayout
+* UICollectionView如何显示内容完全由layout(布局对象)决定
+UICollectionViewLayout：是一个抽象类，一般情况使用UICollectionViewLayout的子类即可, 只有需要自定义cell显示样式时才需要定义一个类继承于UICollectionViewLayout来自己实现
+UICollectionViewFlowLayout(流水布局): 该类是UICollectionViewLayout的子类, 系统已经提供了默认的实现
 <!--调用顺序：-->
 <!--1.prepareLayout-->
 <!--2.-(CGSize) collectionViewContentSize-->
@@ -697,25 +943,171 @@ while (true) {
 
 # 高级
 
+## UIView 与 CALayer
+UIView 的绘制是建立在 CoreGraphic 上的，使用的是 CPU。
+CALayer 使用的是 Core Animation，CPU，GPU 通吃，由系统决定使用哪个。
+* 绘制
+View：自下向上的一层一层的绘制，然后渲染。
+Layer处理的是 Texure，利用 GPU 的 Texture Cache 和独立的浮点数计算单元加速 纹理 的处理。
+
+* 从事件的响应来说：
+UIView是 CALayer 的代理，layer本身并不能响应事件，因为layer是直接继承自NSObject，不具备处理事件的能力。而 UIView 是继承了UIResponder 的，这也是事件转发的角度上说明，view要比单纯的layer复杂的多。多层次的view再加上各种手势的处理势必导致帧数的下降。
+
+## UITableview的优化方法
+1.缓存高度：更新界面之前就把每个 cell 的高度算好，缓存到相对应的 model 中
+2.异步绘制
+```
+//异步绘制
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    CGRect rect = CGRectMake(0, 0, 100, 100);
+    UIGraphicsBeginImageContextWithOptions(rect.size, YES, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [[UIColor lightGrayColor] set];
+    CGContextFillRect(context, rect);
+
+    //将绘制的内容以图片的形式返回，并调主线程显示
+    UIImage *temp = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    // 回到主线程
+    dispatch_async(dispatch_get_main_queue(), ^{
+    //code
+    });
+});
+```
+3.减少层级：减少SubViews的数量, 在滑动的列表上，多层次的view会导致帧数的下降。
+4.hide：尽量少用addView给Cell动态添加View，可以初始化时就添加，然后通过hide来控制是否显示
+5.避免离屏渲染
+（1）当有图像时，预渲染图像，在bitmap context先将其画一遍，导出成UIImage对象，然后再绘制到屏幕，这会大大提高渲染速度
+（2）尽量不要使用透明背景，将cell的opaque值设为Yes，背景色不要使用clearColor，尽量不要使用阴影渐变等
+（3）可以在UIView的drawRect方法中自定义绘制
+（4）正确地使用UITableViewCell的重用机制
+（5）避免阻塞主线程
+（6）尽可能重用开销比较大的对象
+（7）尽量减少计算的复杂度
+
 ## iOS各版本差异
+### iOS9
+1.UIStackView
+
+2.ATS
+
+### iOS11
+
 
 ## 性能优化，内存泄漏
+### time profile
+
+### leaks
 
 ## git
 
-## cocoapods私有库
-
 ## 原生与js交互
 
-## openGL
-
-## 音视频播放，直播，ffmpeg
+## 动画效果
 
 ## swift
+```
+//swift中的let是线程安全的
+static let instance: NetworkTools = NetworkTools()
+class func shareNetworkTools() -> NetworkTools{
+return instance
+}
+```
 
 ## react native
 
+### 组件化
 
+## 第三方库
+
+### SDWebImage
+* 缓存路径
+默认情况下，图片是被存储到`内存`缓存和`磁盘`缓存中的。如果仅仅是想缓存到内存中，可以用方法：storeImage:forKey:toDisk: 第三个参数传NO即可。
+* 查找显示图片
+sd加载一张图片的时候，会先在内存里面查找是否有这张图片，如果没有会根据图片的md5(url)后的名称去沙盒里面去寻找，是否有这张图片，如果没有会开辟线程去下载，下载完毕后加载到imageview上面，并md(url)为名称缓存到沙盒里面。
+* SDWebImage缓存到本地沙盒的哪个路径
+`NSCachesDirectory`，SDImageCache 在初始化的时候会注册一些消息通知，在内存警告或退到后台的时 候清理内存图片缓存，应用结束的时候清理过期图片
+* SDWebImage加载图片的流程
+思路：placeholderImage->内存中查找->硬盘中查找（如有，缓存到内存）->如没有，下载->解码->保存到内存和硬盘
+详细流程：
+1.入口 setImageWithURL:placeholderImage:options:会先把 placeholderImage显示，然后 SDWebImageManager根据 URL 开始处理图片。
+2.进入SDWebImageManager 类中downloadWithURL:delegate:options:userInfo:，交给
+SDImageCache从缓存查找图片是否已经下载
+queryDiskCacheForKey:delegate:userInfo:.
+3.先从内存图片缓存查找是否有图片，如果内存中已经有图片缓存，SDImageCacheDelegate回调 imageCache:didFindImage:forKey:userInfo:到
+SDWebImageManager。
+4.SDWebImageManagerDelegate 回调
+webImageManager:didFinishWithImage: 到 UIImageView+WebCache,等前端展示图片。
+5.如果内存缓存中没有，生成 ｀NSOperation ｀
+添加到队列，开始从硬盘查找图片是否已经缓存。
+6.根据 URL的MD5值Key在硬盘缓存目录下尝试读取图片文件。这一步是在 NSOperation 进行的操作，所以回主线程进行结果回调 notifyDelegate:。
+7.如果上一操作从硬盘读取到了图片，将图片添加到内存缓存中（如果空闲内存过小， 会先清空内存缓存）。SDImageCacheDelegate'回调 imageCache:didFindImage:forKey:userInfo:。进而回调展示图片。
+8.如果从硬盘缓存目录读取不到图片，说明所有缓存都不存在该图片，需要下载图片， 回调 imageCache:didNotFindImageForKey:userInfo:。
+9.共享或重新生成一个下载器 SDWebImageDownloader开始下载图片。
+10.图片下载由 NSURLSession 来做，实现相关 delegate
+来判断图片下载中、下载完成和下载失败。
+11.connection:didReceiveData: 中利用 ImageIO做了按图片下载进度加载效果。
+12.connectionDidFinishLoading: 数据下载完成后交给 SDWebImageDecoder做图片解码处理。
+13.图片解码处理在一个 NSOperationQueue完成，不会拖慢主线程 UI.如果有需要 对下载的图片进行二次处理，最好也在这里完成，效率会好很多。
+14.在主线程 notifyDelegateOnMainThreadWithInfo:
+宣告解码完成 imageDecoder:didFinishDecodingImage:userInfo: 回调给 SDWebImageDownloader`。
+15.imageDownloader:didFinishWithImage:回调给 SDWebImageManager告知图片 下载完成。
+16. 通知所有的 downloadDelegates下载完成，回调给需要的地方展示图片。
+17.将图片保存到 SDImageCache中，内存缓存和硬盘缓存同时保存。写文件到硬盘 也在以单独 NSOperation 完成，避免拖慢主线程。
+18.SDImageCache 在初始化的时候会注册一些消息通知，在内存警告或退到后台的时 候清理内存图片缓存，应用结束的时候清理过期图片。
+19.SDWebImage 也提供了 UIButton+WebCache 和 MKAnnotationView+WebCache，方便使用。
+20.SDWebImagePrefetcher 可以预先下载图片。
+
+#### NSCache优于NSDictionary的地方
+1.当系统资源将要耗尽时，NSCache可以自动删减缓存
+2.NSCache是线程安全的，而NSDictionary则绝对不具备此优势
+
+### cocoapods
+#### 私有库
+远程私有库可以将你的代码传到第三方托管平台进行公司内部开发人员共享,从而实现组件化开发模式
+
+### MJRefresh
+* 基类->基础的下拉/上拉->带有状态文字->(上拉：会回弹到底部/会自动刷新)->能用的子类
+MJRefreshComponent->MJRefreshHeader->MJRefreshStateHeader->MJRefreshNormalHeader/MJRefreshGifHeader
+                                    ->MJRefreshFooter->MJRefreshBackFooter->MJRefreshBackNormalFooter/MJRefreshBackGifFooter
+                                                                   ->MJRefreshAutoFooter->MJRefreshAutoNormalFooter/MJRefreshAutoGifFooter
+                                                    
+* 创建
+block/target-action
+
+* 刷新控件的状态
+```
+typedef NS_ENUM(NSInteger, MJRefreshState) {
+/** 普通闲置状态 */
+MJRefreshStateIdle = 1,
+/** 松开就可以进行刷新的状态 */
+MJRefreshStatePulling,
+/** 正在刷新中的状态 */
+MJRefreshStateRefreshing,
+/** 即将刷新的状态 */
+MJRefreshStateWillRefresh,
+/** 所有数据加载完毕，没有更多的数据了 */
+MJRefreshStateNoMoreData
+};
+```
+
+* 隐藏
+```
+// 隐藏时间
+header.lastUpdatedTimeLabel.hidden = YES;
+// 隐藏状态
+header.stateLabel.hidden = YES;
+```
+
+### fmmpeg框架
+音视频编解码框架，内部使用UDP协议针对流媒体开发，内部开辟了六个端口来接受流媒体数据，完成快速接受之目的。
+
+### 图形和动画 ：Core Animation ，OpenGL ES ，Quartz 2D
+
+### 网络：Bonjour ，WebKit ，BSD Sockets
+Cocoa 网络框架有三层，最底层的是基于 BSD socket库，然后是 Cocoa 中基于 C 的 CFNetwork，最上面一层是 Cocoa 中 Bonjour(法语中的你好)。通常我们无需与 socket 打交道，我们会使用经 Cocoa 封装的 CFNetwork 和 Bonjour 来完成大多数工作。
 
 参考文章：[2017年5月iOS招人心得答案总结](https://www.jianshu.com/p/7d486b24dc21)
 [关于NSMutableArray线程安全的思考和实现](http://blog.csdn.net/kongdeqin/article/details/53171189)
+[OC知识--彻底理解内存管理(MRC、ARC)](https://www.jianshu.com/p/48665652e4e4)
