@@ -904,12 +904,13 @@ Cocoa 网络框架有三层，最底层的是基于 BSD socket库，然后是 Co
 
 ## 设计模式
 ### block
+[OC中的block](https://guchunli.github.io/2017/07/01/OC中的block/)
 实质是OC对象
 
 * 为什么在默认情况下无法修改被block捕获的变量？
 Block只捕获Block中会用到的变量。由于只捕获了自动变量(自动变量是以值传递方式传递到Block的构造函数里面)的值，并非内存地址，所以Block内部不能改变自动变量的值。Block捕获的外部变量可以改变值的是静态变量，静态全局变量，全局变量。
 
-#### 函数指针与指针函数
+#### 函数指针
 
 ### 为什么代理用weak，delegate和dataSource有什么区别，delegate和block的区别
 1.weak指明该对象不会保持delegate，delegate这个对象的销毁由外部控制，strong会强引用delegate，外界不能销毁delegate，会导致循环引用。
@@ -917,7 +918,6 @@ Block只捕获Block中会用到的变量。由于只捕获了自动变量(自动
 3.delegate和block都可以回调。delegate是个对象，调用代理协议函数完成操作。block是传递一个函数指针，利用函数指针执行来进行回调。内存管理上，delegate不需要保存引用，block对数据又copy的处理。
 
 ### KVO
-
 
 ### delegate
 
@@ -1013,61 +1013,33 @@ Block只捕获Block中会用到的变量。由于只捕获了自动变量(自动
 3.category为什么不能添加属性
 category 它是在运行期决议的。 因为在运行期即编译完成后，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的。
 
-## 动画
-
 ## xib,storyboard,autolayout
 缺点：
 1.难以维护
 2.性能
 3.错误定位困难
 
-## 类结构
-
-## UICollectionView
-### UICollectionViewLayout
-* UICollectionView如何显示内容完全由layout(布局对象)决定
-UICollectionViewLayout：是一个抽象类，一般情况使用UICollectionViewLayout的子类即可, 只有需要自定义cell显示样式时才需要定义一个类继承于UICollectionViewLayout来自己实现
-UICollectionViewFlowLayout(流水布局): 该类是UICollectionViewLayout的子类, 系统已经提供了默认的实现
-<!--调用顺序：-->
-<!--1.prepareLayout-->
-<!--2.-(CGSize) collectionViewContentSize-->
-<!--3.-(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect-->
-
-
-
-
-# 高级
-
-## UIView 与 CALayer
-UIView 的绘制是建立在 CoreGraphic 上的，使用的是 CPU。
-CALayer 使用的是 Core Animation，CPU，GPU 通吃，由系统决定使用哪个。
-* 绘制
-View：自下向上的一层一层的绘制，然后渲染。
-Layer处理的是 Texure，利用 GPU 的 Texture Cache 和独立的浮点数计算单元加速 纹理 的处理。
-
-* 从事件的响应来说：
-UIView是 CALayer 的代理，layer本身并不能响应事件，因为layer是直接继承自NSObject，不具备处理事件的能力。而 UIView 是继承了UIResponder 的，这也是事件转发的角度上说明，view要比单纯的layer复杂的多。多层次的view再加上各种手势的处理势必导致帧数的下降。
-
-## UITableview的优化方法
+## UITableView
+### 性能优化
 1.缓存高度：更新界面之前就把每个 cell 的高度算好，缓存到相对应的 model 中
 2.异步绘制
 ```
 //异步绘制
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    CGRect rect = CGRectMake(0, 0, 100, 100);
-    UIGraphicsBeginImageContextWithOptions(rect.size, YES, 0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [[UIColor lightGrayColor] set];
-    CGContextFillRect(context, rect);
+CGRect rect = CGRectMake(0, 0, 100, 100);
+UIGraphicsBeginImageContextWithOptions(rect.size, YES, 0);
+CGContextRef context = UIGraphicsGetCurrentContext();
+[[UIColor lightGrayColor] set];
+CGContextFillRect(context, rect);
 
-    //将绘制的内容以图片的形式返回，并调主线程显示
-    UIImage *temp = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+//将绘制的内容以图片的形式返回，并调主线程显示
+UIImage *temp = UIGraphicsGetImageFromCurrentImageContext();
+UIGraphicsEndImageContext();
 
-    // 回到主线程
-    dispatch_async(dispatch_get_main_queue(), ^{
-    //code
-    });
+// 回到主线程
+dispatch_async(dispatch_get_main_queue(), ^{
+//code
+});
 });
 ```
 3.减少层级：减少SubViews的数量, 在滑动的列表上，多层次的view会导致帧数的下降。
@@ -1081,32 +1053,97 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 （6）尽可能重用开销比较大的对象
 （7）尽量减少计算的复杂度
 
+#### UITableView的滚动加载进行优化，防止卡顿
+1.减少cellForRowAtIndexPath代理中的计算量（cell的内容计算）
+首先要提前计算每个cell中需要的一些基本数据，代理调用的时候直接取出；
+图片要异步加载，加载完成后再根据cell内部UIImageView的引用设置图片；
+图片数量多时，图片的尺寸要跟据需要提前经过transform矩阵变换压缩好（直接设置图片的contentMode让其自行压缩仍然会影响滚动效率），必要的时候要准备好预览图和高清图，需要时再加载高清图。
+图片的‘懒加载'方法，即延迟加载，当滚动速度很快时避免频繁请求服务器数据。
+尽量手动Drawing视图提升流畅性，而不是直接子类化UITableViewCell，然后覆盖drawRect方法，因为cell中不是只有一个contentview。绘制cell不建议使用UIView，建议使用CALayer。原因要参考UIView和CALayer的区别和联系。
+
+2.减少heightForRowAtIndexPath代理中的计算量（cell的高度计算）
+由于每次TableView进行update更新都会对每一个cell调用heightForRowAtIndexPath代理取得最新的height，会大大增加计算时间。如果表格的所有cell高度都是固定的，那么去掉heightForRowAtIndexPath代理，直接设置TableView的rowHeight属性为固定的高度；
+如果高度不固定，应尽量将cell的高度数据计算好并储存起来，代理调用的时候直接取，即将height的计算时间复杂度降到O(1)。例如：在异步请求服务器数据时，提前将cell高度计算好并作为dataSource的一个数据存到数据库供随时取用。
+
+### 重用机制
+* 可变数组，用来保存当前显示的cell
+```
+NSMutableArray *visiableCells
+```
+* 可变字典，用来保存可复用的cell
+```
+NSMutableDictionary *reusableTableCells
+```
+可复用的cell使用字典是因为可复用的cell可能不只有一种样式，这里需要字典指定key(也就是reuseIdentifier)来查找是否有可重用样式
+
+#### 重用原理
+* 底端出现的cell：reusableTableCells（取出）-> visiableCells（放入）
+* 顶端消失的cell：visiableCells（取出）-> reusableTableCells（放入）
+*  visiableCells当中如果没有该标识符，alloc即可
+
+在这里先假设iPhone屏幕最多能显示10个cell
+1.创建11（最多能显示的次数+1）个单元格
+用[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier]创建11次cell，并给cell指定相同的重用标识(当然，能够为不同显示类型的cell指定不同的标识)。而且11个cell所有都增加到visiableCells数组，`此时的reusableTableCells为空`。
+2.向下拖动tableView，当cell1全然移出屏幕，而且cell11(它也是alloc出来的，原因同上)全然显示出来的时候。cell11增加到visiableCells，cell1移出visiableCells，增加到reusableTableCells。
+3.接下来的拖动当中显示新的cell，cellForRowAtIndexPath会调用，这个时候就执行重用API：传入一个CellIdentifier
+接着向下拖动tableView，由于reusableTableCells中已经有值，所以，当须要显示新的cell，cellForRowAtIndexPath再次被调用的时候，tableView dequeueReusableCellWithIdentifier:CellIdentifier，返回cell1。cell1增加到visiableCells，cell1移出reusableTableCells；cell2移出visiableCells，增加到reusableTableCells。之后Cell就能够正常重用了。
+
+* 并不是只有超过屏幕的时候才更新reusableTableCells数组，reloadData方法 和 reloadRowsAtIndex(可能) 对数组进行更新
+1. reloadData，这样的情况比较特殊。通常是部分数据发生变化，须要又一次刷新cell显示的内容时调用。在cellForRowAtIndexPath调用中，全部cell都是重用的。我预计reloadData调用后，把visiableCells中全部cell移入reusableTableCells，visiableCells清空。cellForRowAtIndexPath调用后，再把reuse的cell从reusableTableCells取出来，放入到visiableCells。
+2. reloadRowsAtIndex，刷新指定的IndexPath。假设调用时reusableTableCells为空，那么cellForRowAtIndexPath调用后，是新创建cell，新的cell增加到visiableCells。老的cell移出visiableCells，增加到reusableTableCells。于是，之后的刷新就有cell做reuse了。
+
+
+## UICollectionView
+### UICollectionViewLayout
+* UICollectionView如何显示内容完全由layout(布局对象)决定
+UICollectionViewLayout：是一个抽象类，一般情况使用UICollectionViewLayout的子类即可, 只有需要自定义cell显示样式时才需要定义一个类继承于UICollectionViewLayout来自己实现
+UICollectionViewFlowLayout(流水布局): 该类是UICollectionViewLayout的子类, 系统已经提供了默认的实现
+<!--调用顺序：-->
+<!--1.prepareLayout-->
+<!--2.-(CGSize) collectionViewContentSize-->
+<!--3.-(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect-->
+
+# 高级
+
+## UIView 与 CALayer
+UIView 的绘制是建立在 CoreGraphic 上的，使用的是 CPU。
+CALayer 使用的是 Core Animation，CPU，GPU 通吃，由系统决定使用哪个。
+* 绘制
+View：自下向上的一层一层的绘制，然后渲染。
+Layer处理的是 Texure，利用 GPU 的 Texture Cache 和独立的浮点数计算单元加速 纹理 的处理。
+
+* 从事件的响应来说：
+UIView是 CALayer 的代理，layer本身并不能响应事件，因为layer是直接继承自NSObject，不具备处理事件的能力。而 UIView 是继承了UIResponder 的，这也是事件转发的角度上说明，view要比单纯的layer复杂的多。多层次的view再加上各种手势的处理势必导致帧数的下降。
+
 ## iOS各版本差异
 ### iOS9
 1.UIStackView
-
 2.ATS
 
 ### iOS11
 
-
 ## 性能优化，内存泄漏
-### time profile
-
-### leaks
+[iOS调试与性能优化学习笔记](https://guchunli.github.io/2017/06/05/iOS调试与性能优化学习笔记/)
+[iOS最全性能优化](https://www.jianshu.com/p/9c450e512020)
+[iOS提高界面流畅度的技巧](https://guchunli.github.io/2017/12/19/iOS提高界面流畅度的技巧/)
 
 ## git
+[git学习笔记](https://guchunli.github.io/2017/03/03/git学习笔记/)
 
 ## 原生与js交互
+[OC与JS交互的几种方法](https://guchunli.github.io/2017/07/04/OC与JS交互的几种方法/)
 
 ## RAC 函数式，响应式编程
+[ReactiveCocoa学习笔记](https://guchunli.github.io/2017/05/20/ReactiveCocoa学习笔记/)
+
 
 ## 动画效果
+[iOS动画学习笔记](iOS动画学习笔记)
+[RAC与Target-Action、通知、代理、KVO](https://guchunli.github.io/2017/04/23/RAC与Target-Action、通知、代理、KVO/)
 
-### 组件化
+## 组件化
 
 ## 第三方库
-
 ### SDWebImage
 * 缓存路径
 默认情况下，图片是被存储到`内存`缓存和`磁盘`缓存中的。如果仅仅是想缓存到内存中，可以用方法：storeImage:forKey:toDisk: 第三个参数传NO即可。
@@ -1207,7 +1244,11 @@ return sharedInstance;
 }
 ```
 
+[Swift学习笔记](https://guchunli.github.io/2017/07/14/Swift学习笔记/)
+
 ## react native
+[ReactNative基础知识学习笔记](https://guchunli.github.io/2017/07/06/ReactNative基础知识学习笔记/)
+[ReactNative使用学习笔记](https://guchunli.github.io/2017/06/21/ReactNative使用学习笔记/)
 
 参考文章：[2017年5月iOS招人心得答案总结](https://www.jianshu.com/p/7d486b24dc21)
 [关于NSMutableArray线程安全的思考和实现](http://blog.csdn.net/kongdeqin/article/details/53171189)
