@@ -17,7 +17,7 @@ sudo chown -R $(whoami) /usr/local
 $ sudo chown -R $(whoami) /usr/local
 $ brew install carthage
 ```
-
+<!--more-->
 ### 创建Cartfile文件
 ```
 vim Cartfile
