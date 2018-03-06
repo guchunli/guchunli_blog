@@ -809,11 +809,100 @@ NSAllowsAritraryLoads：是否禁用ATS特性，设置YES就是禁用ATS功能�
 2）加密处理安全，但是性能极差
 3）经典算法：RSA
 
+### 原生网络请求类
+#### NSURL
+作用：对传入的字符串类型采用 ASCII 编码格式
+URL最重要的三个部分是 (scheme 方案), (host 主机), (path 路径)
+scheme：协议名，如“http”
+host：主机域名或 IP 地址。
+port ：端口号。
+path等
 
-### 为什么会废弃NSURLConnection而使用NSURLSession这个网络类呢?
+#### 请求报文和响应报文
+* 请求首部
+1.GET /api/J1/getJ1List HTTP/1.1：请求方式，请求路径，http版本号
+2.Host: localhost：3001，主机名，端口号
+3.Connection: 连接类型为keep-alive
+4.Pragma: no-cache，随报文传送指示的方式
+5.Cache-Control : no-cache，随报文传送缓存指示
+6.Accept: application/json, text/plain, */*，接受的任意媒体类型, 和响应首部的Content-Type信息对照
+7.Origin:  http://localhost:3000，当前访问域名, 与Access-Control-Allow-Origin信息对照
+8.User-Agent: Mozilla/5.0，发起请求的应用程序名称
+9.Referer: http://localhost:3000/，提供了包含当前请求URI的文档的URL
+10.Accept-Encoding: gzip, deflate, br，告诉服务器能够发送哪些编码方式.
+11.Accept-Language: zh-CN,zh;q=0.8，告诉服务器能够发送哪些语言.
+
+* 响应首部
+1.http版本号，状态码，原因
+2.content-Type：如application/json; charset=utf-8，用以区分传输资源
+3.Content-Length：主体部分字节长度
+4.Date：响应日期.
+5.Connection ：连接类型为keep-alive.
+6.Access-Control-Allow-Origin ：服务器域名
+7.Access-Control-Allow-Methods：服务器实现的方法，GET,HEAD,PUT,POST,DELETE。
+
+#### TCP/IP
+HTTP要传送一条报文时, 会以流的形式将报文数据的内容通过一条打开的TCP链接按序传输, TCP收到数据流之后, 会将数据流砍成被称作段的小数据块, 并将段封装在IP分组中.
+
+#### NSURLConnection
+* 为什么会废弃NSURLConnection而使用NSURLSession这个网络类呢?
+NSURLConnection在iOS9以后已经被苹果弃用了
+1.NSURLSession针对下载/上传等复杂的网络操作提供了专门的解决方案，针对普通、上传和下载分别对应三种不同的网络请求任务
+2.下载任务方式
+NSURLConnection下载文件时，先将整个文件下载到内存，然后再写入沙盒，如果文件比较大，就会出现内存暴涨的情况。
+而使用NSURLSessionUploadTask下载文件，会默认下载到沙盒中的tem文件夹中，不会出现内存暴涨的情况，但在下载完成后会将tem中的临时文件删除，需要在初始化任务方法时，在completionHandler回调中增加保存文件的代码。
+3.请求方法的控制
+NSURLConnection实例化对象，实例化开始，默认请求就发送（同步发送），不需要调用start方法。而cancel 可以停止请求的发送，停止后不能继续访问，需要创建新的请求。
+NSURLSession有三个控制方法，取消（cancel），暂停（suspend），继续（resume），暂停后可以通过继续恢复当前的请求任务。
+4.断点续传的方式
+5.配置信息
+NSURLSessionConfiguration类的参数可以设置配置信息，其决定了cookie，安全和高速缓存策略，最大主机连接数，资源管理，网络超时等配置
+6.支持app进入后台后的下载等处理。自带多线程，防死锁
+
+#### NSURLSession
+1.NSURLSession：会话对象，异步请求, dataTask默认是关闭状态, 需要手动开启dataTask.resume().
+2.NSURLSessionConfiguration
+* 配置不同的NSURLSession
+```
+defaultSessionConfiguration //默认配置使用的是持久化的硬盘缓存，存储证书到用户钥匙链。存储cookie到shareCookie。
+ephemeralSessionConfiguration //不使用永久持存cookie、证书、缓存的配置，最佳优化数据传输。
+backgroundSessionConfigurationWithIdentifier //可以上传下载HTTP和HTTPS的后台任务(程序在后台运行)
+```
+
+* 统一设置超时时间、请求头等信息
+```
+// 构造NSURLSessionConfiguration
+NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+//设置请求超时为10秒钟
+configuration.timeoutIntervalForRequest = 10;
+
+//在蜂窝网络情况下是否继续请求（上传或下载）
+configuration.allowsCellularAccess = NO;
+
+//配置请求头
+configuration.HTTPAdditionalHeaders =@{@"Content-Encoding":@"gzip"};
+```
+
+3.NSURLSessionTask
+```
+NSURLSessionDataTask  //一般的get、post等请求
+NSURLSessionUploadTask // 用于上传文件或者数据量比较大的请求
+NSURLSessionDownloadTask //用于下载文件或者数据量比较大的请求
+NSURLSessionStreamTask //建立一个TCP / IP连接的主机名和端口或一个网络服务对象。
+```
+
+函数：
+```
+- (void)suspend;//暂停
+- (void)resume;//开始或者恢复
+- (void)cancel;//关闭任务
+```
+
+### Bonjour ，WebKit ，BSD Sockets
+<!--Bonjour(法语中的你好)-->
+Cocoa 网络框架有三层，最底层的是基于 BSD socket库，然后是 Cocoa 中基于 C 的 CFNetwork，最上面一层是 Cocoa 中Foundation 。
 
 ## 设计模式
-
 ### block
 实质是OC对象
 
@@ -829,10 +918,17 @@ Block只捕获Block中会用到的变量。由于只捕获了自动变量(自动
 
 ### KVO
 
-###
+
+### delegate
+
+### 通知
+
+#### delegate与通知的区别
 * 协议有控制链(has-a)的关系，通知没有。
 * 通知：一对多。代理/block：一对一。
 * OC中的多继承用委托代理实现
+
+### 单例
 
 ### MVC/MVP/MVVM
 1.MVC
@@ -853,9 +949,6 @@ Block只捕获Block中会用到的变量。由于只捕获了自动变量(自动
 双向绑定，view的变动自动反应在viewmodel，反之亦然。
 
 通信方式：view<->viewmodel<- &->model
-
-### 函数式，响应式编程
-
 
 ## App启动顺序
 1.加载main函数
@@ -1004,18 +1097,9 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 ## 原生与js交互
 
+## RAC 函数式，响应式编程
+
 ## 动画效果
-
-## swift
-```
-//swift中的let是线程安全的
-static let instance: NetworkTools = NetworkTools()
-class func shareNetworkTools() -> NetworkTools{
-return instance
-}
-```
-
-## react native
 
 ### 组件化
 
@@ -1105,8 +1189,23 @@ header.stateLabel.hidden = YES;
 
 ### 图形和动画 ：Core Animation ，OpenGL ES ，Quartz 2D
 
-### 网络：Bonjour ，WebKit ，BSD Sockets
-Cocoa 网络框架有三层，最底层的是基于 BSD socket库，然后是 Cocoa 中基于 C 的 CFNetwork，最上面一层是 Cocoa 中 Bonjour(法语中的你好)。通常我们无需与 socket 打交道，我们会使用经 Cocoa 封装的 CFNetwork 和 Bonjour 来完成大多数工作。
+## swift
+```
+//swift中的let是线程安全的
+static let instance: NetworkTools = NetworkTools()
+class func shareNetworkTools() -> NetworkTools{
+return instance
+}
+
+private let sharedInstance = Singleton()
+class Singleton: NSObject {
+class var sharedManager: Singleton {
+return sharedInstance;
+}
+}
+```
+
+## react native
 
 参考文章：[2017年5月iOS招人心得答案总结](https://www.jianshu.com/p/7d486b24dc21)
 [关于NSMutableArray线程安全的思考和实现](http://blog.csdn.net/kongdeqin/article/details/53171189)

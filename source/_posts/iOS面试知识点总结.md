@@ -42,7 +42,7 @@ void print(int n)
 ```
 
 5.sdwebimage使用到了哪些缓存机制，缓存到什么路径下。
-Memory 和 Disk 双重 Cache 机制。
+Memory 和 Disk 双重 Cache 机制。缓存到tmp的cache文件夹下，NSCachesDirectory。
 
 6.是否使用或了解过swift，react native，优缺点是什么。
 swift优点：
