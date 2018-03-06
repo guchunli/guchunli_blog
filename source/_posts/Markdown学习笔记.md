@@ -81,3 +81,5 @@ tags: [markdown]
 |   a    |   aa   |    aaa    |
 |   b    |   bb   |    bbb    |
 |   c    |   cc   |    ccc    |
+
+参考文章：[Markdown: Basics （快速入门）](https://www.appinn.com/markdown/basic.html)

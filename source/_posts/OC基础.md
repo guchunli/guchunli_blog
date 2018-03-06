@@ -1010,6 +1010,8 @@ Block只捕获Block中会用到的变量。由于只捕获了自动变量(自动
 * extension为一个类增加私有方法,属性或成员变量,并且新添加的方法一定要予以实现。Extension都是放在.m文件中@implementation的上方。
 区别：Extension可以添加属性，category不可以。另外Extension添加的方法是必须要实现的。
 2.OC中的私有变量用@private修饰，私有方法用category
+3.category为什么不能添加属性
+category 它是在运行期决议的。 因为在运行期即编译完成后，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的。
 
 ## 动画
 
