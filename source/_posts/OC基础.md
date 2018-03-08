@@ -320,7 +320,7 @@ atomic:
 3.内存管理语义：
 strong：在赋值时调用被指向对象的retain方法，使其引用计数+1
 weak：不持有对象，不增加对象的引用计数，对象消失后，指针自动置nil，只适用于对象
-unsafe_unretained：与weak类似，引用计数为0时，不会置nil
+unsafe_unretained：与weak类似，引用计数为0时，不会置nil，__unsafe_unretained 比 __weak 快。当明确知道对象的生命期时，选择 __unsafe_unretained 会有一些性能提升
 assign：不更改引用计数，适用于基础数据类型／对象
 copy：建立一个引用计数为1的对象，与 strong 类似，然而在设置新属性值时并不保留新值，而是拷贝一份
 
@@ -444,9 +444,9 @@ __strong  Person *p1 = [[Person alloc] init];
 __weak  Person *p2 = [[Person alloc] init];
 ```
 
-### AutoreleasePool（队列）
+### AutoreleasePool
 * 只要给对象发送一条autorelease消息，会将对象放到一个自动释放池中，当该pool被释放时,该pool中的所有对象会被调用一次release。
-* 动释放池是以栈的形式存在，栈顶就是离调用autorelease方法最近的自动释放池
+* 自动释放池是以栈的形式存在，栈顶就是离调用autorelease方法最近的自动释放池
 
 * AutoreleasePool的使用
 注意：放到自动释放池代码中的对象，只有调用了 autorelease 方法，对象才会加入到自动释放池
@@ -468,6 +468,9 @@ Person *p = [[Person new] autorelease];
 * autorelease
 返回对象本身，只是把对release的调用延迟了，调用完autorelease方法后，对象的计数器不变
 
+* drain
+销毁一个自动释放池.
+
 * dealloc
 ```
 -(void)dealloc{
@@ -487,7 +490,7 @@ p=nil;
 ```
 
 * NSString *name，非ARC下重写setter,getter方法
-`一旦重写了getter.setter方法,必须使用@synthesize variable = _variable来区分属性名与方法名.`
+`一旦重写了getter,setter方法,必须使用@synthesize variable = _variable来区分属性名与方法名.`
 ```
 -(void)setName:(NSString *)name{
     if (_name != name) {    //首先判断要赋值的变量和当前成员变量是不是同一个变量
@@ -500,6 +503,8 @@ p=nil;
 }
 ```
 
+* 为什么不能同时重写getter,setter？
+用@property声明的成员属性,相当于自动生成了setter getter方法,如果重写了set和get方法,与@property声明的成员属性就不是一个成员属性了,是另外一个实例变量,而这个实例变量需要手动声明。所以会报错误。
 
 ## 多线程（多线程编程指南）
 ### 进程/线程的区别？同步/异步的区别？并行/并发的区别？
@@ -527,8 +532,8 @@ number=1
 串行和并行的区别：任务的执行方式
 串行：任务只能一个接一个执行
 并行：允许任务同时执行，只在异步函数下才有效，不创建新线程无法并行
-全局并发队列：global
-主队列：系统给每一个应用程序提供了三个concurrent dispatch queues，主队列中的任务都会在主线程中执行
+全局并发队列：global，系统给每一个应用程序提供了三个concurrent dispatch queues
+主队列：主队列中的任务都会在主线程中执行
 
 * 异步函数+并行队列：开启多条（不确定几条）子线程，任务并发执行
 * 异步函数+串行队列：开启一条子线程，任务顺序执行
@@ -780,6 +785,7 @@ dispatch_semaphore_signal(_semaphore);
 ## 数据持久化
 ### plist文件（属性列表）
 ### preference（偏好设置）
+### 沙盒
 ### NSKeyedArchiver（归档）
 #### 实现NSCoding的自动归档和解档
 
@@ -1123,6 +1129,9 @@ UIView是 CALayer 的代理，layer本身并不能响应事件，因为layer是�
 ### iOS11
 
 ## 性能优化，内存泄漏
+内存泄漏（memory leak）： 是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄露危害可以忽略，但内存泄露堆积后果很严重，无论多少内存,迟早会被占光。
+内存溢出（out of memory）：程序要求的内存，超出了系统所能分配的范围。如：我们用一个int型4字节的数据来装一个float型8字节的数据，就会产生内存溢出。不过我们在编程是可以强制类型转换int XX = (int)float;只取float 4字节数据给int.
+
 [iOS调试与性能优化学习笔记](https://guchunli.github.io/2017/06/05/iOS调试与性能优化学习笔记/)
 [iOS最全性能优化](https://www.jianshu.com/p/9c450e512020)
 [iOS提高界面流畅度的技巧](https://guchunli.github.io/2017/12/19/iOS提高界面流畅度的技巧/)
@@ -1140,8 +1149,6 @@ UIView是 CALayer 的代理，layer本身并不能响应事件，因为layer是�
 ## 动画效果
 [iOS动画学习笔记](iOS动画学习笔记)
 [RAC与Target-Action、通知、代理、KVO](https://guchunli.github.io/2017/04/23/RAC与Target-Action、通知、代理、KVO/)
-
-## 组件化
 
 ## 第三方库
 ### SDWebImage
@@ -1189,6 +1196,8 @@ webImageManager:didFinishWithImage: 到 UIImageView+WebCache,等前端展示图�
 ### cocoapods
 #### 私有库
 远程私有库可以将你的代码传到第三方托管平台进行公司内部开发人员共享,从而实现组件化开发模式
+
+## 组件化
 
 ### MJRefresh
 * 基类->基础的下拉/上拉->带有状态文字->(上拉：会回弹到底部/会自动刷新)->能用的子类
