@@ -13,13 +13,13 @@ ERROR:  While executing gem ... (OpenSSL::SSL::SSLError)
 <!--more-->
 移除镜像：
 ```
-sources --remove https://ruby.taobao.org/
-sources --remove https://gems.ruby-china.org/
+gem sources --remove https://ruby.taobao.org/
+gem sources --remove https://gems.ruby-china.org/
 ```
 
-使用阿里云镜像：
+使用`https://gems.ruby-china.org/`镜像：
 ```
-gem sources -a http://rubygems-china.oss.aliyuncs.com
+gem sources -a https://gems.ruby-china.org/
 ```
 
 2.查看镜像：
@@ -34,6 +34,7 @@ sudo gem install cocoapods
 
 ## 安装Homebrew
 ```
+//ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 $ curl -LsSf http://github.com/mxcl/homebrew/tarball/master | sudo tar xvz -C/usr/local --strip 1
 Error: /usr/local must be writable!
 $ sudo chown -R $(whoami) /usr/local
