@@ -107,19 +107,19 @@ UIImage *img = self.data[sourceIndexPath.row];
 ```
 //设置item的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-CGFloat itemW = (self.view.frame.size.width-(ItemNumber-1)*5)/(CGFloat)ItemNumber;
+CGFloat itemW = (self.view.frame.size.width-(ItemNumber-1)*Margin-Inset*2-1)/(CGFloat)ItemNumber;
 return CGSizeMake(itemW, itemW);
 }
 //四周的边距
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-return UIEdgeInsetsMake(5.f, 0, 5.f, 0);
+return UIEdgeInsetsMake(Inset, Inset, Inset, Inset);
 }
 //设置垂直间距,默认的垂直和水平间距都是10
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-return 5.f;
+return Margin;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-return 5.f;
+return Margin;
 }
 /*
 //设置header的大小
@@ -260,6 +260,8 @@ break;
 #import "RACollectionViewCell.h"
 #import "WYAlertController.h"
 #define ItemNumber  3
+#define Margin  5.f
+#define Inset   15.f
 
 @interface BaseViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
@@ -536,19 +538,19 @@ if (index == 0) {
 #pragma mark - UICollectionViewDelegateFlowLayout<UICollectionViewDelegate>
 //设置item的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-CGFloat itemW = (self.view.frame.size.width-(ItemNumber-1)*5)/(CGFloat)ItemNumber;
+CGFloat itemW = (self.view.frame.size.width-(ItemNumber-1)*Margin)/(CGFloat)ItemNumber;
 return CGSizeMake(itemW, itemW);
 }
 //四周的边距
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-return UIEdgeInsetsMake(5.f, 0, 5.f, 0);
+return UIEdgeInsetsMake(Inset, Inset, Inset, Inset);
 }
 //设置垂直间距,默认的垂直和水平间距都是10
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-return 5.f;
+return Margin;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-return 5.f;
+return Margin;
 }
 /*
 //设置header的大小
