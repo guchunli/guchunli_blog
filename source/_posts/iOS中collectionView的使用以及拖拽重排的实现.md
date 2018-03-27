@@ -133,6 +133,116 @@ return Margin;
 */
 ```
 
+# 自定义UICollectionViewFlowLayout
+## 在UICollectionViewFlowLayout类中完成四步：
+（1）重写prepareLayout方法
+- 作用：在这个方法中做一些初始化操作，进行基本的布局，不能在init中布局，因为设置collectionView尺寸是在viewDidLoad中，而init在它之前调用，获得的collectionView的尺寸是空的
+- 注意：一定要调用[super prepareLayout]
+
+（2）重写layoutAttributesForElementsInRect:方法
+- 作用：当collectionView的显示范围发生改变的时候，让其内部重新布局
+- 这个方法的返回值是个数组
+- 这个数组中存放的都是UICollectionViewLayoutAttributes对象
+- UICollectionViewLayoutAttributes对象决定了cell的排布方式（frame等）
+
+（3）重写shouldInvalidateLayoutForBoundsChange:方法
+- 作用：如果返回YES，那么collectionView显示的范围发生改变时，就会重新刷新布局
+- 一旦重新刷新布局，就会按顺序调用下面的方法：
+- prepareLayout
+- layoutAttributesForElementsInRect:
+
+（4）重写targetContentOffsetForProposedContentOffset:withScrollingVelocity:方法
+- 作用：返回值决定了collectionView停止滚动时最终的偏移量（contentOffset）
+- 参数：
+- proposedContentOffset：原本情况下，collectionView停止滚动时最终的偏移量
+- velocity：滚动速率，通过这个参数可以了解滚动的方向
+
+## 例如实现一个相册效果，照片滚动到中间放大：
+（1）prepareLayout：cell在最左面的时候是在正中间
+（2）layoutAttributesForElementsInRect：让cell滚动起来
+（3）shouldInvalidateLayoutForBoundsChange：让cell在左右滑动的时候，尺寸放大或缩小
+（4）targetContentOffsetForProposedContentOffset:withScrollingVelocity：让最接近中心的cell在停在正中央
+```
+/**
+6  * 用来做布局的初始化操作（不建议在init方法中进行布局的初始化操作）
+7  */
+8 - (void)prepareLayout
+9 {
+10     [super prepareLayout];
+11     //水平滚动
+12     self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+13
+14     //
+15     CGFloat margin = (self.collectionView.frame.size.width - self.itemSize.width) / 2;
+16     self.collectionView.contentInset = UIEdgeInsetsMake(0, margin, 0, margin);
+17 }
+18
+19 /**
+20  * 当collectionView的显示范围发生改变的时候，是否需要重新刷新布局
+21  * 一旦重新刷新布局，就会重新调用下面的方法：
+22  * 1.prepareLayout
+23  * 2.layoutAttributesForElementsInRect:方法
+24  */
+25 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
+26 {
+27     return YES;
+28 }
+29
+30
+31 /**
+32  * 这个方法的返回值是一个数组（数组里面存放着rect范围内所有元素的布局属性）
+33  * 这个方法的返回值决定了rect范围内所有元素的排布（frame）
+34  */
+35 //需要在viewController中使用上ZWLineLayout这个类后才能重写这个方法！！
+36 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect
+37 {
+38     //让父类布局好样式
+39     NSArray *arr = [super layoutAttributesForElementsInRect:rect];
+40     //计算出collectionView的中心的位置
+41     CGFloat ceterX = self.collectionView.contentOffset.x + self.collectionView.frame.size.width * 0.5;
+42     /**
+43      * 1.一个cell对应一个UICollectionViewLayoutAttributes对象
+44      * 2.UICollectionViewLayoutAttributes对象决定了cell的frame
+45      */
+46     for (UICollectionViewLayoutAttributes *attributes in arr) {
+47         //cell的中心点距离collectionView的中心点的距离，注意ABS()表示绝对值
+48         CGFloat delta = ABS(attributes.center.x - ceterX);
+49         //设置缩放比例
+50         CGFloat scale = 1.1 - delta / self.collectionView.frame.size.width;
+51         //设置cell滚动时候缩放的比例
+52         attributes.transform = CGAffineTransformMakeScale(scale, scale);
+53     }
+54
+55     return arr;
+56 }
+57
+58 /**
+59  * 这个方法的返回值，就决定了collectionView停止滚动时的偏移量
+60  */
+61 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
+62 {
+63     // 计算出最终显示的矩形框
+64     CGRect rect;
+65     rect.origin.y = 0;
+66     rect.origin.x = proposedContentOffset.x;
+67     rect.size = self.collectionView.frame.size;
+68
+69     //获得super已经计算好的布局的属性
+70     NSArray *arr = [super layoutAttributesForElementsInRect:rect];
+71
+72     //计算collectionView最中心点的x值
+73     CGFloat centerX = proposedContentOffset.x + self.collectionView.frame.size.width * 0.5;
+74
+75     CGFloat minDelta = MAXFLOAT;
+76     for (UICollectionViewLayoutAttributes *attrs in arr) {
+77         if (ABS(minDelta) > ABS(attrs.center.x - centerX)) {
+78             minDelta = attrs.center.x - centerX;
+79         }
+80     }
+81     proposedContentOffset.x += minDelta;
+82     return proposedContentOffset;
+83 }
+```
 
 # 使用collectionView实现拖拽重排
 ## 第一种方法
