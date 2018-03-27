@@ -7,7 +7,7 @@ toc:
 ---
 
 ## 1.图片生成GIF图
-
+<!--more-->
 ```
 //1.图片生成GIF图
 //    NSMutableArray *imgArray = [NSMutableArray array];
