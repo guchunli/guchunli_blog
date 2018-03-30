@@ -163,6 +163,13 @@ return Margin;
 （3）shouldInvalidateLayoutForBoundsChange：让cell在左右滑动的时候，尺寸放大或缩小
 （4）targetContentOffsetForProposedContentOffset:withScrollingVelocity：让最接近中心的cell在停在正中央
 ```
+- (instancetype)init
+{
+    if (self = [super init]) {
+
+    }
+    return self;
+}
 /**
 6  * 用来做布局的初始化操作（不建议在init方法中进行布局的初始化操作）
 7  */
@@ -245,7 +252,7 @@ return Margin;
 ```
 
 # 使用collectionView实现拖拽重排
-## 第一种方法
+## 第一种方法（从iOS9开始支持）
 ### 1.给collectionView添加长按手势
 ```
 UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];
@@ -301,7 +308,7 @@ UIImage *img = self.data[sourceIndexPath.row];
 }
 ```
 
-## 第二种方法
+## 第二种方法（从iOS8开始支持）
 ### 1.给collectionViewCell添加长按手势
 ```
 //为每个cell 添加长按手势
