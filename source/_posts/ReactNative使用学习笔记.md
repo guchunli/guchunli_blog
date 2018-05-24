@@ -291,7 +291,7 @@ var tpl = '公司名：' + name + '\n'+
 返回的任何Object 对象，在各个实例中是共享的
 
 ## 组件的生命周期
-![组件生命周期](http://o8cfktdb3.bkt.clouddn.com/componentLifeCycle.png)
+![组件生命周期](/assets/20170621_react/componentLifeCycle.png)
 
 (1)创建：getDefaultProps(ES6:defaultProps)->
 (2)实例化：getInitialState(ES6:constructor)->componentWillMount->render->componentDidMount->

@@ -104,7 +104,7 @@ static,abstract,final,synchronized,volatile
 * 抽象类(部分)
 * 接口 (完全)
 抽象类实现了部分抽象(0到100％)，而接口实现了完全抽象(100％)。
-![抽象类与接口](http://o8cfktdb3.bkt.clouddn.com/acAndIfa.png)
+![抽象类与接口](/assets/20170609_java/acAndIfa.png)
 
 ### 9.instanceof: name instanceof String
 增强for循环：for(声明语句 : 表达式)

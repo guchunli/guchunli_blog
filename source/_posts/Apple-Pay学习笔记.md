@@ -42,7 +42,7 @@ tags: [iOS,Apple Pay]
 5.绑定Merchant ID 到 APP ID
 
 证书失效，请到以下地址下载重新安装：https://www.apple.com/certificateauthority/
-![证书](http://o8cfktdb3.bkt.clouddn.com/applepay.png)
+![证书](/assets/20170315_ApplePay/applepay.png)
 
 ## 代码实现
 

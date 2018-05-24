@@ -25,7 +25,7 @@ nested exception is java.lang.IllegalArgumentException
 在项目上右键–properties–java Compile–compiler compliance level
 
 在工程目录下添加config文件夹，下面添加文件：jdbc.properties,spring-mvc.xml,spring-mybatis.xml
-![spring-config](/assets/demo/java_config.png)
+![spring-config](/assets/20170609_java/java_config.png)
 
 * jdbc.properties：mysql配置
 * spring-mvc.xml

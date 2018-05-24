@@ -165,7 +165,7 @@ rebase最大的好处是你的项目历史会非常整洁。首先，它不像 g
 ### 分支管理策略  
 本地分支：master，dev，bug，feature
 远程分支：origin，dev
-![“插入图片”](http://o8cfktdb3.bkt.clouddn.com/branch.png) 
+![“插入图片”](/assets/20170303_git/branch.png) 
 
 ### 解决冲突
 + 查看冲突
