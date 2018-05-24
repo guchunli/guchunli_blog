@@ -111,6 +111,6 @@ UIImagePickerController继承于UINavigationController
 ### AVFoundation（AVCaptureSession/AVCaptureDevice）
 灵活性强。
 
-![优缺点比较](http://o8cfktdb3.bkt.clouddn.com/media.png)
+![优缺点比较](/assets/20170506_media/media.png)
 
 参考原文：[iOS开发系列--音频播放、录音、视频播放、拍照、视频录制](http://www.cnblogs.com/kenshincui/p/4186022.html)
