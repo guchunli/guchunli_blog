@@ -15,7 +15,7 @@ toc: true
 * 要渲染 HTML 标签，只需在 JSX 里使用小写字母的标签名,要渲染 React 组件，只需创建一个大写字母开头的本地变量
 * class->className  for->htmlFor
 * 使用{}的情况：表达式，变量，对象，字典
-* {{}}:第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象
+* `{{}}`:第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象
 
 ```
 <View style={{flex:1}}></View>
