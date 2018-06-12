@@ -38,6 +38,27 @@ find . -name ".git" | xargs rm -Rf　　
 ### brew: command not found
 安装brew:
 ```
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+ruby -e "$(curl --insecure -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
+error: could not lock config file .git/config， 权限不够，解决方法：
+```
+sudo chgrp -R admin /usr/local
+sudo chmod -R g+w /usr/local
+```
+
+安装node：
+```
+brew install node
+```
+
+安装git：
+```
+brew install git
+```
+
+安装hexo：
+```
+npm install -g hexo-cli
+```
+
 
