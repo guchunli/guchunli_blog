@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>oc基础 | guchunli</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="OC" />
+  
+  
+  
+  
+  <meta name="description" content="基础运算符优先级">
+<meta name="keywords" content="OC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OC基础">
+<meta property="og:url" content="https://guchunli.github.io/2018/03/01/OC基础/index.html">
+<meta property="og:site_name" content="guchunli">
+<meta property="og:description" content="基础运算符优先级">
+<meta property="og:updated_time" content="2018-05-24T09:16:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OC基础">
+<meta name="twitter:description" content="基础运算符优先级">
+  
+    <link rel="alternate" href="/atom.xml" title="guchunli" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/study/">study</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/other/">other</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/photos">photos</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-OC基础" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      OC基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/01/OC基础/" class="article-date">
+	  <time datetime="2018-03-01T05:54:16.000Z" itemprop="datePublished">2018-03-01</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/study/">学习</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h2><a id="more"></a>
+<table><br><tr><br><td>优先级</td><br><td>运算符</td><br><td>名称或含义</td><br></tr><br><br><tr><br><td rowspan="4">1</td><br><td>[]</td><br><td>数组下标</td><br></tr><br><tr><br><td>()</td><br><td>括号</td><br></tr><br><tr><br><td>.</td><br><td>成员选择（对象）</td><br></tr><br><tr><br><td>-&gt;</td><br><td>成员选择（指针）</td><br></tr><br><br><tr><br><td rowspan="9">2</td><br><td>-</td><br><td>负号运算符</td><br></tr><br><tr><br><td>(类型)</td><br><td>强制类型转换</td><br></tr><br><tr><br><td>++</td><br><td>自增</td><br></tr><br><tr><br><td>–</td><br><td>自减</td><br></tr><br><tr><br><td><code>*</code></td><br><td>取值</td><br></tr><br><tr><br><td>&amp;</td><br><td>取地址</td><br></tr><br><tr><br><td>!</td><br><td>逻辑非</td><br></tr><br><tr><br><td>～</td><br><td>按位取反</td><br></tr><br><tr><br><td>sizeof</td><br><td>长度</td><br></tr><br><br><tr><br><td rowspan="3">3</td><br><td>/</td><br><td>除法</td><br></tr><br><tr><br><td><code>*</code></td><br><td>乘法</td><br></tr><br><tr><br><td>%</td><br><td>余数</td><br></tr><br><br><tr><br><td rowspan="2">4</td><br><td>+</td><br><td>加法</td><br></tr><br><tr><br><td>-</td><br><td>减法</td><br></tr><br><br><tr><br><td rowspan="2">5</td><br><td>&lt;&lt;</td><br><td>左移</td><br></tr><br><tr><br><td>&gt;&gt;</td><br><td>右移</td><br></tr><br><br><tr><br><td rowspan="4">6</td><br><td>&gt;</td><br><td>大于</td><br></tr><br><tr><br><td>&gt;=</td><br><td>大于等于</td><br></tr><br><tr><br><td>&lt;</td><br><td>小于</td><br></tr><br><tr><br><td>&lt;=</td><br><td>小于等于</td><br></tr><br><br><tr><br><td rowspan="2">7</td><br><td>==</td><br><td>等于</td><br></tr><br><tr><br><td>!=</td><br><td>不等于</td><br></tr><br><br><tr><br><td>8</td><br><td>&amp;</td><br><td>按位与</td><br></tr><br><br><tr><br><td>9</td><br><td>^</td><br><td>按位异或</td><br></tr><br><br><tr><br><td>10</td><br><td>|</td><br><td>按位或</td><br></tr><br><br><tr><br><td>11</td><br><td>&amp;&amp;</td><br><td>逻辑与</td><br></tr><br><br><tr><br><td>12</td><br><td>||</td><br><td>逻辑或</td><br></tr><br><br><tr><br><td>13</td><br><td>?:</td><br><td>三目运算符</td><br></tr><br><br><tr><br><td rowspan="10">14</td><br><td>=</td><br><td>赋值</td><br></tr><br><tr><br><td>／=</td><br><td>除后赋值</td><br></tr><br><tr><br><td>*=</td><br><td>乘后赋值</td><br></tr><br><tr><br><td>%=</td><br><td>取余后赋值</td><br></tr><br><tr><br><td>+=</td><br><td>加后赋值</td><br></tr><br><tr><br><td>-=</td><br><td>减后赋值</td><br></tr><br><tr><br><td>&lt;&lt;=</td><br><td>左移后赋值</td><br></tr><br><tr><br><td>&gt;&gt;=</td><br><td>右移后赋值</td><br></tr><br><tr><br><td>&amp;=</td><br><td>按位与后赋值</td><br></tr><br><tr><br><td>^／</td><br><td>按位异或后赋值</td><br></tr><br><br><tr><br><td>15</td><br><td>,</td><br><td>逗号运算符</td><br></tr><br><br></table>
+
+
+<h2 id="OC"><a href="#OC" class="headerlink" title="OC"></a>OC</h2><h3 id="动态语言"><a href="#动态语言" class="headerlink" title="动态语言"></a>动态语言</h3><ul>
+<li>动态编程语言（动态语言）：指程序在运行时可以改变其结构。JS、Python、Ruby属于动态语言，C、C++不属于动态语言。</li>
+<li>动态类型语言：类型检查在运行时做。</li>
+<li>静态类型语言：类型检查在运行前判断（如编译期）。方便类型安全，但是与类型安全没有联系。使用继承、接口等势线多态</li>
+</ul>
+<h3 id="OC的三大特性"><a href="#OC的三大特性" class="headerlink" title="OC的三大特性"></a>OC的三大特性</h3><h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>访问权限修饰符：@public、@protected、@private、@package，默认的修饰符是@private<br>但是OC是没有修饰符的概念的，如果想让一个方法不被外界访问的话，只需要在.m文件中实现这个方法，不要在头文件中进行定义即可。</p>
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p><code>OC是C语言的子类，所以OC是静态语言，但是OC的多态性让其拥有了动态性运行性</code></p>
+<ul>
+<li>动态类型：id类型，运行时决定接收者，动态类型属于弱类型，静态类型属于强类型。</li>
+<li>动态绑定：运行时判断需要调用什么方法。</li>
+<li><p>动态载入：运行时添加代码模块以及其他资源。<br>对象时运行时类的一个实例。在oc中对象永远是通过指针来引用的。</p>
+</li>
+<li><p>无类型：不做任何检查，甚至不区分指令和数据。</p>
+</li>
+<li>弱类型：仅能区分指令和数据。</li>
+<li>强类型：在编译期进行检查，在没有强制类型转换前，不允许两种不同类型的变量相互操作。</li>
+</ul>
+<p>多态：不同对象以自己的方式响应相同的消息的能力叫做多态。子类指针可以赋值给父类对象。<br>主要是将数据类型的确定由编译时，推迟到了运行时。<br>(1)对于语句NSString*obj = [[NSData alloc] init]; obj在编译时和运行时分别时什么类型的对象?<br>答：编译时是NSString的类型;运行时是NSData类型的对象。<br>(2)id声明的对象具有运行时的特性，即可以指向任意类型的objcetive-c的对象.</p>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><h3 id="property本质"><a href="#property本质" class="headerlink" title="@property本质"></a>@property本质</h3><p>1.属性的实质：ivar实例变量+getter+setter<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">property在runtime中是objc_property_t，是一个结构体</div><div class="line">struct property_t &#123;</div><div class="line">const char *name;</div><div class="line">const char *attributes;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">而attributes本质是objc_property_attribute_t，定义了property的一些属性，attributes具体包括：类型，原子性，内存语义和对应的实例变量。定义如下：</div><div class="line">typedef struct &#123;</div><div class="line">const char *name;           /**&lt; The name of the attribute */</div><div class="line">const char *value;          /**&lt; The value of the attribute (usually empty) */</div><div class="line">&#125; objc_property_attribute_t;</div><div class="line"></div><div class="line">@property (nonatomic, copy) NSString *string;，通过 property_getAttributes(property)获取到attributes并打印出来之后的结果为：T@&quot;NSString&quot;,C,N,V_string，T就代表类型，C就代表Copy，N代表nonatomic，V就代表对应的实例变量</div></pre></td></tr></table></figure></p>
+<p>2.ivar、getter、setter 是如何生成并添加到这个类中的：自动合成。完成属性定义后，编译器会自动写出一套存取方法，用以访问给定类型中具有给定名称的变量，这个过程由编译 器在编译期执行。 所以也可以这么说：@property = getter + setter。</p>
+<h3 id="属性关键字"><a href="#属性关键字" class="headerlink" title="属性关键字"></a>属性关键字</h3><ul>
+<li>默认值：atomic，readwrite，assign/strong(基本数据类型／对象)<br>1.原子性：atomic：通过锁定机制确保其原子性，提供线程安全，耗费系统资源，使用了<code>同步锁</code><br>nonatomic：非原子性，不提供线程安全，效率更高，不使用自旋锁，如果其中一个线程正在改写属性值，另外一个线程会把尚未修改好的属性值读取处理。</li>
+<li>atomic是绝对的线程安全吗？<br>NO。例如：一个线程在连续多次读取属性值的过程中有别的线程在同时改写该值，那么即使将属性声明为atomic，还是会读取到不同的值。atomic仅仅是读写安全，但并不是线程安全的，因为别的线程还能进行读写之外的其他操作。线程安全需要开发者自己来保证。如果有线程C在A线程读操作之前release了该属性，那么还会导致程序崩溃。比如用atomic去操作一个NSMutableArray ，如果一个线程循环读数据，一个线程循环写数据，肯定会产生内存问题。</li>
+<li>atomic/nonatomic的区别<br>nonatomic:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (void)setCurrentImage:(UIImage *)currentImage</div><div class="line">&#123;</div><div class="line">    if (_currentImage != currentImage) &#123;</div><div class="line">        [_currentImage release];</div><div class="line">        _currentImage = [currentImage retain];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (UIImage *)currentImage</div><div class="line">&#123;</div><div class="line">    return _currentImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>atomic:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">- (void)setCurrentImage:(UIImage *)currentImage</div><div class="line">&#123;</div><div class="line">    @synchronized(self) &#123;</div><div class="line">        if (_currentImage != currentImage) &#123;</div><div class="line">            [_currentImage release];</div><div class="line">            _currentImage = [currentImage retain];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (UIImage *)currentImage</div><div class="line">&#123;</div><div class="line">    @synchronized(self) &#123;</div><div class="line">        return _currentImage;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.读写权限：readonly只读，readwrite读写</p>
+<p>3.内存管理语义：<br>strong：在赋值时调用被指向对象的retain方法，使其引用计数+1<br>weak：不持有对象，不增加对象的引用计数，对象消失后，指针自动置nil，只适用于对象<br>unsafe_unretained：与weak类似，引用计数为0时，不会置nil，<strong>unsafe_unretained 比 </strong>weak 快。当明确知道对象的生命期时，选择 __unsafe_unretained 会有一些性能提升<br>assign：不更改引用计数，适用于基础数据类型／对象<br>copy：建立一个引用计数为1的对象，与 strong 类似，然而在设置新属性值时并不保留新值，而是拷贝一份</p>
+<p>4.方法名：getter=<name>、setter=<name><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//getter</div><div class="line">@property (nonatomic, getter=isOn) BOOL on;</div></pre></td></tr></table></figure></name></name></p>
+<p>5.不常用：nonnull,null_resettable,nullable</p>
+<ul>
+<li>@synthesize：编译期间，让编译器自动生成getter／setter方法，当有自定义的存或取方法时屏蔽自动生成的方法</li>
+<li>@dynamic：不自动生成getter／setter方法，避免编译期间产生警告，自己实现存取方法</li>
+</ul>
+<h4 id="assign-weak"><a href="#assign-weak" class="headerlink" title="assign/weak"></a>assign/weak</h4><ul>
+<li>用assign声明的变量在栈中可能不会自动赋值为nil，就会造成野指针错误</li>
+<li>用weak声明的变量在栈中会自动清空，赋值为nil<br>assigin 可以用非OC对象,而weak必须用于OC对象</li>
+</ul>
+<h4 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h4><p>1.使用场景</p>
+<ul>
+<li>NSString、NSArray、NSDictionary 等等经常使用copy关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary，他们之间可能进行赋值操作，为确保对象中的字符串值不会无意间变动，应该在设置新属性值时拷贝一份“不可变” (immutable)的字符串，用此特质来保护其<code>封装性</code>。</li>
+<li>用于block：编译器会自动对 block 进行了 copy 操作。</li>
+</ul>
+<ol>
+<li><code>@property (copy) NSMutableArray *array;</code>会有什么问题：1、添加,删除,修改数组内的元素的时候,程序会因为找不到对应的方法而崩溃.因为 copy 就是复制一个不可变 NSArray 的对象；2、使用了 atomic 属性会严重影响性能 。</li>
+</ol>
+<p>3.如何使自己的类用copy修饰符，如何重写带copy关键字的setter<br>实现NSCopying协议，如果自定义的对象分为可变版本与不可变版本，那么就要同时实现 NSCopying 与 NSMutableCopying 协议。<br>NSCopying协议：<code>- (id)copyWithZone:(NSZone *)zone;</code></p>
+<p>重写带copy关键字的setter：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (id)copyWithZone:(NSZone *)zone &#123;</div><div class="line">User *copy = [[[self class] allocWithZone:zone]</div><div class="line">init];</div><div class="line">copy.name = _name;</div><div class="line">copy.age = _age;</div><div class="line">copy.sex = _sex;</div><div class="line">return copy;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setName:(NSString *)name &#123;</div><div class="line">    //[_name release];</div><div class="line">    _name = [name copy];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4.浅复制／深复制<br>浅复制：指针复制，并没有进行对象复制;<br>单层深复制：也就是我们经常说的深复制，我这里说的单层深复制是对于集合类所说的(即NSArray,NSDictionary,NSSet)，单层深复制指的是只复制了该集合类的最外层，里边的元素没有复制，(即这两个集合类的地址不一样，但是两个集合里所存储的元素的地址是一样的);<br>完全复制：指的是完全复制整个集合类，也就是说两个集合地址不一样，里边所存储的元素地址也不一样;</p>
+<p>区别：<br>(1)非集合类（NSString，NSNumber）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[immutableObject copy]  //浅复制</div><div class="line">[immutableObject mutableCopy] //深复制</div><div class="line">[mutableObject copy] //深复制</div><div class="line">[mutableObject mutableCopy] //深复制</div></pre></td></tr></table></figure></p>
+<p>结论：不可变进行copy是浅复制，mutableCopy是深复制，可变的copy，mutableCopy都是深复制</p>
+<p>(2)集合类（NSArray，NSDictionary, NSSet)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[immutableObject copy]  //浅复制</div><div class="line">[immutableObject mutableCopy] //单层深复制</div><div class="line">[mutableObject copy] //单层深复制</div><div class="line">[mutableObject mutableCopy] //单层深复制</div></pre></td></tr></table></figure></p>
+<p>结论：不可变进行copy是浅复制，mutableCopy是单层深复制，如何实现完全复制?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSArray *copyArray = [[NSArray alloc] initWithArray:array copyItems:YES];  // 完全复制</div></pre></td></tr></table></figure></p>
+<p>对于自定义继承自NSObject的类:<br><code>copy</code>需要实现<code>NSCopying</code>协议，然后实现<code>NSCopying</code>协议方法，否则copy会crash；<br><code>mutableCopy</code>时，需要实现<code>NSMutableCopying</code>协议，否则mutableCopy会crash。</p>
+<h4 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h4><p>1.为什么IBOutlet修饰的UIView也适用weak关键字<br>UIViewController-&gt;UIView-&gt;subView-&gt;UIButton<br>view对加到它上面的控件是强引用，在viewController里面使用Outlet属性，仅仅是对其使用，并没有必要拥有它，strong也不会造成强引用循环，不管声明的属性是强引用还是弱引用，在控制器消失的时候，这个属性消失，View消失，subViews消失，控件也就消失了。<br>手动创建控件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//将控件声明成strong</div><div class="line">_btn = [[UIButton alloc]init];</div><div class="line">[self.view addSubview:_btn]</div><div class="line"></div><div class="line">//将控件声明成weak</div><div class="line">UIButton *button = [[UIButton alloc]init];</div><div class="line">_btn = button;</div><div class="line">[self.view addSubview:_btn];</div></pre></td></tr></table></figure></p>
+<p>2.runtime 如何实现 weak 属性<br>为这种属性设置新值时，设置方法既不保留新值，也不释放旧值。此特质同 assign 类似， 然而在属性所指的对象遭到摧毁时，属性值也会清空(nil out)。<br>runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 hash 表中。 用 weak 指向的对象内存地址作为 key，当此对象的引用计数为0的时候会 dealloc，假如 weak 指向的对象内存地址是a，那么就会以a为键， 在这个 weak 表中搜索，找到所有以a为键的 weak 对象，从而设置为 nil。</p>
+<h2 id="OC的内存管理机制"><a href="#OC的内存管理机制" class="headerlink" title="OC的内存管理机制"></a>OC的内存管理机制</h2><p>MRC(manual retain-release)手动内存管理<br>ARC(automatic reference counting)自动引用计数： 在iOS5.0 (Xcode4) 版本后推出的。<br>Garbage collection (垃圾回收)：iOS不支持</p>
+<ul>
+<li>栈/堆<br>栈：由操作系统自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈(先进后出)，非OC对象一般放在操作系统的栈里面。<br>堆：一般由程序员分配释放，若程序员不释放，程序结束时可能由OS回收，分配方式类似于链表，继承了NSObject的对象的存储在操作系统的堆里边。<br><code>任何继承了NSObject的对象需要进行内存管理，非对象类型(int、char、float、double、struct、enum等) 不需要进行内存管理</code></li>
+</ul>
+<h3 id="内存管理规律"><a href="#内存管理规律" class="headerlink" title="内存管理规律"></a>内存管理规律</h3><p>1.MRC：当调用这个对象的alloc、new、retain、copy、mutableCopy方法之后引用计数器自动在原来的基础上加1（ObjC中调用一个对象的方法就是给这个对象发送一个消息），当调用这个对象的release，autorelease方法之后它的引用计数器减1，如果一个对象的引用计数器为0，则系统会自动调用这个对象的dealloc方法来销毁这个对象。<br>2.ARC：编译器会管理好对象的内存，会在何时的地方插入retain, release和autorelease。<br>ARC的判断准则：ARC判断一个对象是否需要释放不是通过引用计数来进行判断的，而是通过强指针来进行判断的。只要还有一个强指针变量指向对象，对象就会保持在内存中, 否则就会被释放。</p>
+<ul>
+<li>强指针/弱指针<br>强指针：被<strong>strong修饰的指针，默认所有对象的指针变量都是强指针<br>弱指针：被</strong>weak修饰的指针，不要使用弱指针保存新创建的对象，否则对象会被立即释放<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">__strong  Person *p1 = [[Person alloc] init];</div><div class="line">__weak  Person *p2 = [[Person alloc] init];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="AutoreleasePool"><a href="#AutoreleasePool" class="headerlink" title="AutoreleasePool"></a>AutoreleasePool</h3><ul>
+<li>只要给对象发送一条autorelease消息，会将对象放到一个自动释放池中，当该pool被释放时,该pool中的所有对象会被调用一次release。</li>
+<li><p>自动释放池是以栈的形式存在，栈顶就是离调用autorelease方法最近的自动释放池</p>
+</li>
+<li><p>AutoreleasePool的使用<br>注意：放到自动释放池代码中的对象，只有调用了 autorelease 方法，对象才会加入到自动释放池</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];</div><div class="line">Person *p = [[[Person alloc] init] autorelease];</div><div class="line">[autoreleasePool drain];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@autoreleasepool</div><div class="line">&#123; // 开始代表创建自动释放池</div><div class="line">Person *p = [[Person new] autorelease];</div><div class="line">// 将代码写到这里就放入了自动释放池</div><div class="line">&#125; // 结束代表销毁自动释放池(会给池子中所有对象发送一条release消息)</div></pre></td></tr></table></figure>
+<ul>
+<li><p>autorelease<br>返回对象本身，只是把对release的调用延迟了，调用完autorelease方法后，对象的计数器不变</p>
+</li>
+<li><p>drain<br>销毁一个自动释放池.</p>
+</li>
+<li><p>dealloc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-(void)dealloc&#123;</div><div class="line">NSLog(@&quot;Invoke Person&apos;s dealloc method.&quot;);</div><div class="line">[super dealloc];//注意：super dealloc一定要写到所有代码的最后（两个目的：一是父类可能有其他引用对象需要释放；二是：当前对象真正的释放操作是在super的dealloc中完成的）</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>野指针/空指针<br>野指针：一个指针指向一个僵尸对象（被释放的对象），给一个野指针发送消息就会报错(EXC_BAD_ACCESS错误)<br>空指针：没有指向存储空间的指针(里面存的是nil, 也就是0)，给空指针发消息是没有任何反应的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//如果不设置p=nil，则p就是一个野指针,此时如果再调用对象release会报错</div><div class="line">//但是如果此时p已经是空指针了，则在ObjC中给空指针发送消息是不会报错的</div><div class="line">p=nil;</div><div class="line">[p release];</div></pre></td></tr></table></figure>
+</li>
+<li><p>NSString *name，非ARC下重写setter,getter方法<br><code>一旦重写了getter,setter方法,必须使用@synthesize variable = _variable来区分属性名与方法名.</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">-(void)setName:(NSString *)name&#123;</div><div class="line">    if (_name != name) &#123;    //首先判断要赋值的变量和当前成员变量是不是同一个变量</div><div class="line">    [_name release];        //释放之前的对象(换房间操作，释放之前的房间)</div><div class="line">    _name = [name copy];    //赋值时重新retain（对房间进行持有）</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">- (NSString *)name&#123;</div><div class="line">    return [[_name retain]autorelease];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>为什么不能同时重写getter,setter？<br>用@property声明的成员属性,相当于自动生成了setter getter方法,如果重写了set和get方法,与@property声明的成员属性就不是一个成员属性了,是另外一个实例变量,而这个实例变量需要手动声明。所以会报错误。</p>
+</li>
+</ul>
+<h2 id="多线程（多线程编程指南）"><a href="#多线程（多线程编程指南）" class="headerlink" title="多线程（多线程编程指南）"></a>多线程（多线程编程指南）</h2><h3 id="进程-线程的区别？同步-异步的区别？并行-并发的区别？"><a href="#进程-线程的区别？同步-异步的区别？并行-并发的区别？" class="headerlink" title="进程/线程的区别？同步/异步的区别？并行/并发的区别？"></a>进程/线程的区别？同步/异步的区别？并行/并发的区别？</h3><ul>
+<li>进程：正在运行的应用程序，是CPU调度的最小单位，有独立的地址空间，进程中包含的一个或多个执行单元称为线程。</li>
+<li><p>线程：是进程中的一条执行路径，共享进程的资源，有自己的堆栈和局部变量，一个线程死掉就等于整个进程死掉。<br>每条线程可以并行执行不同的任务。<br>多线程间并发执行，其实是CPU在多条线程间调度（切换）。</p>
+</li>
+<li><p>主线程：<br>number=1<br>作用：显示/刷新UI，处理UI事件（点击、拖拽、滚动）<br>禁止将比较耗时的操作放在主线程，会卡顿</p>
+</li>
+<li><p>pthread：跨平台，C，程序员管理生命周期</p>
+</li>
+<li>NSThread：面向对象，OC，程序员管理生命周期</li>
+<li>GCD：充分利用设备的多核，C，自动管理生命周期</li>
+<li><p>NSOperation：基于GCD，面向对象，OC，自动管理生命周期</p>
+</li>
+<li><p>执行任务，函数：<br>同步和异步的区别：能不能开启新线程<br>同步：只能在当前线程中执行任务，不具备开启新线程的能力。（同步就是必须一件一件事做，等前一件做完了才能做下一件事。）<br>异步：可以在新线程中执行任务，具备开启新线程的能力。<code>延迟加载可以避免内存过高，异步加载可以避免线程堵塞。</code></p>
+</li>
+<li><p>队列：<br>串行和并行的区别：任务的执行方式<br>串行：任务只能一个接一个执行<br>并行：允许任务同时执行，只在异步函数下才有效，不创建新线程无法并行<br>全局并发队列：global，系统给每一个应用程序提供了三个concurrent dispatch queues<br>主队列：主队列中的任务都会在主线程中执行</p>
+</li>
+<li><p>异步函数+并行队列：开启多条（不确定几条）子线程，任务并发执行</p>
+</li>
+<li>异步函数+串行队列：开启一条子线程，任务顺序执行</li>
+<li>同步函数+并发队列：不开启子线程，在主线程执行，任务顺序执行</li>
+<li>同步函数+串行队列：不开启子线程，在主线程执行，任务顺序执行</li>
+<li>异步函数+主队列：不开启子线程，在主线程执行，任务顺序执行</li>
+<li><p>同步函数+主队列：默认主线程中会死锁，子线程中不会死锁。</p>
+</li>
+<li><p>开启新线程条件：1.异步 2.队列不是主队列，并发队列：开多条，串行：开一条子线程</p>
+</li>
+<li><p>并行和并发的区别：<code>是否是『同时』</code><br>并行（同时）:两个或多个事件在同一时刻发生。（<code>你吃饭吃到一半，电话来了，你一边打电话一边吃饭，这说明你支持并行。</code>）提高效率，资源利用率。<br>关键是你有<code>同时</code>处理多个任务的能力。<br>并发:两个或者多个事件在同一时间间隔发生。（<code>你吃饭吃到一半，电话来了，你停了下来接了电话，接完后继续吃饭，这说明你支持并发。</code>）<br>关键是你有处理多个任务的能力，不一定要同时。</p>
+</li>
+</ul>
+<h4 id="NSThread"><a href="#NSThread" class="headerlink" title="NSThread"></a>NSThread</h4><ul>
+<li><p>创建线程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">1.initWithTarget</div><div class="line">NSThread* myThread = [[NSThread alloc] initWithTarget:self selector:@selector(doSomething:) object:nil];</div><div class="line">//设置线程优先级、线程名称等信息</div><div class="line">[myThread start];</div><div class="line"></div><div class="line">2.detachNewThreadSelector</div><div class="line">[NSThread detachNewThreadSelector:@selector(doSomething:) toTarget:self withObject:nil];</div><div class="line"></div><div class="line">3.performSelectorInBackground</div><div class="line">[self performSelectorInBackground:@selector(doSomething) withObject:nil];</div></pre></td></tr></table></figure>
+</li>
+<li><p>其他用法：延迟/休眠/死亡</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//延迟</div><div class="line">[self performSelector:@selector(run) withObject:nil afterDelay:2.0];</div><div class="line">//休眠</div><div class="line">[NSThread sleepForTimeInterval:2.0];</div><div class="line">[NSThread sleepUntilDate:(NSDate*)date];</div><div class="line">//死亡</div><div class="line">[NSThread exit];</div></pre></td></tr></table></figure>
+</li>
+<li><p>线程间通信<br>1.通知主线程更新UI界面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">waitUntilDone参数：</div><div class="line">* YES:当前线程要被阻塞，直到主线程将我们制定的代码块执行完，即优先执行updateUI方法</div><div class="line">* NO:当前线程不阻塞，会直接向下运行代码，不会立即进入updateUI方法，</div><div class="line">- (void)performSelectorOnMainThread:(SEL)aSelector withObject:(nullable id)arg waitUntilDone:(BOOL)wait;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>2.通知其他线程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)performSelector:(SEL)aSelector onThread:(NSThread *)thr withObject:(nullable id)arg waitUntilDone:(BOOL)wait;</div></pre></td></tr></table></figure></p>
+<h4 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h4><ul>
+<li><p>延迟执行实现：1.performSelector  2.timer  3.GCD after</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 3*NSEC_PER_SEC);</div><div class="line">dispatch_after(time, dispatch_get_main_queue(), ^&#123;</div><div class="line">NSLog(@&quot;3秒后执行&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>onece：整个应用程序中只执行一次，不能在懒加载中使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">static SingleClass *instance;</div><div class="line">static dispatch_once_t onceToken;</div><div class="line">dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">instance = [[SingleClass alloc]init];</div><div class="line">&#125;);</div><div class="line">return instance;</div></pre></td></tr></table></figure>
+</li>
+<li><p>GCD定时器的特点</p>
+<ul>
+<li>GCD的定时器不会受到RunLoop运行模式的影响</li>
+<li>可以控制任务在主线程还是子线程执行</li>
+<li>GCD定时器比NSTimer更加准确是因为单位不同，GCD单位是纳秒</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 3*NSEC_PER_SEC);</div><div class="line">dispatch_after(time, dispatch_get_main_queue(), ^&#123;</div><div class="line">NSLog(@&quot;3秒后执行&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic,strong)dispatch_source_t timer;    //防止timer被释放</div><div class="line"></div><div class="line">dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(0, 0));</div><div class="line">dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);</div><div class="line">dispatch_source_set_event_handler(timer, ^&#123;</div><div class="line">NSLog(@&quot;run...&quot;);</div><div class="line">&#125;);</div><div class="line">dispatch_resume(timer);</div><div class="line">self.timer = timer;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>dispatch_group_async<br>可以实现监听一组任务是否完成，完成后得到通知执行其他的操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line">dispatch_group_t group = dispatch_group_create();</div><div class="line">dispatch_group_async(group, queue, ^&#123;</div><div class="line">[NSThread sleepForTimeInterval:1];</div><div class="line">NSLog(@&quot;group1&quot;);</div><div class="line">&#125;);</div><div class="line">dispatch_group_async(group, queue, ^&#123;</div><div class="line">[NSThread sleepForTimeInterval:2];</div><div class="line">NSLog(@&quot;group2&quot;);</div><div class="line">&#125;);</div><div class="line">dispatch_group_async(group, queue, ^&#123;</div><div class="line">[NSThread sleepForTimeInterval:3];</div><div class="line">NSLog(@&quot;group3&quot;);</div><div class="line">&#125;);</div><div class="line">dispatch_group_notify(group, dispatch_get_main_queue(), ^&#123;</div><div class="line">NSLog(@&quot;updateUI&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>dispatch_barrier_async<br>在前面的任务执行结束后它才执行，而且等它执行完成之后后面的任务才会执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t queue = dispatch_queue_create(&quot;barrier&quot;, DISPATCH_QUEUE_CONCURRENT);</div><div class="line">dispatch_async(queue, ^&#123;</div><div class="line">[NSThread sleepForTimeInterval:2];</div><div class="line">NSLog(@&quot;dispatch_async1&quot;);</div><div class="line">&#125;);</div><div class="line">dispatch_async(queue, ^&#123;</div><div class="line">[NSThread sleepForTimeInterval:4];</div><div class="line">NSLog(@&quot;dispatch_async2&quot;);</div><div class="line">&#125;);</div><div class="line">dispatch_barrier_async(queue, ^&#123;</div><div class="line">NSLog(@&quot;dispatch_barrier_async&quot;);</div><div class="line">[NSThread sleepForTimeInterval:4];</div><div class="line"></div><div class="line">&#125;);</div><div class="line">dispatch_async(queue, ^&#123;</div><div class="line">[NSThread sleepForTimeInterval:1];</div><div class="line">NSLog(@&quot;dispatch_async3&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>dispatch_apply：执行某个代码片段N次。<br>注意：这个方法没有办法异步执行（为了不阻塞线程可以使用dispatch_async()包装一下再执行）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dispatch_apply(5, queue, ^(size_t index) &#123;</div><div class="line">// 执行5次</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>dispatch_suspend(myQueue)： 挂起队列</p>
+</li>
+<li>dispatch_resume(myQueue)：恢复队列<br>注意：调用dispatch_suspend会增加队列挂起的引用计数，而调用dispatch_resume则会减少引用计数，当引用计数大于0时，队列会保持挂起状态。因此，这队列的挂起和恢复中，我们需要小心使用以避免引用计数计算错误的出现。</li>
+</ul>
+<h4 id="NSOperation"><a href="#NSOperation" class="headerlink" title="NSOperation"></a>NSOperation</h4><ul>
+<li><p>NSOperation本身是抽象类，只能只有它的子类，三个子类分别是：NSBlockOperation、NSInvocationOperation以及自定义继承自NSOperation的类</p>
+</li>
+<li><p>队列<br>1.主队列：通过mainQueue获得，凡是放到主队列中的任务都将在主线程执行<br>2.非主队列：直接alloc init出来的队列。非主队列同时具备了并发和串行的功能，通过设置最大并发数属性来控制任务是并发执行还是串行执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//1.创建队列</div><div class="line">NSOperationQueue *queue = [[NSOperationQueue alloc]init];</div><div class="line">//2.设置最大并发数</div><div class="line">//注意点：该属性需要在任务添加到队列中之前进行设置</div><div class="line">//该属性控制队列是串行执行还是并发执行</div><div class="line">//如果最大并发数等于1，那么该队列是串行的，如果大于1那么是并行的</div><div class="line">//系统的最大并发数有个默认的值，为-1，如果该属性设置为0，那么不会执行任何任务</div><div class="line">queue.maxConcurrentOperationCount = 2;</div></pre></td></tr></table></figure>
+</li>
+<li><p>线程通信：设置依赖关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//操作A依赖于操作B，线程操作队列在启动线程时就会首先执行B操作，然后执行A。</div><div class="line">[operationA addDependency:operationB];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="多线程下，NSMutableArray需不需要开启线程保护"><a href="#多线程下，NSMutableArray需不需要开启线程保护" class="headerlink" title="多线程下，NSMutableArray需不需要开启线程保护"></a>多线程下，NSMutableArray需不需要开启线程保护</h3><p>待解决</p>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p>1.NSLock<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">NSLock *theLock = [[NSLock alloc] init];</div><div class="line">[theLock lock];</div><div class="line">//dosomething</div><div class="line">[theLock unlock];</div></pre></td></tr></table></figure></p>
+<p>2.NSConditionLock 条件锁<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//公共部分</div><div class="line">id condLock = [[NSConditionLock alloc] initWithCondition:NO_DATA];</div><div class="line"></div><div class="line">//线程一，生产者</div><div class="line">while(true) &#123;</div><div class="line">[condLock lockWhenCondition:NO_DATA];</div><div class="line">//生产数据</div><div class="line">[condLock unlockWithCondition:HAS_DATA];</div><div class="line">&#125;</div><div class="line"></div><div class="line">//线程二，消费者</div><div class="line">while (true) &#123;</div><div class="line">[condLock lockWhenCondition:HAS_DATA];</div><div class="line">//消费</div><div class="line">[condLock unlockWithCondition:NO_DATA];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3.@synchronized(锁对象){}<br>锁对象必须是全局唯一的<br>加锁的前提条件：抢夺资源<br>作用：线程同步，使多线程按顺序执行<br>注意：加锁的位置，加锁会耗费CPU资源<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@synchronized(self)</div><div class="line">&#123;</div><div class="line">// 这段代码对其他 @synchronized(self) 都是互斥的</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4.GCD<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/*初始化信号量</div><div class="line">参数是信号量初始值</div><div class="line">*/</div><div class="line">_semaphore=dispatch_semaphore_create(1);</div><div class="line">/*信号等待</div><div class="line">第二个参数：等待时间</div><div class="line">*/</div><div class="line">dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);</div><div class="line">//dosomething</div><div class="line">&#125;</div><div class="line">//信号通知</div><div class="line">dispatch_semaphore_signal(_semaphore);</div></pre></td></tr></table></figure></p>
+<ul>
+<li>其他锁<br>递归锁：NSRecursiveLock<br>分布锁：NSDistributedLock，它本身是一个互斥锁，基于文件方式实现锁机制，可以跨进程访问。<br>互斥锁：如果共享数据已经有其他线程加锁了，线程会进入休眠状态等待锁。一旦被访问的资源被解锁，则等待资源的线程会被唤醒。<br>自旋锁：如果共享数据已经有其他线程加锁了，线程会以死循环的方式等待锁，一旦被访问的资源被解锁，则等待资源的线程会立即执行。</li>
+</ul>
+<h2 id="runtime与runloop"><a href="#runtime与runloop" class="headerlink" title="runtime与runloop"></a>runtime与runloop</h2><p><a href="https://guchunli.github.io/2017/03/22/iOS-runtime学习笔记/">iOS runtime与runloop学习笔记</a></p>
+<h2 id="数据持久化"><a href="#数据持久化" class="headerlink" title="数据持久化"></a>数据持久化</h2><h3 id="plist文件（属性列表）"><a href="#plist文件（属性列表）" class="headerlink" title="plist文件（属性列表）"></a>plist文件（属性列表）</h3><h3 id="preference（偏好设置）"><a href="#preference（偏好设置）" class="headerlink" title="preference（偏好设置）"></a>preference（偏好设置）</h3><h3 id="沙盒"><a href="#沙盒" class="headerlink" title="沙盒"></a>沙盒</h3><h3 id="NSKeyedArchiver（归档）"><a href="#NSKeyedArchiver（归档）" class="headerlink" title="NSKeyedArchiver（归档）"></a>NSKeyedArchiver（归档）</h3><h4 id="实现NSCoding的自动归档和解档"><a href="#实现NSCoding的自动归档和解档" class="headerlink" title="实现NSCoding的自动归档和解档"></a>实现NSCoding的自动归档和解档</h4><h3 id="SQLite-3"><a href="#SQLite-3" class="headerlink" title="SQLite 3"></a>SQLite 3</h3><h3 id="CoreData"><a href="#CoreData" class="headerlink" title="CoreData"></a>CoreData</h3><h2 id="网络请求"><a href="#网络请求" class="headerlink" title="网络请求"></a>网络请求</h2><h3 id="http与https"><a href="#http与https" class="headerlink" title="http与https"></a>http与https</h3><p>https：HTTP下加入SSL层<br>区别：<br>1.https协议需要到ca申请证书。<br>2.http是超文本传输协议，信息是明文传输，https 则是具有安全性的ssl加密传输协议。<br>3.http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</p>
+<h3 id="ATS"><a href="#ATS" class="headerlink" title="ATS"></a>ATS</h3><p>NSAppTransportSecurity：ATS配置的根节点，配置了节点表示告诉系统要走自定义的ATS设置。<br>NSAllowsAritraryLoads：是否禁用ATS特性，设置YES就是禁用ATS功能。</p>
+<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p>1.对称加密<br>1）加密/解密使用相同的密钥<br>2）加密和解密的过程是可逆的<br>3）经典算法：AES,DES</p>
+<p>2.非对称加密<br>1）使用公钥加密，使用私钥解密，公钥是公开的，私钥保密<br>2）加密处理安全，但是性能极差<br>3）经典算法：RSA</p>
+<h3 id="原生网络请求类"><a href="#原生网络请求类" class="headerlink" title="原生网络请求类"></a>原生网络请求类</h3><h4 id="NSURL"><a href="#NSURL" class="headerlink" title="NSURL"></a>NSURL</h4><p>作用：对传入的字符串类型采用 ASCII 编码格式<br>URL最重要的三个部分是 (scheme 方案), (host 主机), (path 路径)<br>scheme：协议名，如“http”<br>host：主机域名或 IP 地址。<br>port ：端口号。<br>path等</p>
+<h4 id="请求报文和响应报文"><a href="#请求报文和响应报文" class="headerlink" title="请求报文和响应报文"></a>请求报文和响应报文</h4><ul>
+<li><p>请求首部<br>1.GET /api/J1/getJ1List HTTP/1.1：请求方式，请求路径，http版本号<br>2.Host: localhost：3001，主机名，端口号<br>3.Connection: 连接类型为keep-alive<br>4.Pragma: no-cache，随报文传送指示的方式<br>5.Cache-Control : no-cache，随报文传送缓存指示<br>6.Accept: application/json, text/plain, <em>/</em>，接受的任意媒体类型, 和响应首部的Content-Type信息对照<br>7.Origin:  <a href="http://localhost:3000，当前访问域名" target="_blank" rel="external">http://localhost:3000，当前访问域名</a>, 与Access-Control-Allow-Origin信息对照<br>8.User-Agent: Mozilla/5.0，发起请求的应用程序名称<br>9.Referer: <a href="http://localhost:3000/，提供了包含当前请求URI的文档的URL" target="_blank" rel="external">http://localhost:3000/，提供了包含当前请求URI的文档的URL</a><br>10.Accept-Encoding: gzip, deflate, br，告诉服务器能够发送哪些编码方式.<br>11.Accept-Language: zh-CN,zh;q=0.8，告诉服务器能够发送哪些语言.</p>
+</li>
+<li><p>响应首部<br>1.http版本号，状态码，原因<br>2.content-Type：如application/json; charset=utf-8，用以区分传输资源<br>3.Content-Length：主体部分字节长度<br>4.Date：响应日期.<br>5.Connection ：连接类型为keep-alive.<br>6.Access-Control-Allow-Origin ：服务器域名<br>7.Access-Control-Allow-Methods：服务器实现的方法，GET,HEAD,PUT,POST,DELETE。</p>
+</li>
+</ul>
+<h4 id="TCP-IP"><a href="#TCP-IP" class="headerlink" title="TCP/IP"></a>TCP/IP</h4><p>HTTP要传送一条报文时, 会以流的形式将报文数据的内容通过一条打开的TCP链接按序传输, TCP收到数据流之后, 会将数据流砍成被称作段的小数据块, 并将段封装在IP分组中.</p>
+<h4 id="NSURLConnection"><a href="#NSURLConnection" class="headerlink" title="NSURLConnection"></a>NSURLConnection</h4><ul>
+<li>为什么会废弃NSURLConnection而使用NSURLSession这个网络类呢?<br>NSURLConnection在iOS9以后已经被苹果弃用了<br>1.NSURLSession针对下载/上传等复杂的网络操作提供了专门的解决方案，针对普通、上传和下载分别对应三种不同的网络请求任务<br>2.下载任务方式<br>NSURLConnection下载文件时，先将整个文件下载到内存，然后再写入沙盒，如果文件比较大，就会出现内存暴涨的情况。<br>而使用NSURLSessionUploadTask下载文件，会默认下载到沙盒中的tem文件夹中，不会出现内存暴涨的情况，但在下载完成后会将tem中的临时文件删除，需要在初始化任务方法时，在completionHandler回调中增加保存文件的代码。<br>3.请求方法的控制<br>NSURLConnection实例化对象，实例化开始，默认请求就发送（同步发送），不需要调用start方法。而cancel 可以停止请求的发送，停止后不能继续访问，需要创建新的请求。<br>NSURLSession有三个控制方法，取消（cancel），暂停（suspend），继续（resume），暂停后可以通过继续恢复当前的请求任务。<br>4.断点续传的方式<br>5.配置信息<br>NSURLSessionConfiguration类的参数可以设置配置信息，其决定了cookie，安全和高速缓存策略，最大主机连接数，资源管理，网络超时等配置<br>6.支持app进入后台后的下载等处理。自带多线程，防死锁</li>
+</ul>
+<h4 id="NSURLSession"><a href="#NSURLSession" class="headerlink" title="NSURLSession"></a>NSURLSession</h4><p>1.NSURLSession：会话对象，异步请求, dataTask默认是关闭状态, 需要手动开启dataTask.resume().<br>2.NSURLSessionConfiguration</p>
+<ul>
+<li><p>配置不同的NSURLSession</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">defaultSessionConfiguration //默认配置使用的是持久化的硬盘缓存，存储证书到用户钥匙链。存储cookie到shareCookie。</div><div class="line">ephemeralSessionConfiguration //不使用永久持存cookie、证书、缓存的配置，最佳优化数据传输。</div><div class="line">backgroundSessionConfigurationWithIdentifier //可以上传下载HTTP和HTTPS的后台任务(程序在后台运行)</div></pre></td></tr></table></figure>
+</li>
+<li><p>统一设置超时时间、请求头等信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// 构造NSURLSessionConfiguration</div><div class="line">NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];</div><div class="line">//设置请求超时为10秒钟</div><div class="line">configuration.timeoutIntervalForRequest = 10;</div><div class="line"></div><div class="line">//在蜂窝网络情况下是否继续请求（上传或下载）</div><div class="line">configuration.allowsCellularAccess = NO;</div><div class="line"></div><div class="line">//配置请求头</div><div class="line">configuration.HTTPAdditionalHeaders =@&#123;@&quot;Content-Encoding&quot;:@&quot;gzip&quot;&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>3.NSURLSessionTask<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">NSURLSessionDataTask  //一般的get、post等请求</div><div class="line">NSURLSessionUploadTask // 用于上传文件或者数据量比较大的请求</div><div class="line">NSURLSessionDownloadTask //用于下载文件或者数据量比较大的请求</div><div class="line">NSURLSessionStreamTask //建立一个TCP / IP连接的主机名和端口或一个网络服务对象。</div></pre></td></tr></table></figure></p>
+<p>函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)suspend;//暂停</div><div class="line">- (void)resume;//开始或者恢复</div><div class="line">- (void)cancel;//关闭任务</div></pre></td></tr></table></figure></p>
+<h3 id="Bonjour-，WebKit-，BSD-Sockets"><a href="#Bonjour-，WebKit-，BSD-Sockets" class="headerlink" title="Bonjour ，WebKit ，BSD Sockets"></a>Bonjour ，WebKit ，BSD Sockets</h3><!--Bonjour(法语中的你好)-->
+<p>Cocoa 网络框架有三层，最底层的是基于 BSD socket库，然后是 Cocoa 中基于 C 的 CFNetwork，最上面一层是 Cocoa 中Foundation 。</p>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="block"><a href="#block" class="headerlink" title="block"></a>block</h3><p><a href="https://guchunli.github.io/2017/07/01/OC中的block/">OC中的block</a><br>实质是OC对象</p>
+<ul>
+<li>为什么在默认情况下无法修改被block捕获的变量？<br>Block只捕获Block中会用到的变量。由于只捕获了自动变量(自动变量是以值传递方式传递到Block的构造函数里面)的值，并非内存地址，所以Block内部不能改变自动变量的值。Block捕获的外部变量可以改变值的是静态变量，静态全局变量，全局变量。</li>
+</ul>
+<h4 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h4><h3 id="为什么代理用weak，delegate和dataSource有什么区别，delegate和block的区别"><a href="#为什么代理用weak，delegate和dataSource有什么区别，delegate和block的区别" class="headerlink" title="为什么代理用weak，delegate和dataSource有什么区别，delegate和block的区别"></a>为什么代理用weak，delegate和dataSource有什么区别，delegate和block的区别</h3><p>1.weak指明该对象不会保持delegate，delegate这个对象的销毁由外部控制，strong会强引用delegate，外界不能销毁delegate，会导致循环引用。<br>2.datasource是关于数据的，都有哪些属性，值等；delegate时关于操作的，有什么方法可以调用。<br>3.delegate和block都可以回调。delegate是个对象，调用代理协议函数完成操作。block是传递一个函数指针，利用函数指针执行来进行回调。内存管理上，delegate不需要保存引用，block对数据又copy的处理。</p>
+<h3 id="KVO"><a href="#KVO" class="headerlink" title="KVO"></a>KVO</h3><h3 id="delegate"><a href="#delegate" class="headerlink" title="delegate"></a>delegate</h3><h3 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h3><h4 id="delegate与通知的区别"><a href="#delegate与通知的区别" class="headerlink" title="delegate与通知的区别"></a>delegate与通知的区别</h4><ul>
+<li>协议有控制链(has-a)的关系，通知没有。</li>
+<li>通知：一对多。代理/block：一对一。</li>
+<li>OC中的多继承用委托代理实现</li>
+</ul>
+<h3 id="单例"><a href="#单例" class="headerlink" title="单例"></a>单例</h3><h3 id="MVC-MVP-MVVM"><a href="#MVC-MVP-MVVM" class="headerlink" title="MVC/MVP/MVVM"></a>MVC/MVP/MVVM</h3><p>1.MVC<br>视图（view）：用户界面<br>模型（model）：数据保存<br>控制器（controller）：业务逻辑</p>
+<p>通信方式：view-&gt;controller-&gt;model-&gt;view</p>
+<p>2.MVP<br>将controller改名为presenter<br>各部分之间的通信都是双向的，view与model不发生联系，都通过presenter传递，view薄，controller厚。</p>
+<p>通信方式：view&lt;- &amp;-&gt;presenter&lt;- &amp;-&gt;model</p>
+<p>3.MVVM<br>将presenter改名为viewmodel<br>双向绑定，view的变动自动反应在viewmodel，反之亦然。</p>
+<p>通信方式：view&lt;-&gt;viewmodel&lt;- &amp;-&gt;model</p>
+<h2 id="App启动顺序"><a href="#App启动顺序" class="headerlink" title="App启动顺序"></a>App启动顺序</h2><p>1.加载main函数<br>2.UIApplicationMain，创建application对象，创建application的delegate<br>3.创建主循环，代理对象开始监听<br>4.didFinishLaunch，创建window<br><code>controller的加载过程</code><br>5.设置window的根控制器<br>6.如果有storyboard，根据Info.plist获得最主要storyboard的文件名，加载最主要的storyboard<br>7.显示window<br>8.didBecomeActive：真正到了这里，才是所有东西全部加载完毕</p>
+<ul>
+<li><p>controller的加载过程：<br>1.loadView<br>2.viewDidLoad<br>5.viewWillAppear<br>6.viewWillLayoutSubviews<br>7.viewDidLayoutSubviews<br>8.viewDidAppear</p>
+</li>
+<li><p>view的加载过程：<br>9.-(instancetype)initWithCoder:(NSCoder *)aDecoder：如果没有storyboard就会调用initWithFrame，这里两种方法视为一种）<br>10.- (void)awakeFromNib：在使用IB的时候才会涉及到此方法的使用<br>11.- (void)viewWillLayoutSubviews：布局子视图<br>12.- (void)drawRect:(CGRect)rect：使用setNeedsDisplay来定时多次调用本方法</p>
+</li>
+<li><p>ApplicationDelegate<br>1.didFinishLaunch：应用启动完毕调用<br>2.DidBecomeActive：app程序获取焦点就会调用<br>3.WillResignActive：APP失去焦点<br>4.DidEnterBackground：app进入后台的时候调用， 一般在这里保存应用的数据(游戏数据,比如暂停游戏)<br>5.WillEnterForeground：app程序程序从后台回到前台就会调用<br>6.DidReceiveMemoryWarning：内存警告，可能要终止程序，清除不需要再使用的内存<br>7.WillTerminate：程序即将退出调用</p>
+</li>
+</ul>
+<p>1.应用第一次启动：didFinishLaunch-&gt;didBecomeActive<br>2.前台到后台：WillResignActive-&gt;DidEnterBackground<br>3.后台到前台：WillEnterForeground-&gt;DidBecomeActive</p>
+<h3 id="事件传递-事件响应"><a href="#事件传递-事件响应" class="headerlink" title="事件传递/事件响应"></a>事件传递/事件响应</h3><p>传递：application-&gt;window-&gt;controller-&gt;view<br>响应：view-&gt;controller-&gt;window-&gt;application<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//作用：返回一个view来响应事件</div><div class="line">//如果调用了父类的这个方法，那系统就要调用方法pointInside方法，通过这个方法的返回值，来判断当前这个view能不能响应消息。</div><div class="line">//如果没有调用父类的方法，那就根据这个方法返回的view，作为响应事件的view。（当然返回nil，就是这个view不响应）</div><div class="line">- (nullableUIView *)hitTest:(CGPoint)point withEvent:(nullableUIEvent *)event；</div><div class="line"></div><div class="line">//作用：返回的值可以用来判断是否继续遍历子视图（返回的根据是触摸的point是否在view的frame范围内）</div><div class="line">//如果返回的是no，那就不用再去遍历它的子视图，hitTest方法返回的view就是可以响应事件的view。</div><div class="line">//如果返回的是YES，那就去遍历它的子视图</div><div class="line">- (BOOL)pointInside:(CGPoint)point withEvent:(nullableUIEvent *)event；</div></pre></td></tr></table></figure></p>
+<h1 id="中级"><a href="#中级" class="headerlink" title="中级"></a>中级</h1><h2 id="category分类与extension"><a href="#category分类与extension" class="headerlink" title="category分类与extension"></a>category分类与extension</h2><p>1.category与extension的区别</p>
+<ul>
+<li>category可以不用继承系统类，直接给系统类添加方法，最大程度的体现了Objective-C的动态语言特性。可以用来定义私有方法。</li>
+<li>extension为一个类增加私有方法,属性或成员变量,并且新添加的方法一定要予以实现。Extension都是放在.m文件中@implementation的上方。<br>区别：Extension可以添加属性，category不可以。另外Extension添加的方法是必须要实现的。<br>2.OC中的私有变量用@private修饰，私有方法用category<br>3.category为什么不能添加属性<br>category 它是在运行期决议的。 因为在运行期即编译完成后，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的。</li>
+</ul>
+<h2 id="xib-storyboard-autolayout"><a href="#xib-storyboard-autolayout" class="headerlink" title="xib,storyboard,autolayout"></a>xib,storyboard,autolayout</h2><p>缺点：<br>1.难以维护<br>2.性能<br>3.错误定位困难</p>
+<h2 id="UITableView"><a href="#UITableView" class="headerlink" title="UITableView"></a>UITableView</h2><h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><p>1.缓存高度：更新界面之前就把每个 cell 的高度算好，缓存到相对应的 model 中<br>2.异步绘制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//异步绘制</div><div class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</div><div class="line">CGRect rect = CGRectMake(0, 0, 100, 100);</div><div class="line">UIGraphicsBeginImageContextWithOptions(rect.size, YES, 0);</div><div class="line">CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">[[UIColor lightGrayColor] set];</div><div class="line">CGContextFillRect(context, rect);</div><div class="line"></div><div class="line">//将绘制的内容以图片的形式返回，并调主线程显示</div><div class="line">UIImage *temp = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">UIGraphicsEndImageContext();</div><div class="line"></div><div class="line">// 回到主线程</div><div class="line">dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">//code</div><div class="line">&#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>3.减少层级：减少SubViews的数量, 在滑动的列表上，多层次的view会导致帧数的下降。<br>4.hide：尽量少用addView给Cell动态添加View，可以初始化时就添加，然后通过hide来控制是否显示<br>5.避免离屏渲染<br>（1）当有图像时，预渲染图像，在bitmap context先将其画一遍，导出成UIImage对象，然后再绘制到屏幕，这会大大提高渲染速度<br>（2）尽量不要使用透明背景，将cell的opaque值设为Yes，背景色不要使用clearColor，尽量不要使用阴影渐变等<br>（3）可以在UIView的drawRect方法中自定义绘制<br>（4）正确地使用UITableViewCell的重用机制<br>（5）避免阻塞主线程<br>（6）尽可能重用开销比较大的对象<br>（7）尽量减少计算的复杂度</p>
+<h4 id="UITableView的滚动加载进行优化，防止卡顿"><a href="#UITableView的滚动加载进行优化，防止卡顿" class="headerlink" title="UITableView的滚动加载进行优化，防止卡顿"></a>UITableView的滚动加载进行优化，防止卡顿</h4><p>1.减少cellForRowAtIndexPath代理中的计算量（cell的内容计算）<br>首先要提前计算每个cell中需要的一些基本数据，代理调用的时候直接取出；<br>图片要异步加载，加载完成后再根据cell内部UIImageView的引用设置图片；<br>图片数量多时，图片的尺寸要跟据需要提前经过transform矩阵变换压缩好（直接设置图片的contentMode让其自行压缩仍然会影响滚动效率），必要的时候要准备好预览图和高清图，需要时再加载高清图。<br>图片的‘懒加载’方法，即延迟加载，当滚动速度很快时避免频繁请求服务器数据。<br>尽量手动Drawing视图提升流畅性，而不是直接子类化UITableViewCell，然后覆盖drawRect方法，因为cell中不是只有一个contentview。绘制cell不建议使用UIView，建议使用CALayer。原因要参考UIView和CALayer的区别和联系。</p>
+<p>2.减少heightForRowAtIndexPath代理中的计算量（cell的高度计算）<br>由于每次TableView进行update更新都会对每一个cell调用heightForRowAtIndexPath代理取得最新的height，会大大增加计算时间。如果表格的所有cell高度都是固定的，那么去掉heightForRowAtIndexPath代理，直接设置TableView的rowHeight属性为固定的高度；<br>如果高度不固定，应尽量将cell的高度数据计算好并储存起来，代理调用的时候直接取，即将height的计算时间复杂度降到O(1)。例如：在异步请求服务器数据时，提前将cell高度计算好并作为dataSource的一个数据存到数据库供随时取用。</p>
+<h3 id="重用机制"><a href="#重用机制" class="headerlink" title="重用机制"></a>重用机制</h3><ul>
+<li><p>可变数组，用来保存当前显示的cell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSMutableArray *visiableCells</div></pre></td></tr></table></figure>
+</li>
+<li><p>可变字典，用来保存可复用的cell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSMutableDictionary *reusableTableCells</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可复用的cell使用字典是因为可复用的cell可能不只有一种样式，这里需要字典指定key(也就是reuseIdentifier)来查找是否有可重用样式</p>
+<h4 id="重用原理"><a href="#重用原理" class="headerlink" title="重用原理"></a>重用原理</h4><ul>
+<li>底端出现的cell：reusableTableCells（取出）-&gt; visiableCells（放入）</li>
+<li>顶端消失的cell：visiableCells（取出）-&gt; reusableTableCells（放入）</li>
+<li>visiableCells当中如果没有该标识符，alloc即可</li>
+</ul>
+<p>在这里先假设iPhone屏幕最多能显示10个cell<br>1.创建11（最多能显示的次数+1）个单元格<br>用[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier]创建11次cell，并给cell指定相同的重用标识(当然，能够为不同显示类型的cell指定不同的标识)。而且11个cell所有都增加到visiableCells数组，<code>此时的reusableTableCells为空</code>。<br>2.向下拖动tableView，当cell1全然移出屏幕，而且cell11(它也是alloc出来的，原因同上)全然显示出来的时候。cell11增加到visiableCells，cell1移出visiableCells，增加到reusableTableCells。<br>3.接下来的拖动当中显示新的cell，cellForRowAtIndexPath会调用，这个时候就执行重用API：传入一个CellIdentifier<br>接着向下拖动tableView，由于reusableTableCells中已经有值，所以，当须要显示新的cell，cellForRowAtIndexPath再次被调用的时候，tableView dequeueReusableCellWithIdentifier:CellIdentifier，返回cell1。cell1增加到visiableCells，cell1移出reusableTableCells；cell2移出visiableCells，增加到reusableTableCells。之后Cell就能够正常重用了。</p>
+<ul>
+<li>并不是只有超过屏幕的时候才更新reusableTableCells数组，reloadData方法 和 reloadRowsAtIndex(可能) 对数组进行更新</li>
+</ul>
+<ol>
+<li>reloadData，这样的情况比较特殊。通常是部分数据发生变化，须要又一次刷新cell显示的内容时调用。在cellForRowAtIndexPath调用中，全部cell都是重用的。我预计reloadData调用后，把visiableCells中全部cell移入reusableTableCells，visiableCells清空。cellForRowAtIndexPath调用后，再把reuse的cell从reusableTableCells取出来，放入到visiableCells。</li>
+<li>reloadRowsAtIndex，刷新指定的IndexPath。假设调用时reusableTableCells为空，那么cellForRowAtIndexPath调用后，是新创建cell，新的cell增加到visiableCells。老的cell移出visiableCells，增加到reusableTableCells。于是，之后的刷新就有cell做reuse了。</li>
+</ol>
+<h2 id="UICollectionView"><a href="#UICollectionView" class="headerlink" title="UICollectionView"></a>UICollectionView</h2><h3 id="UICollectionViewLayout"><a href="#UICollectionViewLayout" class="headerlink" title="UICollectionViewLayout"></a>UICollectionViewLayout</h3><ul>
+<li>UICollectionView如何显示内容完全由layout(布局对象)决定<br>UICollectionViewLayout：是一个抽象类，一般情况使用UICollectionViewLayout的子类即可, 只有需要自定义cell显示样式时才需要定义一个类继承于UICollectionViewLayout来自己实现<br>UICollectionViewFlowLayout(流水布局): 该类是UICollectionViewLayout的子类, 系统已经提供了默认的实现<!--调用顺序：-->
+<!--1.prepareLayout-->
+<!--2.-(CGSize) collectionViewContentSize-->
+<!--3.-(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect-->
+</li>
+</ul>
+<h1 id="高级"><a href="#高级" class="headerlink" title="高级"></a>高级</h1><h2 id="UIView-与-CALayer"><a href="#UIView-与-CALayer" class="headerlink" title="UIView 与 CALayer"></a>UIView 与 CALayer</h2><p>UIView 的绘制是建立在 CoreGraphic 上的，使用的是 CPU。<br>CALayer 使用的是 Core Animation，CPU，GPU 通吃，由系统决定使用哪个。</p>
+<ul>
+<li><p>绘制<br>View：自下向上的一层一层的绘制，然后渲染。<br>Layer处理的是 Texure，利用 GPU 的 Texture Cache 和独立的浮点数计算单元加速 纹理 的处理。</p>
+</li>
+<li><p>从事件的响应来说：<br>UIView是 CALayer 的代理，layer本身并不能响应事件，因为layer是直接继承自NSObject，不具备处理事件的能力。而 UIView 是继承了UIResponder 的，这也是事件转发的角度上说明，view要比单纯的layer复杂的多。多层次的view再加上各种手势的处理势必导致帧数的下降。</p>
+</li>
+</ul>
+<h2 id="iOS各版本差异"><a href="#iOS各版本差异" class="headerlink" title="iOS各版本差异"></a>iOS各版本差异</h2><h3 id="iOS9"><a href="#iOS9" class="headerlink" title="iOS9"></a>iOS9</h3><p>1.UIStackView<br>2.ATS</p>
+<h3 id="iOS11"><a href="#iOS11" class="headerlink" title="iOS11"></a>iOS11</h3><h2 id="性能优化，内存泄漏"><a href="#性能优化，内存泄漏" class="headerlink" title="性能优化，内存泄漏"></a>性能优化，内存泄漏</h2><p>内存泄漏（memory leak）： 是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄露危害可以忽略，但内存泄露堆积后果很严重，无论多少内存,迟早会被占光。<br>内存溢出（out of memory）：程序要求的内存，超出了系统所能分配的范围。如：我们用一个int型4字节的数据来装一个float型8字节的数据，就会产生内存溢出。不过我们在编程是可以强制类型转换int XX = (int)float;只取float 4字节数据给int.</p>
+<p><a href="https://guchunli.github.io/2017/06/05/iOS调试与性能优化学习笔记/">iOS调试与性能优化学习笔记</a><br><a href="https://www.jianshu.com/p/9c450e512020" target="_blank" rel="external">iOS最全性能优化</a><br><a href="https://guchunli.github.io/2017/12/19/iOS提高界面流畅度的技巧/">iOS提高界面流畅度的技巧</a></p>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><p><a href="https://guchunli.github.io/2017/03/03/git学习笔记/">git学习笔记</a></p>
+<h2 id="原生与js交互"><a href="#原生与js交互" class="headerlink" title="原生与js交互"></a>原生与js交互</h2><p><a href="https://guchunli.github.io/2017/07/04/OC与JS交互的几种方法/">OC与JS交互的几种方法</a></p>
+<h2 id="RAC-函数式，响应式编程"><a href="#RAC-函数式，响应式编程" class="headerlink" title="RAC 函数式，响应式编程"></a>RAC 函数式，响应式编程</h2><p><a href="https://guchunli.github.io/2017/05/20/ReactiveCocoa学习笔记/">ReactiveCocoa学习笔记</a></p>
+<h2 id="动画效果"><a href="#动画效果" class="headerlink" title="动画效果"></a>动画效果</h2><p><a href="iOS动画学习笔记">iOS动画学习笔记</a><br><a href="https://guchunli.github.io/2017/04/23/RAC与Target-Action、通知、代理、KVO/">RAC与Target-Action、通知、代理、KVO</a></p>
+<h2 id="第三方库"><a href="#第三方库" class="headerlink" title="第三方库"></a>第三方库</h2><h3 id="SDWebImage"><a href="#SDWebImage" class="headerlink" title="SDWebImage"></a>SDWebImage</h3><ul>
+<li>缓存路径<br>默认情况下，图片是被存储到<code>内存</code>缓存和<code>磁盘</code>缓存中的。如果仅仅是想缓存到内存中，可以用方法：storeImage:forKey:toDisk: 第三个参数传NO即可。</li>
+<li>查找显示图片<br>sd加载一张图片的时候，会先在内存里面查找是否有这张图片，如果没有会根据图片的md5(url)后的名称去沙盒里面去寻找，是否有这张图片，如果没有会开辟线程去下载，下载完毕后加载到imageview上面，并md(url)为名称缓存到沙盒里面。</li>
+<li>SDWebImage缓存到本地沙盒的哪个路径<br><code>NSCachesDirectory</code>，SDImageCache 在初始化的时候会注册一些消息通知，在内存警告或退到后台的时 候清理内存图片缓存，应用结束的时候清理过期图片</li>
+<li>SDWebImage加载图片的流程<br>思路：placeholderImage-&gt;内存中查找-&gt;硬盘中查找（如有，缓存到内存）-&gt;如没有，下载-&gt;解码-&gt;保存到内存和硬盘<br>详细流程：<br>1.入口 setImageWithURL:placeholderImage:options:会先把 placeholderImage显示，然后 SDWebImageManager根据 URL 开始处理图片。<br>2.进入SDWebImageManager 类中downloadWithURL:delegate:options:userInfo:，交给<br>SDImageCache从缓存查找图片是否已经下载<br>queryDiskCacheForKey:delegate:userInfo:.<br>3.先从内存图片缓存查找是否有图片，如果内存中已经有图片缓存，SDImageCacheDelegate回调 imageCache:didFindImage:forKey:userInfo:到<br>SDWebImageManager。<br>4.SDWebImageManagerDelegate 回调<br>webImageManager:didFinishWithImage: 到 UIImageView+WebCache,等前端展示图片。<br>5.如果内存缓存中没有，生成 ｀NSOperation ｀<br>添加到队列，开始从硬盘查找图片是否已经缓存。<br>6.根据 URL的MD5值Key在硬盘缓存目录下尝试读取图片文件。这一步是在 NSOperation 进行的操作，所以回主线程进行结果回调 notifyDelegate:。<br>7.如果上一操作从硬盘读取到了图片，将图片添加到内存缓存中（如果空闲内存过小， 会先清空内存缓存）。SDImageCacheDelegate’回调 imageCache:didFindImage:forKey:userInfo:。进而回调展示图片。<br>8.如果从硬盘缓存目录读取不到图片，说明所有缓存都不存在该图片，需要下载图片， 回调 imageCache:didNotFindImageForKey:userInfo:。<br>9.共享或重新生成一个下载器 SDWebImageDownloader开始下载图片。<br>10.图片下载由 NSURLSession 来做，实现相关 delegate<br>来判断图片下载中、下载完成和下载失败。<br>11.connection:didReceiveData: 中利用 ImageIO做了按图片下载进度加载效果。<br>12.connectionDidFinishLoading: 数据下载完成后交给 SDWebImageDecoder做图片解码处理。<br>13.图片解码处理在一个 NSOperationQueue完成，不会拖慢主线程 UI.如果有需要 对下载的图片进行二次处理，最好也在这里完成，效率会好很多。<br>14.在主线程 notifyDelegateOnMainThreadWithInfo:<br>宣告解码完成 imageDecoder:didFinishDecodingImage:userInfo: 回调给 SDWebImageDownloader`。<br>15.imageDownloader:didFinishWithImage:回调给 SDWebImageManager告知图片 下载完成。</li>
+</ul>
+<ol>
+<li>通知所有的 downloadDelegates下载完成，回调给需要的地方展示图片。<br>17.将图片保存到 SDImageCache中，内存缓存和硬盘缓存同时保存。写文件到硬盘 也在以单独 NSOperation 完成，避免拖慢主线程。<br>18.SDImageCache 在初始化的时候会注册一些消息通知，在内存警告或退到后台的时 候清理内存图片缓存，应用结束的时候清理过期图片。<br>19.SDWebImage 也提供了 UIButton+WebCache 和 MKAnnotationView+WebCache，方便使用。<br>20.SDWebImagePrefetcher 可以预先下载图片。</li>
+</ol>
+<h4 id="NSCache优于NSDictionary的地方"><a href="#NSCache优于NSDictionary的地方" class="headerlink" title="NSCache优于NSDictionary的地方"></a>NSCache优于NSDictionary的地方</h4><p>1.当系统资源将要耗尽时，NSCache可以自动删减缓存<br>2.NSCache是线程安全的，而NSDictionary则绝对不具备此优势</p>
+<h3 id="cocoapods"><a href="#cocoapods" class="headerlink" title="cocoapods"></a>cocoapods</h3><h4 id="私有库"><a href="#私有库" class="headerlink" title="私有库"></a>私有库</h4><p>远程私有库可以将你的代码传到第三方托管平台进行公司内部开发人员共享,从而实现组件化开发模式</p>
+<h2 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h2><h3 id="MJRefresh"><a href="#MJRefresh" class="headerlink" title="MJRefresh"></a>MJRefresh</h3><ul>
+<li><p>基类-&gt;基础的下拉/上拉-&gt;带有状态文字-&gt;(上拉：会回弹到底部/会自动刷新)-&gt;能用的子类<br>MJRefreshComponent-&gt;MJRefreshHeader-&gt;MJRefreshStateHeader-&gt;MJRefreshNormalHeader/MJRefreshGifHeader</p>
+<pre><code>-&gt;MJRefreshFooter-&gt;MJRefreshBackFooter-&gt;MJRefreshBackNormalFooter/MJRefreshBackGifFooter
+                               -&gt;MJRefreshAutoFooter-&gt;MJRefreshAutoNormalFooter/MJRefreshAutoGifFooter
+</code></pre></li>
+<li><p>创建<br>block/target-action</p>
+</li>
+<li><p>刷新控件的状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">typedef NS_ENUM(NSInteger, MJRefreshState) &#123;</div><div class="line">/** 普通闲置状态 */</div><div class="line">MJRefreshStateIdle = 1,</div><div class="line">/** 松开就可以进行刷新的状态 */</div><div class="line">MJRefreshStatePulling,</div><div class="line">/** 正在刷新中的状态 */</div><div class="line">MJRefreshStateRefreshing,</div><div class="line">/** 即将刷新的状态 */</div><div class="line">MJRefreshStateWillRefresh,</div><div class="line">/** 所有数据加载完毕，没有更多的数据了 */</div><div class="line">MJRefreshStateNoMoreData</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>隐藏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 隐藏时间</div><div class="line">header.lastUpdatedTimeLabel.hidden = YES;</div><div class="line">// 隐藏状态</div><div class="line">header.stateLabel.hidden = YES;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="fmmpeg框架"><a href="#fmmpeg框架" class="headerlink" title="fmmpeg框架"></a>fmmpeg框架</h3><p>音视频编解码框架，内部使用UDP协议针对流媒体开发，内部开辟了六个端口来接受流媒体数据，完成快速接受之目的。</p>
+<h3 id="图形和动画-：Core-Animation-，OpenGL-ES-，Quartz-2D"><a href="#图形和动画-：Core-Animation-，OpenGL-ES-，Quartz-2D" class="headerlink" title="图形和动画 ：Core Animation ，OpenGL ES ，Quartz 2D"></a>图形和动画 ：Core Animation ，OpenGL ES ，Quartz 2D</h3><h2 id="swift"><a href="#swift" class="headerlink" title="swift"></a>swift</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//swift中的let是线程安全的</div><div class="line">static let instance: NetworkTools = NetworkTools()</div><div class="line">class func shareNetworkTools() -&gt; NetworkTools&#123;</div><div class="line">return instance</div><div class="line">&#125;</div><div class="line"></div><div class="line">private let sharedInstance = Singleton()</div><div class="line">class Singleton: NSObject &#123;</div><div class="line">class var sharedManager: Singleton &#123;</div><div class="line">return sharedInstance;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://guchunli.github.io/2017/07/14/Swift学习笔记/">Swift学习笔记</a></p>
+<h2 id="react-native"><a href="#react-native" class="headerlink" title="react native"></a>react native</h2><p><a href="https://guchunli.github.io/2017/07/06/ReactNative基础知识学习笔记/">ReactNative基础知识学习笔记</a><br><a href="https://guchunli.github.io/2017/06/21/ReactNative使用学习笔记/">ReactNative使用学习笔记</a></p>
+<p>参考文章：<a href="https://www.jianshu.com/p/7d486b24dc21" target="_blank" rel="external">2017年5月iOS招人心得答案总结</a><br><a href="http://blog.csdn.net/kongdeqin/article/details/53171189" target="_blank" rel="external">关于NSMutableArray线程安全的思考和实现</a><br><a href="https://www.jianshu.com/p/48665652e4e4" target="_blank" rel="external">OC知识–彻底理解内存管理(MRC、ARC)</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/assets/blogImg/weixin.png',
+  alipayImage: '/assets/blogImg/zhifubao.png'
+});
+</script>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/14/masonry使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          masonry使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/26/http网络请求过程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">http网络请求过程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#运算符优先级"><span class="nav-number">1.1.</span> <span class="nav-text">运算符优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OC"><span class="nav-number">1.2.</span> <span class="nav-text">OC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态语言"><span class="nav-number">1.2.1.</span> <span class="nav-text">动态语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OC的三大特性"><span class="nav-number">1.2.2.</span> <span class="nav-text">OC的三大特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#封装"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">多态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性"><span class="nav-number">1.3.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#property本质"><span class="nav-number">1.3.1.</span> <span class="nav-text">@property本质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性关键字"><span class="nav-number">1.3.2.</span> <span class="nav-text">属性关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#assign-weak"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">assign/weak</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#copy"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">copy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weak"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">weak</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OC的内存管理机制"><span class="nav-number">1.4.</span> <span class="nav-text">OC的内存管理机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存管理规律"><span class="nav-number">1.4.1.</span> <span class="nav-text">内存管理规律</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AutoreleasePool"><span class="nav-number">1.4.2.</span> <span class="nav-text">AutoreleasePool</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程（多线程编程指南）"><span class="nav-number">1.5.</span> <span class="nav-text">多线程（多线程编程指南）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程-线程的区别？同步-异步的区别？并行-并发的区别？"><span class="nav-number">1.5.1.</span> <span class="nav-text">进程/线程的区别？同步/异步的区别？并行/并发的区别？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NSThread"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">NSThread</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GCD"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">GCD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSOperation"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">NSOperation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程下，NSMutableArray需不需要开启线程保护"><span class="nav-number">1.5.2.</span> <span class="nav-text">多线程下，NSMutableArray需不需要开启线程保护</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁"><span class="nav-number">1.6.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runtime与runloop"><span class="nav-number">1.7.</span> <span class="nav-text">runtime与runloop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据持久化"><span class="nav-number">1.8.</span> <span class="nav-text">数据持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#plist文件（属性列表）"><span class="nav-number">1.8.1.</span> <span class="nav-text">plist文件（属性列表）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#preference（偏好设置）"><span class="nav-number">1.8.2.</span> <span class="nav-text">preference（偏好设置）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#沙盒"><span class="nav-number">1.8.3.</span> <span class="nav-text">沙盒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSKeyedArchiver（归档）"><span class="nav-number">1.8.4.</span> <span class="nav-text">NSKeyedArchiver（归档）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现NSCoding的自动归档和解档"><span class="nav-number">1.8.4.1.</span> <span class="nav-text">实现NSCoding的自动归档和解档</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQLite-3"><span class="nav-number">1.8.5.</span> <span class="nav-text">SQLite 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CoreData"><span class="nav-number">1.8.6.</span> <span class="nav-text">CoreData</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络请求"><span class="nav-number">1.9.</span> <span class="nav-text">网络请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#http与https"><span class="nav-number">1.9.1.</span> <span class="nav-text">http与https</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ATS"><span class="nav-number">1.9.2.</span> <span class="nav-text">ATS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密"><span class="nav-number">1.9.3.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原生网络请求类"><span class="nav-number">1.9.4.</span> <span class="nav-text">原生网络请求类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURL"><span class="nav-number">1.9.4.1.</span> <span class="nav-text">NSURL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求报文和响应报文"><span class="nav-number">1.9.4.2.</span> <span class="nav-text">请求报文和响应报文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-IP"><span class="nav-number">1.9.4.3.</span> <span class="nav-text">TCP/IP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLConnection"><span class="nav-number">1.9.4.4.</span> <span class="nav-text">NSURLConnection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLSession"><span class="nav-number">1.9.4.5.</span> <span class="nav-text">NSURLSession</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bonjour-，WebKit-，BSD-Sockets"><span class="nav-number">1.9.5.</span> <span class="nav-text">Bonjour ，WebKit ，BSD Sockets</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式"><span class="nav-number">1.10.</span> <span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#block"><span class="nav-number">1.10.1.</span> <span class="nav-text">block</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数指针"><span class="nav-number">1.10.1.1.</span> <span class="nav-text">函数指针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么代理用weak，delegate和dataSource有什么区别，delegate和block的区别"><span class="nav-number">1.10.2.</span> <span class="nav-text">为什么代理用weak，delegate和dataSource有什么区别，delegate和block的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KVO"><span class="nav-number">1.10.3.</span> <span class="nav-text">KVO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delegate"><span class="nav-number">1.10.4.</span> <span class="nav-text">delegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通知"><span class="nav-number">1.10.5.</span> <span class="nav-text">通知</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#delegate与通知的区别"><span class="nav-number">1.10.5.1.</span> <span class="nav-text">delegate与通知的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例"><span class="nav-number">1.10.6.</span> <span class="nav-text">单例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVC-MVP-MVVM"><span class="nav-number">1.10.7.</span> <span class="nav-text">MVC/MVP/MVVM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#App启动顺序"><span class="nav-number">1.11.</span> <span class="nav-text">App启动顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件传递-事件响应"><span class="nav-number">1.11.1.</span> <span class="nav-text">事件传递/事件响应</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中级"><span class="nav-number">2.</span> <span class="nav-text">中级</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#category分类与extension"><span class="nav-number">2.1.</span> <span class="nav-text">category分类与extension</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xib-storyboard-autolayout"><span class="nav-number">2.2.</span> <span class="nav-text">xib,storyboard,autolayout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UITableView"><span class="nav-number">2.3.</span> <span class="nav-text">UITableView</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#性能优化"><span class="nav-number">2.3.1.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UITableView的滚动加载进行优化，防止卡顿"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">UITableView的滚动加载进行优化，防止卡顿</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重用机制"><span class="nav-number">2.3.2.</span> <span class="nav-text">重用机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重用原理"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">重用原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UICollectionView"><span class="nav-number">2.4.</span> <span class="nav-text">UICollectionView</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionViewLayout"><span class="nav-number">2.4.1.</span> <span class="nav-text">UICollectionViewLayout</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高级"><span class="nav-number">3.</span> <span class="nav-text">高级</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#UIView-与-CALayer"><span class="nav-number">3.1.</span> <span class="nav-text">UIView 与 CALayer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS各版本差异"><span class="nav-number">3.2.</span> <span class="nav-text">iOS各版本差异</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS9"><span class="nav-number">3.2.1.</span> <span class="nav-text">iOS9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS11"><span class="nav-number">3.2.2.</span> <span class="nav-text">iOS11</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能优化，内存泄漏"><span class="nav-number">3.3.</span> <span class="nav-text">性能优化，内存泄漏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git"><span class="nav-number">3.4.</span> <span class="nav-text">git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原生与js交互"><span class="nav-number">3.5.</span> <span class="nav-text">原生与js交互</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAC-函数式，响应式编程"><span class="nav-number">3.6.</span> <span class="nav-text">RAC 函数式，响应式编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动画效果"><span class="nav-number">3.7.</span> <span class="nav-text">动画效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三方库"><span class="nav-number">3.8.</span> <span class="nav-text">第三方库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SDWebImage"><span class="nav-number">3.8.1.</span> <span class="nav-text">SDWebImage</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NSCache优于NSDictionary的地方"><span class="nav-number">3.8.1.1.</span> <span class="nav-text">NSCache优于NSDictionary的地方</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cocoapods"><span class="nav-number">3.8.2.</span> <span class="nav-text">cocoapods</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#私有库"><span class="nav-number">3.8.2.1.</span> <span class="nav-text">私有库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件化"><span class="nav-number">3.9.</span> <span class="nav-text">组件化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MJRefresh"><span class="nav-number">3.9.1.</span> <span class="nav-text">MJRefresh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fmmpeg框架"><span class="nav-number">3.9.2.</span> <span class="nav-text">fmmpeg框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图形和动画-：Core-Animation-，OpenGL-ES-，Quartz-2D"><span class="nav-number">3.9.3.</span> <span class="nav-text">图形和动画 ：Core Animation ，OpenGL ES ，Quartz 2D</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#swift"><span class="nav-number">3.10.</span> <span class="nav-text">swift</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react-native"><span class="nav-number">3.11.</span> <span class="nav-text">react native</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 guchunli All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories/study/" class="mobile-nav-link">Study</a>
+  
+    <a href="/categories/other/" class="mobile-nav-link">Other</a>
+  
+    <a href="/photos" class="mobile-nav-link">Photos</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            guchunli
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 谷春丽的小站 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

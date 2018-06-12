@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ios runtime与runloop学习笔记 | guchunli</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="iOSruntime" />
+  
+  
+  
+  
+  <meta name="description" content="runtimeObjective-C 是一门动态语言，它把很多静态语言在编译和链接时做的事情放到了运行时去处理，它在运行时实现了对类、方法、成员变量、属性等信息的管理机制。  需要#import &amp;lt;objc/runtime.h&amp;gt;  基于C，为C添加类面向对象的特性。对象方法：保存到类对象的方法列表。类方法：保存到元类(Meta Class)的方法列表。">
+<meta name="keywords" content="iOS,runtime">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS runtime与runloop学习笔记">
+<meta property="og:url" content="https://guchunli.github.io/2017/03/22/iOS runtime与runloop学习笔记/index.html">
+<meta property="og:site_name" content="guchunli">
+<meta property="og:description" content="runtimeObjective-C 是一门动态语言，它把很多静态语言在编译和链接时做的事情放到了运行时去处理，它在运行时实现了对类、方法、成员变量、属性等信息的管理机制。  需要#import &amp;lt;objc/runtime.h&amp;gt;  基于C，为C添加类面向对象的特性。对象方法：保存到类对象的方法列表。类方法：保存到元类(Meta Class)的方法列表。">
+<meta property="og:updated_time" content="2018-05-24T09:16:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS runtime与runloop学习笔记">
+<meta name="twitter:description" content="runtimeObjective-C 是一门动态语言，它把很多静态语言在编译和链接时做的事情放到了运行时去处理，它在运行时实现了对类、方法、成员变量、属性等信息的管理机制。  需要#import &amp;lt;objc/runtime.h&amp;gt;  基于C，为C添加类面向对象的特性。对象方法：保存到类对象的方法列表。类方法：保存到元类(Meta Class)的方法列表。">
+  
+    <link rel="alternate" href="/atom.xml" title="guchunli" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/study/">study</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/other/">other</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/photos">photos</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-iOS runtime与runloop学习笔记" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      iOS runtime与runloop学习笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/03/22/iOS runtime与runloop学习笔记/" class="article-date">
+	  <time datetime="2017-03-22T03:39:18.000Z" itemprop="datePublished">2017-03-22</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/study/">学习</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="runtime"><a href="#runtime" class="headerlink" title="runtime"></a>runtime</h1><p>Objective-C 是一门动态语言，它把很多静态语言在编译和链接时做的事情放到了运行时去处理，它在运行时实现了对类、方法、成员变量、属性等信息的管理机制。</p>
+<ul>
+<li><p>需要<code>#import &lt;objc/runtime.h&gt;</code></p>
+</li>
+<li><p>基于C，为C添加类面向对象的特性。<br>对象方法：保存到类对象的方法列表。<br>类方法：保存到元类(Meta Class)的方法列表。</p>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="运行时的类与对象"><a href="#运行时的类与对象" class="headerlink" title="运行时的类与对象"></a>运行时的类与对象</h2><p>类与对象相关的函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">const char *class_getName(Class cls)，获取指定类的类名。</div><div class="line">BOOL class_isMetaClass(Class cls)，判断指定类是否是一个元类。</div><div class="line">Class class_getSuperclass(Class cls)，获取指定类的父类。</div><div class="line">Class class_setSuperclass(Class cls, Class newSuper)，设定指定类的父类。</div><div class="line">int class_getVersion(Class cls)，获取指定类的版本信息。</div><div class="line">void class_setVersion(Class cls, int version)，设定指定类的版本信息。</div><div class="line">size_t class_getInstanceSize(Class cls)，获取实例大小。</div><div class="line">Ivar class_getInstanceVariable(Class cls, const char *name)，获取指定名字的实例变量。</div><div class="line">Ivar class_getClassVariable(Class cls, const char *name)，获取指定名字的类变量。</div><div class="line">Ivar *class_copyIvarList(Class cls, unsigned int *outCount)，获取类的成员变量列表的拷贝。调用后需要自己 free()。</div><div class="line">Method class_getInstanceMethod(Class cls, SEL name)，获取指定名字的实例方法。</div><div class="line">Method class_getClassMethod(Class cls, SEL name)，获取指定名字的类方法。</div><div class="line">IMP class_getMethodImplementation(Class cls, SEL name)，获取指定名字的方法实现。</div><div class="line">BOOL class_respondsToSelector(Class cls, SEL sel)，类是否响应指定的方法。</div><div class="line">Method *class_copyMethodList(Class cls, unsigned int *outCount)，获取方法列表的拷贝。调用后需要自己 free()。</div><div class="line">BOOL class_conformsToProtocol(Class cls, Protocol *protocol)，类是否遵循指定的协议。</div><div class="line">Protocol * __unsafe_unretained *class_copyProtocolList(Class cls, unsigned int *outCount)，获取协议列表的拷贝。调用后需要自己 free()。</div><div class="line">objc_property_t class_getProperty(Class cls, const char *name)，获取指定名字的属性。</div><div class="line">objc_property_t *class_copyPropertyList(Class cls, unsigned int *outCount)，获取类的属性列表。调用后需要自己 free()。</div><div class="line">BOOL class_addMethod(Class cls, SEL name, IMP imp, const char *types)，为类添加方法。</div><div class="line">IMP class_replaceMethod(Class cls, SEL name, IMP imp, const char *types)，替代类的方法。</div><div class="line">BOOL class_addIvar(Class cls, const char *name, size_t size, uint8_t alignment, const char *types)，给指定的类添加成员变量。这个函数只能在 objc_allocateClassPair() 和 objc_registerClassPair() 之间调用，并且不能为一个已经存在的类添加成员变量。</div><div class="line">BOOL class_addProtocol(Class cls, Protocol *protocol)，为类添加协议。</div><div class="line">BOOL class_addProperty(Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount)，为类添加属性。</div><div class="line">void class_replaceProperty(Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount)，替代类的属性。</div><div class="line">id class_createInstance(Class cls, size_t extraBytes)，创建指定类的实例。</div><div class="line">id objc_constructInstance(Class cls, void *bytes)，在指定的位置创建类的实例。</div><div class="line">void *objc_destructInstance(id obj)，销毁实例。</div><div class="line">Class objc_allocateClassPair(Class superclass, const char *name, size_t extraBytes)，创建类和元类。</div><div class="line">void objc_registerClassPair(Class cls)，注册类到 Runtime。</div><div class="line">void objc_disposeClassPair(Class cls)，销毁类和对应的元类。</div></pre></td></tr></table></figure></p>
+<ul>
+<li>类是元类的实例。</li>
+<li>isa，在大多面向对象的语言中，都有类和对象的概念，其中，对象是类的实例，是通过类定义的结构生成出来的。而在 Objective-C 中，类本身也是一个对象，类作为对象时的 isa 指针指向的是元类(Meta Class)。</li>
+<li><p>object_getClass() 可以获得当前对象 isa</p>
+</li>
+<li><p><code>#pragma clang diagnostic...</code>代码，可用于忽略编译器对于未声明的 @selector 的 warning。因为我们的代码中我们需要动态的为一个类创建方法，所以必然不会事先声明。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#pragma clang diagnostic push</div><div class="line">#pragma clang diagnostic ignored &quot;-Wundeclared-selector&quot;</div><div class="line">//调用未声明的 @selector</div><div class="line">#pragma clang diagnostic pop</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用 <code>objc_registerClassPair()</code> 函数需要注意，不能注册已经注册过的类。</p>
+</li>
+<li>使用 <code>objc_disposeClassPair()</code> 函数需要注意，如果一个类的实例和子类还存在时，不要去销毁一个类。</li>
+</ul>
+<h2 id="运行时的成员变量与属性"><a href="#运行时的成员变量与属性" class="headerlink" title="运行时的成员变量与属性"></a>运行时的成员变量与属性</h2><ul>
+<li>我们不能用 class_addIvar() 函数为一个已经存在的类添加 Ivar。并且 class_addIvar() 只能在 objc_allocateClassPair() 和 objc_registerClassPair() 之间调用。</li>
+<li>添加一个属性及对应的成员变量后，我们还能通过 [obj valueForKey:@”propertyName”]; 获得属性值。</li>
+</ul>
+<h2 id="关联对象"><a href="#关联对象" class="headerlink" title="关联对象"></a>关联对象</h2><p>可用于在类别中添加属性，创建一个category，然后添加property，并且实现setter,gertter。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)setName:(NSString *)name&#123;</div><div class="line">objc_setAssociatedObject(self, &quot;name&quot;, name, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (NSString *)name&#123;</div><div class="line">return objc_getAssociatedObject(self, &quot;name&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>相关方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">void objc_setAssociatedObject(id object, const void *key, id value, objc _AssociationPolicy policy)</div><div class="line">id objc_getAssociatedObject(id object, const void *key)</div><div class="line">void objc_removeAssociatedObjects(id object)</div></pre></td></tr></table></figure></p>
+<h2 id="方法与消息"><a href="#方法与消息" class="headerlink" title="方法与消息"></a>方法与消息</h2><ul>
+<li>需要<code>#import &lt;objc/message.h&gt;</code></li>
+</ul>
+<ol>
+<li>IMP 其实就是 implementation 的缩写，表示方法实现的代码块地址<blockquote>
+<p>IMP定义：<code>id (*IMP)(id, SEL,...)</code></p>
+</blockquote>
+</li>
+</ol>
+<p>2.SEL用于唯一标识一个方法名,因此一个类中是不能存在两个同名的方法的，即使参数类型不同也不行。<br>获取SEL的三种方法：<br>(1)sel_registerName函数<br>(2)Objective-C编译器提供的@selector()<br>(3)NSSelectorFromString()方法</p>
+<p>3.Method<br>将[receiver message]转化为一个消息函数的调用</p>
+<blockquote>
+<p>定义：<code>objc_msgSend(receiver, selector, arg1, arg2,...)</code></p>
+</blockquote>
+<h2 id="消息机制"><a href="#消息机制" class="headerlink" title="消息机制"></a>消息机制</h2><blockquote>
+<p>注意：使用objc_msgSend，需要<code>#import &lt;objc/runtime.h&gt;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">// 通过类名获取类</div><div class="line">Class catClass = objc_getClass(&quot;Cat&quot;); </div><div class="line"></div><div class="line">//注意Class实际上也是对象，所以同样能够接受消息，向Class发送alloc消息</div><div class="line">Cat *cat = objc_msgSend(catClass, @selector(alloc)); </div><div class="line"></div><div class="line">//发送init消息给Cat实例cat</div><div class="line">cat = objc_msgSend(cat, @selector(init)); </div><div class="line"></div><div class="line">//发送eat消息给cat，即调用eat方法</div><div class="line">objc_msgSend(cat, @selector(eat));</div><div class="line"></div><div class="line">//汇总消息传递过程</div><div class="line">objc_msgSend(objc_msgSend(objc_msgSend(objc_getClass(&quot;Cat&quot;), sel_registerName(&quot;alloc&quot;)), sel_registerName(&quot;init&quot;)), sel_registerName(&quot;eat&quot;));</div></pre></td></tr></table></figure></p>
+</blockquote>
+<ul>
+<li>objc_msgSend()报错<code>Too many arguments to function call ,expected 0,have3</code><blockquote>
+<p>Build Setting–&gt; Apple LLVM 6.0 - Preprocessing–&gt; Enable Strict Checking of objc_msgSend Calls  改为 NO</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="方法交换"><a href="#方法交换" class="headerlink" title="方法交换"></a>方法交换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">+ (void)load&#123;</div><div class="line">Method eatMethod = class_getInstanceMethod(self, @selector(eat));</div><div class="line">Method playMethod = class_getInstanceMethod(self, @selector(play));</div><div class="line">method_exchangeImplementations(eatMethod, playMethod);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="动态加载方法"><a href="#动态加载方法" class="headerlink" title="动态加载方法"></a>动态加载方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">void run(id self, SEL _cmd, NSNumber *number)&#123;</div><div class="line">NSLog(@&quot;%@&quot;, number);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//收到run:消息时候，为该类添加一个方法实现</div><div class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel&#123;</div><div class="line">if(sel == NSSelectorFromString(@&quot;run:&quot;))&#123;</div><div class="line">class_addMethod(self, @selector(run:), run, &quot;v@:@&quot;);</div><div class="line">return YES;</div><div class="line">&#125;</div><div class="line">return [super resolveInstanceMethod:sel];</div><div class="line">&#125;</div><div class="line">//另外针对类方法的为 resolveClassMethod</div></pre></td></tr></table></figure>
+<h2 id="消息转发"><a href="#消息转发" class="headerlink" title="消息转发"></a>消息转发</h2><p>Method Swizzling（俗称黑魔法）就是在运行时将一个方法的实现代替为另一个方法的实现。Runtime提供三种方式来将原来的方法实现代替掉，那该怎样选择它们呢？<br>1.Method Resolution：由于Method Resolution不能像消息转发那样可以交给其他对象来处理，所以只适用于在原来的类中代替掉。<br>2.Fast Forwarding：它可以将消息处理转发给其他对象，使用范围更广，不只是限于原来的对象。<br>3.Normal Forwarding：它跟Fast Forwarding一样可以消息转发，但它能通过NSInvocation对象获取更多消息发送的信息，例如：target、selector、arguments和返回值等信息。</p>
+<p>消息转发机制基本上分为三个步骤：<br>第一步：动态方法解析。<br>第二步：备用接收者。<br>第三步：完整转发。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">//  第一步，消息接收者没有找到对应的方法时候，会先调用此方法，可在此方法实现中动态添加新的方法</div><div class="line">//  返回YES表示相应selector的实现已经被找到，或者添加新方法到了类中，否则返回NO</div><div class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</div><div class="line">return YES;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//  第二步， 如果第一步的返回NO或者直接返回了YES而没有添加方法，该方法被调用</div><div class="line">//  在这个方法中，我们可以指定一个可以返回一个可以响应该方法的对象， 注意如果返回self就会死循环</div><div class="line">- (id)forwardingTargetForSelector:(SEL)aSelector &#123;</div><div class="line">//    if ([NSStringFromSelector(aSelector) isEqualToString:@&quot;run:&quot;]) &#123;</div><div class="line">//        return [[RuntimeMethodHelper alloc] init];</div><div class="line">//    &#125;</div><div class="line">//    return [super forwardingTargetForSelector:aSelector];</div><div class="line">return nil;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//  第三步， 如果forwardingTargetForSelector:返回了nil，则该方法会被调用，系统会询问我们要一个合法的『类型编码(Type Encoding)』</div><div class="line">//  函数的最后一个参数 types 是描述方法返回值和参数列表的字符串，我们的代码中的用到的 i@:@ 四个字符分别对应着：返回值 int32_t、参数 id self、参数 SEL _cmd、参数 NSDictionary *dic,即类型编码。</div><div class="line">//  若返回 nil，则不会进入下一步，而是无法处理消息</div><div class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector &#123;</div><div class="line">    NSMethodSignature *signature = [super methodSignatureForSelector:aSelector];</div><div class="line">    if (!signature) &#123;</div><div class="line">        if ([NSStringFromSelector(aSelector) isEqualToString:@&quot;run:&quot;])&#123;</div><div class="line">            return [NSMethodSignature signatureWithObjCTypes:&quot;v@:&quot;];</div><div class="line">        &#125;</div><div class="line">        return [super methodSignatureForSelector: aSelector];</div><div class="line">    &#125;</div><div class="line">    return signature;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 当实现了此方法后，-doesNotRecognizeSelector: 将不会被调用</div><div class="line">// 在这里进行消息转发</div><div class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation &#123;</div><div class="line"></div><div class="line">if ([RuntimeMethodHelper instancesRespondToSelector:anInvocation.selector]) &#123;</div><div class="line">[anInvocation invokeWithTarget:[[RuntimeMethodHelper alloc] init]];</div><div class="line">&#125;</div><div class="line"></div><div class="line">//    // 在这里可以改变方法选择器</div><div class="line">//    [anInvocation setSelector:@selector(run:)];</div><div class="line">//    // 改变方法选择器后，需要指定消息的接收者</div><div class="line">//    [anInvocation invokeWithTarget:self];</div><div class="line">&#125;</div><div class="line"></div><div class="line">//- (void)run:(NSNumber *)num &#123;</div><div class="line">//    NSLog(@&quot;---%@&quot;, num); // Print: &lt;RuntimeMethodHelper: 0x7f814b498ee0&gt;, 0x102d79929</div><div class="line">//&#125;</div><div class="line"></div><div class="line">// 如果没有实现消息转发 forwardInvocation  则调用此方法</div><div class="line">- (void)doesNotRecognizeSelector:(SEL)aSelector &#123;</div><div class="line">NSLog(@&quot;unresolved method ：%@&quot;, NSStringFromSelector(aSelector));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="字典转模型应用"><a href="#字典转模型应用" class="headerlink" title="字典转模型应用"></a>字典转模型应用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (instancetype)modelWithDict:(NSDictionary *)dict&#123;</div><div class="line">    id model = [[self alloc] init];</div><div class="line">    unsigned int count = 0;</div><div class="line"></div><div class="line">    Ivar *ivars = class_copyIvarList(self, &amp;count);</div><div class="line">    for (int i = 0 ; i &lt; count; i++) &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line"></div><div class="line">        NSString *ivarName = [NSString stringWithUTF8String:ivar_getName(ivar)];</div><div class="line"></div><div class="line">        //这里注意，拿到的成员变量名为_cid,_age</div><div class="line">        ivarName = [ivarName substringFromIndex:1];</div><div class="line">        id value = dict[ivarName];</div><div class="line"></div><div class="line">        [model setValue:value forKeyPath:ivarName];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return model;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://github.com/guchunli/RuntimeDemo" target="_blank" rel="external">demo传送门</a></p>
+<h1 id="runloop运行循环"><a href="#runloop运行循环" class="headerlink" title="runloop运行循环"></a>runloop运行循环</h1><ul>
+<li>保持程序的持续运行。</li>
+<li>处理App中的各类事件（触摸事件、定时器事件、Selector事件）</li>
+<li>节省CPU资源，提高程序性能：没有事件时就进行睡眠状态</li>
+</ul>
+<h2 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a>内部实现</h2><p>do-while循环，在这个循环内部不断地处理各种任务（Source\Timeer\Observer）,Source和Timer这两个是主动向RunLoop发送消息的，Observer是被动接收消息的。CDRunLoopRunSpecific具体处理runloop的运行情况。</p>
+<h2 id="runloop与线程"><a href="#runloop与线程" class="headerlink" title="runloop与线程"></a>runloop与线程</h2><h3 id="一个线程对应一个RunLoop（采用字典存储，线程号为key，RunLoop为value），RunLoop在第一次获取时创建，在线程结束时销毁"><a href="#一个线程对应一个RunLoop（采用字典存储，线程号为key，RunLoop为value），RunLoop在第一次获取时创建，在线程结束时销毁" class="headerlink" title="一个线程对应一个RunLoop（采用字典存储，线程号为key，RunLoop为value），RunLoop在第一次获取时创建，在线程结束时销毁"></a>一个线程对应一个RunLoop（采用字典存储，线程号为key，RunLoop为value），RunLoop在第一次获取时创建，在线程结束时销毁</h3><h3 id="主线程的RunLoop默认已经启动，子线程的RunLoop需要手动启动"><a href="#主线程的RunLoop默认已经启动，子线程的RunLoop需要手动启动" class="headerlink" title="主线程的RunLoop默认已经启动，子线程的RunLoop需要手动启动"></a>主线程的RunLoop默认已经启动，子线程的RunLoop需要手动启动</h3><h3 id="RunLoop只能选择一个Mode启动，如果当前Mode没有任何Source、Timer、Observer，那么就不会进入RunLoop"><a href="#RunLoop只能选择一个Mode启动，如果当前Mode没有任何Source、Timer、Observer，那么就不会进入RunLoop" class="headerlink" title="RunLoop只能选择一个Mode启动，如果当前Mode没有任何Source、Timer、Observer，那么就不会进入RunLoop"></a>RunLoop只能选择一个Mode启动，如果当前Mode没有任何Source、Timer、Observer，那么就不会进入RunLoop</h3><ul>
+<li>runloop生命周期：第一次获取时创建（currentRunloop），每条线程对应唯一的runloop，线程结束runloop销毁</li>
+<li>主runloop：在applicationMain中自动创建runloop，主runloop与主线程相关，主线程中runloop自动启动运行，子线程中需要手动创建</li>
+<li>获取runloop：mainRunloop,currentRunloop（懒加载）<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];</div><div class="line">NSRunLoop *currentRunloop = [NSRunLoop currentRunLoop];</div><div class="line">[NSTimer scheduledTimerWithTimeInterval:1.f target:self selector:@selector(run) userInfo:nil repeats:YES];</div><div class="line">[currentRunloop run];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="iOS中访问和使用RunLoop的API"><a href="#iOS中访问和使用RunLoop的API" class="headerlink" title="iOS中访问和使用RunLoop的API"></a>iOS中访问和使用RunLoop的API</h2><ul>
+<li>Foundation–NSRunLoop</li>
+<li>Core Foundation–CFRunLoopRef(开源)<br>因为后者是开源的，且前者是在后者上针对OC的封装，所以一般是对CFRunLoopRef进行研究。</li>
+</ul>
+<h3 id="两套API对应获取RunLoop对象的方式："><a href="#两套API对应获取RunLoop对象的方式：" class="headerlink" title="两套API对应获取RunLoop对象的方式："></a>两套API对应获取RunLoop对象的方式：</h3><blockquote>
+<p>值得注意的是，获取当前RunLoop都是进行懒加载的，也就是调用时自动创建线程对应的RunLoop。</p>
+<ul>
+<li>Foundation<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[NSRunLoop currentRunLoop]; // 当前runloop</div><div class="line">[NSRunLoop mainRunLoop];// 主线程runloop</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>Core Foundation<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CFRunLoopGetCurrent();// 当前runloop</div><div class="line">CFRunLoopGetMain();// 主线程runloop</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>NSRunLoop转化为CFRunLoop：runloop.getCFRunloop</p>
+<h3 id="相关类"><a href="#相关类" class="headerlink" title="相关类"></a>相关类</h3><p>CFRunLoopRef,mode,source（set）,timer（array）,observer（array），每个runloop中至少要有一个source或timer</p>
+<h2 id="runloop的运行模式"><a href="#runloop的运行模式" class="headerlink" title="runloop的运行模式"></a>runloop的运行模式</h2><ul>
+<li>CFRunLoopModeRef代表RunLoop的运行模式，一个RunLoop可以包含多个Mode，每个Mode可以包含多个Source、Timer、Observer。</li>
+<li>每次RunLoop启动时，只能指定其中一个Mode，这个Mode就变成了CurrentMode</li>
+<li>当启动RunLoop时，如果所在Mode中没有Source、Timer、Observer，那么将不会进入RunLoop，会直接结束</li>
+<li>如果要切换Mode，只能退出Loop，再重新制定一个Mode进入</li>
+</ul>
+<h3 id="系统默认注册了5个Mode"><a href="#系统默认注册了5个Mode" class="headerlink" title="系统默认注册了5个Mode"></a>系统默认注册了5个Mode</h3><ul>
+<li>NSDefaultRunLoopMode：App的默认Mode，通常主线程是在这个Mode下运行</li>
+<li>NSRunLoopCommonModes: 这是一个占位用的Mode，不是一种真正的Mode，mode集合</li>
+<li>UITrackingRunLoopMode：界面跟踪 Mode，追踪触摸滑动，保证界面滑动时不受其他 Mode 影响</li>
+<li>UIInitializationRunLoopMode: 在刚启动 App 时第进入的第一个 Mode，启动完成后就不再使用</li>
+<li>GSEventReceiveRunLoopMode: 接受系统事件的内部 Mode，通常用不到</li>
+</ul>
+<h3 id="NSRunLoopCommonModes"><a href="#NSRunLoopCommonModes" class="headerlink" title="NSRunLoopCommonModes"></a>NSRunLoopCommonModes</h3><ul>
+<li>一个Mode可以将自己标记为“Common”属性，每当 RunLoop 的内容发生变化时，RunLoop会对标记有“Common”属性的Mode进行相适应的切换，并同步Source/Observer/Timer</li>
+<li>在主线程中，kCFRunLoopDefaultMode 和 UITrackingRunLoopMode这两个Mode都是被默认标记为“Common”属性的，从输出的主线程RunLoop可以查看。</li>
+</ul>
+<h3 id="source（timer-input）"><a href="#source（timer-input）" class="headerlink" title="source（timer,input）"></a>source（timer,input）</h3><ul>
+<li>根据函数调用栈分为：<br>source0：不基于port，用户主动触发的<br>source1：基于Port，系统的</li>
+</ul>
+<h3 id="observer"><a href="#observer" class="headerlink" title="observer"></a>observer</h3><ul>
+<li>监听runloop的状态改变<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">第一个参数：分配空间</div><div class="line">第一个参数：监听哪个状态</div><div class="line">第一个参数：是否持续监听</div><div class="line">第一个参数：优先级</div><div class="line">第一个参数：回调</div><div class="line">*/</div><div class="line">CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(CFAllocatorGetDefault(), kCFRunLoopAfterWaiting, YES, 0, ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) &#123;</div><div class="line"></div><div class="line">/*</div><div class="line">kCFRunLoopEntry = (1UL &lt;&lt; 0),</div><div class="line">kCFRunLoopBeforeTimers = (1UL &lt;&lt; 1),</div><div class="line">kCFRunLoopBeforeSources = (1UL &lt;&lt; 2),</div><div class="line">kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5),</div><div class="line">kCFRunLoopAfterWaiting = (1UL &lt;&lt; 6),</div><div class="line">kCFRunLoopExit = (1UL &lt;&lt; 7),</div><div class="line">kCFRunLoopAllActivities = 0x0FFFFFFFU</div><div class="line">*/</div><div class="line">switch (activity) &#123;</div><div class="line">case kCFRunLoopAfterWaiting:</div><div class="line">NSLog(@&quot;即将进入休眠&quot;);</div><div class="line">break;</div><div class="line"></div><div class="line">default:</div><div class="line">break;</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="runloop的应用"><a href="#runloop的应用" class="headerlink" title="runloop的应用"></a>runloop的应用</h3><p>1.timer<br>2.imageView的显示<br>3.performSelector<br>4.常驻线程：线程完成任务自动挂掉，如果在完成任务后保持runloop，则不会挂掉。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[NSRunLoop currentRunLoop]addPort:[NSPort port] forMode:NSDefaultRunLoopMode];</div></pre></td></tr></table></figure></p>
+<p>5.自动释放池<br>什么时候创建：启动runloop<br>最后一次销毁：退出runloop<br>其他时候的创建和销毁：runloop即将进入休眠时会销毁之前的，重新创建一个新的</p>
+<p>参考：<a href="https://www.jianshu.com/p/19f280afcb24" target="_blank" rel="external">iOS 模块详解—「Runtime面试、工作」</a><br><a href="http://www.samirchen.com/objective-c-runtime/" target="_blank" rel="external">Objective-C 的 Runtime</a><br><a href="http://www.jianshu.com/p/99af00237cb8" target="_blank" rel="external">iOS Runtime 几种基本用法简记</a><br><a href="http://www.jianshu.com/p/adf0d566c887" target="_blank" rel="external">iOS运行时(Runtime)详解+Demo</a></p>
+<p><a href="https://www.jianshu.com/p/ebc6e20b84cf" target="_blank" rel="external">iOS runtime和runloop</a><br><a href="https://blog.ibireme.com/2015/05/18/runloop/#more-41710" target="_blank" rel="external">深入理解RunLoop</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/assets/blogImg/weixin.png',
+  alipayImage: '/assets/blogImg/zhifubao.png'
+});
+</script>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/08/2017玉渊潭樱花节/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          2017玉渊潭樱花节
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/15/Apple-Pay学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Apple Pay学习笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#runtime"><span class="nav-number">1.</span> <span class="nav-text">runtime</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时的类与对象"><span class="nav-number">1.1.</span> <span class="nav-text">运行时的类与对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时的成员变量与属性"><span class="nav-number">1.2.</span> <span class="nav-text">运行时的成员变量与属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关联对象"><span class="nav-number">1.3.</span> <span class="nav-text">关联对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法与消息"><span class="nav-number">1.4.</span> <span class="nav-text">方法与消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息机制"><span class="nav-number">1.5.</span> <span class="nav-text">消息机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法交换"><span class="nav-number">1.6.</span> <span class="nav-text">方法交换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态加载方法"><span class="nav-number">1.7.</span> <span class="nav-text">动态加载方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息转发"><span class="nav-number">1.8.</span> <span class="nav-text">消息转发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字典转模型应用"><span class="nav-number">1.9.</span> <span class="nav-text">字典转模型应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#runloop运行循环"><span class="nav-number">2.</span> <span class="nav-text">runloop运行循环</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内部实现"><span class="nav-number">2.1.</span> <span class="nav-text">内部实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runloop与线程"><span class="nav-number">2.2.</span> <span class="nav-text">runloop与线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个线程对应一个RunLoop（采用字典存储，线程号为key，RunLoop为value），RunLoop在第一次获取时创建，在线程结束时销毁"><span class="nav-number">2.2.1.</span> <span class="nav-text">一个线程对应一个RunLoop（采用字典存储，线程号为key，RunLoop为value），RunLoop在第一次获取时创建，在线程结束时销毁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主线程的RunLoop默认已经启动，子线程的RunLoop需要手动启动"><span class="nav-number">2.2.2.</span> <span class="nav-text">主线程的RunLoop默认已经启动，子线程的RunLoop需要手动启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RunLoop只能选择一个Mode启动，如果当前Mode没有任何Source、Timer、Observer，那么就不会进入RunLoop"><span class="nav-number">2.2.3.</span> <span class="nav-text">RunLoop只能选择一个Mode启动，如果当前Mode没有任何Source、Timer、Observer，那么就不会进入RunLoop</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS中访问和使用RunLoop的API"><span class="nav-number">2.3.</span> <span class="nav-text">iOS中访问和使用RunLoop的API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#两套API对应获取RunLoop对象的方式："><span class="nav-number">2.3.1.</span> <span class="nav-text">两套API对应获取RunLoop对象的方式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关类"><span class="nav-number">2.3.2.</span> <span class="nav-text">相关类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runloop的运行模式"><span class="nav-number">2.4.</span> <span class="nav-text">runloop的运行模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统默认注册了5个Mode"><span class="nav-number">2.4.1.</span> <span class="nav-text">系统默认注册了5个Mode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSRunLoopCommonModes"><span class="nav-number">2.4.2.</span> <span class="nav-text">NSRunLoopCommonModes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#source（timer-input）"><span class="nav-number">2.4.3.</span> <span class="nav-text">source（timer,input）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#observer"><span class="nav-number">2.4.4.</span> <span class="nav-text">observer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#runloop的应用"><span class="nav-number">2.4.5.</span> <span class="nav-text">runloop的应用</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 guchunli All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories/study/" class="mobile-nav-link">Study</a>
+  
+    <a href="/categories/other/" class="mobile-nav-link">Other</a>
+  
+    <a href="/photos" class="mobile-nav-link">Photos</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            guchunli
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 谷春丽的小站 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

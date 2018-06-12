@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>java开发环境配置 | guchunli</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="Javaweb" />
+  
+  
+  
+  
+  <meta name="description" content="Java开发需要：1.JDK (Java Deverlopment Kit)Java开发工具包(JDK)是一个用于开发Java应用程序和小程序的软件开发环境。它包括Java运行时环境(JRE)，编译器/加载程序(JAVA)，编译器(javac)，归档器(jar)，文档生成(Javadoc)以及 Java 开发的其他工具。">
+<meta name="keywords" content="Java,web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java开发环境配置">
+<meta property="og:url" content="https://guchunli.github.io/2017/06/06/java开发环境配置/index.html">
+<meta property="og:site_name" content="guchunli">
+<meta property="og:description" content="Java开发需要：1.JDK (Java Deverlopment Kit)Java开发工具包(JDK)是一个用于开发Java应用程序和小程序的软件开发环境。它包括Java运行时环境(JRE)，编译器/加载程序(JAVA)，编译器(javac)，归档器(jar)，文档生成(Javadoc)以及 Java 开发的其他工具。">
+<meta property="og:updated_time" content="2018-05-24T09:16:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java开发环境配置">
+<meta name="twitter:description" content="Java开发需要：1.JDK (Java Deverlopment Kit)Java开发工具包(JDK)是一个用于开发Java应用程序和小程序的软件开发环境。它包括Java运行时环境(JRE)，编译器/加载程序(JAVA)，编译器(javac)，归档器(jar)，文档生成(Javadoc)以及 Java 开发的其他工具。">
+  
+    <link rel="alternate" href="/atom.xml" title="guchunli" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/study/">study</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/other/">other</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/photos">photos</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-java开发环境配置" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      java开发环境配置
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/06/06/java开发环境配置/" class="article-date">
+	  <time datetime="2017-06-06T03:27:51.000Z" itemprop="datePublished">2017-06-06</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/study/">学习</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Java开发需要：<br>1.JDK (Java Deverlopment Kit)<br>Java开发工具包(JDK)是一个用于开发Java应用程序和小程序的软件开发环境。<br>它包括Java运行时环境(JRE)，编译器/加载程序(JAVA)，编译器(javac)，归档器(jar)，文档生成(Javadoc)以及 Java 开发的其他工具。<br><a id="more"></a><br>2.IDE (Integrated Development Environment)<br>集成开发环境：MyEclipse,IDEA</p>
+<h1 id="tomcat"><a href="#tomcat" class="headerlink" title="tomcat"></a>tomcat</h1><h2 id="1-下载：http-tomcat-apache-org"><a href="#1-下载：http-tomcat-apache-org" class="headerlink" title="1.下载：http://tomcat.apache.org"></a>1.下载：<a href="http://tomcat.apache.org" target="_blank" rel="external">http://tomcat.apache.org</a></h2><h2 id="2-修改权限，否则会提示permission-denny错误："><a href="#2-修改权限，否则会提示permission-denny错误：" class="headerlink" title="2.修改权限，否则会提示permission denny错误："></a>2.修改权限，否则会提示<code>permission denny</code>错误：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod 755 xxx/bin/*.sh  (xxx表示你tomcat放至的路径)</div></pre></td></tr></table></figure>
+<h2 id="3-将Tomcat写入系统的环境变量PATH中。"><a href="#3-将Tomcat写入系统的环境变量PATH中。" class="headerlink" title="3.将Tomcat写入系统的环境变量PATH中。"></a>3.将Tomcat写入系统的环境变量PATH中。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pico .bash_profile</div></pre></td></tr></table></figure>
+<p>在打开的页面中，输入以下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export PATH=$PATH:tomcat_dir/bin;  </div><div class="line">export PATH=$PATH:tomcat_dir/logs;</div></pre></td></tr></table></figure></p>
+<p>其中tomcat_dir为tomcat根目录<br>接着按下 control+x，再按 y 表示确定修改，最后回车。</p>
+<p>验证是否成功</p>
+<blockquote>
+<p>$ echo $PATH<br>显示如下:<br>$ -bash: /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/fuhua/Documents/Tomcat/apache-tomcat-8.0.30/bin: No such file or directory<br>需要重新启动计算机，以便完成系统环境变量的配置。</p>
+</blockquote>
+<h2 id="4-启动Tomcat"><a href="#4-启动Tomcat" class="headerlink" title="4.启动Tomcat."></a>4.启动Tomcat.</h2><ul>
+<li>如果你完成将Tomcat写入系统的环境变量PATH中，你可以直接在终端输入 startup.sh ；</li>
+<li><p>如果你没有完成，那么就要定位到Tomcat的bin目录中，如在终端输入 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd tomcat_dir/bin</div><div class="line">$ startup.sh</div><div class="line">Tomcat started.</div></pre></td></tr></table></figure>
+</li>
+<li><p>在浏览器中输入<a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a><br>如果出现Apache Tomcat界面，代表 tomcat 启动成功。</p>
+</li>
+</ul>
+<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><h2 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h2><ul>
+<li>下载：<a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">MySQL官网</a></li>
+<li>安装完成时记得保存弹出框中的密码，这是mysql root账号和密码</li>
+<li>系统偏好设置中，点击MySQL开启MySQL Server服务<h2 id="修改root账户密码"><a href="#修改root账户密码" class="headerlink" title="修改root账户密码"></a>修改root账户密码</h2></li>
+<li>关闭MySQL Server服务</li>
+<li>终端输入<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">// 苹果系统下 mysql server 的安装地址</div><div class="line">$ cd /usr/local/mysql/bin/</div><div class="line">// 登录管理员权限</div><div class="line">$ sudo su</div><div class="line">// 禁止 mysql 验证功能</div><div class="line">sh-3.2# ./mysqld_safe --skip-grant-tables &amp;</div><div class="line">//终端输出</div><div class="line">[1] 2487</div><div class="line">sh-3.2# Logging to &apos;/usr/local/mysql-5.7.18-macos10.12-x86_64/data/192.168.1.143.err&apos;.</div><div class="line">2017-06-06T06:35:36.6NZ mysqld_safe Starting mysqld daemon with databases from /usr/local/mysql-5.7.18-macos10.12-x86_64/data</div><div class="line">sh-3.2# ./mysql</div><div class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</div><div class="line">Your MySQL connection id is 3</div><div class="line">Server version: 5.7.18 MySQL Community Server (GPL)</div><div class="line"></div><div class="line">Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.</div><div class="line"></div><div class="line">Oracle is a registered trademark of Oracle Corporation and/or its</div><div class="line">affiliates. Other names may be trademarks of their respective</div><div class="line">owners.</div><div class="line"></div><div class="line">Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.</div><div class="line"></div><div class="line">mysql&gt; FLUSH PRIVILEGES;</div><div class="line">Query OK, 0 rows affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SET PASSWORD FOR &apos;root&apos;@&apos;localhost&apos; = PASSWORD(&apos;123456&apos;);</div><div class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="安装MySQL-Workbench"><a href="#安装MySQL-Workbench" class="headerlink" title="安装MySQL Workbench"></a>安装MySQL Workbench</h2><p><a href="https://dev.mysql.com/downloads/workbench/" target="_blank" rel="external">https://dev.mysql.com/downloads/workbench/</a><br>MySQL connections + ：输入connection name创建新链接</p>
+<h2 id="加入系统环境变量"><a href="#加入系统环境变量" class="headerlink" title="加入系统环境变量"></a>加入系统环境变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">$ cd /usr/local/mysql/bin</div><div class="line">$ ls</div><div class="line">//查看目录中是否有mysql</div><div class="line">$ vim ~/.bash_profile</div><div class="line">//在该文件中添加 PATH=$PATH:/usr/local/mysql/bin</div><div class="line">$ source ~/.bash_profile</div><div class="line">$ mysql -uroot -p   //登录mysql</div><div class="line">//输入密码后，登录成功会显示：</div><div class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</div><div class="line">Your MySQL connection id is 22</div><div class="line">Server version: 5.7.18 MySQL Community Server (GPL)</div><div class="line"></div><div class="line">Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.</div><div class="line"></div><div class="line">Oracle is a registered trademark of Oracle Corporation and/or its</div><div class="line">affiliates. Other names may be trademarks of their respective</div><div class="line">owners.</div><div class="line"></div><div class="line">Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.</div></pre></td></tr></table></figure>
+<p>可以通过以下名录修改密码：</p>
+<blockquote>
+<p>$ $ SET PASSWORD FOR ‘root’@’localhost’ = PASSWORD(‘newpass’);</p>
+</blockquote>
+<h1 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h1><h2 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h2><h3 id="下载：JDK官网"><a href="#下载：JDK官网" class="headerlink" title="下载：JDK官网"></a>下载：<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">JDK官网</a></h3><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li>mac自带jdk，安装目录：/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home</li>
+<li>自己安装目录：/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home<h3 id="配置jdk环境变量"><a href="#配置jdk环境变量" class="headerlink" title="配置jdk环境变量"></a>配置jdk环境变量</h3>（1）只针对当前用户<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ touch ~/.bash_profile  </div><div class="line">$ vim ~/.bash_profile</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在编辑器中添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home</div><div class="line">CLASSPAHT=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</div><div class="line">PATH=$JAVA_HOME/bin:$PATH:</div><div class="line">export JAVA_HOME</div><div class="line">export CLASSPATH</div><div class="line">export PATH</div></pre></td></tr></table></figure></p>
+<p>使系统变量生效，使用以下命令或重启电脑：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ source .bash_profile</div></pre></td></tr></table></figure></p>
+<p>查看java版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ java -version</div></pre></td></tr></table></figure></p>
+<p>检查系统变量是否生效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ echo $JAVA_HOME</div></pre></td></tr></table></figure></p>
+<p>（2）针对所有用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cd /etc</div><div class="line">$ sudo vi profile</div></pre></td></tr></table></figure></p>
+<p>在编辑器最下面添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home</div><div class="line">CLASSPAHT=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</div><div class="line">PATH=$JAVA_HOME/bin:$PATH:</div></pre></td></tr></table></figure></p>
+<p>接下来同上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ source .bash_profile</div><div class="line">$ java -version</div><div class="line">$ echo $JAVA_HOME</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/assets/blogImg/weixin.png',
+  alipayImage: '/assets/blogImg/zhifubao.png'
+});
+</script>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/08/Java搭建springMVC项目笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Java搭建springMVC项目笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/05/iOS调试与性能优化学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">iOS调试与性能优化学习笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tomcat"><span class="nav-number">1.</span> <span class="nav-text">tomcat</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-下载：http-tomcat-apache-org"><span class="nav-number">1.1.</span> <span class="nav-text">1.下载：http://tomcat.apache.org</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-修改权限，否则会提示permission-denny错误："><span class="nav-number">1.2.</span> <span class="nav-text">2.修改权限，否则会提示permission denny错误：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-将Tomcat写入系统的环境变量PATH中。"><span class="nav-number">1.3.</span> <span class="nav-text">3.将Tomcat写入系统的环境变量PATH中。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-启动Tomcat"><span class="nav-number">1.4.</span> <span class="nav-text">4.启动Tomcat.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL"><span class="nav-number">2.</span> <span class="nav-text">MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装MySQL"><span class="nav-number">2.1.</span> <span class="nav-text">安装MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改root账户密码"><span class="nav-number">2.2.</span> <span class="nav-text">修改root账户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装MySQL-Workbench"><span class="nav-number">2.3.</span> <span class="nav-text">安装MySQL Workbench</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加入系统环境变量"><span class="nav-number">2.4.</span> <span class="nav-text">加入系统环境变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JDK"><span class="nav-number">3.</span> <span class="nav-text">JDK</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装JDK"><span class="nav-number">3.1.</span> <span class="nav-text">安装JDK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载：JDK官网"><span class="nav-number">3.1.1.</span> <span class="nav-text">下载：JDK官网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">3.1.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置jdk环境变量"><span class="nav-number">3.1.3.</span> <span class="nav-text">配置jdk环境变量</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 guchunli All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories/study/" class="mobile-nav-link">Study</a>
+  
+    <a href="/categories/other/" class="mobile-nav-link">Other</a>
+  
+    <a href="/photos" class="mobile-nav-link">Photos</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            guchunli
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 谷春丽的小站 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

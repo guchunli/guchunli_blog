@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>reactnative基础知识学习笔记 | guchunli</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="ReactNative基础" />
+  
+  
+  
+  
+  <meta name="description" content="JSX Browser.js:作用是将 JSX 语法转为 JavaScript 语法 JSX 中不能使用 if else 语句，但可以使用 conditional (三元运算) 表达式来替代 注释需要写在花括号中:{/*注释...*/}">
+<meta name="keywords" content="ReactNative,基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactNative基础知识学习笔记">
+<meta property="og:url" content="https://guchunli.github.io/2017/07/06/ReactNative基础知识学习笔记/index.html">
+<meta property="og:site_name" content="guchunli">
+<meta property="og:description" content="JSX Browser.js:作用是将 JSX 语法转为 JavaScript 语法 JSX 中不能使用 if else 语句，但可以使用 conditional (三元运算) 表达式来替代 注释需要写在花括号中:{/*注释...*/}">
+<meta property="og:updated_time" content="2018-05-25T06:51:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactNative基础知识学习笔记">
+<meta name="twitter:description" content="JSX Browser.js:作用是将 JSX 语法转为 JavaScript 语法 JSX 中不能使用 if else 语句，但可以使用 conditional (三元运算) 表达式来替代 注释需要写在花括号中:{/*注释...*/}">
+  
+    <link rel="alternate" href="/atom.xml" title="guchunli" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/study/">study</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/other/">other</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/photos">photos</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-ReactNative基础知识学习笔记" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      ReactNative基础知识学习笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/07/06/ReactNative基础知识学习笔记/" class="article-date">
+	  <time datetime="2017-07-06T03:30:28.000Z" itemprop="datePublished">2017-07-06</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/study/">学习</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h2><ul>
+<li>Browser.js:作用是将 JSX 语法转为 JavaScript 语法</li>
+<li>JSX 中不能使用 if else 语句，但可以使用 conditional (三元运算) 表达式来替代</li>
+<li>注释需要写在花括号中:<code>{/*注释...*/}</code><a id="more"></a></li>
+<li>JSX 允许在模板中插入数组，数组会自动展开所有成员</li>
+<li>要渲染 HTML 标签，只需在 JSX 里使用小写字母的标签名,要渲染 React 组件，只需创建一个大写字母开头的本地变量</li>
+<li>class-&gt;className  for-&gt;htmlFor</li>
+<li>使用{}的情况：表达式，变量，对象，字典</li>
+<li><code>{{}}</code>:第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;View style=&#123;&#123;flex:1&#125;&#125;&gt;&lt;/View&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>使用()的情况：返回组件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">render()&#123;</div><div class="line">return (</div><div class="line">&lt;View&gt;</div><div class="line">&lt;/View&gt;</div><div class="line">)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><p>position</p>
+<ul>
+<li>absolute:绝对定位，相对父组件<blockquote>
+<p>使用：当想把一个已经设置了宽度的控件快速的放在左下角，右下角的时候</p>
+</blockquote>
+</li>
+<li>relative: 相对定位，相对自己的原始位置<blockquote>
+<p>使用：当想相对自己做出一些改变的时候，采用相对定位,比如相对自己，往下移动一点</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="FlexBox"><a href="#FlexBox" class="headerlink" title="FlexBox"></a>FlexBox</h2><p>1.flexDirection:row|row-reverse|column|column-reverse<br>2.flexWrap:wrap|no-wrap<br>3.justifyContent:flex-start|flex-end|center|space-between|space-around<br>4.alignItems:flex-start|flex-end|center|stretch<br>5.alignSelf:auto|flex-start|flex-end|center|stretch<br>6.flex:子控件在主轴中占据几等分</p>
+<h2 id="props-state"><a href="#props-state" class="headerlink" title="props,state"></a>props,state</h2><ul>
+<li>props:在父组件中指定，而且一经指定，在整个组件的生命周期中都不再改变。<br>this.props.children表示组件的所有子节点</li>
+<li>state:constructor中声明(ES6)，在setState中修改数据<blockquote>
+<p>this.props 表示那些一旦定义，就不再改变的特性，而 this.state 是会随着用户互动而产生变化的特性。<br>通过state 来更新和修改数据，而子组件只能通过 props 来传递数据<br>定义state:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">this.state = &#123;</div><div class="line">num:1,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p>修改state:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">this.setState(&#123;</div><div class="line">num : number</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">this.setState(&#123;name: e.target.value&#125;, function()&#123;</div><div class="line">console.log(this.state.name);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<ul>
+<li>状态更新可能是异步的</li>
+<li>状态更新合并</li>
+</ul>
+<h2 id="父子组件传值"><a href="#父子组件传值" class="headerlink" title="父子组件传值"></a>父子组件传值</h2><p>1.父传子<br>(1)props:this.props.name<br>(2)ref:this.refs.son.receiveMsg(“msg”)<br>2.子传父<br>(1)方法回调<br>父组件：定义一个处理接收到值的方法，把这个方法传递给子组件，并且绑定this<br>子组件：通过this.props拿到这个方法调用<br>3.无关联组件间传值<br>(1)通知:组件1传值给组件2<br>组件1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Text onPress=&#123;()=&gt;&#123;</div><div class="line">DeviceEventEmitter.emit(&apos;NotificationName&apos;,123);</div><div class="line">&#125;&#125;&gt;&lt;/Text&gt;</div></pre></td></tr></table></figure></p>
+<p>组件2：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">this.lister = DeviceEventEmitter.addListener(&apos;NotificationName&apos;,(value)=&gt;&#123;</div><div class="line">this.setState(&#123;</div><div class="line">value:value</div><div class="line">&#125;);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h2 id="组件生命周期"><a href="#组件生命周期" class="headerlink" title="组件生命周期"></a>组件生命周期</h2><p>实例化<br>0.defaultProps:给props设置默认值<br>1.constructor:初始化state（只调用一次）<br>2.componentWillMount:即将加载组件调用，render前（只调用一次）<br>3.render:渲染组件<br>4.componentDidMount:组件加载完成调用，render后（只调用一次）<br>运行<br>5.componentWillReceiveProps:props改变调用<br>6.shouldComponentUpdate:props/state改变调用，可控制是否刷新界面<br>7.componentWillUpdate:组件即将更新调用（调用this.setState会循环）<br>8.render<br>9.componentDidUpdate:组件更新完成（调用this.setState会循环）<br>销毁<br>10.componentWillUnmount:组件即将销毁，可移除观察者，清空数据等</p>
+<h2 id="propTypes"><a href="#propTypes" class="headerlink" title="propTypes"></a>propTypes</h2><p>必须要用static修饰，否则无效<br>static：用来定义类方法或者类属性，定义类的方法和属性，生成的对象就自动有这样的属性了。<br>1.类型检查：当传入错误的属性值，会报警告，但是不会报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">propTypes: &#123;</div><div class="line">// 可以声明 prop 为指定的 JS 基本数据类型，默认情况，这些数据是可选的</div><div class="line">optionalArray: React.PropTypes.array,</div><div class="line">optionalBool: React.PropTypes.bool,</div><div class="line">optionalFunc: React.PropTypes.func,</div><div class="line">optionalNumber: React.PropTypes.number,</div><div class="line">optionalObject: React.PropTypes.object,</div><div class="line">optionalString: React.PropTypes.string,</div><div class="line"></div><div class="line">// 可以被渲染的对象 numbers, strings, elements 或 array</div><div class="line">optionalNode: React.PropTypes.node,</div><div class="line"></div><div class="line">//  React 元素</div><div class="line">optionalElement: React.PropTypes.element,</div><div class="line"></div><div class="line">// 用 JS 的 instanceof 操作符声明 prop 为类的实例。</div><div class="line">optionalMessage: React.PropTypes.instanceOf(Message),</div><div class="line"></div><div class="line">// 用 enum 来限制 prop 只接受指定的值。</div><div class="line">optionalEnum: React.PropTypes.oneOf([&apos;News&apos;, &apos;Photos&apos;]),</div><div class="line"></div><div class="line">// 可以是多个对象类型中的一个</div><div class="line">optionalUnion: React.PropTypes.oneOfType([</div><div class="line">React.PropTypes.string,</div><div class="line">React.PropTypes.number,</div><div class="line">React.PropTypes.instanceOf(Message)</div><div class="line">]),</div><div class="line"></div><div class="line">// 指定类型组成的数组</div><div class="line">optionalArrayOf: React.PropTypes.arrayOf(React.PropTypes.number),</div><div class="line"></div><div class="line">// 指定类型的属性构成的对象</div><div class="line">optionalObjectOf: React.PropTypes.objectOf(React.PropTypes.number),</div><div class="line"></div><div class="line">// 特定 shape 参数的对象</div><div class="line">optionalObjectWithShape: React.PropTypes.shape(&#123;</div><div class="line">color: React.PropTypes.string,</div><div class="line">fontSize: React.PropTypes.number</div><div class="line">&#125;),</div><div class="line"></div><div class="line">// 任意类型加上 `isRequired` 来使 prop 不可空。</div><div class="line">requiredFunc: React.PropTypes.func.isRequired,</div><div class="line"></div><div class="line">// 不可空的任意类型</div><div class="line">requiredAny: React.PropTypes.any.isRequired,</div><div class="line"></div><div class="line">// 自定义验证器。如果验证失败需要返回一个 Error 对象。不要直接使用 `console.warn` 或抛异常，因为这样 `oneOfType` 会失效。</div><div class="line">customProp: function(props, propName, componentName) &#123;</div><div class="line">if (!/matchme/.test(props[propName])) &#123;</div><div class="line">return new Error(&apos;Validation failed!&apos;);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;,</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 定义属性</div><div class="line">static propTypes = &#123;</div><div class="line">name:PropTypes.string,</div><div class="line">age:PropTypes.number</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.设置初始化值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">static defaultProps = &#123;</div><div class="line">name:&apos;xiaoming&apos;,</div><div class="line">age:20</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="基本组件"><a href="#基本组件" class="headerlink" title="基本组件"></a>基本组件</h2><p>1.View<br>2.TouchableOpacity<br>默认点击区域是所有子控件的区域,因为默认一个组件的尺寸由子控件决定</p>
+<ul>
+<li>activeOpacity:0-1 1-不透明</li>
+<li>点击事件：onPress|onLongPress|onPressIn|onPressOut</li>
+<li>disabled:true|false<br>3.Text</li>
+<li>numberOfLines</li>
+<li>selectable:true|false 是否允许长按选择文本</li>
+<li>suppressHighlighting:true|false 是否允许按下时有灰色阴影</li>
+<li>onPress:文字点击事件  onPress={()=&gt;{}}</li>
+<li>color/fontSize/fontWeight/lineHeight/textAlign<br>4.Button</li>
+<li>不可设置样式，一般用text自定义</li>
+<li>color/disabled/onPress/title<br>5.TextInput</li>
+<li>默认无边框</li>
+<li>autoFocus/blurOnSubmit/editable/maxLength/multiline/placeholder</li>
+<li>keyboardType/returnKeyType/clearButtonMode</li>
+<li>clearTextOnFocus/enablesReturnKeyAutomatically</li>
+<li>clear()</li>
+<li>事件：onBlur/onFocus/onChange/onChangeText/onEndEditing/onKeyPress/onSubmitEditing<br>6.Image<br>iOS中的2x,3x图片同样适用，如果存在a@2x.png与a@3x.png，写a.png即可。<br>同时兼容iOS和安卓平台的图片，如果存在a.ios.png与a.android.png，同样写a.png即可。</li>
+<li><p>source/defaultSource<br>本地图片放在与index.ios.js同目录下的Img文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;Image source=&#123;require(&apos;./Img/chaolan.jpeg&apos;)&#125; style=&#123;styles.imageSytle&#125;/&gt;</div><div class="line">//Xcode的asset类目中，或是放置在Android的drawable目录</div><div class="line">&lt;Image source=&#123;&#123;uri:&apos;wukong&apos;&#125;&#125; style=&#123;styles.imageSytle&#125;/&gt;</div><div class="line">&lt;Image source=&#123;&#123;uri:&apos;http://img01.youxiaoshuo.com/portal/201703/21/083647y43dl1j14s8s3g99.jpg&apos;, cache: &apos;only-if-cached&apos;&#125;&#125; style=&#123;styles.imageSytle&#125;/&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>通过URI加载网络图片，必须设置图片尺寸，否则不显示</p>
+</li>
+<li>通过URI加载网络图片，iOS端可以添加缓存策略(default/reload/force-cache/only-if-cached)</li>
+<li>blurRadius</li>
+<li>resizeMode:cover|contain|stretch|repeat|center</li>
+<li>事件:onLoad/onLoadStart/onLoadEnd/onProgress/onError<br>7.ScrollView</li>
+<li>horizontal/showsHorizontalScrollIndicator/showsVerticalScrollIndicator/alwaysBounceHorizontal/alwaysBounceVertical</li>
+<li>automaticallyAdjustContentInsets</li>
+<li>bounces/bouncesZoom/contentInset</li>
+<li>scrollEventThrottle/stickyHeaderIndices(与horizontal={true}冲突)</li>
+<li>事件：onScrollBeginDrag/End/onMomentumScrollBegin/End/onScrollAnimationEnd/onScroll/scrollEventThrottle</li>
+</ul>
+<h2 id="自定义类"><a href="#自定义类" class="headerlink" title="自定义类"></a>自定义类</h2><p>1.自定义类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export default class Person&#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>2.继承extends<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">class HomeView extends Component</div></pre></td></tr></table></figure></p>
+<p>3.使用：var p = new Person();</p>
+<h2 id="ListView"><a href="#ListView" class="headerlink" title="ListView"></a>ListView</h2><p>1.创建数据源，给数据源设置数据<br>使用state保存数据源</p>
+<ul>
+<li>不分组使用：cloneWithRows</li>
+<li>分组使用：cloneWithRowsAndSections<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var dataSource = new ListView.DataSource(&#123;rowHasChanged: (r1, r2) =&gt; r1 !== r2&#125;);</div><div class="line">this.state = &#123;</div><div class="line">ds: dataSource.cloneWithRows([&apos;row 1&apos;, &apos;row 2&apos;]),</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var dataSource = new ListView.DataSource(&#123;</div><div class="line">rowHasChanged:(r1,r2)=&gt;r1 !== r2,</div><div class="line">sectionHeaderHasChanged:(s1,s2)=&gt;s1 !== s2</div><div class="line">&#125;);</div><div class="line">var sectionData = &#123;&#125;;</div><div class="line">this.state = &#123;</div><div class="line">ds : dataSource.cloneWithRowsAndSections(sectionData)</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>2.实现数据源方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;ListView dataSource=&#123;this.state.ds&#125;</div><div class="line">renderRow=&#123;this._renderRow.bind(this)&#125;</div><div class="line">renderSectionHeader=&#123;this._renderSectionHeader.bind(this)&#125;</div><div class="line">//renderSeparator=&#123;this._renderSeparator.bind(this)&#125;</div><div class="line">/&gt;</div><div class="line"></div><div class="line">_renderRow(rowData, sectionID, rowID, highlightRow) &#123;</div><div class="line">return (</div><div class="line">&lt;View&gt;</div><div class="line">&lt;Text&gt;&#123;rowData&#125;&lt;/Text&gt;</div><div class="line">&lt;/View&gt;</div><div class="line">);</div><div class="line">&#125;</div><div class="line">//如果是组视图，设置组数据</div><div class="line">_renderSectionHeader(sectionData, sectionID) &#123;</div><div class="line">return (</div><div class="line">&lt;View&gt;</div><div class="line">&lt;Text&gt;&#123;sectionID&#125;&lt;/Text&gt;</div><div class="line">&lt;/View&gt;</div><div class="line">)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="导航Navigator"><a href="#导航Navigator" class="headerlink" title="导航Navigator"></a>导航Navigator</h2><p>如果找不到Navigator，安装Navigator所在的库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install react-native-deprecated-custom-components --save</div><div class="line">//yarn add react-native-deprecated-custom-components</div></pre></td></tr></table></figure></p>
+<p>项目导入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">import &#123;Navigator&#125; from &apos;react-native-deprecated-custom-components&apos;</div></pre></td></tr></table></figure></p>
+<h2 id="Tabbar"><a href="#Tabbar" class="headerlink" title="Tabbar"></a>Tabbar</h2><h3 id="TabBarIOS"><a href="#TabBarIOS" class="headerlink" title="TabBarIOS"></a>TabBarIOS</h3><ul>
+<li>只可用于iOS平台</li>
+<li>badge可设置未读消息数<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;TabBarIOS style=&#123;&#123;flex:1,alignItems:&apos;flex-end&apos;&#125;&#125;&gt;</div><div class="line">&lt;TabBarIOS.Item </div><div class="line">title=&apos;消息&apos;</div><div class="line">icon=&#123;require(&apos;./Img/home.png&apos;)&#125;</div><div class="line">badge=&#123;3&#125;</div><div class="line">onPress=&#123;()=&gt;&#123;</div><div class="line">this.setState(&#123;</div><div class="line">selectIndex:0</div><div class="line">&#125;)</div><div class="line">&#125;&#125;</div><div class="line">selected=&#123;0==this.state.selectIndex&#125;</div><div class="line">&gt;</div><div class="line">&lt;View&gt;</div><div class="line">&lt;Text&gt;首页&lt;/Text&gt;</div><div class="line">&lt;/View&gt;</div><div class="line">&lt;/TabBarIOS.Item&gt;</div><div class="line">&lt;/TabBarIOS&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="TabNavigator"><a href="#TabNavigator" class="headerlink" title="TabNavigator"></a>TabNavigator</h3><ul>
+<li>可用于iOS和安卓<br>1.安装<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install react-native-tab-navigator --save</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>2.导入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">import TabNavigator from &apos;react-native-tab-navigator&apos;;</div></pre></td></tr></table></figure></p>
+<p>3.使用</p>
+<ul>
+<li>TabBarIOS: <code>icon={require(&#39;./Img/home.png&#39;)}</code></li>
+<li>TabNavigator: renderIcon是传入一个函数，这个函数返回一个Image组件,如果是通过url加载，一定要记得设置尺寸，否则不显示<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">renderIcon=&#123;() =&gt; &lt;Image source=&#123;require(&apos;./Img/indexicon_hone_after@3x.png&apos;)&#125; style=&#123;styles.iconStyle&#125;/&gt;&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;TabNavigator&#125;&gt;</div><div class="line">&lt;TabNavigator.Item title=&apos;消息&apos;</div><div class="line">renderIcon=&#123;() =&gt; &lt;Image source=&#123;require(&apos;./Img/indexicon_hone_after@3x.png&apos;)&#125; style=&#123;styles.iconStyle&#125;/&gt;&#125;</div><div class="line">// renderBadge=&#123;3&#125;</div><div class="line">onPress=&#123;()=&gt;&#123;</div><div class="line">this.setState(&#123;</div><div class="line">selectIndex:0</div><div class="line">&#125;)</div><div class="line">&#125;&#125;</div><div class="line">selected=&#123;0==this.state.selectIndex&#125;</div><div class="line">&gt;</div><div class="line">&lt;View style=&#123;&#123;flex:1,justifyContent:&apos;center&apos;,alignItems:&apos;center&apos;&#125;&#125;&gt;</div><div class="line">&lt;Text&gt;首页&lt;/Text&gt;</div><div class="line">&lt;/View&gt;</div><div class="line">&lt;/TabNavigator.Item&gt;</div><div class="line">&lt;/TabNavigator&gt;</div></pre></td></tr></table></figure>
+<h2 id="主流架构搭建"><a href="#主流架构搭建" class="headerlink" title="主流架构搭建"></a>主流架构搭建</h2><p>react navigation</p>
+<h2 id="网络请求"><a href="#网络请求" class="headerlink" title="网络请求"></a>网络请求</h2><ul>
+<li>fetch: 发送请求</li>
+<li>then: 回调函数</li>
+<li>response: 请求到的json数据</li>
+<li>catch: 捕获异常<br>发送GET请求：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">fetch(&apos;http://192.168.1.143:8080&apos;) // 发送GET请求</div><div class="line">.then((response)=&gt;response.json()) // 请求成功，把请求数据转换为 JSON</div><div class="line">.then((json)=&gt;&#123;                    // 获取JSON数据做事情</div><div class="line">console.log(json)</div><div class="line">&#125;)</div><div class="line">.catch((error)=&gt;&#123;                // 请求失败或者处理JSON数据失败，调用</div><div class="line">console.log(error)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>发送POST请求有三种方式：</p>
+<ul>
+<li>application/x-www-form-urlencoded: 参数是普通的参数拼接</li>
+<li>application/json: 参数是json格式</li>
+<li>application/form-data: 文件上传</li>
+</ul>
+<h3 id="request模块"><a href="#request模块" class="headerlink" title="request模块"></a>request模块</h3><h2 id="本地存储-AsyncStorage"><a href="#本地存储-AsyncStorage" class="headerlink" title="本地存储 AsyncStorage"></a>本地存储 AsyncStorage</h2><ul>
+<li>异步的</li>
+<li>只能存储字符串</li>
+<li>把数据保存到沙盒中的Documents中,并生成manifest.json文件</li>
+<li>save/read/delete<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">AsyncStorage.setItem(&apos;object&apos;,JSON.stringify(object),(error)=&gt;&#123;&#125;);</div><div class="line">AsyncStorage.getItem(&apos;object&apos;,(error,result)=&gt;&#123;&#125;);</div><div class="line">AsyncStorage.removeItem(&apos;object&apos;,(error)=&gt;&#123;&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="引导页"><a href="#引导页" class="headerlink" title="引导页"></a>引导页</h2><p>1.第一次进入界面，写个属性，记录下第一次加载。<br>2.每次启动，获取之前是否保存过第一次加载的属性，如果加载过，就显示主页，没加载过，就显示引导页</p>
+<h2 id="模块导出"><a href="#模块导出" class="headerlink" title="模块导出"></a>模块导出</h2><ul>
+<li>自定义组件：继承自Component，必须使用class定义类</li>
+<li>自定义类：可以不使用class定义</li>
+</ul>
+<h3 id="自定义组件导出"><a href="#自定义组件导出" class="headerlink" title="自定义组件导出"></a>自定义组件导出</h3><p>1.ES6/5</p>
+<ul>
+<li>ES6:一般使用默认组件，支持import导出</li>
+<li>ES5:一般使用非默认组件，支持require导出<br>2.默认组件/非默认组件</li>
+<li><p>默认组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//定义</div><div class="line">export default class XXX extends Component</div><div class="line">//外部使用</div><div class="line">import XXX from &apos;../Custom/XXX&apos;</div></pre></td></tr></table></figure>
+</li>
+<li><p>非默认组件<br>非默认组件：需要加入{}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//定义</div><div class="line">export class XXX extends Component</div><div class="line">//外部使用</div><div class="line">import &#123;XXX&#125; from &apos;../Custom/XXX&apos;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="自定义类-1"><a href="#自定义类-1" class="headerlink" title="自定义类"></a>自定义类</h3><p>1.没有对象属性的自定义类</p>
+<ul>
+<li>定义：class</li>
+<li>导出：export default<br>2.有对象属性的自定义类</li>
+<li>定义：function</li>
+<li>导出：module.exports(也可以export default)</li>
+</ul>
+<p>3.class/function</p>
+<ul>
+<li><p>class定义类：在类中声明任何属性和方法，都会自动生成对象的属性和方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export default class XXX &#123;&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>function定义类：要想定义属性和方法，属性和方法前面必须添加this</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">function XXX(data) &#123;</div><div class="line">this.data = data;</div><div class="line">this.func = function () &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>4.导出自定义类的两种方式</p>
+<ul>
+<li><p>module.exports</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">function XXX(data) &#123;&#125;</div><div class="line">module.exports = XXX;</div></pre></td></tr></table></figure>
+</li>
+<li><p>export default</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export default function XXX(sectionID,rowData) &#123;&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>5.外部引用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">import XXX from &apos;../Custom/XXX&apos;</div></pre></td></tr></table></figure></p>
+<h3 id="自定义类的继承–call方法"><a href="#自定义类的继承–call方法" class="headerlink" title="自定义类的继承–call方法"></a>自定义类的继承–call方法</h3><p>call方法<br>1.交换方法调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">func1.call(func2);  //调用func1</div></pre></td></tr></table></figure></p>
+<p>2.交换方法调用者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">c1.log.call(c2);    //c2调用c1的log方法</div></pre></td></tr></table></figure></p>
+<p>3.通过function自定义类没有继承功能，需要通过call方法自己实现<br>本质：交换方法调用者</p>
+<h2 id="项目中经常遇到的问题"><a href="#项目中经常遇到的问题" class="headerlink" title="项目中经常遇到的问题"></a>项目中经常遇到的问题</h2><h3 id="文件导入路径问题（已废弃）"><a href="#文件导入路径问题（已废弃）" class="headerlink" title="文件导入路径问题（已废弃）"></a>文件导入路径问题（已废弃）</h3><p>@providesModule放到第一行注释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">* @providesModule Common</div><div class="line">*/</div><div class="line">export default class Common &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>外部引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">import Common from &apos;Common&apos;</div></pre></td></tr></table></figure></p>
+<h3 id="主头文件问题"><a href="#主头文件问题" class="headerlink" title="主头文件问题"></a>主头文件问题</h3><p>1.创建主头文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import Common from &apos;../Common/GroupListView&apos;</div><div class="line">...</div><div class="line"></div><div class="line">// 这句话的意思：把当前文件作为一个模块导出，模块里面有这些子组件</div><div class="line">// 以后导入这个模块的时候，就能获取了这个模块里面的东西.</div><div class="line">module.exports = &#123;</div><div class="line">GroupListView,</div><div class="line">...</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>2.使用头文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import Common from &apos;Common&apos;</div><div class="line">// 创建行模型</div><div class="line">var item0 = new Common.GroupListView();</div></pre></td></tr></table></figure></p>
+<h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><h3 id="Animated"><a href="#Animated" class="headerlink" title="Animated"></a>Animated</h3><p>Animated封装了四个可以动画化的组件：View、Text、Image和ScrollView。</p>
+<ul>
+<li>配置动画</li>
+<li>组合动画<br>parallel<br>sequence<br>stagger<br>delay</li>
+<li>联动多个动画值</li>
+<li>插值：interpolate({inputRange:[0,1],outputRange:[0,100],})</li>
+<li>跟踪动态值:leader,follower,ValueXY</li>
+<li>输入事件：Animated.event</li>
+<li>使用原生动画驱动：<code>useNativeDriver:true</code></li>
+</ul>
+<h3 id="LayoutAnimation"><a href="#LayoutAnimation" class="headerlink" title="LayoutAnimation"></a>LayoutAnimation</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">LayoutAnimation.spring();</div><div class="line">this.setState(&#123;w: this.state.w + 15, h: this.state.h + 15&#125;)</div></pre></td></tr></table></figure>
+<h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><ul>
+<li>setTimeout,clearTimeout</li>
+<li>setInterval,clearInterval</li>
+<li>setImmediate,clearImmediate</li>
+<li>requestAnimationFrame,cancelAnimationFrame</li>
+</ul>
+<p>requestAnimationFrame():用来执行在一段时间内控制视图动画的代码<br>setTimeout/setInterval/setImmediate:稍后执行代码，可能会延迟当前正在进行的动画<br>runAfterInteractions():稍后执行代码，不会延迟当前进行的动画<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">InteractionManager.runAfterInteractions(() =&gt; &#123;</div><div class="line">// ...需要长时间同步执行的任务...</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><em>*</em> 注意：在unmount方法中清除定时器</p>
+</blockquote>
+<h2 id="setNativeProps"><a href="#setNativeProps" class="headerlink" title="setNativeProps"></a>setNativeProps</h2><h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>iOS模拟器上，<code>cmd+D</code>为摇晃手势<br>启动模拟器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">react-native run-ios --simulator &quot;iPhone 7&quot;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>Reload:刷新JS文件</li>
+<li>Debug JS Remotely：在Chrome中调试JS代码<br>会自动打开<code>http://localhost:8081/debugger-ui</code>，打开开发者工具可以查看console输出，以及打断点调试JS脚本。</li>
+<li>Enable Live Reload：自动刷新，实时加载，应用更新时需要刷新当前页面，可以看到明显的全局刷新效果。</li>
+<li>Enable Hot Reloading：热加载，基本上看不出刷新的效果，类似于局部刷新。</li>
+<li>Start Systrace</li>
+<li>Show Inspector</li>
+<li>Show Pert Monitor</li>
+</ul>
+<p>必须重新编译应用才能生效：</p>
+<ul>
+<li>增加了新的资源，如图片</li>
+<li><p>更改了原生代码</p>
+</li>
+<li><p>console.error()可触发红屏报错</p>
+</li>
+<li><p>屏蔽指定警告：ignoreWarnings([‘Warning:’]);</p>
+</li>
+<li><p>访问控制台日志：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">react-native log-ios</div><div class="line">react-native log-android</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>还可以通过Debug-&gt;Open System Log查看日志</p>
+<ul>
+<li><p>React Developer Tools</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install -g react-devtools  //安装</div><div class="line">react-devtools  //启动</div></pre></td></tr></table></figure>
+</li>
+<li><p>真机调试<br>(1)退出所有终端打开的页面<br>(2)手机与电脑连到同一无线网下<br>(3)将AppDelegate中jsCodeLocation的URL地址中的<code>localhost</code>改成电脑的IP地址，然后打开<code>Debug JS Remotely</code><br>(4)解决https问题<br>(5)更新node,npm版本到最新<br>(6)关闭防火墙</p>
+</li>
+</ul>
+<h2 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ cd react-native</div><div class="line">$ npm test</div><div class="line">$ npm run flow</div><div class="line">$ ./scripts/objc-test-ios.sh</div><div class="line">$ ./scripts/test-manual-e2e.sh</div></pre></td></tr></table></figure>
+<h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><p>只在开发环境时打印日志<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">if (!__DEV__) &#123;</div><div class="line">    global.console = &#123;</div><div class="line">        info: () =&gt; &#123;&#125;,</div><div class="line">        log: () =&gt; &#123;&#125;,</div><div class="line">        warn: () =&gt; &#123;&#125;,</div><div class="line">        debug: () =&gt; &#123;&#125;,</div><div class="line">        error: () =&gt; &#123;&#125;,</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="发布应用"><a href="#发布应用" class="headerlink" title="发布应用"></a>发布应用</h2><p>1.edit scheme-&gt;Run-&gt;release release版本会自动禁用开发者菜单，同事讲JS文件和静态图片打包压缩后放到包中<br>2.热更新：<a href="https://github.com/reactnativecn/react-native-pushy/blob/master/docs/guide.md" target="_blank" rel="external">pushy</a></p>
+<p><a href="http://www.jianshu.com/p/504a26d094b2" target="_blank" rel="external">袁峥讲ReactNative-系列</a><br><a href="http://blog.xieliqun.com/2016/11/06/react-study/#more" target="_blank" rel="external">React学习资源汇总</a><br><a href="http://www.jianshu.com/p/98c8f2a970eb" target="_blank" rel="external">React Native开发错误警告处理总结（已解决 ！持续更新</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/assets/blogImg/weixin.png',
+  alipayImage: '/assets/blogImg/zhifubao.png'
+});
+</script>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/11/ES6学习笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          ES6学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/05/iOS使定时器NSTimer在程序进入后台仍然运行的方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">iOS使定时器NSTimer在程序进入后台仍然运行的方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSX"><span class="nav-number">1.</span> <span class="nav-text">JSX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">2.</span> <span class="nav-text">CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FlexBox"><span class="nav-number">3.</span> <span class="nav-text">FlexBox</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#props-state"><span class="nav-number">4.</span> <span class="nav-text">props,state</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#父子组件传值"><span class="nav-number">5.</span> <span class="nav-text">父子组件传值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件生命周期"><span class="nav-number">6.</span> <span class="nav-text">组件生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#propTypes"><span class="nav-number">7.</span> <span class="nav-text">propTypes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本组件"><span class="nav-number">8.</span> <span class="nav-text">基本组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义类"><span class="nav-number">9.</span> <span class="nav-text">自定义类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ListView"><span class="nav-number">10.</span> <span class="nav-text">ListView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导航Navigator"><span class="nav-number">11.</span> <span class="nav-text">导航Navigator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tabbar"><span class="nav-number">12.</span> <span class="nav-text">Tabbar</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TabBarIOS"><span class="nav-number">12.1.</span> <span class="nav-text">TabBarIOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TabNavigator"><span class="nav-number">12.2.</span> <span class="nav-text">TabNavigator</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主流架构搭建"><span class="nav-number">13.</span> <span class="nav-text">主流架构搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络请求"><span class="nav-number">14.</span> <span class="nav-text">网络请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#request模块"><span class="nav-number">14.1.</span> <span class="nav-text">request模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地存储-AsyncStorage"><span class="nav-number">15.</span> <span class="nav-text">本地存储 AsyncStorage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引导页"><span class="nav-number">16.</span> <span class="nav-text">引导页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块导出"><span class="nav-number">17.</span> <span class="nav-text">模块导出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义组件导出"><span class="nav-number">17.1.</span> <span class="nav-text">自定义组件导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义类-1"><span class="nav-number">17.2.</span> <span class="nav-text">自定义类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义类的继承–call方法"><span class="nav-number">17.3.</span> <span class="nav-text">自定义类的继承–call方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目中经常遇到的问题"><span class="nav-number">18.</span> <span class="nav-text">项目中经常遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件导入路径问题（已废弃）"><span class="nav-number">18.1.</span> <span class="nav-text">文件导入路径问题（已废弃）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主头文件问题"><span class="nav-number">18.2.</span> <span class="nav-text">主头文件问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动画"><span class="nav-number">19.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Animated"><span class="nav-number">19.1.</span> <span class="nav-text">Animated</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LayoutAnimation"><span class="nav-number">19.2.</span> <span class="nav-text">LayoutAnimation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时器"><span class="nav-number">20.</span> <span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setNativeProps"><span class="nav-number">21.</span> <span class="nav-text">setNativeProps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调试"><span class="nav-number">22.</span> <span class="nav-text">调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化测试"><span class="nav-number">23.</span> <span class="nav-text">自动化测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能"><span class="nav-number">24.</span> <span class="nav-text">性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布应用"><span class="nav-number">25.</span> <span class="nav-text">发布应用</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 guchunli All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories/study/" class="mobile-nav-link">Study</a>
+  
+    <a href="/categories/other/" class="mobile-nav-link">Other</a>
+  
+    <a href="/photos" class="mobile-nav-link">Photos</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            guchunli
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 谷春丽的小站 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

@@ -7,11 +7,11 @@ Yelee: "3.5"
 ## About Page: `hexo new page about`
 ## Tags Cloud Page: `hexo new page tags`
 menu:
-  主页: /
-  所有文章: /archives/
-  笔记: /categories/note/
+   主页: /
+  归档: /archives/
+  学习: /categories/study/
   随笔: /categories/other/
-  相册: /photos/
+  相册: photos
 
 # Link to your avatar | 填写头像地址
 avatar: /assets/blogImg/avatar.jpg
@@ -182,9 +182,9 @@ tagcloud: true
 
 # Blogroll, Link exchange | 友情链接
 friends:
-  Hexo: https://hexo.io
-  GitHub: https://pages.github.com/
-  MOxFIVE: http://moxfive.xyz/
+  友情链接1: https://guchunli.github.io
+  友情链接2: https://guchunli.github.io
+  友情链接3: https://guchunli.github.io
 #friends: false
 
 #是否开启“关于我”。

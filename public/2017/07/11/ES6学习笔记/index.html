@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>es6学习笔记 | guchunli</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="ReactNativeES6" />
+  
+  
+  
+  
+  <meta name="description" content="letES5只有全局作用域和函数作用域，没有块级作用域，而let声明的变量，只在let命令所在的代码块内有效">
+<meta name="keywords" content="ReactNative,ES6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6学习笔记">
+<meta property="og:url" content="https://guchunli.github.io/2017/07/11/ES6学习笔记/index.html">
+<meta property="og:site_name" content="guchunli">
+<meta property="og:description" content="letES5只有全局作用域和函数作用域，没有块级作用域，而let声明的变量，只在let命令所在的代码块内有效">
+<meta property="og:updated_time" content="2018-05-24T09:16:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6学习笔记">
+<meta name="twitter:description" content="letES5只有全局作用域和函数作用域，没有块级作用域，而let声明的变量，只在let命令所在的代码块内有效">
+  
+    <link rel="alternate" href="/atom.xml" title="guchunli" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/study/">study</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/other/">other</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/photos">photos</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-ES6学习笔记" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      ES6学习笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/07/11/ES6学习笔记/" class="article-date">
+	  <time datetime="2017-07-11T01:13:09.000Z" itemprop="datePublished">2017-07-11</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/study/">学习</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p>ES5只有全局作用域和函数作用域，没有块级作用域，而let声明的变量，只在let命令所在的代码块内有效<br><a id="more"></a><br>ES5产生的问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var a = [];</div><div class="line">for (var i = 0; i &lt; 10; i++) &#123;</div><div class="line">a[i] = function () &#123;</div><div class="line">console.log(i);</div><div class="line">&#125;;</div><div class="line">&#125;</div><div class="line">a[6](); // 10</div></pre></td></tr></table></figure></p>
+<p>(1)let解决：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var a = [];</div><div class="line">for (let i = 0; i &lt; 10; i++) &#123;</div><div class="line">a[i] = function () &#123;</div><div class="line">console.log(i);</div><div class="line">&#125;;</div><div class="line">&#125;</div><div class="line">a[6](); // 6</div></pre></td></tr></table></figure></p>
+<p>(2)闭包解决：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var a = [];</div><div class="line">function iteratorFactory(i)&#123;</div><div class="line">    var onclick = function(e)&#123;</div><div class="line">        console.log(i)</div><div class="line">    &#125;</div><div class="line">    return onclick;</div><div class="line">&#125;</div><div class="line">for (var i = 0; i &lt; 10; i++)&#123;</div><div class="line">    a[i] = iteratorFactory(i)</div><div class="line">&#125;</div><div class="line">a[6](); // 6</div></pre></td></tr></table></figure></p>
+<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p>引用第三方库时声明的变量用const修饰可以避免重命名导致错误</p>
+<h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>用于定义类：class Person{}</p>
+<h2 id="extends"><a href="#extends" class="headerlink" title="extends"></a>extends</h2><p>继承类，constructor内定义的方法和属性是实例对象自己的，外的是所有实力对象共享的</p>
+<h2 id="super"><a href="#super" class="headerlink" title="super"></a>super</h2><p>必须先调用父类<code>super()</code>,才能修改子类的this</p>
+<h2 id="arrow-function"><a href="#arrow-function" class="headerlink" title="arrow function"></a>arrow function</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">function(i)&#123;return i+1;&#125;</div><div class="line">(i) =&gt; i+1</div></pre></td></tr></table></figure>
+<p>解决函数内this指向全局变量问题：<br>(1)使用self指代this<br>(2)bind(this)<br>(3)=&gt; 使用箭头函数</p>
+<h2 id="template-string"><a href="#template-string" class="headerlink" title="template string"></a>template string</h2><p>` ` 表示起始，${}引用变量，保留所有空格和缩进</p>
+<h2 id="destructuring解构"><a href="#destructuring解构" class="headerlink" title="destructuring解构"></a>destructuring解构</h2><p>按照一定模式从数组和对象中提取值，对变量进行赋值</p>
+<h2 id="default默认值"><a href="#default默认值" class="headerlink" title="default默认值"></a>default默认值</h2><p>ES5: type = type || ‘value’<br>ES6: 参数列表中指定<code>(type = &#39;value&#39;)</code></p>
+<h1 id="rest"><a href="#rest" class="headerlink" title="rest"></a>rest</h1><p>传递多个参数时：<br>ES5: arguments<br>ES6: 参数列表可写成<code>...types</code></p>
+<h2 id="JS中的作用域"><a href="#JS中的作用域" class="headerlink" title="JS中的作用域"></a>JS中的作用域</h2><h3 id="函数作用域"><a href="#函数作用域" class="headerlink" title="函数作用域"></a>函数作用域</h3><p>Javascript没有块级作用域，而是函数作用域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var scope=&quot;global&quot;;  </div><div class="line">function t()&#123;  </div><div class="line">console.log(scope);  //undefined</div><div class="line">var scope=&quot;local&quot;  </div><div class="line">console.log(scope);  //local</div><div class="line">&#125;  </div><div class="line">t();</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var name=&quot;global&quot;;  </div><div class="line">if(true)&#123;  </div><div class="line">var name=&quot;local&quot;;  </div><div class="line">console.log(name)   //local</div><div class="line">&#125;  </div><div class="line">console.log(name);  //local</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function t(flag)&#123;  </div><div class="line">if(flag)&#123;  </div><div class="line">var s=&quot;ifscope&quot;;  </div><div class="line">for(var i=0;i&lt;2;i++)   </div><div class="line">;  </div><div class="line">&#125;  </div><div class="line">console.log(i);  //2</div><div class="line">console.log(s);  //ifscope</div><div class="line">&#125;  </div><div class="line">t(true);</div></pre></td></tr></table></figure>
+<h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><p>JS中没有用var声明的变量都是全局变量，而且是顶层对象的属性。<br>使用var声明一个变量时，创建的这个属性是不可配置的，也就是说无法通过delete运算符删除。</p>
+<h3 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">name=&quot;lwy&quot;;  </div><div class="line">function t()&#123;  </div><div class="line">var name=&quot;tlwy&quot;;  </div><div class="line">function s()&#123;  </div><div class="line">var name=&quot;slwy&quot;;  </div><div class="line">console.log(name);  </div><div class="line">&#125;  </div><div class="line">function ss()&#123;  </div><div class="line">console.log(name);  </div><div class="line">&#125;  </div><div class="line">s();  //slwy</div><div class="line">ss(); //tlwy</div><div class="line">&#125;  </div><div class="line">t();</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var a = [];</div><div class="line">for (var i = 0; i &lt; 10; i++) &#123;</div><div class="line">a[i] = function () &#123;</div><div class="line">console.log(i);</div><div class="line">&#125;;</div><div class="line">&#125;</div><div class="line">a[6](); // 10</div></pre></td></tr></table></figure>
+<h3 id="with语句"><a href="#with语句" class="headerlink" title="with语句"></a>with语句</h3><p>with语句主要用来临时扩展作用域链，将语句中的对象添加到当前作用域的头部。<br>with语句结束后，作用域链恢复正常。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">person=&#123;name:&quot;yhb&quot;,age:22,height:175,wife:&#123;name:&quot;lwy&quot;,age:21&#125;&#125;;  </div><div class="line">with(person.wife)&#123;  </div><div class="line">console.log(name);  //lwy</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><p>1.全局代码区域：所有函数之外的区域，指全局对象window（node.js中是global）<br>2.function代码区域：某个函数内的代码，但不包括它所嵌套的函数内的代码<br>函数中的this的含义在函数声明时无法确定，要到运行期才能确定，而且与调用函数的方式有关<br>内部函数可以引用外部函数的局部变量，但是不能直接应用外部函数的this<br>(1)直接调用时，在严格模式下，this会被设为undefined，非严格模式下，this会被设为全局对象window<br>(2)作为方法调用时，this指方法所属的对象</p>
+<h1 id="ES6基础知识"><a href="#ES6基础知识" class="headerlink" title="ES6基础知识"></a>ES6基础知识</h1><h2 id="Babel"><a href="#Babel" class="headerlink" title="Babel"></a>Babel</h2><p>ES6转码器</p>
+<ul>
+<li>配置文件.babelrc：用于配置转码规则和插件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">&quot;presets&quot;: [&quot;latest&quot;,&quot;react&quot;,&quot;stage-2&quot;],</div><div class="line">&quot;plugins&quot;: []</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 最新转码规则</div><div class="line">$ npm install --save-dev babel-preset-latest</div><div class="line"># react 转码规则</div><div class="line">$ npm install --save-dev babel-preset-react</div><div class="line"># 不同阶段语法提案的转码规则（0-3)</div><div class="line">$ npm install --save-dev babel-preset-stage-2</div></pre></td></tr></table></figure>
+<ul>
+<li>命令行转码babel-cli<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install --global babel-cli</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>将babel-cli安装在项目中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install --save-dev babel-cli</div></pre></td></tr></table></figure></p>
+<p>改写package.json<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">// ...</div><div class="line">&quot;devDependencies&quot;: &#123;</div><div class="line">&quot;babel-cli&quot;: &quot;^6.0.0&quot;</div><div class="line">&#125;,</div><div class="line">&quot;scripts&quot;: &#123;</div><div class="line">&quot;build&quot;: &quot;babel src -d lib&quot;</div><div class="line">&#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>执行命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm run build</div></pre></td></tr></table></figure></p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>###let</p>
+<ul>
+<li>let：类似于var,声明的变量只在let命令所在的代码块中有效</li>
+<li>for语句设置循环变量部分与循环体是两个作用域</li>
+<li>不存在变量提升：var声明的变量在声明前使用已经存在，但没有值；let声明的变量在声明前是不存在的</li>
+<li>暂时性死区：let声明的变量在块级作用域内被绑定，不受外部影响</li>
+<li>let在同一作用域中不可重复声明变量</li>
+</ul>
+<h3 id="块级作用域"><a href="#块级作用域" class="headerlink" title="块级作用域{}"></a>块级作用域{}</h3><blockquote>
+<p>var声明的变量存在的问题：1.变量升级 2.for语句中的循环变量为全局变量</p>
+<ul>
+<li>块级作用域中可以声明函数，在浏览器中行为类似于var(会提升)，其他环境类似于let</li>
+</ul>
+</blockquote>
+<h3 id="do"><a href="#do" class="headerlink" title="do"></a>do</h3><p>使块级作用域变为表达式，可以用变量接收do{}的返回值</p>
+<h3 id="const-1"><a href="#const-1" class="headerlink" title="const"></a>const</h3><ul>
+<li>声明只读常量，只声明不赋值会报错</li>
+<li>同let相同的块级作用域内有效，不提升，窜仔暂时性死区，不可重复声明</li>
+</ul>
+<h3 id="ES6声明变量的六中方法"><a href="#ES6声明变量的六中方法" class="headerlink" title="ES6声明变量的六中方法"></a>ES6声明变量的六中方法</h3><p>var,function,let,const,import,class</p>
+<h3 id="顶层对象"><a href="#顶层对象" class="headerlink" title="顶层对象"></a>顶层对象</h3><p>浏览器环境，顶层对象指window，Node指glocal。<br>var,function声明的全局变量是顶层对象属性，let,const,class声明的不属于。</p>
+<h3 id="global"><a href="#global" class="headerlink" title="global"></a>global</h3><p>system.global可以在所有环境拿到global。</p>
+<h3 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h3><p>1.数组的解构赋值</p>
+<ul>
+<li>模式匹配，解构不成功，变量值为undefined；</li>
+<li>设置默认值，当成员等于undefined时默认值生效</li>
+</ul>
+<p>2.对象的解构赋值</p>
+<ul>
+<li>允许取别名</li>
+</ul>
+<p>3.字符串的解构赋值</p>
+<ul>
+<li>可对length进行解构赋值</li>
+</ul>
+<p>4.使用</p>
+<ul>
+<li>交换变量值</li>
+<li>函数返回多个值</li>
+<li>提取json数据</li>
+<li>for…of遍历Map结构</li>
+<li>加载模块</li>
+</ul>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><ul>
+<li>includes(),startsWith(),endsWith(),repeat(),padStart().padEnd()</li>
+<li>模板字符串：\’\’  </li>
+<li>&amp;{变量/表达式、函数}</li>
+</ul>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><h2 id="Iterator-for…of"><a href="#Iterator-for…of" class="headerlink" title="Iterator for…of"></a>Iterator for…of</h2><h2 id="aync"><a href="#aync" class="headerlink" title="aync"></a>aync</h2><h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><h2 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h2><p>待补充</p>
+<p>参考文章：(30分钟掌握ES6/ES2015核心内容)[<a href="http://www.jianshu.com/p/ebfeb687eb70" target="_blank" rel="external">http://www.jianshu.com/p/ebfeb687eb70</a>]<br><a href="http://es6.ruanyifeng.com/#docs/promise" target="_blank" rel="external">ECMAScript 6 入门</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/assets/blogImg/weixin.png',
+  alipayImage: '/assets/blogImg/zhifubao.png'
+});
+</script>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/11/Babel学习笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Babel学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/06/ReactNative基础知识学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">ReactNative基础知识学习笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#let"><span class="nav-number">1.</span> <span class="nav-text">let</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const"><span class="nav-number">2.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class"><span class="nav-number">3.</span> <span class="nav-text">class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extends"><span class="nav-number">4.</span> <span class="nav-text">extends</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#super"><span class="nav-number">5.</span> <span class="nav-text">super</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arrow-function"><span class="nav-number">6.</span> <span class="nav-text">arrow function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#template-string"><span class="nav-number">7.</span> <span class="nav-text">template string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#destructuring解构"><span class="nav-number">8.</span> <span class="nav-text">destructuring解构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#default默认值"><span class="nav-number">9.</span> <span class="nav-text">default默认值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rest"><span class="nav-number"></span> <span class="nav-text">rest</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS中的作用域"><span class="nav-number">1.</span> <span class="nav-text">JS中的作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数作用域"><span class="nav-number">1.1.</span> <span class="nav-text">函数作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量作用域"><span class="nav-number">1.2.</span> <span class="nav-text">变量作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域链"><span class="nav-number">1.3.</span> <span class="nav-text">作用域链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#with语句"><span class="nav-number">1.4.</span> <span class="nav-text">with语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this"><span class="nav-number">2.</span> <span class="nav-text">this</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ES6基础知识"><span class="nav-number"></span> <span class="nav-text">ES6基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Babel"><span class="nav-number">1.</span> <span class="nav-text">Babel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">2.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#块级作用域"><span class="nav-number">2.1.</span> <span class="nav-text">块级作用域{}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#do"><span class="nav-number">2.2.</span> <span class="nav-text">do</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const-1"><span class="nav-number">2.3.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6声明变量的六中方法"><span class="nav-number">2.4.</span> <span class="nav-text">ES6声明变量的六中方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顶层对象"><span class="nav-number">2.5.</span> <span class="nav-text">顶层对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#global"><span class="nav-number">2.6.</span> <span class="nav-text">global</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解构赋值"><span class="nav-number">2.7.</span> <span class="nav-text">解构赋值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">3.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数"><span class="nav-number">4.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组"><span class="nav-number">5.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象"><span class="nav-number">6.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map"><span class="nav-number">7.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise"><span class="nav-number">8.</span> <span class="nav-text">Promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterator-for…of"><span class="nav-number">9.</span> <span class="nav-text">Iterator for…of</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aync"><span class="nav-number">10.</span> <span class="nav-text">aync</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class"><span class="nav-number">11.</span> <span class="nav-text">Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Module"><span class="nav-number">12.</span> <span class="nav-text">Module</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 guchunli All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories/study/" class="mobile-nav-link">Study</a>
+  
+    <a href="/categories/other/" class="mobile-nav-link">Other</a>
+  
+    <a href="/photos" class="mobile-nav-link">Photos</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            guchunli
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 谷春丽的小站 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

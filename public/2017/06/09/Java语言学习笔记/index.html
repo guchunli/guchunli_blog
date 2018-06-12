@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>java语言学习笔记 | guchunli</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="Java语法" />
+  
+  
+  
+  
+  <meta name="description" content="##JAVA基础 1.public类 一个源文件中只能有一个public类 一个源文件可以有多个非public类">
+<meta name="keywords" content="Java,语法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java语言学习笔记">
+<meta property="og:url" content="https://guchunli.github.io/2017/06/09/Java语言学习笔记/index.html">
+<meta property="og:site_name" content="guchunli">
+<meta property="og:description" content="##JAVA基础 1.public类 一个源文件中只能有一个public类 一个源文件可以有多个非public类">
+<meta property="og:image" content="https://guchunli.github.io/assets/20170609_java/acAndIfa.png">
+<meta property="og:updated_time" content="2018-05-24T10:06:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java语言学习笔记">
+<meta name="twitter:description" content="##JAVA基础 1.public类 一个源文件中只能有一个public类 一个源文件可以有多个非public类">
+<meta name="twitter:image" content="https://guchunli.github.io/assets/20170609_java/acAndIfa.png">
+  
+    <link rel="alternate" href="/atom.xml" title="guchunli" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/study/">study</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/other/">other</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/photos">photos</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Java语言学习笔记" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Java语言学习笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/06/09/Java语言学习笔记/" class="article-date">
+	  <time datetime="2017-06-09T01:59:09.000Z" itemprop="datePublished">2017-06-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/study/">学习</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##JAVA基础</p>
+<h3 id="1-public类"><a href="#1-public类" class="headerlink" title="1.public类"></a>1.public类</h3><ul>
+<li>一个源文件中只能有一个public类</li>
+<li>一个源文件可以有多个非public类<a id="more"></a>
+<h3 id="2-package-import"><a href="#2-package-import" class="headerlink" title="2.package/import"></a>2.package/import</h3>编译java包：<blockquote>
+<p>$ javac -d directory javafilename</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">E:\sources&gt; javac -d c:\classes Simple.java</div><div class="line">//运行</div><div class="line">e:\sources&gt; set classpath=c:\classes;.;</div><div class="line">e:\sources&gt; java mypack.Simple</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p>OR<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">e:\sources&gt; java -classpath c:\classes mypack.Simple</div></pre></td></tr></table></figure></p>
+<p>加载类文件或jar文件的方式:</p>
+<ul>
+<li>加载临时类文件<ul>
+<li>通过在命令提示符中设置类路径</li>
+<li>通过 -classpath 开关选项</li>
+</ul>
+</li>
+<li>永久加载类文件<ul>
+<li>通过在环境变量中设置类路径</li>
+<li>通过创建jar文件，其中包含所有类文件，并将jar文件复制到JDK安装目录的jre/lib/ext文件夹中。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-引用类型"><a href="#3-引用类型" class="headerlink" title="3.引用类型"></a>3.引用类型</h3><p>对象、数组都是引用数据类型。<br>所有引用类型的默认值都是null。</p>
+<h3 id="4-JAVA常量"><a href="#4-JAVA常量" class="headerlink" title="4.JAVA常量"></a>4.JAVA常量</h3><p>在 Java 中使用 final 关键字来修饰常量，通常使用大写字母表示常量</p>
+<h3 id="5-基本数据类型"><a href="#5-基本数据类型" class="headerlink" title="5. 基本数据类型"></a>5. 基本数据类型</h3><ul>
+<li>不能对boolean类型进行类型转换。</li>
+<li>在把容量大的类型转换为容量小的类型时必须使用强制类型转换 double-&gt;float</li>
+</ul>
+<p>6.自动类型转换<br>转换前的数据类型的位数要低于转换后的数据类型。Float-&gt;double</p>
+<ol>
+<li>Java语言支持的变量类型<h4 id="类变量：独立于方法之外的变量，用-static-修饰。"><a href="#类变量：独立于方法之外的变量，用-static-修饰。" class="headerlink" title="类变量：独立于方法之外的变量，用 static 修饰。"></a>类变量：独立于方法之外的变量，用 static 修饰。</h4></li>
+</ol>
+<ul>
+<li>在类中以static关键字声明，但必须在方法构造方法和语句块之外</li>
+<li>静态变量除了被声明为常量外很少使用。常量是指声明为public/private，final和static类型的变量。常量初始化后不可改变。</li>
+<li>静态变量储存在静态存储区。经常被声明为常量，很少单独使用static声明变量。</li>
+<li>为了对类的使用者可见，大多数静态变量声明为public类型</li>
+<li>默认值和实例变量相似。数值型变量默认值是0，布尔型默认值是false，引用类型默认值是null。变量的值可以在声明的时候指定，也可以在构造方法中指定。此外，静态变量还可以在静态语句块中初始化。</li>
+<li>类变量被声明为public static final类型时，类变量名称一般建议使用大写字母。如果静态变量不是public和final类型，其命名方式与实例变量以及局部变量的命名方式一致。</li>
+<li>静态块在类加载时main之前执行<h4 id="实例变量：独立于方法之外的变量，不过没有-static-修饰。"><a href="#实例变量：独立于方法之外的变量，不过没有-static-修饰。" class="headerlink" title="实例变量：独立于方法之外的变量，不过没有 static 修饰。"></a>实例变量：独立于方法之外的变量，不过没有 static 修饰。</h4></li>
+<li>当一个对象被实例化之后，每个实例变量的值就跟着确定；</li>
+<li>实例变量可以声明在使用前或者使用后；</li>
+<li>一般情况下应该把实例变量设为私有。通过使用访问修饰符可以使实例变量对子类可见；</li>
+<li>实例变量具有默认值。数值型变量的默认值是0，布尔型变量的默认值是false，引用类型变量的默认值是null。变量的值可以在声明时指定，也可以在构造方法中指定；</li>
+<li>实例变量可以直接通过变量名访问。但在静态方法以及其他类中，就应该使用完全限定名<h4 id="局部变量：类的方法中的变量。"><a href="#局部变量：类的方法中的变量。" class="headerlink" title="局部变量：类的方法中的变量。"></a>局部变量：类的方法中的变量。</h4></li>
+<li>访问修饰符不能用于局部变量；</li>
+<li>局部变量是在栈上分配的。</li>
+<li>局部变量没有默认值，所以局部变量被声明后，必须经过初始化，才可以使用。</li>
+</ul>
+<h4 id="实例初始化块"><a href="#实例初始化块" class="headerlink" title="实例初始化块"></a>实例初始化块</h4><p>主要有三个规则。 它们如下：</p>
+<ul>
+<li>在创建类的实例时创建实例初始化程序块。</li>
+<li>在父类构造函数被调用之后(即在super()构造函数调用之后)调用实例初始化块。</li>
+<li>实例初始化程序块按它们显示的顺序排列。</li>
+</ul>
+<h3 id="8．修饰符：访问修饰符、非访问修饰符"><a href="#8．修饰符：访问修饰符、非访问修饰符" class="headerlink" title="8．修饰符：访问修饰符、非访问修饰符"></a>8．修饰符：访问修饰符、非访问修饰符</h3><ul>
+<li>修饰符用来定义类、方法或者变量，通常放在语句的最前端，默认default<h4 id="访问修饰符"><a href="#访问修饰符" class="headerlink" title="访问修饰符"></a>访问修饰符</h4>（1） public/protected/default/private<br>（2） private: 只能通过类中公共的 getter 方法被外部类访问<br>（3） protected: 同一个包中的任何其他类访问，也能够被不同包中的子类访问</li>
+<li>public: 如果几个相互访问的 public 类分布在不同的包中，则需要导入相应 public 类所在的包</li>
+<li>注意：父类中声明为 public 的方法在子类中也必须为 public。</li>
+<li>父类中声明为 protected 的方法在子类中要么声明为 protected，要么声明为 public，不能声明为 private。</li>
+<li>父类中声明为 private 的方法，不能够被继承。</li>
+</ul>
+<h4 id="非访问修饰符"><a href="#非访问修饰符" class="headerlink" title="非访问修饰符"></a>非访问修饰符</h4><p>static,abstract,final,synchronized,volatile<br>（1）final：用来修饰类、方法和变量，final 修饰的类不能够被继承，修饰的方法不能被继承类重新定义，修饰的变量为常量，是不可修改的。</p>
+<ul>
+<li>final 变量：能被显式地初始化并且只能初始化一次。被声明为 final 的对象的引用不能指向不同的对象。但是 final 对象里的数据可以被改变。也就是说 final 对象的引用不能改变，但是里面的值可以改变。final 修饰符通常和 static 修饰符一起使用来创建类常量。</li>
+<li>final 方法：类中的 final 方法可以被子类继承，但是不能被子类修改。</li>
+<li>final 类：final 类不能被继承，没有类能够继承 final 类的任何特性。</li>
+<li>被声明为 final 类的方法自动地声明为 final，但是实例变量并不是 final</li>
+<li>在声明时未初始化的静态final变量称为静态空白final变量。 它只能在静态块中初始化。<br>（2）abstract: 抽象类不能用来实例化对象，声明抽象类的唯一目的是为了将来对该类进行扩充<br>一个类不能同时被 abstract 和 final 修饰。<br>抽象方法:是一种没有任何实现的方法，该方法的的具体实现由子类提供。</li>
+<li>抽象方法不能被声明成 final 和 static。</li>
+<li>任何继承抽象类的子类必须实现父类的所有抽象方法，除非该子类也是抽象类。</li>
+<li>如果一个类包含若干个抽象方法，那么该类必须声明为抽象类。抽象类可以不包含抽象方法。抽象类可以包含抽象方法和非抽象方法。</li>
+<li>抽象方法的声明以分号结尾，例如：public abstract sample()。<br>在java中有两种实现抽象的方法，它们分别是：</li>
+<li>抽象类(部分)</li>
+<li>接口 (完全)<br>抽象类实现了部分抽象(0到100％)，而接口实现了完全抽象(100％)。<br><img src="/assets/20170609_java/acAndIfa.png" alt="抽象类与接口"></li>
+</ul>
+<h3 id="9-instanceof-name-instanceof-String"><a href="#9-instanceof-name-instanceof-String" class="headerlink" title="9.instanceof: name instanceof String"></a>9.instanceof: name instanceof String</h3><p>增强for循环：for(声明语句 : 表达式)<br>switch支持字符串，直到break退出</p>
+<h3 id="10-装箱-拆箱"><a href="#10-装箱-拆箱" class="headerlink" title="10.装箱/拆箱"></a>10.装箱/拆箱</h3><p>装箱：int-&gt;number  拆箱：number-&gt;int<br>intValue() valueOf() compareo() equals() parseInt()(string-&gt;int) ceil() floor() random()</p>
+<h3 id="11-Character-char的包装类"><a href="#11-Character-char的包装类" class="headerlink" title="11.Character char的包装类"></a>11.Character char的包装类</h3><p>isLetter() isDigit() isUpperCase() isWhitespace() toUpperCase() toString()</p>
+<h3 id="12-String"><a href="#12-String" class="headerlink" title="12.String"></a>12.String</h3><p>length() s1.concat(s2)  s = format(”—%f %d %s”,floatVar,.,.) charAt(index) int compareo()(对象，字符串)<br>boolean contentEquals(StringBuffer)  endsWith() equals()  indexOf(ch) split substring</p>
+<h3 id="13-StringBuffer-StringBuilder"><a href="#13-StringBuffer-StringBuilder" class="headerlink" title="13. StringBuffer/StringBuilder"></a>13. StringBuffer/StringBuilder</h3><p>当对字符串进行修改的时候，需要使用 StringBuffer 和 StringBuilder 类。<br>StringBuffer(线程安全) StringBuilder(速度优势,不是线程安全的,不能同步访问)  多数情况下建议使用 StringBuilder 类<br>StringBuffer：append(s) reverse dekete(start,end) replace(start,end,str) capacity() charAt() indexOf() toString substring</p>
+<h3 id="14-Arrays数组"><a href="#14-Arrays数组" class="headerlink" title="14.Arrays数组"></a>14.Arrays数组</h3><p>double[] list = new double[10];  参数：(int[] array)  返回值：int[]<br>fill sort equals binarySearch</p>
+<h3 id="15-Date"><a href="#15-Date" class="headerlink" title="15.Date"></a>15.Date</h3><p>date.toString() getime() after before equals compareo   format parse<br>SimpleDateFormat(E yyyy-MM-dd HH:mm:ss a zzz) PM<br>Sleep(1000*3)  Calender.getInstance()</p>
+<h3 id="16-正则表达式"><a href="#16-正则表达式" class="headerlink" title="16.正则表达式"></a>16.正则表达式</h3><p>Pattern Matcher<br>\s+ 多个空格  ^$ 以什么开始  \d+多个数字  ()? 0/1 可选  * 0/n  +1\n   {n} (n,) &gt;=n  . 除\n\r之外的任何单个字符<br>[xyz] [^xyz] [a-z]  \b字符边界</p>
+<h3 id="17-function"><a href="#17-function" class="headerlink" title="17.function"></a>17.function</h3><p>重载：方法名相同，参数列表不同<br>构造方法：方法名与类名相同，没有返回值，自定义则默认构造方法失效<br>可变参数：一个方法中只能指定一个可变参数，它必须是方法的最后一个参数。任何普通的参数必须在它之前声明<br>（double… numbers）<br>protected void finalize()</p>
+<h3 id="18-BufferReader"><a href="#18-BufferReader" class="headerlink" title="18.BufferReader"></a>18.BufferReader</h3><p>read() write() scanner() print() println()</p>
+<h3 id="19-I-O"><a href="#19-I-O" class="headerlink" title="19.I/O"></a>19.I/O</h3><p>FileInputStream FileOutputStream File FileReader FileWrite mkdir mkdirs isDirectory delete()</p>
+<p>20.Scanner(System.in)<br>next nextLine</p>
+<p>21.Exception<br>java.lang.Exception Error  Throwable<br>IOException RuntimeException</p>
+<h3 id="22-面向对象"><a href="#22-面向对象" class="headerlink" title="22.面向对象"></a>22.面向对象</h3><h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>extends final修饰的类不能被集成，方法不能被重写  单继承</p>
+<h4 id="重写与重载"><a href="#重写与重载" class="headerlink" title="重写与重载"></a>重写与重载</h4><p>Override(返回值和形参都不能改变) Overload(方法名字相同，而参数不同。返回类型可以相同也可以不同)<br>构造方法不能被重写<br>最常用的地方就是构造器的重载</p>
+<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>父类指向子类对象  Animal a = new Cat()   实现方式：重写，接口，抽象类和抽象方法  变量不能被重写</p>
+<h4 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h4><p>抽象类不能被实例化(初学者很容易犯的错)，如果被实例化，就会报错，编译无法通过。只有抽象类的非抽象子类可以创建对象。</p>
+<h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>修改属性的可见性来限制对属性的访问（一般限制为private）<br>对每个值属性提供对外的公共方法访问，也就是创建一对赋取值方法，用于对私有属性的访问</p>
+<h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><p>是抽象方法的集合。<br>有静态、final变量和抽象方法（JAVA8还可以有默认方法，静态方法），接口字段默认是public，static和final，方法默认是public和abstract<br>类描述对象的属性和方法。接口则包含类要实现的方法。<br>除非实现接口的类是抽象类，否则该类要定义接口中的所有方法。<br>一个实现接口的类，必须实现接口内所描述的所有方法，否则就必须声明为抽象类。<br>接口中的方法会被隐式的指定为 public abstract，接口中的变量会被隐式的指定为 public static final<br>类的多重继承是不合法，但接口允许多重继承</p>
+<h4 id="包"><a href="#包" class="headerlink" title="包"></a>包</h4><p>小写开头<br>使用类全名描述 或 import(import 声明必须在包声明之后，类声明之前)</p>
+<h2 id="java高级"><a href="#java高级" class="headerlink" title="java高级"></a>java高级</h2><h3 id="1-一些概念理解"><a href="#1-一些概念理解" class="headerlink" title="1.一些概念理解"></a>1.一些概念理解</h3><h4 id="JVM-Java虚拟机"><a href="#JVM-Java虚拟机" class="headerlink" title="JVM(Java虚拟机)"></a>JVM(Java虚拟机)</h4><p>一个抽象机器。它是一个提供可以执行Java字节码的运行时环境的规范。<br>JVM执行以下主要任务：</p>
+<ul>
+<li>加载代码</li>
+<li>验证代码</li>
+<li>执行代码</li>
+<li>提供运行时环境<h4 id="JRE（Java-Runtime-Environment）"><a href="#JRE（Java-Runtime-Environment）" class="headerlink" title="JRE（Java Runtime Environment）"></a>JRE（Java Runtime Environment）</h4>用于提供Java运行时环境。它是JVM的实现。它是实际存在的。它包含一组库和JVM在运行时使用的其他文件。<h4 id="JDK（Java-Development-Kit）"><a href="#JDK（Java-Development-Kit）" class="headerlink" title="JDK（Java Development Kit）"></a>JDK（Java Development Kit）</h4>它是实际上存在的。它包含JRE+开发工具。</li>
+</ul>
+<p>JDK(JRE(JVM+LIB+OTHER)+IDE)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/assets/blogImg/weixin.png',
+  alipayImage: '/assets/blogImg/zhifubao.png'
+});
+</script>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/09/几种常见算法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          几种常见算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/09/MyEclipse快捷键/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">MyEclipse快捷键</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-public类"><span class="nav-number">1.</span> <span class="nav-text">1.public类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-package-import"><span class="nav-number">2.</span> <span class="nav-text">2.package/import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-引用类型"><span class="nav-number">3.</span> <span class="nav-text">3.引用类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-JAVA常量"><span class="nav-number">4.</span> <span class="nav-text">4.JAVA常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-基本数据类型"><span class="nav-number">5.</span> <span class="nav-text">5. 基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类变量：独立于方法之外的变量，用-static-修饰。"><span class="nav-number">5.1.</span> <span class="nav-text">类变量：独立于方法之外的变量，用 static 修饰。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例变量：独立于方法之外的变量，不过没有-static-修饰。"><span class="nav-number">5.2.</span> <span class="nav-text">实例变量：独立于方法之外的变量，不过没有 static 修饰。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#局部变量：类的方法中的变量。"><span class="nav-number">5.3.</span> <span class="nav-text">局部变量：类的方法中的变量。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例初始化块"><span class="nav-number">5.4.</span> <span class="nav-text">实例初始化块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8．修饰符：访问修饰符、非访问修饰符"><span class="nav-number">6.</span> <span class="nav-text">8．修饰符：访问修饰符、非访问修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#访问修饰符"><span class="nav-number">6.1.</span> <span class="nav-text">访问修饰符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非访问修饰符"><span class="nav-number">6.2.</span> <span class="nav-text">非访问修饰符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-instanceof-name-instanceof-String"><span class="nav-number">7.</span> <span class="nav-text">9.instanceof: name instanceof String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-装箱-拆箱"><span class="nav-number">8.</span> <span class="nav-text">10.装箱/拆箱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-Character-char的包装类"><span class="nav-number">9.</span> <span class="nav-text">11.Character char的包装类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-String"><span class="nav-number">10.</span> <span class="nav-text">12.String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-StringBuffer-StringBuilder"><span class="nav-number">11.</span> <span class="nav-text">13. StringBuffer/StringBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-Arrays数组"><span class="nav-number">12.</span> <span class="nav-text">14.Arrays数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-Date"><span class="nav-number">13.</span> <span class="nav-text">15.Date</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-正则表达式"><span class="nav-number">14.</span> <span class="nav-text">16.正则表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-function"><span class="nav-number">15.</span> <span class="nav-text">17.function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-BufferReader"><span class="nav-number">16.</span> <span class="nav-text">18.BufferReader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-I-O"><span class="nav-number">17.</span> <span class="nav-text">19.I/O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22-面向对象"><span class="nav-number">18.</span> <span class="nav-text">22.面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">18.1.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重写与重载"><span class="nav-number">18.2.</span> <span class="nav-text">重写与重载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态"><span class="nav-number">18.3.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类"><span class="nav-number">18.4.</span> <span class="nav-text">抽象类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#封装"><span class="nav-number">18.5.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口"><span class="nav-number">18.6.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#包"><span class="nav-number">18.7.</span> <span class="nav-text">包</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java高级"><span class="nav-number"></span> <span class="nav-text">java高级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-一些概念理解"><span class="nav-number">1.</span> <span class="nav-text">1.一些概念理解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM-Java虚拟机"><span class="nav-number">1.1.</span> <span class="nav-text">JVM(Java虚拟机)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JRE（Java-Runtime-Environment）"><span class="nav-number">1.2.</span> <span class="nav-text">JRE（Java Runtime Environment）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK（Java-Development-Kit）"><span class="nav-number">1.3.</span> <span class="nav-text">JDK（Java Development Kit）</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 guchunli All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories/study/" class="mobile-nav-link">Study</a>
+  
+    <a href="/categories/other/" class="mobile-nav-link">Other</a>
+  
+    <a href="/photos" class="mobile-nav-link">Photos</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            guchunli
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 谷春丽的小站 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

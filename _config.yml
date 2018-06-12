@@ -5,8 +5,8 @@
 # Site
 title: guchunli
 subtitle: 努力把生活折腾成自己喜欢的样子~
-description: 谷春丽的个人站
-author: 谷春丽
+description: Welcome to
+author: 谷春丽的小站
 keywords: "ios,swift,mac"
 language: zh_CN
 #timezone: Asia/Beijing
@@ -71,7 +71,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: yilia
+theme: hiker
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -103,11 +103,11 @@ jsonContent:
       content: false
       slug: false
       updated: false
-      comments: false
+      comments: true
       link: false
       permalink: false
       excerpt: false
-      categories: false
+      categories: true
       tags: true
 
 # jsonContent:

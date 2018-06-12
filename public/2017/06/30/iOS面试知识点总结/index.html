@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ios面试知识点总结 | guchunli</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="iOS面试" />
+  
+  
+  
+  
+  <meta name="description" content="youxin1.阐述一下 runtime,runloop，并举几个应用场景。runtime:动态创建类和对象，进行消息发送和转发runloop运行循环:一.保持程序的持续运行。二.处理App中的各类事件（触摸事件、定时器事件、Selector事件）三.节省CPU资源，提高程序性能：没有事件时就进行睡眠状态内部实现：do-while循环。 2.请列举你知道的设计模式。代理，观察者，单例，mvc／mv">
+<meta name="keywords" content="iOS,面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS面试知识点总结">
+<meta property="og:url" content="https://guchunli.github.io/2017/06/30/iOS面试知识点总结/index.html">
+<meta property="og:site_name" content="guchunli">
+<meta property="og:description" content="youxin1.阐述一下 runtime,runloop，并举几个应用场景。runtime:动态创建类和对象，进行消息发送和转发runloop运行循环:一.保持程序的持续运行。二.处理App中的各类事件（触摸事件、定时器事件、Selector事件）三.节省CPU资源，提高程序性能：没有事件时就进行睡眠状态内部实现：do-while循环。 2.请列举你知道的设计模式。代理，观察者，单例，mvc／mv">
+<meta property="og:image" content="https://guchunli.github.io/2017/06/30/iOS面试知识点总结/assets/demo/sort.png">
+<meta property="og:image" content="https://guchunli.github.io/2017/06/30/iOS面试知识点总结/assets/demo/sort_desc.png">
+<meta property="og:updated_time" content="2018-05-24T09:16:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS面试知识点总结">
+<meta name="twitter:description" content="youxin1.阐述一下 runtime,runloop，并举几个应用场景。runtime:动态创建类和对象，进行消息发送和转发runloop运行循环:一.保持程序的持续运行。二.处理App中的各类事件（触摸事件、定时器事件、Selector事件）三.节省CPU资源，提高程序性能：没有事件时就进行睡眠状态内部实现：do-while循环。 2.请列举你知道的设计模式。代理，观察者，单例，mvc／mv">
+<meta name="twitter:image" content="https://guchunli.github.io/2017/06/30/iOS面试知识点总结/assets/demo/sort.png">
+  
+    <link rel="alternate" href="/atom.xml" title="guchunli" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/study/">study</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/other/">other</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/photos">photos</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-iOS面试知识点总结" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      iOS面试知识点总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/06/30/iOS面试知识点总结/" class="article-date">
+	  <time datetime="2017-06-30T06:31:59.000Z" itemprop="datePublished">2017-06-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/study/">学习</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="youxin"><a href="#youxin" class="headerlink" title="youxin"></a>youxin</h2><p>1.阐述一下 runtime,runloop，并举几个应用场景。<br>runtime:动态创建类和对象，进行消息发送和转发<br>runloop运行循环:<br>一.保持程序的持续运行。<br>二.处理App中的各类事件（触摸事件、定时器事件、Selector事件）<br>三.节省CPU资源，提高程序性能：没有事件时就进行睡眠状态<br>内部实现：do-while循环。</p>
+<p>2.请列举你知道的设计模式。<br>代理，观察者，单例，mvc／mvvm，工厂，策略模式</p>
+<p>3.请设计一个账号系统，需考虑持久化，登录态等。</p>
+<p>4.请用代码或者伪代码打印输出一个菱形。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">void print(int n)</div><div class="line">&#123;</div><div class="line">    int i,j;</div><div class="line">    for(i=1; i&lt;=n; i++)</div><div class="line">    &#123;</div><div class="line">        for(j=1; j&lt;=n-i; j++)&#123; printf(&quot; &quot;); &#125;</div><div class="line">        for(j=n-i+1; j&lt;n+i; j++)&#123; printf(&quot;*&quot;); &#125;</div><div class="line">        printf(&quot;\n&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    for(i=n-1; i&gt;=1; i--)</div><div class="line">    &#123;</div><div class="line">        for(j=1; j&lt;=(n-i); j++)&#123; printf(&quot; &quot;); &#125;</div><div class="line">        for(j=n-i+1; j&lt;n+i; j++)&#123; printf(&quot;*&quot;); &#125;</div><div class="line">        printf(&quot;\n&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>5.sdwebimage使用到了哪些缓存机制，缓存到什么路径下。<br>Memory 和 Disk 双重 Cache 机制。缓存到tmp的cache文件夹下，NSCachesDirectory。</p>
+<p>6.是否使用或了解过swift，react native，优缺点是什么。<br>swift优点：<br>（1）简洁的语法；<br>（2）更强的类型安全；<br>（3）函数式编程的支持；<br>（4）编写 OS X 下的自动化脚本<br>swift缺点：<br>（1）App体积变大<br>（2）Xcode 支持不够好<br>（3）第三方库的支持不够多<br>（4）语言版本更新带来的编译问题</p>
+<p>react native优点：<br>1、原生应用的用户体验<br>2、跨平台特性<br>3、热更新（升级）<br>4、上手快，入门容易，开发效率较高<br>5、社区繁荣</p>
+<p>1.跨平台开发。同一段 Javascript 代码可以被用于 iOS 和 Android 两个平台。相比于以前 iOS 和 Android App 各维护一套逻辑大同小异的代码，React Native 的开发、测试和维护成本要低很多。<br>2.快速编译。比起 Xcode 中漫长的编译，React Native 采用了热加载（Hot Reload）的即时编译机制，使得 App UI 的开发体验大幅改善，几乎到了和网页开发一样随改随变的效果。<br>3.快速发布。通过 JSBundle，React Native 可以即时更新 App。相比原来冗长的审核和上传过程，发布和测试新功能的效率大幅提高。<br>4.渲染和布局更加高效。React Native 可以直接套用网页开发的 CSS 和 flex 机制，摆脱了 autolayout 和 frame 布局中繁琐的数学计算，更加直接简便。<br>5.简单易学。相比于 iOS 和 Android 的一整套复杂的知识体系，React Native 从本质上来讲就是状态机，对于开发者来讲理解不难，且实际操作可谓入门容易、上手轻松。如果是前端开发者，那么对于 Javascript 本来就有相应了解，用 React Native 开发手机应用更是水到渠成。</p>
+<p>react native缺点：<br>1.对开发人员要求较高<br>2.发展还不成熟，目前很多ui组件只有ios的实现，android的需要自己实现<br>3.文档/组件欠缺, 版本升级快</p>
+<p>1.第三方依赖。React Native 严重依赖于 Facebook 的维护。苹果在 iOS 上每次技术的更新、政策的改变都会让原来使用了 React Native 代码库受到影响，等待 Facebook 和社区的修复会妨碍 App 的更新和用户体验。前段时间，百度和开发者们弃用<br>React Native 而迫使的 Facebook 修改开发者权限（License）事件，证明了开发依赖于第三方的风险确实存在。<br>2.逻辑上的额外开销。直到今天， React Native 依然只是0.49版本，仅仅支持简单的 UI 制作，其不成熟的 API 连复杂的动画都难以实现，更别提 iOS 的底层优化和兼容操作。同时因为操作系统和设备的不同，React Native 得分别进行针对性处理，这对代码库的维护又是一个挑战。<br>3.联调的困难。对于原生的 iOS 和 Android App 引入 React Native，会增加整个代码库的复杂度，在深入底层原生代码进行 debug 时也是困难重重，可以说是在开发和维护上的成本都有所增加。</p>
+<p>7.线上crash如何解决。<br>bug严重性分析：确定紧急版本更新，迭代版本中修复，热修复。<br>（1）如果是服务端返回的异常数据没做兼容，就由服务端确保格式正确，客户端看情况是否要做兼容；<br>（2）如果是升级版本后的由于本地数据库或本地存储的数据格式未兼容等问题，一般需要撤下版本重新提交；<br>（3）已经发布的版本集成过热修复模块，否则也要重新发布版本。</p>
+<p>8.请写出你知道的排序算法及其复杂度。<br>（1）冒泡排序<br>（2）插入排序<br>（3）选择排序<br>（4）快速排序<br><img src="assets/demo/sort.png" alt="排序算法比较"><br><img src="assets/demo/sort_desc.png" alt="排序算法图解"></p>
+<p>9.AutoreleasePool是如何实现的。</p>
+<ul>
+<li>AutoreleasePool（自动释放池）：是OC中的一种内存自动回收机制，它可以延迟加入AutoreleasePool中的变量release的时机。</li>
+<li>AutoreleasePool与线程：每一个线程都会维护自己的 autoreleasepool 堆栈，每一个 autoreleasepool 只对应一个线程。Autorelease对象是在当前的runloop迭代结束时释放的。</li>
+<li>autorelease何时释放：在没有使用@autoreleasepool的情况,autorelease对象是在当前的runloop迭代结束时释放。每个runloop中都会创建一个 autoreleasepool 并在runloop迭代结束进行释放。如果是手动创建autoreleasepool,自己创建Pool并释放</li>
+<li>AutoreleasePool是如何实现的：通过声明一个<strong>AtAutoreleasePool类型的局部变量</strong>autoreleasepool实现了@autoreleasepool{}。一个线程的autoreleasepool就是一个指针栈，每个runloop迭代中都加入了自动释放池Push和Pop。</li>
+</ul>
+<p>10.ipa体积如何压缩。<br>（1）配置编译选项 （Levels选项内）Genetate Debug Symbols  设置为NO，这个配置选项应该会让你减去小半的体积。<br>（2）舍弃架构armv7，因为armv7用于支持4s和3gs<br>（3）编译的版本必须是发布版本<br>（4）资源：<br>1）图片：去掉无用的图片；用代码绘制简单的纯色图片；一些对图片要求高的用位图，其他的尽量用矢量图；如果不需要使用透明，可以用jpeg代替PNG<br>2）音视频：不增加编解码的前提下正确选择格式<br>3）文件：检查bundle中的无用文件，不要打包到app或者静态库中。可以点击文件，在右侧的file inspector里面的target membership中取消勾选；或者在build phase里面的Copy Bundle Resources中去掉。<br>4）代码：确定 dead code（代码被定义但从未被调用）被剥离，build setting 里 DEAD_CODE_STRIPPING = YES。 去掉冗余的代码，即使一点冗余代码，编译后体积也是很可观的。<br>5）第三方库：查找内部使用到的第三方库，一方面可以进行删减代码，用不到的类，直接删除，还有第三方库中的图片资源统统删除掉，如果能够自己手写实现的，那费功夫自己写吧<br>注意：把product 里面的文件 使用“显示包内容”方式，按照文件大小排序，查看打完包后具体是哪些图片占用太多的空间，并针对性地优化</p>
+<h2 id="http网络请求过程"><a href="#http网络请求过程" class="headerlink" title="http网络请求过程"></a>http网络请求过程</h2><h2 id="对称加密与非对称加密"><a href="#对称加密与非对称加密" class="headerlink" title="对称加密与非对称加密"></a>对称加密与非对称加密</h2><h3 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h3><p>对称加密：加密（encryption）与解密（decryption）使用的是同样的密钥（secret key）。加密和解密算法是公开的，秘钥必须严格保存，如果秘钥泄露，别人就能够用密文+秘钥还原成你的明文。<br>优点：算法公开、计算量小、加密速度快、加密效率高。<br>缺点：秘钥的管理和分发非常困难，不够安全。<br>比如：常见的DES/AES都是属于对称加密算法。</p>
+<h3 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h3><p>非对称加密：需要两个密钥来进行加密和解密，这两个秘钥是公开密钥（简称公钥）和私有密钥（简称私钥），即常说的“公钥加密，私钥加密”或“私钥加密，公钥加密”。私钥只能由一方安全保管，不能外泄，而公钥则可以发给任何请求它的人。非对称加密使用这对密钥中的一个进行加密，而解密则需要另一个密钥。比如，你向银行请求公钥，银行将公钥发给你，你使用公钥对消息加密，那么只有私钥的持有人–银行才能对你的消息解密。与对称加密不同的是，银行不需要将私钥通过网络发送出去，因此安全性大大提高。<br>优点：安全性更高，公钥是公开的，秘钥是自己保存的，不需要将私钥给别人。<br>缺点：加密和解密花费时间长、速度慢，只适合对少量数据进行加密。<br>比如：RSA就是最常用的非对称加密算法。</p>
+<h1 id="momo"><a href="#momo" class="headerlink" title="momo"></a>momo</h1><h2 id="1-NSString-name，非ARC下重写setter-getter方法"><a href="#1-NSString-name，非ARC下重写setter-getter方法" class="headerlink" title="1.NSString *name，非ARC下重写setter,getter方法"></a>1.NSString *name，非ARC下重写setter,getter方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">-(void)setName:(NSString *)name&#123;</div><div class="line">    if (_name != name) &#123;</div><div class="line">        [_name release];</div><div class="line">        _name = [name copy];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">- (NSString *)name&#123;</div><div class="line">    return [[_name retain]autorelease];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="2-简述OC的内存管理模式，包括alloc-retain-copy-release-autorelease-dealloc这些方法的理解。"><a href="#2-简述OC的内存管理模式，包括alloc-retain-copy-release-autorelease-dealloc这些方法的理解。" class="headerlink" title="2.简述OC的内存管理模式，包括alloc,retain,copy,release,autorelease,dealloc这些方法的理解。"></a>2.简述OC的内存管理模式，包括alloc,retain,copy,release,autorelease,dealloc这些方法的理解。</h2><h2 id="3-描述autorelease对象释放时机，简述autorelasepool的工作机制"><a href="#3-描述autorelease对象释放时机，简述autorelasepool的工作机制" class="headerlink" title="3.描述autorelease对象释放时机，简述autorelasepool的工作机制"></a>3.描述autorelease对象释放时机，简述autorelasepool的工作机制</h2><h2 id="4-在OC中如何判定两个对象完全相等"><a href="#4-在OC中如何判定两个对象完全相等" class="headerlink" title="4.在OC中如何判定两个对象完全相等"></a>4.在OC中如何判定两个对象完全相等</h2><h2 id="5-以下作为button的响应方法会有什么问题，能看到log吗"><a href="#5-以下作为button的响应方法会有什么问题，能看到log吗" class="headerlink" title="5.以下作为button的响应方法会有什么问题，能看到log吗"></a>5.以下作为button的响应方法会有什么问题，能看到log吗</h2><ul>
+<li>(void)clickButton{<br>  dispatch_sync(dispatch_get_main_queue(), ^{<br>  NSLog(“log”);<br>  });<br>}</li>
+</ul>
+<h2 id="6-在一个类中retain一个NSTimer类型的成员变量会有问题吗，为什么"><a href="#6-在一个类中retain一个NSTimer类型的成员变量会有问题吗，为什么" class="headerlink" title="6.在一个类中retain一个NSTimer类型的成员变量会有问题吗，为什么"></a>6.在一个类中retain一个NSTimer类型的成员变量会有问题吗，为什么</h2><h2 id="7-简述C的函数调用和OC的消息传递的机制区别"><a href="#7-简述C的函数调用和OC的消息传递的机制区别" class="headerlink" title="7.简述C的函数调用和OC的消息传递的机制区别"></a>7.简述C的函数调用和OC的消息传递的机制区别</h2><h2 id="8-OC中category的实现原理和runtime有关吗，什么联系"><a href="#8-OC中category的实现原理和runtime有关吗，什么联系" class="headerlink" title="8.OC中category的实现原理和runtime有关吗，什么联系"></a>8.OC中category的实现原理和runtime有关吗，什么联系</h2><h2 id="9-NSOperationQueue和GCD有什么区别，实现机制有什么不同"><a href="#9-NSOperationQueue和GCD有什么区别，实现机制有什么不同" class="headerlink" title="9.NSOperationQueue和GCD有什么区别，实现机制有什么不同"></a>9.NSOperationQueue和GCD有什么区别，实现机制有什么不同</h2><h2 id="10-列举在iOS开发中擅长的模块和其特点使用时的注意问题（例如：音频录制和播放，mapkit定位等）"><a href="#10-列举在iOS开发中擅长的模块和其特点使用时的注意问题（例如：音频录制和播放，mapkit定位等）" class="headerlink" title="10.列举在iOS开发中擅长的模块和其特点使用时的注意问题（例如：音频录制和播放，mapkit定位等）"></a>10.列举在iOS开发中擅长的模块和其特点使用时的注意问题（例如：音频录制和播放，mapkit定位等）</h2><h2 id="11-简述1-2个自己经常使用的第三方库和其优缺点"><a href="#11-简述1-2个自己经常使用的第三方库和其优缺点" class="headerlink" title="11.简述1.2个自己经常使用的第三方库和其优缺点"></a>11.简述1.2个自己经常使用的第三方库和其优缺点</h2><h2 id="atomic／lock"><a href="#atomic／lock" class="headerlink" title="atomic／lock"></a>atomic／lock</h2><p>一般情况下并不要求属性必须是“原子的”，因为这并不能保证“线程安全” ( thread safety)，若要实现“线程安全”的操作，还需采用更为深层的锁定机制才行。例如，一个线程在连续多次读取某属性值的过程中有别的线程在同时改写该值，那么即便将属性声明为 atomic，也还是会读到不同的属性值。</p>
+<h2 id="使用一种数据结构替代NSNotificationCenter"><a href="#使用一种数据结构替代NSNotificationCenter" class="headerlink" title="使用一种数据结构替代NSNotificationCenter"></a>使用一种数据结构替代NSNotificationCenter</h2><p>dictionary</p>
+<h2 id="NSSet使用场景"><a href="#NSSet使用场景" class="headerlink" title="NSSet使用场景"></a>NSSet使用场景</h2><h1 id="zhihu"><a href="#zhihu" class="headerlink" title="zhihu"></a>zhihu</h1><h2 id="1-rebase"><a href="#1-rebase" class="headerlink" title="1.rebase"></a>1.rebase</h2><h2 id="2-私有库"><a href="#2-私有库" class="headerlink" title="2.私有库"></a>2.私有库</h2><h2 id="4-NSURL-NSURLSession-NSURLConnection-NSURL"><a href="#4-NSURL-NSURLSession-NSURLConnection-NSURL" class="headerlink" title="4.NSURL,NSURLSession,NSURLConnection,NSURL"></a>4.NSURL,NSURLSession,NSURLConnection,NSURL</h2><h1 id="xiaoyezi"><a href="#xiaoyezi" class="headerlink" title="xiaoyezi"></a>xiaoyezi</h1><h2 id="wkwebview交互过程造成内存泄漏"><a href="#wkwebview交互过程造成内存泄漏" class="headerlink" title="wkwebview交互过程造成内存泄漏"></a>wkwebview交互过程造成内存泄漏</h2><h2 id="Safari-怎么调试加载的h5，怎么控制手机页面调试"><a href="#Safari-怎么调试加载的h5，怎么控制手机页面调试" class="headerlink" title="Safari 怎么调试加载的h5，怎么控制手机页面调试"></a>Safari 怎么调试加载的h5，怎么控制手机页面调试</h2><ul>
+<li>1.Safari设置-safari偏好设置-高级菜单-在菜单中显示“开发”菜单，选中复选框，这样就能看到开发菜单了</li>
+<li>2.iPhone设置-safari-高级-打开“javascript”开关和web检查器开关</li>
+<li>3.iPhone接上Mac，运行手机app里的web页面，在开发菜单中选择连接的手机，找到调试的网页，就能在Safari里面调试了，可以打断点，查看cookie，打印cookie或元素，添加alert</li>
+</ul>
+<h2 id="IM消息状态提醒，比如正在输入之类的"><a href="#IM消息状态提醒，比如正在输入之类的" class="headerlink" title="IM消息状态提醒，比如正在输入之类的"></a>IM消息状态提醒，比如正在输入之类的</h2><h2 id="n个台阶，一次走一步或者两步，有多少种走法"><a href="#n个台阶，一次走一步或者两步，有多少种走法" class="headerlink" title="n个台阶，一次走一步或者两步，有多少种走法"></a>n个台阶，一次走一步或者两步，有多少种走法</h2><h2 id="git回退"><a href="#git回退" class="headerlink" title="git回退"></a>git回退</h2><h2 id="view从创建到展示出来都会经历哪些过程"><a href="#view从创建到展示出来都会经历哪些过程" class="headerlink" title="view从创建到展示出来都会经历哪些过程"></a>view从创建到展示出来都会经历哪些过程</h2><p>loadView创建：<br>(1)[super loadView]<br>    1)指定了与控制器相关联的xib文件，通过xib文件创建控制器的view<br>    2)没有明显地传xib文件名，加载与控制器同名的xib文件<br>    3)没有找到相关联的xib文件，创建一个空白的UIView，赋值给控制器的view<br>(2)在loadView方法中，通过代码创建view，不需要调用[super loadView]<br>过程：loadView-&gt;viewDidLoad-&gt;viewWillAppear-&gt;viewWillLayoutSubviews-&gt;viewDidLayoutSubviews-&gt;viewDidAppear-&gt;viewWillDisappear-&gt;viewDidDisappear-&gt;viewDidUnLoad</p>
+<p>参考文章：<a href="https://www.cnblogs.com/dianming/p/6902442.html" target="_blank" rel="external">iOS之Safari调试webView/H5页面</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/assets/blogImg/weixin.png',
+  alipayImage: '/assets/blogImg/zhifubao.png'
+});
+</script>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/01/OC中的block/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          OC中的block
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/29/iOS直播学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">iOS直播学习笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#youxin"><span class="nav-number">1.</span> <span class="nav-text">youxin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http网络请求过程"><span class="nav-number">2.</span> <span class="nav-text">http网络请求过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对称加密与非对称加密"><span class="nav-number">3.</span> <span class="nav-text">对称加密与非对称加密</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对称加密"><span class="nav-number">3.1.</span> <span class="nav-text">对称加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非对称加密"><span class="nav-number">3.2.</span> <span class="nav-text">非对称加密</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#momo"><span class="nav-number"></span> <span class="nav-text">momo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-NSString-name，非ARC下重写setter-getter方法"><span class="nav-number">1.</span> <span class="nav-text">1.NSString *name，非ARC下重写setter,getter方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-简述OC的内存管理模式，包括alloc-retain-copy-release-autorelease-dealloc这些方法的理解。"><span class="nav-number">2.</span> <span class="nav-text">2.简述OC的内存管理模式，包括alloc,retain,copy,release,autorelease,dealloc这些方法的理解。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-描述autorelease对象释放时机，简述autorelasepool的工作机制"><span class="nav-number">3.</span> <span class="nav-text">3.描述autorelease对象释放时机，简述autorelasepool的工作机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-在OC中如何判定两个对象完全相等"><span class="nav-number">4.</span> <span class="nav-text">4.在OC中如何判定两个对象完全相等</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-以下作为button的响应方法会有什么问题，能看到log吗"><span class="nav-number">5.</span> <span class="nav-text">5.以下作为button的响应方法会有什么问题，能看到log吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-在一个类中retain一个NSTimer类型的成员变量会有问题吗，为什么"><span class="nav-number">6.</span> <span class="nav-text">6.在一个类中retain一个NSTimer类型的成员变量会有问题吗，为什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-简述C的函数调用和OC的消息传递的机制区别"><span class="nav-number">7.</span> <span class="nav-text">7.简述C的函数调用和OC的消息传递的机制区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-OC中category的实现原理和runtime有关吗，什么联系"><span class="nav-number">8.</span> <span class="nav-text">8.OC中category的实现原理和runtime有关吗，什么联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-NSOperationQueue和GCD有什么区别，实现机制有什么不同"><span class="nav-number">9.</span> <span class="nav-text">9.NSOperationQueue和GCD有什么区别，实现机制有什么不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-列举在iOS开发中擅长的模块和其特点使用时的注意问题（例如：音频录制和播放，mapkit定位等）"><span class="nav-number">10.</span> <span class="nav-text">10.列举在iOS开发中擅长的模块和其特点使用时的注意问题（例如：音频录制和播放，mapkit定位等）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-简述1-2个自己经常使用的第三方库和其优缺点"><span class="nav-number">11.</span> <span class="nav-text">11.简述1.2个自己经常使用的第三方库和其优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atomic／lock"><span class="nav-number">12.</span> <span class="nav-text">atomic／lock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用一种数据结构替代NSNotificationCenter"><span class="nav-number">13.</span> <span class="nav-text">使用一种数据结构替代NSNotificationCenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSSet使用场景"><span class="nav-number">14.</span> <span class="nav-text">NSSet使用场景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zhihu"><span class="nav-number"></span> <span class="nav-text">zhihu</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-rebase"><span class="nav-number">1.</span> <span class="nav-text">1.rebase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-私有库"><span class="nav-number">2.</span> <span class="nav-text">2.私有库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-NSURL-NSURLSession-NSURLConnection-NSURL"><span class="nav-number">3.</span> <span class="nav-text">4.NSURL,NSURLSession,NSURLConnection,NSURL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xiaoyezi"><span class="nav-number"></span> <span class="nav-text">xiaoyezi</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#wkwebview交互过程造成内存泄漏"><span class="nav-number">1.</span> <span class="nav-text">wkwebview交互过程造成内存泄漏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Safari-怎么调试加载的h5，怎么控制手机页面调试"><span class="nav-number">2.</span> <span class="nav-text">Safari 怎么调试加载的h5，怎么控制手机页面调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IM消息状态提醒，比如正在输入之类的"><span class="nav-number">3.</span> <span class="nav-text">IM消息状态提醒，比如正在输入之类的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#n个台阶，一次走一步或者两步，有多少种走法"><span class="nav-number">4.</span> <span class="nav-text">n个台阶，一次走一步或者两步，有多少种走法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git回退"><span class="nav-number">5.</span> <span class="nav-text">git回退</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#view从创建到展示出来都会经历哪些过程"><span class="nav-number">6.</span> <span class="nav-text">view从创建到展示出来都会经历哪些过程</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 guchunli All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories/study/" class="mobile-nav-link">Study</a>
+  
+    <a href="/categories/other/" class="mobile-nav-link">Other</a>
+  
+    <a href="/photos" class="mobile-nav-link">Photos</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            guchunli
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 谷春丽的小站 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
