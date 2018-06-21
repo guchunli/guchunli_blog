@@ -1,7 +1,7 @@
 ---
 title: java开发环境配置
 date: 2017-06-06 11:27:51
-categories: 学习
+categories: 笔记
 tags: [Java,web]
 toc: true
 ---

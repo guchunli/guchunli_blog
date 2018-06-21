@@ -1,7 +1,7 @@
 ---
 title: Carthage的安装与使用
 date: 2018-02-26 15:53:36
-categories: 学习
+categories: 笔记
 tags: [Carthage]
 toc:
 ---

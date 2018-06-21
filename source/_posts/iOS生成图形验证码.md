@@ -1,7 +1,7 @@
 ---
 title: iOS生成图形验证码
 date: 2018-02-07 14:04:18
-categories: 学习
+categories: 笔记
 tags: [图形,验证码]
 toc:
 ---

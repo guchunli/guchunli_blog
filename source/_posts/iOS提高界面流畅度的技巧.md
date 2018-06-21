@@ -1,7 +1,7 @@
 ---
 title: iOS提高界面流畅度的技巧
 date: 2017-12-19 19:10:30
-categories: 学习
+categories: 笔记
 tags: [流畅]
 toc:
 ---

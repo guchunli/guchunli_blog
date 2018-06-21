@@ -1,7 +1,7 @@
 ---
 title: ReactNative使用学习笔记
 date: 2017-06-21 11:39:45
-categories: 学习
+categories: 笔记
 tags: [iOS,ReactNative]
 toc: true
 ---

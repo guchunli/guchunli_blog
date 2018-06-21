@@ -1,7 +1,7 @@
 ---
 title: MyEclipse快捷键
 date: 2017-06-09 09:33:03
-categories: 学习
+categories: 笔记
 tags: [Java,快捷键]
 ---
 

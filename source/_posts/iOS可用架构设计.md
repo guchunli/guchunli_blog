@@ -1,7 +1,7 @@
 ---
 title: iOS可用架构设计
 date: 2017-07-21 10:43:44
-categories: 学习
+categories: 笔记
 tags: [架构]
 ---
 

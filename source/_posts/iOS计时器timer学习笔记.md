@@ -1,7 +1,7 @@
 ---
 title: iOS计时器timer学习笔记
 date: 2018-06-20 18:12:53
-categories: 学习
+categories: 笔记
 tags: [计时器,timer]
 toc: true
 ---
@@ -92,6 +92,7 @@ invalidate是唯一让timer从runloop删除的方法，也是唯一去除对targ
 
 ### GCD的定时器
 如果对精度有要求，可以使用GCD的定时器
+timer不是一种实时的机制，会存在延迟，而且延迟的程度跟当前线程的执行情况有关，timer并不会因为触发延迟而导致后面的触发时间发生延迟。。
 <!--NSTimer不支持暂停和继续，如果需要可以使用GCD的定时器-->
 
 ### NSTimer的暂停/重启

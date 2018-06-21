@@ -52,7 +52,7 @@ highlight:
 # Category & Tag
 default_category: uncategorized
 category_map:
-             学习: study
+             笔记: note
              随笔: other
 tag_map:
 

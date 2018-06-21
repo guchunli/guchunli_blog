@@ -1,7 +1,7 @@
 ---
 title: iOS-APP打包/提审/被拒等注意事项
 date: 2017-04-13 12:20:22
-categories: 学习
+categories: 笔记
 tags: [iOS,app store]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: iOS runtime与runloop学习笔记
 date: 2017-03-22 11:39:18
-categories: 学习
+categories: 笔记
 tags: [iOS,runtime]
 toc: true
 ---

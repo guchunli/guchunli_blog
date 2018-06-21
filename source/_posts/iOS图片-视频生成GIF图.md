@@ -1,8 +1,8 @@
 ---
 title: iOS图片/视频生成GIF图
 date: 2018-03-15 15:14:58
-categories:
-tags:
+categories: 笔记
+tags: [gif]
 toc:
 ---
 

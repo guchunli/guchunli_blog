@@ -1,7 +1,7 @@
 ---
 title: github上优秀的iOS开源项目
 date: 2017-08-01 17:45:50
-categories: 学习
+categories: 笔记
 tags: [开源]
 toc: true
 ---

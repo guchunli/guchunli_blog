@@ -1,7 +1,7 @@
 ---
 title: iOS模拟器报错总结
 date: 2018-01-11 10:22:34
-categories: 学习
+categories: 笔记
 tags: [模拟器]
 toc:
 ---

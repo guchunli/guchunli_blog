@@ -1,7 +1,7 @@
 ---
 title: iPhoneX适配笔记
 date: 2017-12-05 14:10:42
-categories: 学习
+categories: 笔记
 tags: [iPhoneX]
 toc:
 ---

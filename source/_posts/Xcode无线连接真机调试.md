@@ -1,7 +1,7 @@
 ---
 title: Xcode无线连接真机调试
 date: 2018-01-29 17:51:41
-categories: 学习
+categories: 笔记
 tags: [Xcode,无线]
 toc:
 ---

@@ -1,7 +1,7 @@
 ---
 title: iOS IM学习笔记
 date: 2017-04-22 11:19:11
-categories: 学习
+categories: 笔记
 tags: [iOS,IM,socket]
 ---
 

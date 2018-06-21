@@ -1,7 +1,7 @@
 ---
 title: Xcode控制台打印中文
 date: 2017-12-15 10:38:53
-categories: 学习
+categories: 笔记
 tags: [log,中文]
 toc:
 ---

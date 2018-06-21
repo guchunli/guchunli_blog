@@ -1,7 +1,7 @@
 ---
 title: iOS富文本的使用
 date: 2017-12-18 16:38:52
-categories: 学习
+categories: 笔记
 tags: [富文本]
 toc:
 ---

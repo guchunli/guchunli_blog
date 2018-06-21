@@ -1,7 +1,7 @@
 ---
 title: SVN使用
 date: 2017-08-04 15:07:57
-categories: 学习
+categories: 笔记
 tags: [SVN]
 toc: true
 ---

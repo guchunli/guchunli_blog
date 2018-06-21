@@ -1,7 +1,7 @@
 ---
 title: OC基础
 date: 2018-03-01 13:54:16
-categories: 学习
+categories: 笔记
 tags: [OC]
 toc: true
 ---

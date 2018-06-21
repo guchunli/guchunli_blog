@@ -1,7 +1,7 @@
 ---
 title: cocoapods安装
 date: 2017-08-14 15:24:09
-categories: 学习
+categories: 笔记
 tags: [cocoapods]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Mac终端常用命令
 date: 2018-05-25 11:35:36
-categories: 学习
+categories: 笔记
 tags: [mac,终端,命令]
 toc:
 ---

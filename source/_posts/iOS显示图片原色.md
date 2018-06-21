@@ -1,7 +1,7 @@
 ---
 title: iOS显示图片原色
 date: 2018-01-31 16:08:07
-categories: 学习
+categories: 笔记
 tags: [图片,原色]
 toc:
 ---

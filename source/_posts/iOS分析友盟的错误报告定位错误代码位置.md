@@ -1,7 +1,7 @@
 ---
 title: iOS分析友盟的错误报告定位错误代码位置
 date: 2017-11-06 18:19:13
-categories: 学习
+categories: 笔记
 tags: [友盟,崩溃,错误]
 toc: true
 ---

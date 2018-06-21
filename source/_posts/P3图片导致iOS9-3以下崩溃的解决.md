@@ -1,7 +1,7 @@
 ---
 title: P3图片导致iOS9.3以下崩溃的解决
 date: 2017-12-12 13:28:39
-categories: 学习
+categories: 笔记
 tags: [P3图片]
 toc:
 ---

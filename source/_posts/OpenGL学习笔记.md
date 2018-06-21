@@ -1,7 +1,7 @@
 ---
 title: OpenGL学习笔记
 date: 2017-07-03 18:23:19
-categories: 学习
+categories: 笔记
 tags: [iOS,OpenGL,待补充]
 ---
 

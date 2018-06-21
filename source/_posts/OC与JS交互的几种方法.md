@@ -1,7 +1,7 @@
 ---
 title: OC与JS交互的几种方法
 date: 2017-07-04 11:59:35
-categories: 学习
+categories: 笔记
 tags: [OC,JS]
 toc: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: iOS11适配注意点
 date: 2017-10-16 09:59:02
-categories: 学习
+categories: 笔记
 tags: [iOS11]
 toc:
 ---

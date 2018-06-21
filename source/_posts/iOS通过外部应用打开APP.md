@@ -1,7 +1,7 @@
 ---
 title: iOS通过外部应用打开APP
 date: 2018-06-12 16:11:28
-categories: 学习
+categories: 笔记
 tags: [打开,唤醒]
 toc:
 ---

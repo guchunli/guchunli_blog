@@ -1,7 +1,7 @@
 ---
 title: iOS实现导航栏渐变
 date: 2018-01-15 16:16:31
-categories: 学习
+categories: 笔记
 tags: [导航栏,渐变]
 toc:
 ---

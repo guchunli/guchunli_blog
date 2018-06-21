@@ -1,7 +1,7 @@
 ---
 title: ReactNative基础知识学习笔记
 date: 2017-07-06 11:30:28
-categories: 学习
+categories: 笔记
 tags: [ReactNative,基础]
 toc: true
 ---

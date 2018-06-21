@@ -1,7 +1,7 @@
 ---
 title: iOS动画学习笔记
 date: 2017-07-05 15:15:27
-categories: 学习
+categories: 笔记
 tags: [iOS,动画]
 toc: true
 ---
