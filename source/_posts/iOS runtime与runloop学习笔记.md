@@ -217,6 +217,21 @@ NSLog(@"unresolved method ：%@", NSStringFromSelector(aSelector));
 }
 ```
 
+### 深入理解黑魔法
+当项目规模比较大，各个控制器功能都已经实现，突然增加每个页面都需要修改的需求，实现方式有以下几种：
+1.每个页面进行修改
+2.继承
+3.category
+4.Method Swizzling
+Method Swizzling本质上就是对IMP和SEL进行交换。Method Swizzling也是iOS中AOP(面相切面编程)的一种实现方式。
+在OC语言的runtime特性中，调用一个对象的方法就是给这个对象发送消息。是通过查找接收消息对象的方法列表，从方法列表中查找对应的SEL，这个SEL对应着一个IMP(一个IMP可以对应多个SEL)，通过这个IMP找到对应的方法调用。
+在每个类中都有一个Dispatch Table，这个Dispatch Table本质是将类中的SEL和IMP(可以理解为函数指针)进行对应。而我们的Method Swizzling就是对这个table进行了操作，让SEL对应另一个IMP。
+在实现Method Swizzling时，核心代码主要就是一个runtime的C语言API：
+```
+OBJC_EXPORT void method_exchangeImplementations(Method m1, Method m2) 
+__OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
+```
+
 ## 字典转模型应用
 ```
 + (instancetype)modelWithDict:(NSDictionary *)dict{
@@ -360,6 +375,7 @@ break;
 [Objective-C 的 Runtime](http://www.samirchen.com/objective-c-runtime/)
 [iOS Runtime 几种基本用法简记](http://www.jianshu.com/p/99af00237cb8)
 [iOS运行时(Runtime)详解+Demo](http://www.jianshu.com/p/adf0d566c887)
+[https://www.jianshu.com/p/ed65518ec8db](https://www.jianshu.com/p/ed65518ec8db)
 
 [iOS runtime和runloop](https://www.jianshu.com/p/ebc6e20b84cf)
 [深入理解RunLoop](https://blog.ibireme.com/2015/05/18/runloop/#more-41710)
