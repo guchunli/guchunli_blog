@@ -6,8 +6,6 @@ tags: [C]
 toc: true
 ---
 
-auto const extern goto register volatile
-
 ## 数据类型
 ### 基本类型
 #### 常用基本数据类型占用空间（64位机器为例）
@@ -66,6 +64,27 @@ int i; //声明，也是定义
 在 C 中，有两种简单的定义常量的方式（一般把常量定义为大写字母形式）：
 * 使用 #define 预处理器。
 * 使用 const 关键字。
+
+#### 
+const T ：定义一个常量，声明的同时必须进行初始化。一旦声明，这个值将不能被改变。
+const T* ：指向常量的指针，不能用于改变其所指向的对象的值。
+* const int* ：指针指向的对象不可以改变，但指针本身的值可以改变；int* const ：指针本身的值不可改变，但其指向的对象可以改变。
+```
+const int i = 5;
+const int i2 = 10;
+const int* pInt = &i;           //正确，指向一个const int对象，即i的地址
+//*pInt = 10;                   //错误，不能改变其所指缶的对象
+pInt = &i2;                     //正确，可以改变pInt指针本身的值,此时pInt指向的是i2的地址
+const int* p2 = new int(8);     //正确，指向一个new出来的对象的地址
+delete p2;                      //正确
+//int* pInt = &i;               //错误，i是const int类型，类型不匹配，不能将const int * 初始化为int *
+int nValue = 15;
+const int * pConstInt = &nValue;    //正确，可以把int *赋给const int *，但是pConstInt不能改变其所指向对象的值，即nValue
+*pConstInt = 40;                    //错误，不能改变其所指向对象的值
+```
+
+const T& ：对常量(const)的引用，又称为常量引用，常量引用不能修改其邦定的对象。允许为一个常量引用邦定一个非常量对象、字面值，甚至是表达式；引用的类型与引用所指向的类型必须一致。
+const T*&与T *const& ：指向常量对象的指针的引用，这可以分两步来理解：1.const T*是指向常量的指针；2.const T*&指向常量的指针的引用。
 
 ## 存储类
 ### auto
@@ -517,12 +536,143 @@ member definition;
 * typedef 仅限于为类型定义符号名称，#define 不仅可以为类型定义别名，也能为数值定义别名，比如您可以定义 1 为 ONE。
 * typedef 是由编译器执行解释的，#define 语句是由预编译器进行处理的。
 
+## 输入 & 输出
+### getchar() & putchar() 函数
+* int getchar(void) 函数从屏幕读取下一个可用的字符，并把它返回为一个整数。这个函数在同一个时间内只会读取一个单一的字符。
+* int putchar(int c) 函数把字符输出到屏幕上，并返回相同的字符。这个函数在同一个时间内只会输出一个单一的字符。
+
+### gets() & puts() 函数
+* char *gets(char *s) 函数从 stdin 读取一行到 s 所指向的缓冲区，直到一个终止符或 EOF。
+* int puts(const char *s) 函数把字符串 s 和一个尾随的换行符写入到 stdout。
+
+### scanf() 和 printf() 函数
+* int scanf(const char *format, ...) 函数从标准输入流 stdin 读取输入，并根据提供的 format 来浏览输入。
+* int printf(const char *format, ...) 函数把输出写入到标准输出流 stdout ，并根据提供的格式产生输出。
+
+## 文件读写
+### 打开文件
+FILE *fopen( const char * filename, const char * mode );
+
+### 关闭文件
+int fclose( FILE *fp );
+
+### 写入文件
+int fputc( int c, FILE *fp );
+int fputs( const char *s, FILE *fp );
+
+### 读取文件
+int fgetc( FILE * fp );
+char *fgets( char *buf, int n, FILE *fp );
+
+### 二进制 I/O 函数
+这两个函数都是用于存储块的读写 - 通常是数组或结构体：
+```
+size_t fread(void *ptr, size_t size_of_elements, 
+size_t number_of_elements, FILE *a_file);
+
+size_t fwrite(const void *ptr, size_t size_of_elements, 
+size_t number_of_elements, FILE *a_file);
+```
+
 ## 预处理器
+### 预处理器指令
+| 指令  |  描述 |
+|--------|--------|
+| #define   |  定义宏 |
+| #include   |  包含一个源代码文件 |
+| #undef   |  取消已定义的宏 |
+| #ifdef   |  如果宏已经定义，则返回真 |
+| #ifndef   |  如果宏没有定义，则返回真 |
+| #if   |  如果给定条件为真，则编译下面代码 |
+| #else   |  #if 的替代方案 |
+| #elif   |  如果前面的 #if 给定条件不为真，当前条件为真，则编译下面代码 |
+| #endif   |  结束一个 #if……#else 条件编译块 |
+| #error  |   当遇到标准错误时，输出错误消息 |
+| #pragma   |  使用标准化方法，向编译器发布特殊的命令到编译器中 |
+
+### 宏
+| 宏  |  描述 |
+|--------|--------|
+| __DATE__  |  当前日期，一个以 "MMM DD YYYY" 格式表示的字符常量。 |
+| __TIME__  |  当前时间，一个以 "HH:MM:SS" 格式表示的字符常量。 |
+| __FILE__   |  这会包含当前文件名，一个字符串常量。 |
+| __LINE__  |  这会包含当前行号，一个十进制常量。 |
+| __STDC__ |   当编译器以 ANSI 标准编译时，则定义为 1。 |
+
+### 预处理器运算符
+宏延续运算符（\）：宏太长，一个单行容纳不下时使用
+字符串常量化运算符（#）：把一个宏的参数转换为字符串常量
+```
+#define  message_for(a, b)  \
+printf(#a " and " #b ": We love you!\n")
+```
+
+标记粘贴运算符（##）：在宏定义中两个独立的标记被合并为一个标记
+```
+#define tokenpaster(n) printf ("token" #n " = %d", token##n)
+
+tokenpaster(34);
+```
+
+defined() 运算符：如果指定的标识符已定义，则值为真（非零）。如果指定的标识符未定义，则值为假（零）。
+```
+#if !defined (MESSAGE)
+    #define MESSAGE "You wish!"
+#endif
+```
 
 ## 强制类型转换
 
 ## 递归
+阶乘
+```
+double factorial(unsigned int i)
+{
+    if(i <= 1)
+    {
+        return 1;
+    }
+    return i * factorial(i - 1);
+}
+```
 
-## 可变参数
+斐波那契数列
+```
+int fibonaci(int i)
+{
+    if(i == 0)
+    {
+        return 0;
+    }
+    if(i == 1)
+    {
+        return 1;
+    }
+    return fibonaci(i-1) + fibonaci(i-2);
+}
+
+```
 
 ## 内存管理
+`void * 类型表示未确定类型的指针。C、C++ 规定 void * 类型可以通过类型转换强制转换为任何其它类型的指针。`
+### void *calloc(int num, int size);
+在`内存`中动态地分配 num 个长度为 size 的连续空间，并将每一个字节都初始化为 0。所以它的结果是分配了 num*size 个字节长度的内存空间，并且每个字节的值都是0。
+### void free(void *address); 
+该函数释放 address 所指向的内存块,释放的是动态分配的内存空间。
+### void *malloc(int num); 
+在`堆区`分配一块指定大小的内存空间，用来存放数据。这块内存空间在函数执行完成后不会被初始化，它们的值是未知的。
+### void *realloc(void *address, int newsize); 
+该函数重新分配内存，把内存扩展到 newsize。
+
+
+# 实例
+命令行执行.c文件：
+```
+gcc hello.c
+./a.out
+```
+
+[C 语言实例](http://www.runoob.com/cprogramming/c-examples.html)
+[C 语言经典100例](http://www.runoob.com/cprogramming/c-100-examples.html)
+
+
