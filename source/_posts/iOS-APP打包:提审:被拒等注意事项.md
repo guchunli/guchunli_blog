@@ -76,25 +76,15 @@ NOTE: Please be sure to make any metadata changes to all app localizations by se
 回复模板如下：
 ```
 尊敬的苹果审核委员会， 你好。
-
 谢谢你的耐心和认真审核， 我们认真排查了你提到的7个审核条款， 我们对此回应如下：
-
 1.1.6：我们App并没有包含误导用户的功能和虚假信息，全都是真实的。
-
 2.3.0：我们App没有在通过苹果审核后修改任何的概念和功能。
-
 2.3.1：我们App没有切换到任何赌博或彩票的网站，我们是原生App。
-
 3.1.1：我们App内需要使用第三方支付来XXX。
-
 4.3.0：我们App内容都是我们自己开发的， 并不存在抄袭或者大量相似。
-
 5.2.1：我们App并没有法人实体和版权的风险。
-
 5.3.4：我们App需要在XXX、XXX等服务中访问用户的位置信息。
-
 这是我们经过认真自查之后，得到的结论， 我们的App需要尽快上线，因为我们有大量推广活动在做。
-
 希望苹果审核团队能继续审核，感谢。
 ```
 
@@ -158,6 +148,42 @@ For additional information and instructions on configuring and presenting an ale
 
 * 原因：定位使用场景提示文本不够明确，需提示用户为何打开此功能。
 * 解决：info.plist文件中，对应key为NSLocationWhenInUseUsageDescription的value说明在哪些地方要用到定位服务，用户的位置信息，例如："App会在XXX、XXX等服务中访问您的位置信息"。
+
+### Guideline 3.2.1 - Business - Other Business Model Issues - Acceptable
+```
+The seller and company names associated with your app do not reflect the financial institute name in the app or its metadata, as required by Guideline 3.2.1(viii) of the App Store Review Guidelines.
+
+Next Steps
+
+Your app must be published under a seller name and company name that reflects the financial institution. If you have developed this app on behalf of a client, please advise your client to add you to the development team of their Apple Developer account.
+
+Please note that submitting documentation showing permission to publish this app on behalf of the financial institution will not resolve this issue. This app must be submitted under the financial institution’s own Apple Developer account.
+
+Once created, you cannot change your seller name or company name in App Store Connect. For assistance with changing your company name or seller name, you will need to contact us. Select Membership and Account to request an update to your Apple Developer account information.
+
+Please see attached screenshot for details.
+
+Since your App Store Connect status is Rejected, a new binary will be required.
+```
+
+原因：
+1. APP名称跟公司名字差距较大，APP没有表现出APP与公司的关系。
+2. 开发者账号不是企业开发账号
+3.  开发者申请的邮箱不是公司名字的邮箱（比如自己的QQ号码邮箱）
+4. iTunes Connect中填写的技术支持网址不是跟公司有关的网址。
+5.电商和金融理财类被拒的风险很大
+
+解决：
+1. 提供APP是其公司合法App的相关文件，向苹果提供公司营业执照和软著之类证明。在itunes connect中,app描述里面加上: "app名字"属于你们公司的。
+2. 用公司帐号而非个人帐号提交应用。
+3. 确认开发账号申请邮箱是否是公司邮箱
+4. 技术支持是公司网站主页
+5. 提供金融资质证明。审核期间app内部不能出现任何第三方的名字，屏蔽敏感页面和敏感词等审核通过后再打开。
+
+### 解决方案中心回复提交附件注意事项（重要）
+1. 上传的文件必须是png格式（直接修改后缀名不可以）
+2. 并且文件大小限制在5M内
+3. 上传文件的命名不要有汉字，要用字母
 
 ## iOS的各种结果文件：
 （1）app

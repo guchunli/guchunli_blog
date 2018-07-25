@@ -1,10 +1,11 @@
 ---
-title: cocoapods安装
+title: cocoapods安装与使用
 date: 2017-08-14 15:24:09
 categories: 笔记
 tags: [cocoapods]
 ---
 
+## cocoapods的安装
 1.安装过程中如果出现以下错误提示：
 ```
 ERROR:  While executing gem ... (OpenSSL::SSL::SSLError)
@@ -32,7 +33,7 @@ gem sources -l
 sudo gem install cocoapods
 ```
 
-## 安装Homebrew
+### 安装Homebrew
 ```
 //ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 $ curl -LsSf http://github.com/mxcl/homebrew/tarball/master | sudo tar xvz -C/usr/local --strip 1
@@ -43,9 +44,34 @@ $ brew doctor     //检查是否安装成功
 Your system is ready to brew.
 ```
 
-## 安装npm和node
+### 安装npm和node
 ```
 brew install node
 npm -v      //查看npm是否安装成功
 node -v     //查看node是否安装成功
 ```
+
+## cocoapods的使用
+```
+//拉取最新pod库时间较长
+pod setup
+vim Podfile
+pod install
+//配置完成后在 Podfile 所在目录执行更新
+pod update
+```
+
+Podfile：
+```
+platform :ios, ’9.0’
+target 'xxx' do
+pod 'AFNetworking'
+pod 'SDWebImage'
+pod 'MJExtension'
+pod 'MJRefresh'
+pod 'MBProgressHUD'
+end
+```
+
+### Project Document-Project Format
+
