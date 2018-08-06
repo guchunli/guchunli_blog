@@ -113,42 +113,6 @@ NOTE: Please be sure to make any metadata changes to all app localizations by se
 * 原因：虽然针对iPhone X上传的设计图尺寸大小符合规定，但在设计图内容中出现的手机屏幕样式不是iPhoneX的样式。
 * 解决：让设计修改设计图内容中手机屏幕的样式，修改成iPhoneX带刘海的样式，或者5.8寸预览图属于可选而非必选，所以，如果没有新的是配图可以忽略5.8寸不上传。
 
-### Guideline 5.1.1 - Legal - Privacy - Data Collection and Storage
-```
-We noticed that your app requests the user’s consent to access their camera but does not clarify the use of this feature in the permission modal alert.
-
-Please see attached screenshot for details.
-
-Next Steps
-
-To resolve this issue, please revise the permission modal alert to specify why the app is requesting access to the user's camera.
-
-Resources
-
-To learn more about requesting the user’s permission to access app features, visit the iOS Human Interface Guidelines. You may also want to review the Technical Q&A QA1937: Resolving the Privacy-Sensitive Data App Rejection page for details on how to provide a usage description for permission request alerts.
-```
-
-* 原因：相机使用场景提示文本不够明确，需提示用户为何打开此功能。
-* 解决：info.plist文件中，对应key为NSCameraUsageDescription的value说明在哪些地方要用到定位服务，用户的位置信息，例如："App会在XXX、XXX等服务中访问您的相机"。
-
-### Guideline 5.1.5 - Legal - Privacy - Location Services
-```
-Your app uses location services but does not clarify the purpose of its use in the location modal alert. Apps that collect, transmit, or use location data must notify and obtain the user’s consent prior to accessing this data.
-
-Please see attached screenshot for details.
-
-Next Steps
-
-To resolve this issue, please specify why the app is requesting the user's location in the location permission modal alert.
-
-Resources
-
-For additional information and instructions on configuring and presenting an alert, please review the Requesting Permission section of the iOS Human Interface Guidelines and the Information Property List Key Reference. You may also want to review the Technical Q&A QA1937: Resolving the Privacy-Sensitive Data App Rejection page for details on how to provide a usage description for permission request alerts.
-```
-
-* 原因：定位使用场景提示文本不够明确，需提示用户为何打开此功能。
-* 解决：info.plist文件中，对应key为NSLocationWhenInUseUsageDescription的value说明在哪些地方要用到定位服务，用户的位置信息，例如："App会在XXX、XXX等服务中访问您的位置信息"。
-
 ### Guideline 3.2.1 - Business - Other Business Model Issues - Acceptable
 ```
 The seller and company names associated with your app do not reflect the financial institute name in the app or its metadata, as required by Guideline 3.2.1(viii) of the App Store Review Guidelines.
@@ -185,6 +149,65 @@ Since your App Store Connect status is Rejected, a new binary will be required.
 2. 并且文件大小限制在5M内
 3. 上传文件的命名不要有汉字，要用字母
 
+### Guideline 3.2.2 - Business - Other Business Model Issues - Unacceptable
+```
+The primary purpose of your app is to encourage users to watch ads or perform marketing-oriented tasks, which is not appropriate for the App Store.
+
+Next Steps
+
+We encourage you to review your app concept and incorporate different content and features that are in compliance with the App Store Review Guidelines.
+```
+
+
+
+### Guideline 5.1.1 - Legal - Privacy - Data Collection and Storage
+```
+We noticed that your app requests the user’s consent to access their camera but does not clarify the use of this feature in the permission modal alert.
+
+Please see attached screenshot for details.
+
+Next Steps
+
+To resolve this issue, please revise the permission modal alert to specify why the app is requesting access to the user's camera.
+
+Resources
+
+To learn more about requesting the user’s permission to access app features, visit the iOS Human Interface Guidelines. You may also want to review the Technical Q&A QA1937: Resolving the Privacy-Sensitive Data App Rejection page for details on how to provide a usage description for permission request alerts.
+```
+
+* 原因：相机使用场景提示文本不够明确，需提示用户为何打开此功能。
+* 解决：info.plist文件中，对应key为NSCameraUsageDescription的value说明在哪些地方要用到定位服务，用户的位置信息，例如："App会在XXX、XXX等服务中访问您的相机"。
+
+### Guideline 5.1.1 - Legal - Privacy - Data Collection and Storage
+```
+Specific issue: We noticed that your app requires users to register with personal information to access non-account-based features.
+
+Action required: To resolve this issue, please revise your app to let users freely access your app’s non account-based features. To protect users’ privacy, any registration feature that requires users to disclose personal information must be optional or tied to account-specific functionality. Additionally, the requested information must be relevant to the features.
+
+More information: Apps cannot require user registration prior to allowing access to app content and features that are not associated specifically to the user. You should allow users to freely access your app’s non account-based features. For example, an e-commerce app should let users browse store offerings and other features that are not account-based before being asked to register, or a restaurant app should allow users to explore the menu before placing an order. Registration must then only be required for account-specific features, such as saving items for future reference or placing an order.
+```
+
+* 原因：在没有进行与用户信息相关的操作时，却强行让用户登录，甚至不登录就无法看到任何内容。
+* 解决：增加游客模式。
+
+### Guideline 5.1.5 - Legal - Privacy - Location Services
+```
+Your app uses location services but does not clarify the purpose of its use in the location modal alert. Apps that collect, transmit, or use location data must notify and obtain the user’s consent prior to accessing this data.
+
+Please see attached screenshot for details.
+
+Next Steps
+
+To resolve this issue, please specify why the app is requesting the user's location in the location permission modal alert.
+
+Resources
+
+For additional information and instructions on configuring and presenting an alert, please review the Requesting Permission section of the iOS Human Interface Guidelines and the Information Property List Key Reference. You may also want to review the Technical Q&A QA1937: Resolving the Privacy-Sensitive Data App Rejection page for details on how to provide a usage description for permission request alerts.
+```
+
+* 原因：定位使用场景提示文本不够明确，需提示用户为何打开此功能。
+* 解决：info.plist文件中，对应key为NSLocationWhenInUseUsageDescription的value说明在哪些地方要用到定位服务，用户的位置信息，例如："App会在XXX、XXX等服务中访问您的位置信息"。
+
 ## iOS的各种结果文件：
 （1）app
 iOS编译以后生成的原始文件，实际是一个文件夹，里面包含各种资源文件（图片，第三方bundle，plist等文件），程序的可执行文件(二进制格式)以及对所有文件的签名记录（_CodeSignature）
@@ -202,4 +225,37 @@ iOS编译以后生成的原始文件，实际是一个文件夹，里面包含�
 实际上也是一个文件夹，包含.ipa和.dSYM文件
 可通过Xcode上传AppStore
 
-[BuildSettings所有选项的官方说明](https://developer.apple.com/legacy/library/documentation/DeveloperTools/Reference/XcodeBuildSettingRef/0-Introduction/introduction.html)
+## 获取APP在APP Store的最新版本号
+```
+//版本更新方法实现
+- (NSComparisonResult)shouldUpdateOnlineVersion {
+    //获取app地址
+    NSURL *appURLPath = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",ITUNESAPPID]];
+    //获取发布版本的Version
+    NSString *string = [NSString stringWithContentsOfURL:appURLPath encoding:NSUTF8StringEncoding error:nil];
+
+    NSString *onlineVersion;
+
+    if (!([string isEqualToString:@""] || string == nil)) {
+    NSDictionary *dic = [JsonUtil dictionaryWithJsonString:string];
+
+        NSInteger resultCount = [[dic objectForKey:@"resultCount"] integerValue];
+        if (resultCount == 1) {
+            NSArray *result = [dic objectForKey:@"results"];
+            NSDictionary *first = [result firstObject];
+            onlineVersion = [first objectForKey:@"version"];
+        }else{
+            return NSOrderedDescending;
+        }
+    }
+
+    NSString *nowVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+
+    NSComparisonResult result = [nowVersion compare:onlineVersion];
+    return result;
+    //    NSOrderedAscending 当前版本低于(伪)线上版本
+    //    NSOrderedSame 等于
+    //    NSOrderedDescending 当前版本高于(伪)线上版本
+    //  ！！该接口不一定能获取到最新appstore上的版本信息
+}
+```

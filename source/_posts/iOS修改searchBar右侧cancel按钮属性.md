@@ -26,6 +26,15 @@ searchBar.showsCancelButton = NO;
 
 2.setValue: forkey:
 ```
+UIButton *cancelBtn = [_searchBar valueForKeyPath:@"cancelButton"]; //取出cancelBtn
+cancelBtn.enabled = YES;
+[cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+[cancelBtn setTitleColor:WYContentColor forState:UIControlStateNormal];
+cancelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+
+```
+
+```
 //这种写法解决了上面那种写法在弹出取消按钮时不自然的问题。
         [_searchBar setValue:@"确定" forKey: @"_cancelButtonText"];
         [_searchBar setValue:@"确定" forKey: @"_cancelButtonText"];

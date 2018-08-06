@@ -554,5 +554,32 @@ document.getElementById('jsParamFuncSpan').innerHTML
 }
 ```
 
+
+## 清除webview缓存
+```
+//清除cookies
+NSHTTPCookie *cookie;
+NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+for (cookie in [storage cookies]) {
+[storage deleteCookie:cookie];
+}
+
+NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:@"false",@"HttpOnly",nil]];
+[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+```
+ 
+```
+//清除webView的缓存
+[[NSURLCache sharedURLCache] removeAllCachedResponses];
+
+//清除请求
+[[NSURLCache sharedURLCache] removeCachedResponseForRequest:self.request];
+```
+ 
+```
+//不加载缓存
+[self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.webURL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0]];
+```
+
 参考文章：[WKWebView与Js实战(OC版)](https://www.cnblogs.com/jiang-xiao-yan/p/5345893.html)
 

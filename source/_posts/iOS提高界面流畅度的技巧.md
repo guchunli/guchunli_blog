@@ -59,4 +59,157 @@ toc:
 ## product->profile
 
 
+# 提高列表滚动流畅度
+## 避免重复多次计算 cell 行高
+* 获取都数据
+```
+for (InfoModel *model in data) {
+    FrameModel *frameModel = [FrameModel new];
+    frameModel.model = model;
+    [self.data addObject:frameModel];
+}
+[self.tabView reloadData];
+```
+
+* 计算 frame 、cell 行高
+```
+@interface FrameModel : NSObject
+
+@property (assign, nonatomic, readonly) CGRect titleFrame;
+@property (assign, nonatomic, readonly) CGFloat cellHeight;
+@property (strong, nonatomic) InfoModel *model;
+
+@end
+
+@implementation FrameModel
+
+- (void)setModel:(InfoModel *)model {
+if (!model) return;
+
+_model = model;
+
+CGFloat maxLayout = ([UIScreen mainScreen].bounds.size.width - 20.f);
+CGFloat bottom = 4.f;
+
+//title
+CGFloat titleX = 10.f;
+CGFloat titleY = 10.f;
+CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(maxLayout, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : Font(16.f)} context:nil].size;
+_titleFrame = CGRectMake(titleX, titleY, titleSize.width, titleSize.height);
+
+//cell Height
+_cellHeight = (CGRectGetMaxY(_titleFrame) + bottom);
+}
+
+@end
+```
+
+* 行高取值
+```
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"identifier" forIndexPath:indexPath];
+    FrameModel *frameModel = self.data[indexPath.row];
+    cell.frameModel = frameModel;
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    FrameModel *frameModel = self.data[indexPath.row];
+    return frameModel.cellHeight;
+}
+```
+
+* 控件赋值
+```
+- (void)setFrameModel:(FrameModel *)frameModel {
+    if (!frameModel) return;
+
+    _frameModel = frameModel;
+
+    InfoModel *model = frameModel.model;
+
+    self.titleLabel.frame = frameModel.titleFrame;
+    self.titleLabel.text = model.title;
+}
+```
+
+## 文本异步渲染
+用 TextKit 或最底层的 CoreText 对文本异步绘制，支持文本异步渲染也有现成的库 YYText 。* 计算 frame 、cell 行高
+```
+@interface FrameModel : NSObject
+
+@property (assign, nonatomic, readonly) CGRect titleFrame;
+@property (strong, nonatomic, readonly) YYTextLayout *titleLayout;
+@property (assign, nonatomic, readonly) CGFloat cellHeight;
+@property (strong, nonatomic) InfoModel *model;
+
+@end
+
+@implementation FrameModel
+
+- (void)setModel:(InfoModel *)model {
+if (!model) return;
+
+_model = model;
+
+CGFloat maxLayout = ([UIScreen mainScreen].bounds.size.width - 20.f);
+CGFloat bottom = 4.f;
+
+//title
+NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:entity.title];
+title.yy_font = Font(16.f);
+title.yy_color = [UIColor blackColor];
+
+YYTextContainer *titleContainer = [YYTextContainer containerWithSize:CGSizeMake(maxLayout, CGFLOAT_MAX)];
+_titleLayout = [YYTextLayout layoutWithContainer:titleContainer text:title];
+
+CGFloat titleX = 10.f;
+CGFloat titleY = 10.f;
+CGSize titleSize = _titleLayout.textBoundingSize;
+//CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(maxLayout, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : Font(16.f)} context:nil].size;
+_titleFrame = (CGRect){titleX,titleY,CGSizeMake(titleSize.width, titleSize.height)};
+
+//cell Height
+_cellHeight = (CGRectGetMaxY(_titleFrame) + bottom);
+}
+
+@end
+```
+
+* UITableViewCell 处理
+```
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (!self) return nil;
+
+    YYLabel *title = [YYLabel new];
+    title.displaysAsynchronously = YES; //开启异步渲染
+    title.ignoreCommonProperties = YES; //忽略属性
+    title.layer.borderColor = [UIColor brownColor].CGColor;
+    title.layer.cornerRadius = 1.f;
+    title.layer.borderWidth = 1.f;
+    [self.contentView addSubview:_titleLabel = title];
+
+    return self;
+}
+```
+
+* 控件赋值
+```
+- (void)setFrameModel:(FrameModel *)frameModel {
+if (!frameModel) return;
+
+_frameModel = frameModel;
+
+self.titleLabel.frame = frameModel.titleFrame;
+self.titleLabel.textLayout = model.titleLayout; //直接取 YYTextLayout
+//InfoModel *model = frameModel.model;
+//self.titleLabel.text = model.title;
+}
+```
+
+## 离屏渲染
+
+
+
 参考文章：[iOS 保持界面流畅的技巧](https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/)
