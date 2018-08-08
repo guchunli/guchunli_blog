@@ -200,6 +200,23 @@ printf("%d\n",__LINE__);
 * 4.API调用错误：未包含使用的库或框架
 
 ## Instruments
+Activity Monitor（活动监视器）：    监控进程的CPU,内存,磁盘，网络使用情况 是程序在手机运行真正占用的内存大小
+3.    Allocations（内存分配）：    跟踪过程的匿名虚拟内存和堆的对象提供类名和可选保留/释放历史；
+4.    Cocoa Layout    观察NSLayoutConstraint对象的改变，帮助我们判断什么时间什么地点的constraint是否合理
+5.    Core Animation（图形性能）    这个模块显示程序显卡性能以及CPU使用情况
+6.    CoreData    这个模块跟踪Core Data文件系统活动
+7.    Counters    收集使用时间或基于事件的抽样方法的性能监控计数器（PMC）事件 ？
+8.    Energy Log    耗电量监控
+9.    File Activity    检测文件创建，移动，变化，删除等
+10.    Leaks（泄漏）：    一般的措施内存使用情况，检查泄漏的内存，并提供了所有活动的分配和泄漏模块的类对象分配统计信息以及内存地址历史记录；
+11.    Metal System Trace    (Metal API是apple 2014年在ios平台上推出的高效底层的3D图形API，它通过减少驱动层的API调用CPU的消耗提高渲染效率。
+12.    Network    用链接工具分析你的程序如何使用TCP/IP和UDP/IP链接
+13.    OpenGL ES Analysis    这个模块测量分析OpenGL ES活动正确性检测以及表现问题，提供解决建议
+14.    System Trace    系统跟踪，通过显示当前被调度线程提供综合的系统表现，显示从用户到系统的转换代码通过两个系统调用或内存操作
+15.    System Usage 这个模板记录关于文件读写，sockets，I/O系统活动， 输入输出    
+16.    Time Profiler（时间探查）：    执行对系统的CPU上运行的进程低负载时间为基础采样。
+17.    Zombies    测量一般的内存使用，专注于检测过度释放的野指针对象，也提供对象分配统计，以及主动分配的内存地址历史
+
 ### 1.Time Profile
 1.1 在底部的Call Tree中勾选：
 <!--more-->
