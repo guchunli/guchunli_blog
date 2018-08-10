@@ -266,7 +266,7 @@ __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 do-while循环，在这个循环内部不断地处理各种任务（Source\Timeer\Observer）,Source和Timer这两个是主动向RunLoop发送消息的，Observer是被动接收消息的。CDRunLoopRunSpecific具体处理runloop的运行情况。
 
 ## runloop与线程
-### 一个线程对应一个RunLoop（采用字典存储，线程号为key，RunLoop为value），RunLoop在第一次获取时创建，在线程结束时销毁
+### 线程与RunLoop一一对应，其关系是保存在一个全局的 Dictionary 里，key 是 pthread_t， value 是 CFRunLoopRef，RunLoop在第一次获取时创建，在线程结束时销毁
 ### 主线程的RunLoop默认已经启动，子线程的RunLoop需要手动启动
 ### RunLoop只能选择一个Mode启动，如果当前Mode没有任何Source、Timer、Observer，那么就不会进入RunLoop
 
@@ -303,12 +303,17 @@ NSRunLoop转化为CFRunLoop：runloop.getCFRunloop
 
 ### 相关类
 CFRunLoopRef,mode,source（set）,timer（array）,observer（array），每个runloop中至少要有一个source或timer
+一个 RunLoop 包含若干个 Mode，每个 Mode 又包含若干个 Source/Timer/Observer。
 
 ## runloop的运行模式
 * CFRunLoopModeRef代表RunLoop的运行模式，一个RunLoop可以包含多个Mode，每个Mode可以包含多个Source、Timer、Observer。
 * 每次RunLoop启动时，只能指定其中一个Mode，这个Mode就变成了CurrentMode
 * 当启动RunLoop时，如果所在Mode中没有Source、Timer、Observer，那么将不会进入RunLoop，会直接结束
 * 如果要切换Mode，只能退出Loop，再重新制定一个Mode进入
+
+CFRunLoopSourceRef 是事件产生的地方
+CFRunLoopTimerRef 是基于时间的触发器
+CFRunLoopObserverRef 是观察者
 
 ### 系统默认注册了5个Mode
 * NSDefaultRunLoopMode：App的默认Mode，通常主线程是在这个Mode下运行
@@ -371,6 +376,15 @@ break;
 最后一次销毁：退出runloop
 其他时候的创建和销毁：runloop即将进入休眠时会销毁之前的，重新创建一个新的
 
+事件响应
+手势识别
+界面更新
+定时器
+PerformSelecter
+关于GCD
+关于网络请求
+
+
 参考：[iOS 模块详解—「Runtime面试、工作」](https://www.jianshu.com/p/19f280afcb24)
 [Objective-C 的 Runtime](http://www.samirchen.com/objective-c-runtime/)
 [iOS Runtime 几种基本用法简记](http://www.jianshu.com/p/99af00237cb8)
@@ -378,4 +392,5 @@ break;
 [https://www.jianshu.com/p/ed65518ec8db](https://www.jianshu.com/p/ed65518ec8db)
 
 [iOS runtime和runloop](https://www.jianshu.com/p/ebc6e20b84cf)
-[深入理解RunLoop](https://blog.ibireme.com/2015/05/18/runloop/#more-41710)
+[深入理解RunLoop](https://blog.ibireme.com/2015/05/18/runloop/)
+

@@ -1,11 +1,23 @@
 ---
-title: Xcode控制台打印中文
+title: Xcode开发技巧总结
 date: 2017-12-15 10:38:53
 categories: 笔记
 tags: [log,中文]
 toc:
 ---
 
+## 无线连接真机调试
+1.用数据线将手机连到Xcode，`请确保手机和电脑连到同一个wifi`。
+<!--more-->
+2.Xcode：Window->Device and Simulators，找到连接的设备，将`Connect via network`打勾。
+3.等待连接成功后，连接成功后设备那一列右边有一个地球标识，拔掉数据线，设备连接列表中选择真机即可进行无线调试。
+4.还可以查看设备日志：Window->Device and Simulators->View Device Logs
+
+* Passcode Required (“The device musthave a passcode set in order to allow this operation.”)
+错误原因：可能手机未设置开机/锁屏密码导致，或者是开发工具Xcode的缓存所致。
+解决方法：设置手机密码,然后再次点击Connect via network,可以正常连接,之后关掉手机密码后也可正常连接。
+
+## Xcode控制台打印中文
 ### 1.宏定义
 <!--more-->
 ```

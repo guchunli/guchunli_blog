@@ -200,52 +200,115 @@ printf("%d\n",__LINE__);
 * 4.API调用错误：未包含使用的库或框架
 
 ## Instruments
-Activity Monitor（活动监视器）：    监控进程的CPU,内存,磁盘，网络使用情况 是程序在手机运行真正占用的内存大小
-3.    Allocations（内存分配）：    跟踪过程的匿名虚拟内存和堆的对象提供类名和可选保留/释放历史；
-4.    Cocoa Layout    观察NSLayoutConstraint对象的改变，帮助我们判断什么时间什么地点的constraint是否合理
-5.    Core Animation（图形性能）    这个模块显示程序显卡性能以及CPU使用情况
-6.    CoreData    这个模块跟踪Core Data文件系统活动
-7.    Counters    收集使用时间或基于事件的抽样方法的性能监控计数器（PMC）事件 ？
-8.    Energy Log    耗电量监控
-9.    File Activity    检测文件创建，移动，变化，删除等
-10.    Leaks（泄漏）：    一般的措施内存使用情况，检查泄漏的内存，并提供了所有活动的分配和泄漏模块的类对象分配统计信息以及内存地址历史记录；
-11.    Metal System Trace    (Metal API是apple 2014年在ios平台上推出的高效底层的3D图形API，它通过减少驱动层的API调用CPU的消耗提高渲染效率。
-12.    Network    用链接工具分析你的程序如何使用TCP/IP和UDP/IP链接
-13.    OpenGL ES Analysis    这个模块测量分析OpenGL ES活动正确性检测以及表现问题，提供解决建议
-14.    System Trace    系统跟踪，通过显示当前被调度线程提供综合的系统表现，显示从用户到系统的转换代码通过两个系统调用或内存操作
-15.    System Usage 这个模板记录关于文件读写，sockets，I/O系统活动， 输入输出    
-16.    Time Profiler（时间探查）：    执行对系统的CPU上运行的进程低负载时间为基础采样。
-17.    Zombies    测量一般的内存使用，专注于检测过度释放的野指针对象，也提供对象分配统计，以及主动分配的内存地址历史
+### Activity Monitor（活动监视器）：监控进程的CPU,内存,磁盘
 
-### 1.Time Profile
-1.1 在底部的Call Tree中勾选：
+### Time Profile
+注意：
+1.使用真机调试
+2.使用发布配置
+
+1在底部的Call Tree中勾选：
 <!--more-->
 * Seperate by state：
-* Separate by Thread（建议选择）：按照线程分类查看结果
-* Invert Call Tree（不建议选择）：反向输出调用树，把调用层级最深的方法显示在最上面，如果想要查看哪个方法调用为最深时使用。
-* Hide system Libraries（建议选择）：隐藏系统函数，选上后只会展示与应用有关的符号信息。
-* Flatten Recursion（一般不选）：拼合递归，把同一递归函数产生的多条堆栈合并为一条
-* Top Functions（可选）：选上后会将最耗时的函数降序排列，比如A调用了B，A的耗时时间是会包含B的耗时。
+* Separate by Thread（建议选择）：每个线程被单独考虑。这能让你知道哪一个线程占用CPU最多。
+* Invert Call Tree（不建议选择）：选中该选项后，调用栈会自上至下显示。这通常是你需要的，因为你想知道CPU花费时间的那个最深的方法。
+* Hide system Libraries（建议选择）：隐藏系统库文件。过滤掉各种系统调用，只显示自己的代码调用。
+* Flatten Recursion（一般不选）：拼合递归，将每一个调用栈中的递归函数（调用它们自身的函数）视作单一入口，而不是多入口。
+* Top Functions（可选）：将花费在一个函数中的总时间视作在该函数中直接花费的时间加上调用的其他函数花费的时间。找到最耗时的函数或方法，选上后会将最耗时的函数降序排列，比如A调用了B，A的耗时时间是会包含B的耗时。
 
-1.2 配置项目
+2.配置项目
 scheme->profile->Build Configuration：Debug
 project->debug information format->debug：DWARF with dSYM File
 
-1.3 运行项目
+3 运行项目
 在time profiler中，选择对应的device和process，点击红色按钮运行APP。
 * 可以拖动时间轴查看其中一段时间的CPU使用情况
 * 可以点击weight，按照时间消耗进行排序
 选择真机运行APP，模拟器使用的是电脑的CPU
 
-### 2.内存泄露 Leaks
+### 内存泄露 Leaks
 leaks:自动加载Allocations，监控程序运行过程中的内存变化
-### 3.僵尸对象 Zoombies
+** 内存溢出/内存泄露 **
+* 内存溢出 out of memory，是指程序在申请内存时，没有足够的内存空间供其使用，出现out of memory；比如申请了一个integer,但给它存了long才能存下的数，那就是内存溢出。
+* 内存泄露 memory leak，是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄露危害可以忽略，但内存泄露堆积后果很严重，无论多少内存,迟早会被占光。memory leak会最终会导致out of memory！
 
-### 4.被遗弃的内存 Generational Analysis
+如果出现红色的叉，说明有内存泄露问题。
+修复：暂停->leak checks->点击红色的叉->call tree->hide system libraries->点击展开到最后不能展开的代码为止->双击定位到具体代码
 
-### 5.Allocations
+一般检测内存泄露：（1）Instruments－Leaked （2）Analyze
 
-### 6.Energy Log
+### Allocations
+内存泄漏分两种：
+* Leaked Memory：为对象A申请了内存空间，之后再也没用到A，也没有释放A导致内存泄漏。
+* Abandoned Memory（被遗弃的内存）：类似于递归，不断的申请内存导致的内存泄漏。
+
+### Core Animation
+一般FPS是60左右，低于45的话需要进行优化。
+调试选项：真机，run，Xcode->debug->View Debugging->Rendering->
+
+* Color Blended Layers（图层混合）
+这个选项基于渲染程度对屏幕中的混合区域进行绿到红的高亮显示。由于重绘的原因，混合对GPU性能有影响，同时也是滑动和动画帧率下降的罪魁祸首之一。
+可以这样做：
+1.给视图的backgroundColor属性设置一个固定的，不透明的颜色
+2.设置opaque属性为YES
+* Color Hits Green and MissesRed（光栅化）
+光栅化是将一个layer预先渲染成位图(bitmap)，然后加入缓存中。如果对于阴影效果这样比较消耗资源的静态内容进行缓存，可以得到一定幅度的性能提升。demo中的这一行代码表示将label的layer光栅化：
+```
+label.layer.shouldRasterize = YES;
+```
+
+图层的以下属性将会触发屏幕外绘制：
+1.圆角（当和maskToBounds一起使用时）
+2.图层蒙板
+3.阴影
+
+有时候我们可以把那些需要屏幕外绘制的图层开启光栅化以作为一个优化方式，前提是这些图层并不会被频繁地重绘。
+对于那些需要动画而且要在屏幕外渲染的图层来说，你可以用CAShapeLayer，contentsCenter或者shadowPath来获得同样的表现而且较少地影响到性能。
+
+* Color Copied Images （颜色格式）
+有时候寄宿图片的生成意味着Core Animtaion 被强制生成一些图片，然后发送到渲染服务器，而不是简单的指向原始指针。这个选项把这些图片渲染成蓝色。复制图片对内存和CPU使用来说，是一项非常昂贵的操作，所以应该尽可能避免。
+* Color Non-Standard Surface Formats
+* Color immediately 
+通常 Core Animation Instrument 以每秒以每秒十次的频率更新图层调试颜色。对某些效果来说，这显然太慢了，这个选项就可以设置每帧都更新（可能会影响到渲染性能，而且会导致帧率测量不准，所以不要一直都设置它）。
+* Color misaligned Images （图片大小）
+这里会高亮那些被缩放或者拉伸，以及没有正确对起到像素边界的图片。这些中大多数通常会导致图片的不正常缩放，如果把一张大图当缩略图显示，或者不正确的模糊图像。那么这个选项会帮你识别出问题所在。
+* Color Offscreen-Rendered Yellow （离屏渲染）
+这里会把那些需要离屏渲染的图层高亮成黄色。这些图层很可能需要用shadowPath或者shouldRasterize来优化。
+* Color Compositing Fast Path Blue （快速路径）
+这个选项会对任何使用OpenGL绘制的图层进行高亮。如果仅仅使用UIKit或者Core Animtaion的API，那么不会有任何效果。
+* Flash Updated Regions （变化区域）
+这个选项会对重绘的内容高亮成黄色（也就是任何现在软件层面使用Core Animtaion绘制的图层）。这种绘图的速度很慢，如果频繁发生这种情况的话，这意味着有一个隐藏的bug，或者说通过增加缓存，或使用替代方案会有提示的空间。
+
+** 总结 **
+
+1、避免图层混合
+①、确保控件的opaque属性设置为true，确保backgroundColor和父视图颜色一致且不透明；
+②、如无特殊需要，不要设置低于1的alpha值；
+③、确保UIImage没有alpha通道；
+
+2、避免临时转换
+①、确保图片大小和frame一致，不要在滑动时缩放图片；
+②、确保图片颜色格式被GPU支持，避免劳烦CPU转换；
+
+3、慎用离屏渲染
+①、绝大多数时候离屏渲染会影响性能；
+②、重写drawRect方法，设置圆角、阴影、模糊效果，光栅化都会导致离屏渲染；
+③、设置阴影效果是加上阴影路径；
+④、滑动时若需要圆角效果，开启光栅化；
+
+### 僵尸对象 Zoombies
+在项目中经常见到的“EXC_BAD_ACCESS”就是访问了被释放的内存地址造成的。
+在用Zombies模版时使用iOS模拟器比真机要好。
+
+另外XCode也提供了手动设置NSZombieEnabled环境变量的方法：Edit Scheme->勾选Enable Zombie Objects。
+不过设置NSZombieEnabled为True后，会导致内存占用的增长，同时会影响Leaks工具的调试，这是因为设置NSZombieEnabled会用僵尸对象来代替已释放对象。
+
+* 重要概念：
+1、内存泄漏：对象使用完没有释放，导致内存浪费。
+2、僵尸对象：已经被销毁的对象(不能再使用的对象)
+3、野指针：指向僵尸对象(不可用内存)的指针。给野指针发消息会报EXC_BAD_ACCECC错误。
+4、空指针：没有指向储存空间的指针(里面存的是nil,也就是0)。在oc中使用空指针调中方法不会报错。
+注意:为了避免野指针错误的常见方法:在对象被销毁之后,将指向对象的指针变为空指针。
 
 
 学习资料：

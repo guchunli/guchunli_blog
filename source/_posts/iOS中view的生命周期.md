@@ -129,6 +129,17 @@ layoutSubViews的被调用时机：
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView;   
 ```
 
+## +initialize 与 +load
+### 调用时机
+* + initialize 方法：这个方法会在 `第一次初始化这个类之前` 被调用，我们用它来初始化静态变量。
++ initialize 方法类似一个懒加载，如果没有使用这个类，那么系统默认不会去调用这个方法，且默认只加载一次；
++ initialize 的调用发生在 +init 方法之前。
+创建子类的时候，子类会去调用父类的 + initialize 方法。
+
+* load 方法：会在`加载类的时候就被调用`，也就是 ios 应用启动的时候，就会加载所有的类，就会调用每个类的 + load 方法。
+没有对类做任何操作的情况下，+load 方法会被默认执行，并且是在 main 函数之前执行的。
+
+
 
 参考文章：[IOS app生命周期](https://www.cnblogs.com/wodemeng/p/ios1.html)
 [ios中的view生命周期](https://www.jianshu.com/p/42eb5a930d66)
