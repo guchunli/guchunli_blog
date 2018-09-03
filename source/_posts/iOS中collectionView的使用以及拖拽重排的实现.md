@@ -1,5 +1,5 @@
 ---
-title: iOS中collectionView的使用以及拖拽重排的实现
+title: iOS中UICollectionView的使用
 date: 2018-03-27 15:10:30
 categories: 笔记
 tags: [collectionView,拖拽,重排]
@@ -251,16 +251,16 @@ return Margin;
 83 }
 ```
 
-# 使用collectionView实现拖拽重排
-## 第一种方法（从iOS9开始支持）
-### 1.给collectionView添加长按手势
+## 使用collectionView实现拖拽重排
+### 第一种方法（从iOS9开始支持）
+1.给collectionView添加长按手势
 ```
 UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];
 [_collectionView addGestureRecognizer:longPressGesture];
 }
 ```
 
-### 2.实现长按手势的方法
+2.实现长按手势的方法
 ```
 - (void)longPressAction:(UILongPressGestureRecognizer *)longPress {
 //获取此次点击的坐标，根据坐标获取cell对应的indexPath
@@ -292,7 +292,7 @@ break;
 }
 ```
 
-### 3.实现移动的数据源方法
+3.实现移动的数据源方法
 ```
 #pragma mark - 移动
 //设置某个item是否可以被移动，返回NO则不能移动
@@ -308,15 +308,15 @@ UIImage *img = self.data[sourceIndexPath.row];
 }
 ```
 
-## 第二种方法（从iOS8开始支持）
-### 1.给collectionViewCell添加长按手势
+### 第二种方法（从iOS8开始支持）
+1.给collectionViewCell添加长按手势
 ```
 //为每个cell 添加长按手势
 UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressCellAction:)];
 [cell addGestureRecognizer:longPress];
 ```
 
-### 2.实现长按手势的方法
+2.实现长按手势的方法
 ```
 - (void)longPressCellAction:(UILongPressGestureRecognizer *)longPress {
 
@@ -733,3 +733,86 @@ _imageView.alpha = 1.f;
 
 @end
 ```
+
+## 瀑布流实现
+```
+@interface TestLayout : UICollectionViewFlowLayout
+
+@property(nonatomic,assign)NSInteger itemCount;
+
+@end
+
+
+
+@interface TestLayout ()
+{
+NSMutableArray * _attributeArray;
+}
+@end
+
+@implementation TestLayout
+
+-(void)prepareLayout{
+
+_attributeArray = [NSMutableArray array];
+[super prepareLayout];
+
+_itemCount = (int)[self.collectionView numberOfItemsInSection:0];
+
+float WIDTH = ([UIScreen mainScreen].bounds.size.width-self.sectionInset.left-self.sectionInset.right-self.minimumInteritemSpacing)/2;
+CGFloat colHight[2] = {self.sectionInset.top,self.sectionInset.bottom};
+for (int i=0; i<_itemCount; i++) {
+
+NSIndexPath * index = [NSIndexPath indexPathForItem:i inSection:0];
+UICollectionViewLayoutAttributes * attribute =  [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:index];
+CGFloat height = arc4random()%150+40;
+int row = 0;
+if (colHight[0]<colHight[1]) {
+colHight[0] = colHight[0]+height+self.minimumLineSpacing;
+row = 0;
+}else{
+colHight[1] = colHight[1]+height+self.minimumLineSpacing;
+row = 1;
+}
+attribute.frame = CGRectMake(self.sectionInset.left+(self.minimumInteritemSpacing+WIDTH)*row, colHight[row]-height-self.minimumLineSpacing, WIDTH, height);
+[_attributeArray addObject:attribute];
+
+}
+if (colHight[0]>colHight[1]) {
+self.itemSize = CGSizeMake(WIDTH, (colHight[0]-self.sectionInset.top)*2/_itemCount-self.minimumLineSpacing);
+}else{
+self.itemSize = CGSizeMake(WIDTH, (colHight[1]-self.sectionInset.top)*2/_itemCount-self.minimumLineSpacing);
+}
+
+}
+-(NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect{
+return _attributeArray;
+}
+```
+
+## collectionCell根据内容自动适应宽度
+1.设置layout.estimatedItemSize
+2.在自定义cell中实现preferredLayoutAttributesFittingAttributes
+```
+#pragma mark — 实现自适应文字宽度的关键步骤:item的layoutAttributes
+-(UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes{
+
+    UICollectionViewLayoutAttributes *attributes = [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+    //    CGRect maxBounds= CGRectMake(0, 0, CGFLOAT_MAX, self.textLabel.frame.size.height);
+    //    attributes.frame = [self.textLabel textRectForBounds:maxBounds limitedToNumberOfLines:self.textLabel.numberOfLines];
+    attributes.frame = [self.textLabel.text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.textLabel.frame.size.height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.textLabel.font} context:nil];
+    return attributes;
+}
+```
+
+# UITableView自动调整
+UITableViewDelegate新增了三个方法来满足用户设定Cell、Header和Footer预计高度的方法:
+```
+- tableView:estimatedHeightForRowAtIndexPath:
+- tableView:estimatedHeightForHeaderInSection:
+- tableView:estimatedHeightForFooterInSection:
+```
+当然对应这三个方法UITableView也有estimatedRowHeight、estimatedSectionHeaderHeight和estimatedSectionFooterHeight三个属性，局限性在于只能统一定义所有行和节的高度。
+
+参考：[两列瀑布流](https://github.com/Flying-Einstein/CollectionViewTest)
+[三列瀑布流](https://github.com/codingZero/XRWaterfallLayout)

@@ -31,7 +31,8 @@ brew install flow
 $ react-native init RNDemo
 ```
 
-运行项目:使用命令行或Xcode
+### 运行项目
+1.使用命令行或Xcode
 ```
 $ react-native run-ios
 $ react-native run-android
@@ -42,11 +43,43 @@ React packager ready.
 Loading dependency graph, done.
 ````
 
+* run-ios指定模拟器
+1.react-native run-ios --simulator "iPhone 7”
+2.敲过一次就之后就可以直接react-native run-ios了
+
 运行项目时如果遇到`<React/RCTBundleURLProvider.h>” file not found`问题，可按如下方法试着解决：
 * 把项目里面的 node_modules 文件夹删除掉
 * npm install
 * react-native upgrade
 * clean,run
+
+2.在Xcode中运行原生iOS项目（对于Android则是在Android Studio中运行原生Android项目），然后在对应的React Native根目录下运行npm start(开启nodejs服务，开启JS Server)。
+
+### 安装JDK
+运行 `react-native run-android` 时如果提示缺少JDK，同时在终端运行`java -version`获取不到JAVA版本，则需要安装JDK。
+1.访问[http://www.oracle.com](http://www.oracle.com) ，底部点击`Java for Developers`，JDK DOWNLOAD，根据环境选择安装包下载，根据提示完成安装。
+3.配置JDK的环境变量。`/Library/Java/JavaVirtualMachines/jdk-x.x.x.jdk/Contents/Home` (注意版本号)是该JDK的根目录。
+
+```
+vi .bash_profile
+```
+```
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-x.x.x.jdk/Contents/Home
+PATH=$JAVA_HOME/bin:$PATH:.
+CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:.
+export JAVA_HOME
+export PATH
+export CLASSPATH
+```
+```
+source .bash_profile
+```
+
+再次运行 `java -version` 应该就能获取到版本了。
+如果报错 `Could not determine java version from 'x.x.x'`，需要执行以下命令或直接到上面的安装目录删除 jdk，安装低版本即可。
+```
+sudo rm -rf /Library/Java/JavaVirtualMachines/jdk-x.x.x.jdk
+```
 
 # RN与原生项目
 ## 先创建iOS项目，再集成React Native到原生项目
@@ -371,5 +404,5 @@ appProperties：可以通过componentWillMount访问新的属性值。
 
 参考链接：[React Native开发](http://www.lcode.org/【react-native开发】react-native-for-android环境配置以及第一个实例/)
 [React Native 简介与入门](http://www.jianshu.com/p/5b185df2d11a)
-[reactnative集成到原生ios项目](http://www.tuicool.com/articles/BfInEv)
+[学习React Native必看的几个开源项目](https://www.cnblogs.com/qiangxia/p/5584622.html)
 

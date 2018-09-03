@@ -15,6 +15,11 @@ toc: true
 * 要渲染 HTML 标签，只需在 JSX 里使用小写字母的标签名,要渲染 React 组件，只需创建一个大写字母开头的本地变量
 * class->className  for->htmlFor
 * 使用{}的情况：表达式，变量，对象，字典
+```
+style={styles.mainStyle}
+var str = 'hello'
+<Text>{str}</Text>
+```
 * `{{}}`:第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象
 
 ```
@@ -24,34 +29,123 @@ toc: true
 * 使用()的情况：返回组件
 ```
 render(){
-return (
-<View>
-</View>
-)
+    return (
+        <View>
+        </View>
+    )
 }
 ```
 
-## CSS
+## 判断平台进行不同操作
+```
+const instructions = Platform.select({
+    ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
+    android:
+    'Double tap R on your keyboard to reload,\n' +
+    'Shake or press menu button for dev menu',
+});
+```
+
+## CSS样式
+* 使用驼峰命名法
+* style属性可以是一个普通的 JavaScript 对象
+* 建议使用StyleSheet.create来集中定义组件的样式
+* 后声明的属性会覆盖先声明的同名属性
+
+### 创建一个样式表
+```
+const styles = StyleSheet.create({
+container: {
+    borderRadius: 4,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+    },
+    title: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    },
+    activeTitle: {
+    color: 'red',
+    },
+});
+```
+
+### 使用一个样式表
+```
+<View style={styles.container}>
+    <Text style={[styles.title, this.props.isActive && styles.activeTitle]} />
+</View>
+```
+
+* margin：第一个组件比较特殊，参照父组件，与父控件之间的间距。其他组件间距，相对于上一个组件
+* padding：设置子控件与当前控件的位置，想设置自己的子控件相对自己的位置的时候使用
+* 注意marginRight和width冲突，如果设置了width，marginRight无效
 position
 * absolute:绝对定位，相对父组件
 > 使用：当想把一个已经设置了宽度的控件快速的放在左下角，右下角的时候
 * relative: 相对定位，相对自己的原始位置
 > 使用：当想相对自己做出一些改变的时候，采用相对定位,比如相对自己，往下移动一点
 
-## FlexBox
-1.flexDirection:row|row-reverse|column|column-reverse
-2.flexWrap:wrap|no-wrap
-3.justifyContent:flex-start|flex-end|center|space-between|space-around
-4.alignItems:flex-start|flex-end|center|stretch
-5.alignSelf:auto|flex-start|flex-end|center|stretch
-6.flex:子控件在主轴中占据几等分
+## FlexBox布局
+1.flexDirection：row | row-reverse | column | column-reverse
+决定了子元素在主轴方向的排列方式（此样式设置在父元素上），默认值是column
+```
+<View style={{flex: 1, flexDirection: 'column'}}>
+    <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
+    <View style={{width: 50, height: 50, backgroundColor: 'skyblue'}} />
+    <View style={{width: 50, height: 50, backgroundColor: 'steelblue'}} />
+</View>
+```
+
+2.justifyContent（no flex:1）：flex-start | flex-end | center | space-between | space-around | space-evenly
+决定了子元素在主轴方向的对齐方式（此样式设置在父元素上），默认值是flex-start
+```
+<View style={{
+flex: 1,
+flexDirection: 'column',
+justifyContent: 'space-between',
+}}>
+    <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
+    <View style={{width: 50, height: 50, backgroundColor: 'skyblue'}} />
+    <View style={{width: 50, height: 50, backgroundColor: 'steelblue'}} />
+</View>
+```
+
+3.alignItems（nowrap,align-self）：flex-start | flex-end | center | stretch
+决定了子元素在次轴方向的排列方式（此样式设置在父元素上），默认值为 stretch，子组件在侧轴方向被拉伸到与容器相同的高度或宽度
+`次轴：与主轴垂直的轴，若主轴方向为row，则次轴方向为column`
+`要使stretch选项生效的话，子元素在次轴方向上不能有固定的尺寸`
+```
+<View style={{
+flex: 1,
+flexDirection: 'column',
+justifyContent: 'center',
+alignItems: 'stretch',
+}}>
+    <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
+    <View style={{height: 50, backgroundColor: 'skyblue'}} />
+    <View style={{height: 100, backgroundColor: 'steelblue'}} />
+</View>
+```
+4.alignSelf：auto | flex-start | flex-end | center | stretch
+决定了元素在父元素的次轴方向的排列方式（此样式设置在子元素上），其值会覆盖父元素的alignItems的值。默认值为 auto，继承它的父容器的alignItems属性。如果没有父容器则为 "stretch"。
+
+5.aligncontent（wrap）：stretch | flex-start | flex-end | center | space-between | space-around
+6.flexWrap：wrap | no-wrap
+决定子控件在父视图内是否允许多行排列，显示不全时是否自动换行。默认为nowrap
+7.flex:子控件在主轴中占据几等分，任意数字，所有子控件flex相加，自己flex占总共多少，就有多少宽度.
 
 ## props,state
-* props:在父组件中指定，而且一经指定，在整个组件的生命周期中都不再改变。
-this.props.children表示组件的所有子节点
-* state:constructor中声明(ES6)，在setState中修改数据
+* props：一般用于自定义组件，大多数组件在创建时就可以使用各种参数来进行定制，用于定制的这些参数就称为props（属性）。
+    * 在父组件中指定，而且一经指定，在整个组件的生命周期中都不再改变。通过this.props.name访问。
+    * this.props.children表示组件的所有子节点
+
+* state：以后想修改某个属性，就修改界面，就需要用state。
+    * constructor中声明(ES6)，在setState中修改数据
+
 > this.props 表示那些一旦定义，就不再改变的特性，而 this.state 是会随着用户互动而产生变化的特性。
 > 通过state 来更新和修改数据，而子组件只能通过 props 来传递数据
+
 定义state:
 ```
 this.state = {
@@ -73,19 +167,22 @@ console.log(this.state.name);
 })
 ```
 
-* 状态更新可能是异步的
-* 状态更新合并
+* 一切界面变化都是状态state变化
+* state的修改必须通过setState()方法
+    * this.state.likes = 100; // 这样的直接赋值修改无效！
+    * setState 是一个 merge 合并操作，只修改指定属性，不影响其他属性
+    * setState 是异步操作，修改不会马上生效
 
 ## 父子组件传值
-1.父传子
-(1)props:this.props.name
-(2)ref:this.refs.son.receiveMsg("msg")
-2.子传父
-(1)方法回调
+### 父传子
+* props:this.props.name
+* ref:this.refs.son.receiveMsg("msg")
+### 子传父
+* 方法回调
 父组件：定义一个处理接收到值的方法，把这个方法传递给子组件，并且绑定this
 子组件：通过this.props拿到这个方法调用
-3.无关联组件间传值
-(1)通知:组件1传值给组件2
+### 无关联组件间传值
+* 通知:组件1传值给组件2
 组件1：
 ```
 <Text onPress={()=>{
@@ -95,33 +192,72 @@ DeviceEventEmitter.emit('NotificationName',123);
 
 组件2：
 ```
-this.lister = DeviceEventEmitter.addListener('NotificationName',(value)=>{
-this.setState({
-value:value
-});
-})
+componentDidMount() {
+
+    this.age = 10;
+    this.age = 20;
+
+    console.log(this.age);
+
+    // 定义属性,但是对这个属性的修改不会触发render
+    this.lister = DeviceEventEmitter.addListener('NotificationName',(value)=>{
+        this.setState({
+            value:value
+        });
+    })
+}
+
+componentWillUnmount() {
+    this.lister.remove();
+}
 ```
 
 ## 组件生命周期
-实例化
+```
+export default class RNDemo extends Component {
+    render() {
+        return (
+        <View />
+        );
+    }
+}
+AppRegistry.registerComponent('React', () => RNDemo);
+```
+
+### 实例化
 0.defaultProps:给props设置默认值
 1.constructor:初始化state（只调用一次）
 2.componentWillMount:即将加载组件调用，render前（只调用一次）
 3.render:渲染组件
 4.componentDidMount:组件加载完成调用，render后（只调用一次）
-运行
+* 除了 render ，其他方法只调用一次
+### 运行
+`props改变`
 5.componentWillReceiveProps:props改变调用
+`state改变`
 6.shouldComponentUpdate:props/state改变调用，可控制是否刷新界面
 7.componentWillUpdate:组件即将更新调用（调用this.setState会循环）
 8.render
 9.componentDidUpdate:组件更新完成（调用this.setState会循环）
-销毁
+* 绝对不要在componentWillUpdate，componentDidUpdate中调用this.setState方法，否则将导致无限循环调用，在componentWillReceiveProps，shouldComponentUpdate可以
+### 销毁
 10.componentWillUnmount:组件即将销毁，可移除观察者，清空数据等
 
 ## propTypes
-必须要用static修饰，否则无效
-static：用来定义类方法或者类属性，定义类的方法和属性，生成的对象就自动有这样的属性了。
-1.类型检查：当传入错误的属性值，会报警告，但是不会报错
+* 可以实现类型检查，当传入错误的属性值，会报警告，但是不会报错
+* 用PropTypes定义属性，外界使用的时候，会有提示。
+* 必须要用static修饰，否则无效
+    * static：用来定义类方法或者类属性，定义类的方法和属性，生成的对象就自动有这样的属性了。
+* 只能用于React框架的自定义组件，默认JS是没有的，因为它是React框架中的。
+### 类型检查：当传入错误的属性值，会报警告，但是不会报错
+导入：`import React, { Component,PropTypes } from 'react';`
+* 定义属性
+```
+static propTypes = {
+name:PropTypes.string,
+age:PropTypes.number
+}
+```
 ```
 propTypes: {
 // 可以声明 prop 为指定的 JS 基本数据类型，默认情况，这些数据是可选的
@@ -178,15 +314,7 @@ return new Error('Validation failed!');
 },
 ```
 
-```
-// 定义属性
-static propTypes = {
-name:PropTypes.string,
-age:PropTypes.number
-}
-```
-
-2.设置初始化值
+### 设置初始化值
 ```
 static defaultProps = {
 name:'xiaoming',
@@ -195,33 +323,40 @@ age:20
 ```
 
 ## 基本组件
-1.View
-2.TouchableOpacity
-默认点击区域是所有子控件的区域,因为默认一个组件的尺寸由子控件决定
+### View
+###TouchableOpacity：默认点击区域是所有子控件的区域,因为默认一个组件的尺寸由子控件决定
 * activeOpacity:0-1 1-不透明
 * 点击事件：onPress|onLongPress|onPressIn|onPressOut
 * disabled:true|false
-3.Text
+```
+<TouchableOpacity activeOpacity={0.7}>
+    <View style={styles.childSytle}>
+    </View>
+</TouchableOpacity>
+```
+
+### Text
 * numberOfLines
 * selectable:true|false 是否允许长按选择文本
 * suppressHighlighting:true|false 是否允许按下时有灰色阴影
 * onPress:文字点击事件  onPress={()=>{}}
 * color/fontSize/fontWeight/lineHeight/textAlign
-4.Button
+### Button
 * 不可设置样式，一般用text自定义
 * color/disabled/onPress/title
-5.TextInput
+### TextInput
 * 默认无边框
 * autoFocus/blurOnSubmit/editable/maxLength/multiline/placeholder
 * keyboardType/returnKeyType/clearButtonMode
 * clearTextOnFocus/enablesReturnKeyAutomatically
 * clear()
 * 事件：onBlur/onFocus/onChange/onChangeText/onEndEditing/onKeyPress/onSubmitEditing
-6.Image
+### Image
 iOS中的2x,3x图片同样适用，如果存在a@2x.png与a@3x.png，写a.png即可。
 同时兼容iOS和安卓平台的图片，如果存在a.ios.png与a.android.png，同样写a.png即可。
 * source/defaultSource
-本地图片放在与index.ios.js同目录下的Img文件夹
+#### 本地图片存放路径
+1.放在与index.ios.js同目录下的Img文件夹
 ```
 <Image source={require('./Img/chaolan.jpeg')} style={styles.imageSytle}/>
 //Xcode的asset类目中，或是放置在Android的drawable目录
@@ -229,12 +364,15 @@ iOS中的2x,3x图片同样适用，如果存在a@2x.png与a@3x.png，写a.png即
 <Image source={{uri:'http://img01.youxiaoshuo.com/portal/201703/21/083647y43dl1j14s8s3g99.jpg', cache: 'only-if-cached'}} style={styles.imageSytle}/>
 ```
 
+2.iOS：可以存放到iOS项目中，打开iOS项目，存入到Images.xcassets文件中
+Android：可以存放到安卓项目中,必须放入drawable-xxhdpi文件中
+
 * 通过URI加载网络图片，必须设置图片尺寸，否则不显示
 * 通过URI加载网络图片，iOS端可以添加缓存策略(default/reload/force-cache/only-if-cached)
 * blurRadius
 * resizeMode:cover|contain|stretch|repeat|center
-* 事件:onLoad/onLoadStart/onLoadEnd/onProgress/onError
-7.ScrollView
+* 事件：onLoad/onLoadStart/onLoadEnd/onProgress/onError
+### ScrollView
 * horizontal/showsHorizontalScrollIndicator/showsVerticalScrollIndicator/alwaysBounceHorizontal/alwaysBounceVertical
 * automaticallyAdjustContentInsets
 * bounces/bouncesZoom/contentInset
@@ -255,35 +393,67 @@ class HomeView extends Component
 
 3.使用：var p = new Person();
 
-## ListView
-1.创建数据源，给数据源设置数据
-使用state保存数据源
-* 不分组使用：cloneWithRows
-* 分组使用：cloneWithRowsAndSections
+## ScrollView
+* 不能通过scrollView获取,因为在RN中,滚动的时候,不会给scrollView组件的contentOffset属性赋值,只能通过nativeEvent事件获取
 ```
-var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-this.state = {
-ds: dataSource.cloneWithRows(['row 1', 'row 2']),
-};
+_onScroll(e) {
+// console.log('滚动的时候调用');
+//  var scrollView = this.refs.scrollView;
+//  console.log(scrollView.props.contentOffset);
+
+var nativeEvent = e.nativeEvent;
+console.log(nativeEvent.contentOffset);
+}
 ```
 
+## ListView
+0.ListViewDataSource
 ```
-var dataSource = new ListView.DataSource({
-rowHasChanged:(r1,r2)=>r1 !== r2,
-sectionHeaderHasChanged:(s1,s2)=>s1 !== s2
-});
-var sectionData = {};
-this.state = {
-ds : dataSource.cloneWithRowsAndSections(sectionData)
-};
+构造函数可以接受下列四种参数（都是可选）：
+
+getRowData(dataBlob, sectionID, rowID);
+getSectionHeaderData(dataBlob, sectionID);
+rowHasChanged(prevRowData, nextRowData);
+sectionHeaderHasChanged(prevSectionData, nextSectionData);
+```
+1.创建数据源，给数据源设置数据
+使用state保存数据源
+### 不分组使用：cloneWithRows
+```
+constructor(props) {
+    super(props);
+    var data = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+    this.state = {
+        // 给数据源设置数据,创建新的数据,不过保存了之前的行改变方法属性
+        dataSource: data.cloneWithRows(['row 1', 'row 2']),
+    };
+}
+```
+
+###  分组使用：cloneWithRowsAndSections
+```
+constructor(props) {
+    super(props);
+    var data = new ListView.DataSource({
+        rowHasChanged:(r1,r2)=>r1 !== r2,
+        sectionHeaderHasChanged:(s1,s2)=>s1 !== s2
+    });
+    var sectionData = {};
+    this.state = {
+        dataSource : data.cloneWithRowsAndSections(sectionData)
+    };
+}
 ```
 
 2.实现数据源方法
 ```
-<ListView dataSource={this.state.ds}
+<ListView dataSource={this.state.dataSource}
 renderRow={this._renderRow.bind(this)}
-renderSectionHeader={this._renderSectionHeader.bind(this)}
-//renderSeparator={this._renderSeparator.bind(this)}
+renderHeader={this._renderHeader.bind(this)}
+renderFooter={this._renderFooter.bind(this)}
+renderSeparator={this._renderSeparator.bind(this)}
+//renderSectionHeader={this._renderSectionHeader.bind(this)}
 />
 
 _renderRow(rowData, sectionID, rowID, highlightRow) {
@@ -293,6 +463,30 @@ return (
 </View>
 );
 }
+
+_renderHeader() {
+return (
+<View>
+<Text>头部视图</Text>
+</View>
+)
+}
+
+_renderFooter() {
+return (
+<View>
+<Text>尾部视图</Text>
+</View>
+)
+}
+
+_renderSeparator(sectionID, rowID, adjacentRowHighlighted)  {
+console.log(sectionID,rowID,adjacentRowHighlighted);
+return (
+<View style={{height:1,backgroundColor:'black'}}></View>
+)
+}
+
 //如果是组视图，设置组数据
 _renderSectionHeader(sectionData, sectionID) {
 return (
@@ -301,6 +495,18 @@ return (
 </View>
 )
 }
+```
+
+## FlatList
+## SectionList
+默认情况下每行都需要提供一个不重复的key属性。你也可以提供一个keyExtractor函数来生成key。
+把这个属性添加到 <SectionList/> 里面
+```
+keyExtractor = {this._extraUniqueKey}   
+
+_extraUniqueKey(item ,index){
+return "index"+index+item;
+}  
 ```
 
 ## 导航Navigator
@@ -379,6 +585,9 @@ selected={0==this.state.selectIndex}
 
 ## 主流架构搭建
 react navigation
+
+npm install react-navigation --save
+import {TabNavigator} from 'react-navigation';
 
 ## 网络请求
 * fetch: 发送请求

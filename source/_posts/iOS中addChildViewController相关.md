@@ -31,7 +31,7 @@ Controller里面的viewWillAppear:(BOOL)animated在subview真正加到父view之
 
 ## 常见问题
 1.[self.scrollView addSubview:childVC.view]会调用childVC的viewDidLoad方法。
-2.如果把childVC.view添加到collectionView的cell上，当点击cell时会无法触发navigationController的push或者present操作。
+<!--2.如果把childVC.view添加到collectionView的cell上，当点击cell时会无法触发navigationController的push或者present操作。-->
 
 
 

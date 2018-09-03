@@ -2284,13 +2284,12 @@ class func shareNetworkTools() -> NetworkTools{
 
 
 参考资料：[The Swift Programming Language中文版](http://wiki.jikexueyuan.com/project/swift)
-[苹果官方文档](https://developer.apple.com/documentation/swift)
-[菜鸟教程-swift教程](http://www.runoob.com/swift/swift-tutorial.html)
 [Swift的74个常用内置函数介绍](http://blog.csdn.net/banma2008/article/details/46360333)
 [深入探究Swift数组背后的协议、方法、拓展](http://www.cocoachina.com/ios/20151218/14716.html)
-[swift常用代码](http://www.cnblogs.com/Jepson1218/p/5277677.html)
-[Swift编程](http://www.swift51.com/openSource.htm)
 [30个swift项目源码](https://github.com/allenwong/30DaysofSwift)
 [50个swift项目源码](https://github.com/cjiong/LearnSwift)
 [https://github.com/yagamis/swift2basic](https://github.com/yagamis/swift2basic)
 [https://github.com/KeyJohn/Swift](https://github.com/KeyJohn/Swift)
+
+[Swift编程](http://www.swift51.com/openSource.htm)
+[swift 框架大全](http://lib.csdn.net/article/swift/52339)

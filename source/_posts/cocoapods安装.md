@@ -65,6 +65,7 @@ Podfile：
 ```
 platform :ios, ’9.0’
 target 'xxx' do
+use_framework!
 pod 'AFNetworking'
 pod 'SDWebImage'
 pod 'MJExtension'
@@ -72,6 +73,7 @@ pod 'MJRefresh'
 pod 'MBProgressHUD'
 end
 ```
+在swift中配置Podfile文件时要加上 `use_framework!` ，作用是把三方库打包成静态库。
 
 ### Project Document-Project Format
 
