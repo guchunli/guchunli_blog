@@ -6,14 +6,12 @@ tags: [框架,待补充]
 ---
 
 ## 网络
-1.AFNetworking
-
-2.PPNetworkHelper
+1.PPNetworkHelper
 * 对AFNetworking 3.x 与YYCache的二次封装
 * 简单易用，包含了缓存机制，控制台可以直接打印json中文字符
 <!--more-->
 
-3.YTKNetwork
+2..YTKNetwork
 * 猿题库研发团队基于AFNetworking封装的iOS网络库
 * 适合稍微复杂一些的项目，不适合个人的小项目
 
@@ -87,6 +85,7 @@ tags: [框架,待补充]
 
 ## 美颜相机（仿faceU）
 * [MARFaceBeauty](https://github.com/Maru-zhang/MARFaceBeauty)
+* [XIUSDK--美图，美颜]()
 
 ## 多功能数据pickerView
 * [DLPickerView](https://github.com/coder-zwz/DLPickerView)
@@ -100,6 +99,10 @@ tags: [框架,待补充]
 
 ## VR播放器
 * MDVRLibrary
+
+## 知识整合，学习资源
+* AxcUIKit
+* [BigShow1949](https://github.com/BigShow1949/BigShow1949)
 
 待补充
 

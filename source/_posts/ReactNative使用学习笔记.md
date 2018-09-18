@@ -405,4 +405,4 @@ appProperties：可以通过componentWillMount访问新的属性值。
 参考链接：[React Native开发](http://www.lcode.org/【react-native开发】react-native-for-android环境配置以及第一个实例/)
 [React Native 简介与入门](http://www.jianshu.com/p/5b185df2d11a)
 [学习React Native必看的几个开源项目](https://www.cnblogs.com/qiangxia/p/5584622.html)
-
+[总结一下今年的react native 填坑之旅，已双端上线](http://react-china.org/t/react-native/10141/3)
