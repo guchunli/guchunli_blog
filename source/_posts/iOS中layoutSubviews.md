@@ -10,6 +10,7 @@ toc:
 * 初始化不会触发layoutSubviews，但是如果设置了不为CGRectZero的frame的时候就会触发。
 * addSubview会触发layoutSubviews
 * 设置view的Frame会触发layoutSubviews，当然前提是frame的值设置前后发生了变化
+<!--more-->
 * 滚动一个UIScrollView会触发layoutSubviews
 * 旋转Screen会触发父UIView上的layoutSubviews事件
 * 改变一个UIView大小的时候也会触发父UIView上的layoutSubviews事件

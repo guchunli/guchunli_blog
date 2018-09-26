@@ -13,6 +13,3 @@ UICollectionViewLayout自定义
 
 APP配置多环境变量和制作马甲包，私有APP，私有库，私有API
 operation和GCD区别
-MVVM
-react native
-swift

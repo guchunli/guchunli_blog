@@ -15,7 +15,7 @@ towCol.view.frame = self.view.bounds;
 //addChildViewController 会调用 [child willMoveToParentViewController:self] 方法，但是不会调用 didMoveToParentViewController:方法，官方建议显示调用
 [towCol didMoveToParentViewController:self];//3
 ```
-
+<!--more-->
 ## 移除一个Controller:
 ```
 ////移除oldController，但在removeFromParentViewController：方法前不会调用willMoveToParentViewController:nil 方法，所以需要显示调用

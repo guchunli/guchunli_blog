@@ -36,9 +36,11 @@ root:
 # Content
 
 # 文章太长，截断按钮文字
-excerpt_link: more
+excerpt_link: 阅读全文
 # 文章卡片右下角常驻链接，不需要请设置为false
 show_all_link: '展开全文'
+# Content
+
 # 数学公式
 mathjax: false
 # 是否在新窗口打开链接
@@ -55,6 +57,17 @@ reward_wording: '谢谢你请我吃糖果'
 alipay: /assets/blogImg/zhifubao.png
 # 微信二维码图片地址
 weixin: /assets/blogImg/weixin.png
+
+# 目录
+# 目录设定：0-不显示目录； 1-文章对应的md文件里有toc:true属性，才有目录； 2-所有文章均显示目录
+toc: 1
+# 根据自己的习惯来设置，如果你的目录标题习惯有标号，置为true即可隐藏hexo重复的序号；否则置为false
+toc_hide_index: true
+# 目录为空时的提示
+toc_empty_wording: '目录，不存在的…'
+
+# 是否有快速回到顶部的按钮
+top: true
 
 # Miscellaneous
 # baidu_analytics: e2bbbeff887c44473655288d77c51a13
@@ -111,4 +124,11 @@ friends:
   友情链接2: https://guchunli.github.io
   友情链接3: https://guchunli.github.io
 
-aboutme: 谷春丽<br><br>从事iOS开发<br>
+aboutme: about me
+
+# Post wordcount display settings
+# Dependencies: https://github.com/willin/hexo-wordcount
+post_wordcount:
+  item_text: true
+  wordcount: true
+  min2read: true

@@ -8,11 +8,11 @@ toc: true
 
 ## 打包步骤
 ### clean
-
 使用cocoapods：
 `xcodebuild clean -workspace ${TARGET_NAME}.xcworkspace -scheme ${TARGET_NAME} -configuration ${BUILD_TYPE}`
 * `-workspace`： 如果项目中没有使用到CocoaPods，则该命令可以不用。
 * `-scheme`： 和工程名字一样，
+<!--more-->
 没有使用cocoapods：
 `xcodebuild clean -project ${TARGET_NAME}.xcodeproj -configuration ${CONFIGURATION} -alltargets`
 

@@ -9,8 +9,8 @@ toc:
 微信屏蔽了外部唤醒其他app，实现从微信浏览器唤醒APP的几种方法：
 ## 1.加入微信白名单
 ## 2.使用腾讯应用宝，魔窗第三方服务
-
 ## 3.微信右上角有个“更多”，点击后选择在浏览器中打开
+<!--more-->
 例如：`test://com.xxx?name=zhangsan&pwd=123`
 * URL Schemes：xxx，url.scheme = `test`。
 * URL Identifier：是自定义的 URL scheme 的名字，一般采用反转域名的方法保证该名字的唯一性，比如 com.domain。url.host =`com.xxx`。

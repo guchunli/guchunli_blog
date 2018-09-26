@@ -7,6 +7,7 @@ toc:
 ---
 
 1.遍历searchBar子视图
+<!--more-->
 ```
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
 searchBar.showsCancelButton = YES;

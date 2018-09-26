@@ -14,7 +14,7 @@ toc:
 | 持有对象  |  reatain方法  |  使引用计数 +1 |
 | 释放对象  |  release方法  |  使引用计数 -1 |
 | 废弃对象  |  dealloc方法  |  引用计数 =0 时调用（系统自动调用） |
-
+<!--more-->
 ```
 +(id)alloc
 {
@@ -182,7 +182,6 @@ for in、经典for循环和EnumerateObjectsUsingBlock 的比较：
 ## 属性修饰关键字
 
 ### 写一个setter方法用于完成@property(nonatomic,retain)NSString *name;写一个setter方法用于完成@property(nonatomic, copy)NSString *name;
-<!--more-->
 答: 
 retain表示持有特性，setter方法将传入参数先保留，再赋值，传入参数的retaincount会+1;
 copy表示拷贝特性，setter方法将传入对象复制一份；需要完全一份新的变量时。
