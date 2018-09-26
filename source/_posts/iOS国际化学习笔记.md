@@ -2,7 +2,7 @@
 title: iOS国际化学习笔记
 date: 2016-12-19 10:30:38
 categories: 笔记
-tags: [iOS,国际化]
+tags: [国际化]
 toc: true
 ---
 

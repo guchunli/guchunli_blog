@@ -2,7 +2,7 @@
 title: Xcode开发技巧总结
 date: 2017-12-15 10:38:53
 categories: 笔记
-tags: [log,中文]
+tags: [Xcode]
 toc:
 ---
 

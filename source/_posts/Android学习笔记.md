@@ -2,7 +2,7 @@
 title: Android学习笔记
 date: 2018-08-22 10:38:17
 categories: 笔记
-tags: [Android,安卓]
+tags: [Android]
 toc:
 ---
 

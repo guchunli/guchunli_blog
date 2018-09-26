@@ -2,7 +2,7 @@
 title: iOS报错信息详解
 date: 2017-11-06 11:46:41
 categories: 笔记
-tags: [bug,崩溃,报错]
+tags: [Xcode]
 toc:
 ---
 

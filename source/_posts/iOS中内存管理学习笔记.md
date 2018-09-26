@@ -2,7 +2,7 @@
 title: iOS中内存管理学习笔记
 date: 2018-06-25 16:20:20
 categories: 笔记
-tags: [内存管理,MRC,ARC]
+tags: [面试]
 toc:
 ---
 

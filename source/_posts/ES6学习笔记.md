@@ -2,7 +2,7 @@
 title: ES6学习笔记
 date: 2017-07-11 09:13:09
 categories: 笔记
-tags: [ReactNative,ES6]
+tags: [ReactNative]
 ---
 
 ## let

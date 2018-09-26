@@ -5,7 +5,7 @@ menu:
   归档: /archives/
   笔记: /categories/note/
   随笔: /categories/other/
-  相册: photos
+  相册: photos/
 
 # SubNav
 subnav:
@@ -60,7 +60,7 @@ weixin: /assets/blogImg/weixin.png
 
 # 目录
 # 目录设定：0-不显示目录； 1-文章对应的md文件里有toc:true属性，才有目录； 2-所有文章均显示目录
-toc: 1
+toc: 2
 # 根据自己的习惯来设置，如果你的目录标题习惯有标号，置为true即可隐藏hexo重复的序号；否则置为false
 toc_hide_index: true
 # 目录为空时的提示
@@ -124,7 +124,7 @@ friends:
   友情链接2: https://guchunli.github.io
   友情链接3: https://guchunli.github.io
 
-aboutme: about me
+aboutme: about/
 
 # Post wordcount display settings
 # Dependencies: https://github.com/willin/hexo-wordcount

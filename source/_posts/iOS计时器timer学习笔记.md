@@ -2,7 +2,7 @@
 title: iOS计时器timer学习笔记
 date: 2018-06-20 18:12:53
 categories: 笔记
-tags: [计时器,timer]
+tags: [timer]
 toc: true
 ---
 

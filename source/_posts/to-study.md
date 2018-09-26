@@ -2,7 +2,7 @@
 title: to study
 date: 2018-06-27 15:48:59
 categories: 笔记
-tags: [study]
+tags: 
 toc:
 ---
 

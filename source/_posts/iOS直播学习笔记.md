@@ -2,7 +2,7 @@
 title: iOS直播学习笔记
 date: 2017-06-29 17:14:34
 categories: 笔记
-tags: [iOS,直播,待补充]
+tags: [直播]
 ---
 
 

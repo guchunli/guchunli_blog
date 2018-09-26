@@ -2,7 +2,7 @@
 title: iOS单元测试学习笔记
 date: 2017-04-09 14:16:58
 categories: 笔记
-tags: [iOS,test]
+tags: [测试]
 ---
 
 1.新建项目时注意勾选`Unit Tests`,`UI Tests`

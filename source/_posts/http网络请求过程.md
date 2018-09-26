@@ -2,7 +2,7 @@
 title: http网络请求过程
 date: 2018-02-26 16:51:23
 categories: 笔记
-tags: [http,网络]
+tags: [http]
 toc:
 ---
 

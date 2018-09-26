@@ -2,7 +2,7 @@
 title: iOS IM学习笔记
 date: 2017-04-22 11:19:11
 categories: 笔记
-tags: [iOS,IM,socket]
+tags: [IM]
 ---
 
 客户端需要做如下4件事：

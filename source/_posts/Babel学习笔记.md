@@ -2,7 +2,7 @@
 title: Babel学习笔记
 date: 2017-07-11 10:24:51
 categories: 笔记
-tags: [ReactNative,Babel]
+tags: [ReactNative]
 ---
 
 ## 安装

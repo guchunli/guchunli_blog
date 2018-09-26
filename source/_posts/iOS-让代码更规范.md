@@ -2,7 +2,7 @@
 title: iOS-让代码更规范
 date: 2017-10-26 15:38:58
 categories: 笔记
-tags: [iOS,代码规范]
+tags: [规范]
 toc:
 ---
 

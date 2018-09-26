@@ -2,7 +2,7 @@
 title: iPhoneX适配笔记
 date: 2017-12-05 14:10:42
 categories: 笔记
-tags: [iPhoneX]
+tags: [适配]
 toc:
 ---
 

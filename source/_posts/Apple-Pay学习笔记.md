@@ -2,7 +2,7 @@
 title: Apple Pay学习笔记
 date: 2017-03-15 16:37:17
 categories: 笔记
-tags: [iOS,Apple Pay]
+tags: [Apple Pay]
 ---
 ## 概述
 ### 1.支付方式：Touch ID/ Passcode

@@ -2,7 +2,7 @@
 title: iOS中UICollectionView的使用
 date: 2018-03-27 15:10:30
 categories: 笔记
-tags: [collectionView,拖拽,重排]
+tags:
 toc:
 ---
 

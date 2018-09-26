@@ -2,7 +2,7 @@
 title: RAC与Target-Action、通知、代理、KVO
 date: 2017-04-23 11:30:03
 categories: 笔记
-tags: [iOS,RAC]
+tags: [RAC]
 ---
 
 ReactiveCocoa作用

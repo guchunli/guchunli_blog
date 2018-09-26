@@ -4,23 +4,25 @@ slug: "photos"
 title: "相册"
 noDate: "true"
 ---
+
 <link rel="stylesheet" href="./ins.css">
 <div class="photos-btn-wrap">
-	<a class="photos-btn active" href="javascript:void(0)">Photos</a>
-	<a class="photos-btn" href="#">待续</a>
+<a class="photos-btn active" href="javascript:void(0)">图片</a>
+<a class="photos-btn" href="javascript:void(0)">摄影</a>
+<!--<a class="photos-btn" target="_blank" href="http://litten.me/gallery/">相册</a>-->
 </div>
 <div class="instagram itemscope">
-	<a href="https://github.com/guchunli/blog_photos/" target="_blank" class="open-ins">图片正在加载中…</a>
+<a href="https://github.com/guchunli/blog_photos/" target="_blank" class="open-ins">图片正在加载中…</a>
 </div>
 <script>
-  (function() {
-    var loadScript = function(path) {
-      var $script = document.createElement('script')
-      document.getElementsByTagName('body')[0].appendChild($script)
-      $script.setAttribute('src', path)
-    }
-    setTimeout(function() {
-      loadScript('./ins.js')
-    }, 0)
-  })()
+(function() {
+var loadScript = function(path) {
+var $script = document.createElement('script')
+document.getElementsByTagName('body')[0].appendChild($script)
+$script.setAttribute('src', path)
+}
+setTimeout(function() {
+loadScript('./ins.js')
+}, 0)
+})()
 </script>

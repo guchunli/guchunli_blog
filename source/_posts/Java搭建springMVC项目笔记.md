@@ -2,7 +2,7 @@
 title: Java搭建springMVC项目笔记
 date: 2017-06-08 09:44:19
 categories: 笔记
-tags: [Java,springMVC,项目]
+tags: [Java]
 ---
 
 # MyEclipse搭建项目

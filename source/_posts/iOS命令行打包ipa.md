@@ -2,7 +2,7 @@
 title: iOS命令行打包ipa
 date: 2018-06-04 14:20:09
 categories: 笔记
-tags: [archive,打包,ipa]
+tags: [打包]
 toc: true
 ---
 

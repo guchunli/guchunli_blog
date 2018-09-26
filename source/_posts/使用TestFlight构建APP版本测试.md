@@ -2,7 +2,7 @@
 title: 使用TestFlight构建APP版本测试
 date: 2017-12-06 11:48:55
 categories: 笔记
-tags: [TestFlight,测试]
+tags: [测试]
 toc:
 ---
 
