@@ -109,21 +109,30 @@ jsonContent:
       categories: true
       tags: true
 
-# jsonContent:
-#     meta: false
-#     pages: false
-#     posts:
-#       title: true
-#       date: true
-#       path: true
-#       text: true
-#       raw: false
-#       content: false
-#       slug: false
-#       updated: false
-#       comments: true
-#       link: false
-#       permalink: false
-#       excerpt: false
-#       categories: true
-#       tags: true
+# 添加宠物
+# live2d-widget-model-wanko 小狗
+# live2d-widget-model-tororo 小猫
+# live2d-widget-model-chitose 少年
+# live2d-widget-model-epsilon2_1 夏装少女
+# live2d-widget-model-z16 制服少女
+# live2d-widget-model-hibiki 傲娇少女
+# live2d-widget-model-tsumiki 学生少女
+# live2d-widget-model-nipsilon 呆萌少女1
+# live2d-widget-model-nietzsche 呆萌少女2
+# live2d-widget-model-nico  呆萌少女3
+# live2d-widget-model-haruto 男孩
+# live2d-widget-model-gf 卡通人物
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  model:
+    use: live2d-widget-model-tororo
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true

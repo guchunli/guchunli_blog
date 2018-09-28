@@ -1,13 +1,14 @@
-<% if (theme.baidu_tongji){ %>
+<% if (theme.baidu_tongji.enable){ %>
 <!-- baidu_tongji -->
 <script>
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?e2bbbeff887c44473655288d77c51a13";
+  hm.src = "https://hm.baidu.com/hm.js?theme.baidu_tongji.sitecod";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
+
 <!-- End baidu_tongji -->
 <% } %>

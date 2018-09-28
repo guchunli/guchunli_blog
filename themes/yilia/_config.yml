@@ -72,7 +72,11 @@ top: true
 # Miscellaneous
 # baidu_analytics: e2bbbeff887c44473655288d77c51a13
 # 百度统计
-baidu_tongji: true
+baidu_tongji:
+  enable: true
+  sitecode:  e2bbbeff887c44473655288d77c51a13
+
+
 favicon: /assets/blogImg/favicon.jpg
 
 #你的头像url
