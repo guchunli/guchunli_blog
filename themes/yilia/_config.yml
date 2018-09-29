@@ -70,7 +70,7 @@ toc_empty_wording: '目录，不存在的…'
 top: true
 
 # Miscellaneous
-# baidu_analytics: e2bbbeff887c44473655288d77c51a13
+baidu_analytics: e2bbbeff887c44473655288d77c51a13
 # 百度统计
 baidu_tongji:
   enable: true
