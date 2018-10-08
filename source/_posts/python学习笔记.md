@@ -136,13 +136,14 @@ for iterating_var in sequence:
 迭代器是一个可以记住遍历的位置的对象。
 迭代器有两个基本的方法：iter() 和 next()。
 迭代器对象可以使用常规for语句进行遍历：
+iter()：
 ```
 list=[1,2,3,4]
 it = iter(list)    # 创建迭代器对象
 for x in it:
     print (x, end=" ")
 ```
-
+next()：
 ```
 import sys         # 引入 sys 模块
 
@@ -157,7 +158,15 @@ while True:
 ```
 
 创建一个迭代器：需要在类中实现两个方法 __iter__() 与 __next__() 。
+* __iter__() 方法返回一个特殊的迭代器对象， 这个迭代器对象实现了 __next__() 方法并通过 StopIteration 异常标识迭代的完成。
+* __next__() 方法（Python 2 里是 next()）会返回下一个迭代器对象。
+可以在 __next__() 方法中触发 StopIteration 异常来结束迭代。
 
+### 生成器
+使用了 yield 的函数被称为生成器（generator）。
+生成器是一个返回迭代器的函数，只能用于迭代操作，更简单点理解生成器就是一个迭代器。
+在调用生成器运行的过程中，每次遇到 yield 时函数会暂停并保存当前所有的运行信息，返回 yield 的值, 并在下一次执行 next() 方法时从当前位置继续运行。
+调用一个生成器函数，返回的是一个迭代器对象。
 
 ## 函数
 ```
@@ -167,7 +176,7 @@ def functionname( parameters ):
     return [expression]
 ```
 
-* 在 python 中，类型属于对象，变量是没有类型的
+* 在 python 中，类型属于对象，变量是没有类型的，仅仅是一个对象的引用（一个指针）。
 * 在 python 中，strings, tuples, 和 numbers 是不可更改的对象，而 list,dict 等则是可以修改的对象。
 * python 中一切都是对象，严格意义我们不能说值传递还是引用传递，我们应该说传不可变对象和传可变对象。
     * 不可变类型：传递的只是参数的值，没有影响参数本身。
@@ -176,12 +185,55 @@ def functionname( parameters ):
 * 必备参数：须以正确的顺序传入函数。调用时的数量必须和声明时的一样。
 * 关键字参数：允许函数调用时参数的顺序与声明时不一致。`printinfo( age=50, name="miki" );`
 * 默认参数：`def printinfo( name, age = 35 ):`，调用`printinfo( name="miki" );`
-* 不定长参数：加了星号（*）的变量名会存放所有未命名的变量参数。`def printinfo( arg1, *vartuple ):`
+* 不定长参数：加了星号（*）的变量名会存放所有未命名的变量参数。`def functionname([formal_args,] *var_args_tuple ):`
+* 加了两个星号 ** 的参数会以字典的形式导入：`def functionname([formal_args,] **var_args_dict ):`。
+* 单独出现星号 * 后的参数必须用关键字传入：`def f(a,b,*,c):`，调用`f(1,2,c=3)`。
 
 ### 匿名函数
 ```
 # 可写函数说明
 sum = lambda arg1, arg2: arg1 + arg2;
+```
+
+### 变量作用域
+* L （Local） 局部作用域
+* E （Enclosing） 闭包函数外的函数中
+* G （Global） 全局作用域
+* B （Built-in） 内建作用域
+以 L –> E –> G –>B 的规则查找：
+```
+x = int(2.9)  # 内建作用域
+
+g_count = 0  # 全局作用域
+def outer():
+    o_count = 1  # 闭包函数外的函数中
+    def inner():
+        i_count = 2  # 局部作用域
+```
+
+`Python 中只有模块（module），类（class）以及函数（def、lambda）才会引入新的作用域，其它的代码块（如 if/elif/else/、try/except、for/while等）是不会引入新的作用域的，也就是说这些语句内定义的变量，外部也可以访问。`
+
+global：内部作用域可以修改外部作用域的变量，修改全局变量。
+nonlocal：修改嵌套作用域（enclosing 作用域，外层非全局作用域）中的变量
+
+## 数据结构
+* 将列表当做堆栈使用：append() pop()
+* 列表推导式
+* `del a[2:4]`删除一个切割，  `del a[:]`清空列表。
+* 遍历技巧：
+```
+//遍历字典，同时获取key和value
+for k, v in dict.items():
+//遍历序列m，同时获取索引位置和对应值
+for i, v in enumerate(list1):
+//同时遍历两个或更多的序列，可以使用 zip() 组合
+for q, a in zip(questions, answers):
+//反向遍历一个序列
+for i in reversed(range(1, 10, 2)):
+//排序
+for f in sorted(basket):
+//去重
+for f in sorted(set(basket)):
 ```
 
 ## 模块(Module)
