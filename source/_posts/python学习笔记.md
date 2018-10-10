@@ -6,6 +6,7 @@ tags: [笔记]
 toc: true
 ---
 
+# 基础
 ## 中文编码
  `# -*- coding: UTF-8 -*-` 或者 `#coding=utf-8` 。
 ## 基础语法
@@ -22,7 +23,7 @@ toc: true
 ### 等待用户输入
 `input("按下 enter 键退出，其他任意键显示...\n")`
 ### 输出
-print() 默认输出是换行的，如果要实现不换行需要在变量末尾加上 `end=""`
+print() 默认输出是换行的，如果要实现不换行需要在变量末尾加上 `end=""`，`print ('hello', end=" ")`。
 ### 代码组
 首行以关键字开始，以冒号( : )结束
 ### 命令行参数
@@ -80,7 +81,7 @@ print() 默认输出是换行的，如果要实现不换行需要在变量末尾
 * `()` 标识
 * 与列表类似，不同之处在于元组的元素不能修改。元组不能二次赋值，相当于只读列表。
 * 元组中的元素类型也可以不相同
-* 元组中只包含一个元素时，需要在元素后面添加逗号，`tup1 = (50,)`，否则括号会被当作运算符使用
+* 元组中只包含一个元素时，需要在元素后面添加逗号，`tup1 = (50,)`，否则括号会被当作运算符使用。
 * 组中的元素值是不允许删除的，但我们可以使用del语句来删除整个元组
 * 无关闭分隔符：任意无符号的对象，以逗号隔开，默认为元组
 #### Dictionary（字典）
@@ -93,7 +94,7 @@ print() 默认输出是换行的，如果要实现不换行需要在变量末尾
 #### Set（集合）
 * 是一个无序不重复元素的序列。基本功能是进行成员关系测试和删除重复元素。
 * 大括号 { } 或者 set() 函数创建集合，注意：创建一个空集合必须用 set() 而不是 { }，因为 { } 是用来创建一个空字典
-* add，update，remove，discard(如果元素不存在，不会发生错误)，clear，
+* add，update，remove(如果元素不存在，会发生错误)，discard(如果元素不存在，不会发生错误)，clear，
 ### 类型转换
 将数据类型作为函数名
 
@@ -254,8 +255,8 @@ for f in sorted(set(basket)):
 * PYTHONPATH
 * 默认路径。UNIX下，默认路径一般为/usr/local/lib/python/。
 
-### PYTHONPATH 变量
-UNIX 系统，典型的 PYTHONPATH 如下：`set PYTHONPATH=/usr/local/lib/python`
+### __name__
+一个模块被另一个程序第一次引入时，其主程序将运行。每个模块都有一个__name__属性，当其值是'__main__'时，表明该模块自身在运行，否则是被引入。
 
 ### 命名空间和作用域
 * 如果要给函数内的全局变量赋值，必须使用 global 语句
@@ -265,14 +266,30 @@ UNIX 系统，典型的 PYTHONPATH 如下：`set PYTHONPATH=/usr/local/lib/pytho
 * reload() 函数：重新导入之前导入过的模块
 
 ### 包
+* 包是一种管理 Python 模块命名空间的形式
 * __init__.py 用于标识当前文件夹是一个包。
 
 ## I/O
 * print
+* str()： 函数返回一个用户易读的表达形式。repr()： 产生一个解释器易读的表达形式。
+* str.format()：
+```
+print('hello! I\'m {}. {} years old.'.format('Jack',18))
+print('hello! I\'m {name}. {age} years old.'.format(name='Jack',age=18))
+print('hello! I\'m {0}. {age} years old.'.format('Jack', age=18))
+
+//旧
+print('常量 PI 的值近似为：%5.3f。' % math.pi)
+//新
+print('常量 PI 的值近似为 {0:.3f}。'.format(math.pi))
+```
 * raw_input：读取键盘输入
 * input：可以接收一个Python表达式作为输入
 * 文件：open/close/write/read/tell/seek/rename/remove/
-* 目录：mkdir/chdir/rmdir/
+* pickle模块实现了基本的数据序列和反序列化。
+
+## 文件/目录
+os.mkdir/chdir/rmdir/
 
 ## 异常处理
 如果在try子句执行时没有发生异常，python将执行else语句后的语句（如果有else的话），然后控制流通过整个try语句。
@@ -358,6 +375,8 @@ class C(A, B):   # 继承类 A 和 B
 * _foo: 以单下划线开头的表示的是 protected 类型的变量，即保护类型只能允许其本身与子类进行访问，不能用于 from module import *。
 * __foo: 双下划线的表示的是私有类型(private)的变量, 只能是允许这个类本身进行访问了。
 
+
+# 高级
 ## 正则表达式
 `import re`
 从字符串的起始位置匹配一个模式：
