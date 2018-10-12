@@ -136,3 +136,5 @@ post_wordcount:
   item_text: true
   wordcount: true
   min2read: true
+
+canvas_nest: true

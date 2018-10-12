@@ -4,4 +4,5 @@ date: {{ date }}
 categories:
 tags:
 toc: 
+copyright: true
 ---
