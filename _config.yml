@@ -4,11 +4,11 @@
 
 # Site
 title: guchunli
-subtitle: 努力把生活折腾成自己喜欢的样子~
-description: Welcome to
+subtitle: 日子熬我 我熬粥
+  # 努力把生活折腾成自己喜欢的样子~
+description: 摊开双手 空无一物 天空有云 舒卷于胸
 author: 谷春丽
 keywords: "ios,swift,mac"
-language: zh_CN
 #timezone: Asia/Beijing
 
 # URL
@@ -71,7 +71,10 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: yilia
+# theme: yilia
+# language: zh_CN
+theme: next
+language: zh-Hans
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
