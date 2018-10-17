@@ -13,7 +13,9 @@ UICollectionViewLayout自定义
 
 APP配置多环境变量和制作马甲包，私有APP，私有库，私有API
 operation和GCD区别
-
+工厂模式
+AsyncDisplayKit
+ComponentKit
 
 
 
@@ -66,3 +68,7 @@ review Tumblr功能模块 内存检测 UI标注
 8.define，const区别
 9.五张图片合成一张，异步下载
 10.OC动态语言理解
+
+
+[百思不得姐demo](https://github.com/targetcloud/baisibudejie)
+
