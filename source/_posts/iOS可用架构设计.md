@@ -35,4 +35,5 @@ tags: [架构]
 * Define：全局宏定义，屏幕宽高、接口地址、字体颜色、key、secret
 * Resource：资源文件，图片，音视频等
 
+
 参考链接：[iOS 从0到1搭建高可用App框架](http://www.jianshu.com/p/d553096914ff)
