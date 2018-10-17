@@ -16,6 +16,9 @@ operation和GCD区别
 工厂模式
 AsyncDisplayKit
 ComponentKit
+MVVM
+RESTFUL API
+jenkins 阿里云 自动化测试
 
 
 
@@ -53,21 +56,7 @@ APNS本地消息存储
 
 layoutsubview调用时机
 
-review Tumblr功能模块 内存检测 UI标注  
-登录系统，免登陆
 
-
-东奥
-1.strong，retain，copy，assign，weak，unsafe_unretained
-2.远程推送
-3.copy，nsmutablearray
-4.layoutsubviews什么时候调用
-5.内存空间
-6.内存优化
-7.创建一个对象过程
-8.define，const区别
-9.五张图片合成一张，异步下载
-10.OC动态语言理解
 
 
 [百思不得姐demo](https://github.com/targetcloud/baisibudejie)
