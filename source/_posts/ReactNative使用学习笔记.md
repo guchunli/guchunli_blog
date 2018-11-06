@@ -24,6 +24,39 @@ npm install -g react-native-cli
 brew install watchman
 //flow
 brew install flow
+//yarn全局安装
+npm install -g yarn
+```
+
+* 如果安装brew时报错：
+```
+xcode-select: error: invalid developer directory '/Library/Developer/CommandLineTools'
+Failed during: /usr/bin/sudo /usr/bin/xcode-select --switch /Library/Developer/CommandLineTools
+```
+解决：
+如果`/Library/Developer/CommandLineTools` 路径不存在，需要手动安装 Command Line Tools：`XCode --> Open Developer Tool --> More Developer tools` 下载安装系统对应版本的  Command Line Tools 即可。
+
+否则
+```
+$ xcodebuild
+xcodebuild: error: The directory /Users/jzg does not contain an Xcode project.
+xcode-select --install
+$ xcode-select -p
+/Applications/Xcode.app/Contents/Developer
+//xcode的命令行工具不再安装在 /Library/Developer/CommandLineTools 这个位置了，需要重新设置一下路径: 
+$ sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+//最后再输入命令这个验证一下： 
+$ xcode-select -p
+//重新执行brew安装命令
+```
+
+* brew update 或者 brew install ... 时出现卡在updating状态问题，解决：
+```
+//先卸载已安装的homebrew
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+//然后重新安装
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+//通过该方法直接获取最新的homebrew执行安装其他插件等操作即可。
 ```
 
 ## 创建项目
@@ -32,6 +65,13 @@ $ react-native init RNDemo
 ```
 
 ### 运行项目
+* 启功服务器
+```
+npm run start 
+//或者
+yarn start
+```
+
 1.使用命令行或Xcode
 ```
 $ react-native run-ios

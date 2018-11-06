@@ -14,13 +14,12 @@ ERROR:  While executing gem ... (OpenSSL::SSL::SSLError)
 <!--more-->
 移除镜像：
 ```
-gem sources --remove https://ruby.taobao.org/
-gem sources --remove https://gems.ruby-china.org/
+gem sources --remove https://rubygems.org/
 ```
 
-使用`https://gems.ruby-china.org/`镜像：
+使用`https://gems.ruby-china.com/`镜像：
 ```
-gem sources -a https://gems.ruby-china.org/
+gem sources -a https://gems.ruby-china.com/
 ```
 
 2.查看镜像：
@@ -30,7 +29,7 @@ gem sources -l
 
 3.安装cocoapods：
 ```
-sudo gem install cocoapods
+sudo gem install -n /usr/local/bin cocoapods
 ```
 
 ### 安装Homebrew
@@ -65,7 +64,7 @@ Podfile：
 ```
 platform :ios, ’9.0’
 target 'xxx' do
-use_framework!
+use_frameworks!
 pod 'AFNetworking'
 pod 'SDWebImage'
 pod 'MJExtension'
@@ -73,7 +72,7 @@ pod 'MJRefresh'
 pod 'MBProgressHUD'
 end
 ```
-在swift中配置Podfile文件时要加上 `use_framework!` ，作用是把三方库打包成静态库。
+在swift中配置Podfile文件时要加上 `use_frameworks!` ，作用是把三方库打包成静态库。
 
 ### Project Document-Project Format
 

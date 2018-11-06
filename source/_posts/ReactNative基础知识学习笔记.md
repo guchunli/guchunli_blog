@@ -1049,6 +1049,7 @@ error: () => {},
 2.热更新：[pushy](https://github.com/reactnativecn/react-native-pushy/blob/master/docs/guide.md)
 
 
+[React Native中文网]https://reactnative.cn/docs/sample-application-movies/
 [袁峥讲ReactNative-系列](http://www.jianshu.com/p/504a26d094b2)
 [React学习资源汇总](http://blog.xieliqun.com/2016/11/06/react-study/#more)
 [React Native开发错误警告处理总结（已解决 ！持续更新](http://www.jianshu.com/p/98c8f2a970eb)

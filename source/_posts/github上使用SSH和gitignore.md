@@ -2,7 +2,7 @@
 title: github上使用SSH和gitignore
 date: 2017-03-03 16:52:02
 categories: 笔记
-tags: [github]
+tags: [github,Git]
 toc: true
 ---
 
