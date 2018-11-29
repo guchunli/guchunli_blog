@@ -122,5 +122,18 @@ $ git config --global user.email "youremail"
 color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
 ```
 
+(6)inunpopulatedsubmodule'.deploy_git'
+解决：
+先安装下相关的依赖：
+```
+npm install hexo-deployer-git –save
+```
+实在不行，就把它删掉，然后重新生成和部署。
+```
+ls -a
+rm -rf .deploy_git
+hexo g
+hexo d
+```
 
 [打造个性超赞博客Hexo+NexT+GitHubPages的超深度优化](https://reuixiy.github.io/technology/computer/computer-aided-art/2017/06/09/hexo-next-optimization.html#fn:2)

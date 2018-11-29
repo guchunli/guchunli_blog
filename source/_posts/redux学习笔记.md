@@ -11,6 +11,7 @@ toc: true
 1.使用Immutable.js创建不可变的数据结构。
 2.使用JavaScript库(如Underscore和Lodash)来执行不可变的操作。
 3.使用ES6方法执行不可变操作，`b = Object.assign([],a)`，也可以使用操作符(...)执行不可变操作。
+<!--more-->
 
 ## 组成部分
 1.store：在Redux中，所有的数据（比如state）被保存在一个被称为store的容器中 → 在一个应用程序中只能有一个。store本质上是一个状态树，保存了所有对象的状态。任何UI组件都可以直接从store访问特定对象的状态。

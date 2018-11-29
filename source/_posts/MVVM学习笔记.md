@@ -2,7 +2,8 @@
 title: MVVM学习笔记
 date: 2017-05-20 11:38:51
 categories: 笔记
-tags: 
+tags: [面试]
+---
 
 ## MVVM（Model View View-Mode）的四个组件：
 * view ：由 MVC 中的 view 和 controller 组成，负责 UI 的展示，绑定 viewModel 中的属性，触发 viewModel 中的命令；在MVVM中，Controller可以当作一个重量级的View（负责界面切换和处理各类系统事件）。
