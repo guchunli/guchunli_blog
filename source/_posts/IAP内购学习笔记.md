@@ -1,8 +1,8 @@
 ---
-title: Apple Pay学习笔记
+title: IAP内购学习笔记
 date: 2017-03-15 16:37:17
 categories: 笔记
-tags: [Apple Pay]
+tags: [IAP]
 ---
 ## 概述
 ### 1.支付方式：Touch ID/ Passcode
@@ -288,4 +288,24 @@ NSLog(@"取消或者交易完成");
 }
 ```
 
-转自：[Apple Pay--iOS开发](http://www.cnblogs.com/dashunzi/archive/2016/02/23/ApplePay.html#undefined)
+
+## IAPHelper
+<!--more-->
+
+## 恢复购买
+ 在如下两种情况下，你只能使用SKPaymentQueue的restoreCompletedTransactions方法来恢复自动订阅或者非消耗性商品：
+ * 1.在消费者拥有的其他设备上安装它们。
+ * 2.在相关应用程序被删除的设备上重新安装它们。
+ 
+## 沙箱测试
+### 生成共享密钥
+ 进入 Features，点击 In-App Purchases 表格左上角的 View Share Secret。有可能，你还需要点击 Generate Shared Secret 按钮。
+   
+参考文章：
+[Apple Pay--iOS开发](http://www.cnblogs.com/dashunzi/archive/2016/02/23/ApplePay.html#undefined)
+[iOS内购编程指南](https://www.jianshu.com/p/17e0d11149f3)
+[IAP开发的那些坑](https://www.jianshu.com/p/ebdeea271352)
+[获取共享密钥](https://blog.csdn.net/kmyhy/article/details/75489241)
+[iOS开发之内购-AppStore](https://yimouleng.com/2015/12/17/ios-AppStore/)
+
+
