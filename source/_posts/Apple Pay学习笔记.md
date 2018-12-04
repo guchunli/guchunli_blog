@@ -1,8 +1,8 @@
 ---
-title: IAP内购学习笔记
+title: Apple Pay学习笔记
 date: 2017-03-15 16:37:17
 categories: 笔记
-tags: [IAP]
+tags: 
 ---
 ## 概述
 ### 1.支付方式：Touch ID/ Passcode
@@ -13,8 +13,8 @@ tags: [IAP]
 ### 5.2014年10月20日在美国正式上线，2016年2月18日凌晨5：00， Apple Pay 业务在中国上线。
 ### 6.与微信支付以及支付宝等第三方支付平台的区别：
 * 硬件方面
-    + Apple Pay：必须是iOS设备， 而且是按照线上支付和线下支付区分不同的真机设备（具体参考表1）
-    + 微信、支付宝： 基本跟硬件设备无关， 支持大多数的只能手机
+    + Apple Pay：必须是iOS设备， 而且是按照线上支付和线下支付区分不同的真机设备
+    + 微信、支付宝： 基本跟硬件设备无关， 支持大多数的智能手机
 * 网络环境要求
     + Apple Pay：线上支付需要联网， 线下支付无需联网就可以支付
     + 微信、支付宝： 无论是线上还是线下支付， 都需要联网使用
@@ -289,23 +289,8 @@ NSLog(@"取消或者交易完成");
 ```
 
 
-## IAPHelper
-<!--more-->
-
-## 恢复购买
- 在如下两种情况下，你只能使用SKPaymentQueue的restoreCompletedTransactions方法来恢复自动订阅或者非消耗性商品：
- * 1.在消费者拥有的其他设备上安装它们。
- * 2.在相关应用程序被删除的设备上重新安装它们。
- 
-## 沙箱测试
-### 生成共享密钥
- 进入 Features，点击 In-App Purchases 表格左上角的 View Share Secret。有可能，你还需要点击 Generate Shared Secret 按钮。
-   
 参考文章：
 [Apple Pay--iOS开发](http://www.cnblogs.com/dashunzi/archive/2016/02/23/ApplePay.html#undefined)
-[iOS内购编程指南](https://www.jianshu.com/p/17e0d11149f3)
-[IAP开发的那些坑](https://www.jianshu.com/p/ebdeea271352)
-[获取共享密钥](https://blog.csdn.net/kmyhy/article/details/75489241)
-[iOS开发之内购-AppStore](https://yimouleng.com/2015/12/17/ios-AppStore/)
+
 
 
