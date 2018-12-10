@@ -20,6 +20,11 @@ toc:
 2. 修改函数名，属性名：代码混淆
 
 3. 修改工程名，target，scheme
+1)）在Xcode中点击工程名称直接修改，Rename
+2）点击Edit Scheme，点击Duplicate Scheme命名为新的项目名，点击Manage Schemes选中新的scheme，删除旧的scheme
+3）修改项目下与项目名同名的目录名称，实体文件夹名称，工程下查找旧的项目名称进行替换，如：Info.plist File，prefix header，framework search path 下的静态库路径。
+4）修改.xcodeproj：右键显示包内容，打开.pbxproj文件，查找替换项目名
+5）如果有pod，删除Podfile.lock文件、.xcodeproj文件以及Pods文件夹，重新 `pod install`。
 
 4. 修改资源路径和文件名，修改md5值
 图片：修改icon、启动页、图标
