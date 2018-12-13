@@ -239,15 +239,23 @@ loadView创建：
 * ABC排序
 
 * nil、Nil、NULL、NSNull  
-nil：指向一个对象的空指针
-Nil：指向一个类的空指针
-NULL：指向其他类型（如：基本数据类型，C类型）的空指针
-NSNull：通常标识集合中的空值
+nil：定义一个实例为空，指向一个OC对象的空指针，而且我们对于nil的调用方法，是不会产生crash或者抛出异常。
+NULL：nil是一个对象，而NULL只是一个空值而已。
+Nil：定义一个空的类，指向一个类的空指针。
+NSNull：通常标识集合中的空值，定义了一个单例对象用于表示集合对象的空值。集合对象无法包含nil 用来作为其具体的值，譬如NSArray.NSSet和NSDictionary.相应的，nil值用一个特定的对象NSNulll来表示。NSNull只是提供了一个单一实例用力表示对象属性中的nil值。在默认的实现方法中，dictionaryWithValuesForKeys:和setValuesForKeysWith:自动地奖NSNull和nil相互转换，因此我们设置的对象不需要进行NSNulld的测试操作。
 ```
 NSURL *url = nil;
 Class cls = Nil;
 int *pointerInt = NULL;
-NSArray *arr = [NSArray arrayWithObject:[[NSObject alloc]init],[NSNull null],[[NSObject alloc]init],[[NSObject alloc]init]];
+NSArray *arr = [NSArray arrayWithObjects:[[NSObject alloc]init],[NSNull null],[[NSObject alloc]init],[[NSObject alloc]init],nil,nil];
+NSLog(@"%@--%ld",arr,arr.count);
+//打印结果
+(
+"<NSObject: 0x600001de85c0>",
+"<null>",
+"<NSObject: 0x600001de8570>",
+"<NSObject: 0x600001de85f0>"
+)--4
 ```
 
 * uibutton hitTest
@@ -506,8 +514,20 @@ let x = d.sort{$0.1<$1.1}.map{$0.0}
 3.常用的多线程有哪几种，以及使用场景
 4.简单写出VC的生命周期（执行的方法及顺序）
 5.@property的本质是什么，有哪些属性关键字和关键字的使用情况。
+答：assign：直接赋值
+retain:引用计数+1
+nonatomic:非原子性访问，多线程并发访问会提高性能。
+atomic:原子性访问
+strong:ARC
+weak:ARC，在属性所指的对象遭到摧毁时,系统会将 weak 修饰的属性对象的指针指向 nil。
 
-# fzapb
+* copy：建立一个索引计数为1的对象，在赋值时使用传入值的一份拷贝。
+NSString、NSArray、NSDictionary 等等经常使用 copy 关键字,是因为他们有对应的可变类型:NSMutableString、NSMutableArray、NSMutableDictionary.
+为确保对象中的属性值不会无意间变动,应该在设置新属性值时拷贝一份,保护其封装性block，也经常使用 copy，关键字block。
+使用 copy 是从 MRC 遗留下来的“传统”,在 MRC 中,方法内部的 block 是在栈区的,使用 copy 可以把它放到堆区.
+在 ARC 中写不写都行:对于 block 使用 copy 还是 strong 效果是一样的,但是建议写上 copy,因为这样显示告知调用者“编译器会自动对 block 进行了 copy 操作。
+
+# fz apb
 1.描述一个MVC模式和MVVM模式等具体应用场景和如何应用，以及两种模式的最根本区别
 
 # zili（swift）
@@ -533,16 +553,19 @@ view2.alpha = 0.5 //will this line compile
     return self;
 }
 ```
-
-8.nil 和 None 有什么不同，变量optional1 和 optional2 有什么不同，当nil == None 输出是？
-var optional1: String? = nil
-var optional2: String? = None
+答：结果self和super都是指向当前实例的。不同的是，[self class]会在当前类的方法列表中去找class这个方法，[super class]会直接开始在当前类的父类中去找calss这个方法，两者在找不到的时候，都会继续向祖先类查询class方法，最终到NSObject类。那么问题来了，由于我们在Father和Son中都没有去重写class这个方法，最终自然都会去执行NSObject中的class方法，结果也自然应该是一样的。至于为什么是Son，我们可以看看NSObject中class的实现：
+```
+-(Class)class { 
+return object_getClass(self); 
+}
+```
+这就说的通了，返回的都是self的类型，self此处正好就是Son，因此结果就会输出Son。
 9.swift2.0引用了一个新关键字能产生递归枚举类型，下面是一个带有Node节点的枚举类型，Node关联值类型，T和List：
 enum List<T>{
     case Node(T,List<T>)
 }
 10.swift中struct和class有什么区别，举个应用中的实例
-class可以继承
+class可以继承 值拷贝/指针拷贝
 12.OC的类可以多重继承吗，可以实现多个接口吗，category 是什么，重写一个类的方式用继承好还是分类好，为什么
 13.什么情况使用weak关键字，相比assign有什么不同
 14.设计模式是什么，你知道哪些设计模式，并简要叙述

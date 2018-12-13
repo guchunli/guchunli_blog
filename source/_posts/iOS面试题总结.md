@@ -6,6 +6,8 @@ tags: [面试]
 toc: 
 ---
 
+### 属性关键字
+
 ### iOS平台怎么做数据的持久化?coredata和sqlite有无必然联系?coredata是一个关系型数据库吗?
 <!--more-->
 答：core data是对sqlite的封装，sqlite是c语言的api，core data把c的api翻译成oc的api，coredata还提供了一些管理的功能，使用更加方便。它提供了对象-关系映射(ORM)的功能，即能够将OC对象转化成数据，保存在SQLite数据库文件中，也能够将保存在数据库中的数据还原成OC对象。
@@ -23,5 +25,5 @@ toc:
 ### 对于语句NSString *obj =[[NSData alloc] init]; obj在编译时和运行时分别是什么类型的对象?
 答:编译时是NSString的类型；运行时是NSData类型的对象
 
-### 工厂模式
+### 设计模式
 
