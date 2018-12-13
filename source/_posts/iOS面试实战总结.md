@@ -266,7 +266,287 @@ NSArray *arr = [NSArray arrayWithObject:[[NSObject alloc]init],[NSNull null],[[N
 
 * OC 高效
 
-# 
+# sougou
+第一部分：选择题（有多选）
+1.在OC中类接口声明的关键字为：（ D ）
+A、@import
+B、@interface
+C、@implementation
+D、@protocal
+2.不会立刻使引用计数器改变的是（ C ）
+A、release
+B、alloc
+C、autorelease
+D、retain
+3.下属代码打印的结果是：（ C ）
+NSString *name = [[NSString alloc]initWithString:@"张三"];
+NSLog(@"%ld",[name retainCount]);
+A、-1
+B、0
+C、1
+D、2
+4.控制台打印的最后一条信息会是：（ A ）
+NSDictionary *dict = [NSDictionary dictionaryWithObject:@"v" forKey:@"k"];
+NSLog(@"%@",[dict objectForKey:@"k"]);
+[dict release];
+A、v
+B、k:v
+C、崩溃信息
+D、v:k
+5.以下说法正确的是：（ B ）
+A、nonatomic：提供多线程保护，提高性能，在没有使用多线程的编程中可以选择使用
+B、assign：属性默认值，说明设置器直接进行赋值，针对基础数据类型（NSInteger,CGFloat）和C数据类型（int,float,double,char）等。
+C、retain：此属性只用于obj-c的对象类型，对参数进行release 旧值，再retain 新值。
+D、copy：此属性只对实现NSCoping 协议的对象有效（NSString）,拷贝工作由copy方法执行
+6.下面代码对字符串str进行拼接后，2次打印的地址是否相同：（ A ）
+NSMutableString *str = [[NSMutableString alloc]initWithFormat:@"123"];
+NSLog(@"str = %p",str);
+[str appendFormat:@"456"];
+NSLog(@"str = %p",str);
+A、相同
+B、不同
+C、随机打印
+D、有时相同，有时不同
+7.以下说法正确的是：（ B ）
+A、OC不用"函数调用"，而用互相传递讯息
+B、OC一个完整的类分为interface和implemention两块
+C、OC对象使用new分配内存，用delete释放
+D、OC协议分为非正式协议和正式协议
+8.OC中包含一个自定义的头文件应该使用：（ C ）
+A、#include ""
+B、#include <>
+C、#import ""
+D、import <>
+9.OC中的委托最好声明成：（ B ）
+A、retain
+B、assign
+C、copy
+D、readonly
+10.创建对象时，对象的内存和指向对象的指针分别分配在哪里：（ A ）
+A、堆区，栈区
+B、常量区，堆区
+C、全局区，栈区
+D、栈区，堆区
+11.关于KVC的描述错误的是:（ A ）
+A、KVC 是指 "Key-Value Observing"
+B、是一种间接访问对象属性的机制
+C、只能访问对象的属性
+D、当对象的属性值改变时，我们能收到一个通知
+12.以下说法正确的是:（ C ）
+A、求数组的内容的个数用length方法
+B、字典时根据其位置来索引数据的
+C、协议中定义的方法默认是必须实现的
+D、定义类目必须要拿到自己类的源代码
+13.内存管理的关键字描述错误的是:（ D ）
+A、retainCount是指对象的引用计数
+B、retain关键字可以增大对象的引用计数
+C、release可以减小对象的引用计数，但autorelease不可以
+D、dealloc方法不能直接调用
+14.下面描述正确的选项是:（ B ）
+A、当计数器为1时，dealloc方法由系统自动调用
+B、一个对象在引用计数变为0时，会调用自己的dealloc
+C、在dealloc方法里，应该在[super dealloc]后释放本类所拥有的对象
+D、开启ARC后，可以重载dealloc，必须在dealloc里写[super dealloc]方法
+15.下面哪个选项是正确的（ B ）
+A、用继承可以扩展一个类，要调用扩展的方法，既可以用父类，也可以用子类
+B、用类目可以扩展一个类，可以直接用该类或该类的实例对象，去调用该类目扩展的方法
+C、延展就是类目
+D、可以在一个类的外部，调用这个类延展的方法
+
+第二部分：问答题（至少答四题）
+1.在iOS中实现回调一般有哪几种方法
+block,delegate
+2.OC中实现多线程有哪几种方式
+NSThread,pthread,NSOperation+NSOperationQueue,GCD
+3.NSMutableDictionary 中的 setObject:forKey 和 setValue:forKey 有什么区别
+
+4.weak 和 assign 有什么区别
+
+5.initWithCoder 和 initWithFrame 有什么区别
+
+6.NSView 的 frame、bounds 和 center 有什么区别
+frame：相对于父视图
+bounds：相对于自身
+center：中心店
+7.awakeFromNib,initWithCoder,viewDidLoad 的调用顺序和调用时间
+
+第三部分：编程题
+1.编程实现字符串拷贝（考虑内存重叠）
+char *strcpy(char *src,char *dst);
+
+2.利用分类给NSString 扩展三个方法：
+（1）字符串翻转（比如：@"123"，调用方法后，返回@"321"）
+（2）计算英文字母的个数（比如：@"123abc456"，调用方法后，返回@"3"）
+（3）去除字符串两端的空格（比如：@"123 456"，调用方法后，返回@"123456"）
+```
+@interface NSString(LPY)
+
++ (NSString *)stringWithReverse:(NSString *)rString;
+- (NSString *)initWithReverse;
+
++ (NSString *)stringWithCharacterLength:(NSString *)lString;
+- (NSString *)initWithCharacterLength;
+
++ (NSString *)stringWithTrim:(NSString *)tString;
+- (NSString *)initWithTrim;
+
+@END
+```
+
+# 未知
+第一部分：swift技术
+1.struct Tutorial{
+var difficulty: Int = 1
+}
+var tutorial1 = Tutorial()
+var tutorial2 = tutorial1
+tutorial2.difficulty = 2
+请说明：tutorial1.difficulty和tutoria2.difficulty 的值分别是多少
+如果Tutorial是一个类会有什么不同，说明原因
+1.2 2.2 结构体值拷贝，类指针拷贝
+2.下面code是把数组按字母顺序进行排序，看起来有些复杂，你能用闭包代码简化它吗
+```
+let sortedAnimals = animals.sort{(one: String,two: String) -> Bool in
+return one<two
+}
+```
+sort{<} sort{$0<$1}
+3.下面代码能否编译通过
+public struct ThermometerStruct {
+    private(set) var temperature: Double = 0.0
+    public mutating func registerTemperature(temperature: Double){
+        self.temperature = temperature
+    }
+}
+let thermometerStruct = ThermometerStruct()
+thermometerStruct.registerTemperature(56.0)
+4.下面代码打印输出是什么？为什么？
+```
+var thing = "cars"
+let closure = {(thing) in
+print("I love \(thing)")
+}
+thing = "airplane"
+```
+I love airplane
+5.下面代码会出什么错误，如何修复
+struct Kitten{
+
+}
+func showKitten(kitten: Kitten?){
+    guard let k = kitten else {
+        print ("there is no kitten")
+    }
+    print(k)
+}
+6.什么是optional类型，它是用来解决什么问题的，对一个optional变量拆包有多少种方法
+7.swift中枚举类型中，row values 和associated values有什么区别
+8.下面代码中，x时什么类型，值是什么
+let d = ["john":23,"james":24,"vincent":34,"louis":29]
+let x = d.sort{$0.1<$1.1}.map{$0.0}
+
+第二部分：iOS技术
+1.view 类中，bounds和frame有什么区别
+2.描述viewcontroller的生命周期事件顺序
+3.描述iOS APP 应用程序声明周期状态
+4.列举比较重要的application delegate methods
+5.iOS中如何进行并发编程开发，请描述各种方式的使用方式和优缺点
+
+第三部分：编程
+1.给Array写一个扩展方法，查一下Array中不相同元素的个数（注意需要泛型类型支持，且类型遵循comparable协议），如：[1,2,3].countUniques() //输出结果：3
+
+第四部分：逻辑题
+
+# zaiyoudao
+1.id 声明的属性有什么特性
+2.@public,@protect,@private 它们的含义与作用
+3.深复制和浅复制的区别
+4.NSArray 和NSMutableArray 的区别
+6.在iPhone应用中如何保存数据
+7.view和view之间传值方式
+8.请简单介绍下APNS发送系统消息的机制
+9.__block和__weak 修饰符的区别
+10.define和const常量的区别
+19.描述下SDWebimage中给UIImageView加载图片的逻辑。
+
+# buchang
+1.iOS设计模式是什么，你知道哪些设计模式，并简要叙述
+2.#import 和#include 有什么区别，@class呢，#import<>和#import()有什么区别
+3.category（类别）、extension（扩展）和继承的区别
+4.什么事KVC和KVO
+5.ViewController生命周期
+6.进程和线程的区别，同步异步的区别，并行和并发的区别
+7.什么时候报 unrecognize selector 错误，iOS有哪些机制来避免走到这一步
+8.runloop 是来做什么的，runloop 和线程有什么关系，主线程默认开启了runloop吗，子线程呢
+9.类方法和实例方法有什么区别
+10.isKindOfClass,isMemberOfClass selector 作用分别是什么
+11.gGCD和NSOperation 的区别
+12.Runtime 实现的机制是什么，怎么用，一般用于干嘛
+13.什么是 method swizzling
+14.假定输入的字符串中只包含字母和*号，编写函数fun，功能是：除了中间和尾部的*外，将字符串中其他*全部删除。编写时，不用C的其他函数。例：*****A*BC*DEF*G****，结果为：A*BC*DEF*G****
+
+# feienlaisi 
+1.NSObject 中 description 属性的意义，它可以重写吗
+2.懒加载（延时加载）
+3.UIView和CALayer的区别
+4.优化UITablebView的性能（比如含有正在加载的网络图片不会卡）
+5.cocoapods
+7.进程间的通信方式
+8.static 的作用
+9.线程的状态
+10.AFNetworking 的底层实现
+11.nil,Nil,NULL,NSNull
+12.简述 NotificationCenter,KVC,KVO,delegate，并说明它们之间的区别
+13.drawRect 和 layoutsubviews 的区别
+14.controllerA调用controllerB后，如何在B中对A进行一些代码操作，请用block和delegate分别实现
+
+# yige
+1.请写一个单例的实现
+2.简单描述一个MVC,MVP,MVVM的优缺点
+3.常用的多线程有哪几种，以及使用场景
+4.简单写出VC的生命周期（执行的方法及顺序）
+5.@property的本质是什么，有哪些属性关键字和关键字的使用情况。
+
+# fzapb
+1.描述一个MVC模式和MVVM模式等具体应用场景和如何应用，以及两种模式的最根本区别
+
+# zili（swift）
+1.用var 声明view1和用let声明view2，在下面的例子中有什么不同，能否编译通过
+```
+import UIKit
+var view1 = UIView()
+view1.alpha = 0.5
+let view2 = UIView()
+view2.alpha = 0.5 //will this line compile
+```
+3.属性关键字 readwrite，readionly，assign，retain，copy，nonatomic 各有什么作用，在哪种情况下用
+4.你是否接触过OC中的反射机制，简单聊一下概念和使用
+5.开发项目中你怎么检查内存泄露
+6.下面的代码输出什么
+```
+@implementation Son: Father
+- (id)init{
+    if(self = [super init]){
+    NSLog(@"%@",NSStringFromClass([self class]));//Son
+    NSLog(@"%@",NSStringFromClass([super class]));//Son
+    }
+    return self;
+}
+```
+
+8.nil 和 None 有什么不同，变量optional1 和 optional2 有什么不同，当nil == None 输出是？
+var optional1: String? = nil
+var optional2: String? = None
+9.swift2.0引用了一个新关键字能产生递归枚举类型，下面是一个带有Node节点的枚举类型，Node关联值类型，T和List：
+enum List<T>{
+    case Node(T,List<T>)
+}
+10.swift中struct和class有什么区别，举个应用中的实例
+class可以继承
+12.OC的类可以多重继承吗，可以实现多个接口吗，category 是什么，重写一个类的方式用继承好还是分类好，为什么
+13.什么情况使用weak关键字，相比assign有什么不同
+14.设计模式是什么，你知道哪些设计模式，并简要叙述
+15.MVC和MVVM的区别
 
 # other
 * 热修复
