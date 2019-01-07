@@ -6,7 +6,21 @@ tags: [面试]
 toc: 
 ---
 
+### 内存管理
+[iOS中内存管理学习笔记]()
+
 ### 属性关键字
+[OC中属性关键字相关]()
+<!--more-->
+
+### 设计模式
+[OC中的设计模式]()
+
+## runtime与runloop
+[iOS runtime与runloop学习笔记](https://guchunli.github.io/2017/03/22/iOS-runtime学习笔记/)
+
+
+
 
 ### iOS平台怎么做数据的持久化?coredata和sqlite有无必然联系?coredata是一个关系型数据库吗?
 <!--more-->
@@ -24,6 +38,4 @@ toc:
 
 ### 对于语句NSString *obj =[[NSData alloc] init]; obj在编译时和运行时分别是什么类型的对象?
 答:编译时是NSString的类型；运行时是NSData类型的对象
-
-### 设计模式
 

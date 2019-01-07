@@ -15,10 +15,8 @@ runloop运行循环:
 内部实现：do-while循环。
 
 2.请列举你知道的设计模式。
-代理，观察者，单例，mvc／mvvm，工厂，策略模式
 
 3.请设计一个账号系统，需考虑持久化，登录态等。
-
 
 4.请用代码或者伪代码打印输出一个菱形。
 ```
@@ -45,39 +43,6 @@ void print(int n)
 Memory 和 Disk 双重 Cache 机制。缓存到tmp的cache文件夹下，NSCachesDirectory。
 
 6.是否使用或了解过swift，react native，优缺点是什么。
-swift优点：
-（1）简洁的语法；
-（2）更强的类型安全；
-（3）函数式编程的支持；
-（4）编写 OS X 下的自动化脚本
-swift缺点：
-（1）App体积变大
-（2）Xcode 支持不够好
-（3）第三方库的支持不够多
-（4）语言版本更新带来的编译问题
-
-react native优点：
-1、原生应用的用户体验
-2、跨平台特性
-3、热更新（升级）
-4、上手快，入门容易，开发效率较高
-5、社区繁荣
-
-1.跨平台开发。同一段 Javascript 代码可以被用于 iOS 和 Android 两个平台。相比于以前 iOS 和 Android App 各维护一套逻辑大同小异的代码，React Native 的开发、测试和维护成本要低很多。
-2.快速编译。比起 Xcode 中漫长的编译，React Native 采用了热加载（Hot Reload）的即时编译机制，使得 App UI 的开发体验大幅改善，几乎到了和网页开发一样随改随变的效果。
-3.快速发布。通过 JSBundle，React Native 可以即时更新 App。相比原来冗长的审核和上传过程，发布和测试新功能的效率大幅提高。
-4.渲染和布局更加高效。React Native 可以直接套用网页开发的 CSS 和 flex 机制，摆脱了 autolayout 和 frame 布局中繁琐的数学计算，更加直接简便。
-5.简单易学。相比于 iOS 和 Android 的一整套复杂的知识体系，React Native 从本质上来讲就是状态机，对于开发者来讲理解不难，且实际操作可谓入门容易、上手轻松。如果是前端开发者，那么对于 Javascript 本来就有相应了解，用 React Native 开发手机应用更是水到渠成。
-
-react native缺点：
-1.对开发人员要求较高
-2.发展还不成熟，目前很多ui组件只有ios的实现，android的需要自己实现
-3.文档/组件欠缺, 版本升级快
-
-1.第三方依赖。React Native 严重依赖于 Facebook 的维护。苹果在 iOS 上每次技术的更新、政策的改变都会让原来使用了 React Native 代码库受到影响，等待 Facebook 和社区的修复会妨碍 App 的更新和用户体验。前段时间，百度和开发者们弃用
-React Native 而迫使的 Facebook 修改开发者权限（License）事件，证明了开发依赖于第三方的风险确实存在。
-2.逻辑上的额外开销。直到今天， React Native 依然只是0.49版本，仅仅支持简单的 UI 制作，其不成熟的 API 连复杂的动画都难以实现，更别提 iOS 的底层优化和兼容操作。同时因为操作系统和设备的不同，React Native 得分别进行针对性处理，这对代码库的维护又是一个挑战。
-3.联调的困难。对于原生的 iOS 和 Android App 引入 React Native，会增加整个代码库的复杂度，在深入底层原生代码进行 debug 时也是困难重重，可以说是在开发和维护上的成本都有所增加。
 
 7.线上crash如何解决。
 bug严重性分析：确定紧急版本更新，迭代版本中修复，热修复。
@@ -140,7 +105,7 @@ bug严重性分析：确定紧急版本更新，迭代版本中修复，热修�
 }
 ```
 
-## 2.简述OC的内存管理模式，包括alloc,retain,copy,release,autorelease,dealloc这些方法的理解。
+<!--## 2.简述OC的内存管理模式，包括alloc,retain,copy,release,autorelease,dealloc这些方法的理解。-->
 
 ## 3.描述autorelease对象释放时机，简述autorelasepool的工作机制
 
@@ -174,9 +139,7 @@ mapkit：always/wheninuse background
 
 ## 11.简述1.2个自己经常使用的第三方库和其优缺点
 
-
-## atomic／lock
-一般情况下并不要求属性必须是“原子的”，因为这并不能保证“线程安全” ( thread safety)，若要实现“线程安全”的操作，还需采用更为深层的锁定机制才行。例如，一个线程在连续多次读取某属性值的过程中有别的线程在同时改写该值，那么即便将属性声明为 atomic，也还是会读到不同的属性值。
+<!--## atomic／lock-->
 
 ## 使用一种数据结构替代NSNotificationCenter
 dictionary
@@ -216,9 +179,9 @@ loadView创建：
 过程：loadView->viewDidLoad->viewWillAppear->viewWillLayoutSubviews->viewDidLayoutSubviews->viewDidAppear->viewWillDisappear->viewDidDisappear->viewDidUnLoad
 
 # dongao
-1.strong，retain，copy，assign，weak，unsafe_unretained
+<!--1.strong，retain，copy，assign，weak，unsafe_unretained-->
 2.远程推送
-3.copy，nsmutablearray
+<!--3.copy，nsmutablearray-->
 4.layoutsubviews什么时候调用
 5.内存空间
 6.内存优化
@@ -228,7 +191,7 @@ loadView创建：
 10.OC动态语言理解
 
 # 高德
-* reatin copy 属性 代码
+<!--* reatin copy 属性 代码-->
 
 * 通知 主/子线程
 
@@ -513,19 +476,7 @@ let x = d.sort{$0.1<$1.1}.map{$0.0}
 2.简单描述一个MVC,MVP,MVVM的优缺点
 3.常用的多线程有哪几种，以及使用场景
 4.简单写出VC的生命周期（执行的方法及顺序）
-5.@property的本质是什么，有哪些属性关键字和关键字的使用情况。
-答：assign：直接赋值
-retain:引用计数+1
-nonatomic:非原子性访问，多线程并发访问会提高性能。
-atomic:原子性访问
-strong:ARC
-weak:ARC，在属性所指的对象遭到摧毁时,系统会将 weak 修饰的属性对象的指针指向 nil。
-
-* copy：建立一个索引计数为1的对象，在赋值时使用传入值的一份拷贝。
-NSString、NSArray、NSDictionary 等等经常使用 copy 关键字,是因为他们有对应的可变类型:NSMutableString、NSMutableArray、NSMutableDictionary.
-为确保对象中的属性值不会无意间变动,应该在设置新属性值时拷贝一份,保护其封装性block，也经常使用 copy，关键字block。
-使用 copy 是从 MRC 遗留下来的“传统”,在 MRC 中,方法内部的 block 是在栈区的,使用 copy 可以把它放到堆区.
-在 ARC 中写不写都行:对于 block 使用 copy 还是 strong 效果是一样的,但是建议写上 copy,因为这样显示告知调用者“编译器会自动对 block 进行了 copy 操作。
+<!--5.@property的本质是什么，有哪些属性关键字和关键字的使用情况。-->
 
 # fz apb
 1.描述一个MVC模式和MVVM模式等具体应用场景和如何应用，以及两种模式的最根本区别
@@ -539,7 +490,7 @@ view1.alpha = 0.5
 let view2 = UIView()
 view2.alpha = 0.5 //will this line compile
 ```
-3.属性关键字 readwrite，readionly，assign，retain，copy，nonatomic 各有什么作用，在哪种情况下用
+<!--3.属性关键字 readwrite，readionly，assign，retain，copy，nonatomic 各有什么作用，在哪种情况下用-->
 4.你是否接触过OC中的反射机制，简单聊一下概念和使用
 5.开发项目中你怎么检查内存泄露
 6.下面的代码输出什么
@@ -567,7 +518,7 @@ enum List<T>{
 10.swift中struct和class有什么区别，举个应用中的实例
 class可以继承 值拷贝/指针拷贝
 12.OC的类可以多重继承吗，可以实现多个接口吗，category 是什么，重写一个类的方式用继承好还是分类好，为什么
-13.什么情况使用weak关键字，相比assign有什么不同
+<!--13.什么情况使用weak关键字，相比assign有什么不同-->
 14.设计模式是什么，你知道哪些设计模式，并简要叙述
 15.MVC和MVVM的区别
 

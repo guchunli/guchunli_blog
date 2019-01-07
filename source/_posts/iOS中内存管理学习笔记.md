@@ -6,14 +6,25 @@ tags: [面试]
 toc:
 ---
 
+
+## 内存空间
+`任何继承了NSObject的对象需要进行内存管理，非对象类型(int、char、float、double、struct、enum等) 不需要进行内存管理`
+内存（RAM）中的5大区都是什么？
+* 栈区（stack）：由操作系统自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈(先进后出)，非OC对象一般放在操作系统的栈里面。
+* 堆区（heap）：一般由程序员分配释放，若程序员不释放，程序结束时可能由OS回收，分配方式类似于链表，继承了NSObject的对象的存储在操作系统的堆里边。
+* 全局区（静态区）（static）：全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。程序结束后由系统释放。
+* 文字常量区：常量字符串就是放在这里的，还有const常量。程序结束后由系统释放。
+* 程序代码区：存放函数体的二进制代码。
+
 ## MRC
-答：
+MRC：当调用这个对象的alloc、new、retain、copy、mutableCopy方法之后引用计数器自动在原来的基础上加1（ObjC中调用一个对象的方法就是给这个对象发送一个消息），当调用这个对象的release，autorelease方法之后它的引用计数器减1，如果一个对象的引用计数器为0，则系统会自动调用这个对象的dealloc方法来销毁这个对象。
+
 | 对象操作 | Objective-C方法 |    对应的操作结果  |
 |:--------:|:------:|----------:|
 | 生成并持有对象  |  alloc, new, copy,mutableCopy等方法  |  生成对象并设置引用计数 =1 |
 | 持有对象  |  reatain方法  |  使引用计数 +1 |
 | 释放对象  |  release方法  |  使引用计数 -1 |
-| 废弃对象  |  dealloc方法  |  引用计数 =0 时调用（系统自动调用） |
+| 废弃对象  |  dealloc方法  |  引用计数 = 0 时调用（系统自动调用） |
 <!--more-->
 ```
 +(id)alloc
@@ -44,6 +55,7 @@ return NSAllocateObject(self, 0, zone);
 ```
 
 ## ARC
+当调用这个对象的alloc、new、retain、copy、mutableCopy方法之后引用计数器自动在原来的基础上加1（ObjC中调用一个对象的方法就是给这个对象发送一个消息），当调用这个对象的release，autorelease方法之后它的引用计数器减1，如果一个对象的引用计数器为0，则系统会自动调用这个对象的dealloc方法来销毁这个对象。
 当一个autorelease pool(自动释放池)被drain(销毁)的时候会对pool里的对象发送一条release的消息.
 * 在ARC项目中我们同样可以创建NSAutoreleasePool类对象去帮助我们更精确的管理内存问题。
 * NSAutoreleasePool的管理范围是在NSAutoreleasePool *pool = [[NSAutoreleasePool alloc]init];与[pool release];之间的对象
@@ -51,6 +63,63 @@ return NSAllocateObject(self, 0, zone);
 * NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init]; 当执行[pool autorelease]的时候，系统会进行一次内存释放，把autorelease的对象释放掉，如果没有NSAutoreleasePool, 那这些内存不会释放
 注意，对象并不是自动被加入到当前pool中，而是需要对对象发送autorelease消息，这样，对象就被加到当前pool的管理里了。当当前pool接受到drain消息时，它就简单的对它所管理的所有对象发送release消息。
 * 在ARC项目中.不能直接使用autorelease pools,而是使用@autoreleasepool{},@autoreleasepool{}比直接使用NSAutoreleasePool效率高。不使用ARC的时候也可以使用(autorelease嵌套）
+
+### AutoreleasePool
+* 只要给对象发送一条autorelease消息，会将对象放到一个自动释放池中，当该pool被释放时,该pool中的所有对象会被调用一次release。
+* 自动释放池是以栈的形式存在，栈顶就是离调用autorelease方法最近的自动释放池
+
+* AutoreleasePool的使用
+注意：放到自动释放池代码中的对象，只有调用了 autorelease 方法，对象才会加入到自动释放池
+```
+NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
+Person *p = [[[Person alloc] init] autorelease];
+[autoreleasePool drain];
+```
+
+```
+@autoreleasepool
+{ // 开始代表创建自动释放池
+Person *p = [[Person new] autorelease];
+// 将代码写到这里就放入了自动释放池
+} // 结束代表销毁自动释放池(会给池子中所有对象发送一条release消息)
+```
+
+* autoReleasePool 什么时候释放?
+App启动后，苹果在主线程 RunLoop 里注册了两个 Observer，其回调都是 _wrapRunLoopWithAutoreleasePoolHandler()。
+第一个 Observer 监视的事件是 Entry(即将进入Loop)，其回调内会调用 _objc_autoreleasePoolPush() 创建自动释放池。其 order 是 -2147483647，优先级最高，保证创建释放池发生在其他所有回调之前。
+第二个 Observer 监视了两个事件： BeforeWaiting(准备进入休眠) 时调用_objc_autoreleasePoolPop()  和 _objc_autoreleasePoolPush() 释放旧的池并创建新池；Exit(即将退出Loop) 时调用 _objc_autoreleasePoolPop() 来释放自动释放池。这个 Observer 的 order 是 2147483647，优先级最低，保证其释放池子发生在其他所有回调之后。
+在主线程执行的代码，通常是写在诸如事件回调、Timer回调内的。这些回调会被 RunLoop 创建好的 AutoreleasePool 环绕着，所以不会出现内存泄漏，开发者也不必显示创建 Pool 了。
+
+* autorelease
+返回对象本身，只是把对release的调用延迟了，调用完autorelease方法后，对象的计数器不变
+
+* drain
+销毁一个自动释放池.
+
+* dealloc
+```
+-(void)dealloc{
+NSLog(@"Invoke Person's dealloc method.");
+[super dealloc];//注意：super dealloc一定要写到所有代码的最后（两个目的：一是父类可能有其他引用对象需要释放；二是：当前对象真正的释放操作是在super的dealloc中完成的）
+}
+```
+
+* 野指针/空指针
+野指针：一个指针指向一个僵尸对象（被释放的对象），给一个野指针发送消息就会报错(EXC_BAD_ACCESS错误)
+空指针：没有指向存储空间的指针(里面存的是nil, 也就是0)，给空指针发消息是没有任何反应的
+```
+//如果不设置p=nil，则p就是一个野指针,此时如果再调用对象release会报错
+//但是如果此时p已经是空指针了，则在ObjC中给空指针发送消息是不会报错的
+p=nil;
+[p release];
+```
+
+### ARC下的dealloc
+ARC下,系统可以帮我们释放该对象，及其包含的对象，但是却无法释放不属于该对象的一些东西。
+* 移除通知的观察者,或KVO的观察者
+* 对象强委托/引用的解除(例如XMPPMannerger的delegateQueue)
+* 做一些其他的注销之类的操作(关闭程序运行期间没有关闭的资源)
+
 
 ## block使用时的一些情况以及防止循环引用
 * block 在实现时就会对它引用到的它所在方法中定义的栈变量进行一次只读拷贝，然后在 block 块内使用该只读拷贝。
@@ -88,6 +157,14 @@ return NSAllocateObject(self, 0, zone);
 * __block：__block 变量的内部实现要复杂许多，__block 变量其实是一个结构体对象，拷贝的是指向该结构体对象的指针。
 
 ### __strong/__weak/__unsafe_unretain/__autoreleasing
+* 强指针/弱指针
+强指针：被__strong修饰的指针，默认所有对象的指针变量都是强指针
+弱指针：被__weak修饰的指针，不要使用弱指针保存新创建的对象，否则对象会被立即释放
+```
+__strong  Person *p1 = [[Person alloc] init];
+__weak  Person *p2 = [[Person alloc] init];
+```
+
 #### __weak
 如果局部变量block中retain了self，当block中的代码被执行完后，self就会被ARC释放。所以不需要处理weakself的情况。
 ```
@@ -179,27 +256,18 @@ for in、经典for循环和EnumerateObjectsUsingBlock 的比较：
 遍历数组的同时删除元素：
 如果在for in 循环里，对这个数组进行了修改的话，无论是增，删，修改数组元素位置，都会扔一个异常出来，枚举的过程中数组发生了突变（<__NSArrayM: 0xa4fc000> was mutated while being enumerated.），但是如果写成for循环或Enumerate都没有问题。
 
-## 属性修饰关键字
-
-### 写一个setter方法用于完成@property(nonatomic,retain)NSString *name;写一个setter方法用于完成@property(nonatomic, copy)NSString *name;
-答: 
-retain表示持有特性，setter方法将传入参数先保留，再赋值，传入参数的retaincount会+1;
-copy表示拷贝特性，setter方法将传入对象复制一份；需要完全一份新的变量时。
+* NSString *name，非ARC下重写setter,getter方法
 ```
--(void)setName:(NSString *)str{
-[str retain];
-[name release];
-name = str;
+-(void)setName:(NSString *)name{
+if (_name != name) {
+[_name release];
+_name = [name copy];
 }
-
-- (void)setName:(NSString *)str{
-id t = [str copy];
-[name release];
-name = t;  
+}
+- (NSString *)name{
+return [[_name retain]autorelease];
 }
 ```
 
-
-参考文档：[iOS中 property中的属性strong 、weak、copy 、assign 、retain 、unsafe_unretained 与autoreleasing区别和作用详解](https://blog.csdn.net/queenlysun/article/details/52681858)
 [block使用时的一些情况以及防止循环引用](https://blog.csdn.net/cyj_sky/article/details/51442732)
 
