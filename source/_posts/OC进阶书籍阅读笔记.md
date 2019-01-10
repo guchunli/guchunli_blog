@@ -7,17 +7,17 @@ tags: [OC,面试]
 toc:
 ---
 
-## 《编写高质量iOS与OS X代码的52个有效方法》
-### 熟悉Objective-C
-1.了解Objective-C语言的起源
+# 《编写高质量iOS与OS X代码的52个有效方法》
+## 熟悉Objective-C
+### 1.了解Objective-C语言的起源
 
-2.在类的头文件中尽量少引入其他头文件
+### 2.在类的头文件中尽量少引入其他头文件
 * @class 向前声明
 <!--more-->
-3.多用literal字面量语法，少用与之等价的方法
+### 3.多用literal字面量语法，少用与之等价的方法
 * 用literal语法创建数组或字典时，若值中有nil，则会抛出异常。因此，务必确保值里不含nil。
 
-4.多用类型常量，少用#define预处理指令
+### 4.多用类型常量，少用#define预处理指令
 * 不要用预处理指令定义常量。这样定义出来的常量不含类型信息，编译器只是会在编译前据此执行查找与替换操作。即使有人重新定义了常量值，编译器也不会产生警告信息，这将导致应用程序中的常量值不一致。
 * 在实现文件中使用static const来定义只在编译单元内可见的常量。由于此类常量不在全局符号表中，所以无需为其名称加前缀。
 * 在头文件中使用extern来声明全局常量，并在相关实现文件中定义其值。这种常量要出现在全局符号表中，所以其名称要加以区隔，通常用与之相关的类名做前缀。
@@ -30,353 +30,401 @@ extern NSString *const EOCStringConstant;
 NSString *const EOCStringConstant = "VALUE";
 ```
 
-5.用枚举表示状态、选项、状态码
+### 5.用枚举表示状态、选项、状态码
 * 应该用枚举来表示状态机的状态、传递给方法的选项遗迹状态码等值，给这些值起个易懂的名字。
 * 如果把传递给某个方法的选项表示为枚举型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或者操作将其组合起来。
 * 用NS_ENUM与NS_OPTIONS宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。（需要以按位或操作来组合的枚举都应使用NS_OPTIONS定义，若是枚举不需要互相组合，则应使用NS_ENUM来定义。）
 * 在处理枚举类型的switch语句中不要实现default分支。这样的话，加入新枚举之后，编译器就会提示开发者：switch语句并未处理所有的枚举。
 
-### 对象、消息、runtime
-6.理解“属性”这一概念
+## 对象、消息、runtime
+### 6.理解“属性”这一概念
 * 可以通过@property语法来定义对象中所封装的数据。
 * 通过“特质”来指定存储数据所需的正确语义
 * 在设置属性所对应的实例变量时，一定要遵从该属性所声明的语义。
 * 开发iOS程序时，应该使用nonatomic属性，因为atomic属性会严重影响性能。
 
-7.在对象内部尽量直接访问实例变量
+### 7.在对象内部尽量直接访问实例变量
 * 在对象内部读取数据时，应该直接通过实例变量来读，而写入数据时，应该通过属性来写。
 * 在初始化方法及dealloc方法中，总是应该直接通过实例变量来读写数据。
 * 有时会使用惰性初始化技术配置某份数据，这种情况下，需要通过属性来读取数据。
 
-8.理解“对象等同性”这一概念
+### 8.理解“对象等同性”这一概念
 * 若想检测对象的等同性，请提供“isEqual:”与hash方法。
 * 相同的对象必须具有相同的hash码，但是两个hash码相同的对象却未必相同。
 * 不要盲目的逐个监测每条属性，而是应该依照具体需求来制定检测方案。
 * 编写hash方法时，应该使用计算速度快而且哈希码碰撞几率低的算法。
 
-9.以“类族模式”隐藏实现细节
+### 9.以“类族模式”隐藏实现细节
 * 类族模式可以把实现细节隐藏在一套简单的公共接口后面。
 * 系统框架中经常使用类族。
 * 从类族的公共抽象基类中继承子类时要当心，若有开发文档，则应首先阅读。
 
-10.在既有类中，使用关联对象(Associated Object)存放自定义数据
+### 10.在既有类中，使用关联对象(Associated Object)存放自定义数据（关联对象）
 * 可以通过“关联对象”机制来把两个对象连起来。
 * 定义关联对象时可指定内存管理语义，用以模仿定义属性时所采用的“拥有关系”与“非拥有关系”。
 * 只有在其他做法不可行时才应选用关联对象，因为这种做法通常会引入难于查找的bug。
 
-11.理解objc_msgSend的作用
+### 11.理解objc_msgSend的作用（消息传递/消息发送）
 *  C语言中的函数调用与OC中的消息传递的区别：OC是C的超集，C语言使用"静态绑定"，在编译期就能决定运行时所应调用的函数。OC中，如果向某对象传递消息，使用动态绑定机制来决定需要调用的方法。
 * 消息由接受者，selector及参数构成。给某对象“发送消息”也就相当于在该对象上调用方法。
 * 发给某对象的全部消息都要由“动态消息派发系统”来处理，该系统会查出对应的方法，并执行其代码。
 
-12.理解消息转发机制
+### 12.理解消息转发机制（消息转发）
+1.动态方法解析 + (BOOL)resolveInstanceMethod:(SEL)selector (resolveClassMethod) 
+2.备援接收者  - (id)forwardingTargetForSelector:(SEL)selector
+3.完整的消息转发  - (void)forwardInvocation:(NSInvocation *)invocation
 * 若对象无法响应某个selector，则进入消息转发流程。
 * 通过运行期的动态方法解析功能，我们可以在需要用到某个方法时再将其加入类中。
 * 对象可以将其无法解读的某些selector转交给其他对象处理。
 * 经过上述两步后，如果还是没办法处理selector，那就启动完整的消息转发机制。
+```
+// @interface EOCAutoDictionary : NSObject
++ (BOOL)resolveInstanceMethod:(SEL)sel{
 
-13.用method swizzling调试黑盒方法
+NSString *selectorString = NSStringFromSelector(sel);
+if ([selectorString hasPrefix:@"set"]) {
+class_addMethod(self, sel, (IMP)autoDictionarySetter, "v@:@");
+}else{
+class_addMethod(self, sel, (IMP)autoDictionaryGetter, "@@:");
+}
+return YES;
+}
+
+void autoDictionarySetter(id self, SEL _cmd, id value){
+
+EOCAutoDictionary *typedSelf = (EOCAutoDictionary *)self;
+NSMutableDictionary *backingStore = typedSelf.backingStore;
+NSString *selectorString = NSStringFromSelector(_cmd);
+NSMutableString *key = [selectorString mutableCopy];
+[key deleteCharactersInRange:NSMakeRange(key.length-1, 1)];
+[key deleteCharactersInRange:NSMakeRange(0, 3)];
+
+NSString *lowercaseFirstChar = [[key substringToIndex:1]lowercaseString];
+[key replaceCharactersInRange:NSMakeRange(0, 1) withString:lowercaseFirstChar];
+if (value) {
+[backingStore setObject:value forKey:key];
+}else{
+[backingStore removeObjectForKey:key];
+}
+}
+
+id autoDictionaryGetter(id self, SEL _cmd){
+
+EOCAutoDictionary *typedSelf = (EOCAutoDictionary *)self;
+NSMutableDictionary *backingStore = typedSelf.backingStore;
+NSString *key = NSStringFromSelector(_cmd);
+return [backingStore objectForKey:key];
+}
+```
+
+### 13.用method swizzling调试黑盒方法（黑魔法）
+IMP：函数指针
 * 在runtime中，可以向类中新增或替换selector所对应的方法实现。
 * 使用另一份实现来替换原有的方法实现，这道工序叫做method swizzling，开发者常用此技术向原有视线中添加功能。
 * 一般来说，只有调试程序的时候才需要在runtime中修改方法实现，这种做法不宜滥用。
+```
+NSString+EOCMyAdditions.h
+- (NSString *)eoc_myLowercaseString;
+//NSString+EOCMyAdditions.m
+- (NSString *)eoc_myLowercaseString{
+NSString *lowercase = [self eoc_myLowercaseString];
+NSLog(@"%@ => %@",self,lowercase);
+return lowercase;
+}
 
-14.理解“类对象”的用意
+Method originalMethod = class_getInstanceMethod([NSString class], @selector(lowercaseString));
+Method swappedMethod = class_getInstanceMethod([NSString class], @selector(eoc_myLowercaseString));
+method_exchangeImplementations(originalMethod, swappedMethod);
+```
+
+### 14.理解“类对象”的用意
+isKindOfClass / isMemberOfClass
 * 每个实例都有一个指向Class对象的指针，用以表明其类型，而这些Class对象则构成了累的继承体系。
 * 如果对象类型无法在编译期确定，那么就应该使用类型信息查询方法来探知。
 * 尽量使用类型信息查询方法来确定对象类型，而不要直接比较类对象，因为某些对象可能实现了消息转发功能。
 
-### 接口与API设计
-15.用前缀避免命名空间冲突
-选择与你公司、应用程序或者二者皆有关联之名称作为类名的前缀，并在所有代码中均使用这一前缀。
-若自己所开发的程序库中用到了第三方库，则应为其中的名称加上前缀。
-Apple宣称保留使用所有两字母前缀的权利，所以自己所选用的前缀最好是三字母的。
+## 接口与API设计
+### 15.用前缀避免命名空间冲突
+* 选择与你公司、应用程序或者二者皆有关联之名称作为类名的前缀，并在所有代码中均使用这一前缀。
+* 若自己所开发的程序库中用到了第三方库，则应为其中的名称加上前缀。
+* Apple宣称保留使用所有两字母前缀的权利，所以自己所选用的前缀最好是三字母的。
 
+### 16.提供“全能初始化方法”
+* 在类中提供一个全能初始化方法，并于文档里指明。其它初始化方法均应调用此方法。
+* 若全能初始化方法与超类不同，则需覆写超类中对应方法。
+* 如果超类的初始化方法并不适用于子类，那么应该覆写这个超类方法，并在其中抛出异常。
+```
+-(instancetype)init{
+@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"" userInfo:nil];
+}
 
-16.提供“全能初始化方法”
+```
+```
+//<NSCoding>
+-(instancetype)initWithCoder:(NSCoder *)aDecoder{
+if (self = [super init]) {
+_width = [aDecoder decodeFloatForKey:@"width"];
+_height = [aDecoder decodeFloatForKey:@"height"];
+}
+return self;
+}
+```
 
+### 17.实现description方法
+* 实现description方法返回一个有意义的字符串，用以描述该实例。
+* 若想在调试时打印出更详尽的对象描述信息，则应该实现debugDescription方法。
 
-在类中提供一个全能初始化方法，并于文档里指明。其它初始化方法均应调用此方法。
-若全能初始化方法与超类不同，则需覆写超类中对应方法。
-如果超类的初始化方法并不适用于子类，那么应该覆写这个超类方法，并在其中抛出异常。
+### 18.尽量使用不可变对象
+* 尽量创建不可变的对象。
+* 若某属性仅可于对象内部修改，则在“class-continuation分类”中将其由readonly属性扩展为readwrite属性。
+```
+@interface EOCPerson : NSObject
+@property (nonatomic, readonly, copy) NSString *firstName;
+@property (nonatomic, readonly, copy) NSString *lastName;
+@end
 
+@interface EOCPerson ()
+@property (nonatomic, readwrite, copy) NSString *firstName;
+@property (nonatomic, readwrite, copy) NSString *lastName;
+@end
+```
+* 不要把可变的collection作为属性公开，而应提供相关方法，一次修改对象中的可变collection。
+```
+@property (nonatomic, readonly, strong) NSSet *friends;
+{
+NSMutableSet *_internalFriends;
+}
 
-17.实现description方法
+-(NSSet *)friends{
+return [_internalFriends copy];
+}
 
+- (void)addFriend:(EOCPerson *)person{
+[_internalFriends addObject:person];
+}
+- (void)removeFriend:(EOCPerson *)person{
+[_internalFriends removeObject:person];
+```
 
-实现description方法返回一个有意义的字符串，用以描述该实例。
-若想在调试时打印出更详尽的对象描述信息，则应该实现debugDescription方法。
+### 19.使用清晰而协调的命名方式
+* 起名时应遵从标准的Objective-C命名规范，这样创建出来的接口更容易为开发者所理解。
+* 方法名要言简意赅，从左至右读起来要像个日常用语中的句子才好。
+* 方法名利不要使用缩略后的类型名称。
+* 给方法起名时的第一要务就是确保其风格与你自己的代码或所要集成的框架相符。
+* 方法命名规则：
+（1）如果方法的返回值是新创建的，那么方法名的首个词应是返回值的类型。
+（2）应该把表示参数类型的名词放在参数前面。
+（3）如果方法要在当前对象上执行操作，那么就应该包含动词；若执行操作时还需要参数，则应该在动词后面加上一个或多个名词。
+（4）Boolean属性应加is前缀。如果某方法返回非属性的Boolean值，那么应该根据其功能选用has或is当前缀。
+（5）将get这个前缀留给那些借由"输出参数"来保存返回值的方法，比如说，把返回值填充到"C语言式数组"里的那种方法就可以使用这个词做前缀。
 
+### 20.为私有方法名加前缀
+`OC语言没办法将方法标为私有。`每个对象都可以响应任意消息，而且可在运行期检视某个对象所能直接响应的消息。根据给定的消息查出其对应的方法，这一工作要在运行期才能完成，所以OC中没有那种约束方法调用的机制t用以限定谁能调用此方法、能在哪个对象上调用此方法以及何时能调用此方法。
+* 给私有方法的名称加上前缀，这样可以很容易的将其同公共方法区分开。
+* 不要单用一个下划线做私有方法的前缀，因为这种做法的预留给苹果公司用的。可以把自己一贯使用的类名前缀用作子类私有方法的前缀。
 
-18.尽量使用不可变对象
+### 21.理解Objective-C错误模型
+* 只有发生了可使整个应用程序崩溃的严重错误时，才使用异常。
+* 在错误不那么严重的情况下，可以指派委托方法来处理错误，也可把错误信息放在NSError对象里，经由输出参数返回给调用者。
+NSError 对象里封装了三条信息：
+（1）Error domain：错误范围，类型为字符串，通常用一个特有的全局常量来定义
+```
+extern NSString *const EOCErrorDomain;
+NSString *const EOCErrorDomain = @"EOCErrorDomain";
+```
+（2）Error code：错误码，类型为整数，一般定义为枚举值
+```
+typedef NS_ENUM(NSUInteger,EOCError) {
+    EOCErrorUnknown     = -1,
+    EOCErrorBadInpur    = 100,
+    ...
+};
+```
+（3）User info：用户信息，类型为字典
 
+传递错误的方式：
+（1）委托协议 
+（2）由方法的"输出参数"返回给调用者，一般会返回Boolean值
+```
+- (BOOL)doSomething:(NSError**)error {
+    if (/* there was an error */) {
+        if (error){
+        //不关心具体错误时，传入nil
+        // 解引用，必须保证error参数不是nil，空指针解引用会导致错误
+            *error = [NSError errorWithDomain:domain code:code userInfo:userInfo];
+        }
+        return NO;
+    } else {
+        return YES;
+    }
+}
 
-尽量创建不可变的对象。
-若某属性仅可于对象内部修改，则在“class-continuation分类”中将其由readonly属性扩展为readwrite属性。
-不要把可变的collection作为属性公开，而应提供相关方法，一次修改对象中的可变collection。
+NSError *error = nil;
+BOOL ret = [object doSomething:&error];
+//关注具体错误
+if (error){
+    //
+}
+//不关注具体的错误信息
+if (ret){
 
+}
+```
 
-19.使用清晰而协调的命名方式
+### 22.理解NSCopying协议
+* 若想令自己所写的对象具有拷贝功能，则需实现NSCopying协议。该协议只有一个方法：
+```
+- (id)copyWithZone:(NSZone *)zone;
+```
+* 如果自定义的对象分为可变版本与不可变版本，那么就要同时实现NSCopying与NSMutableCopying协议。
+* 复制对象时需决定采用浅拷贝还是深拷贝，一般情况下应该尽量执行浅拷贝。
+* 如果你所写的对象需要深拷贝，那么可考虑新增一个专门执行深拷贝的方法。
 
-
-起名时应遵从标准的Objective-C命名规范，这样创建出来的接口更容易为开发者所理解。
-方法名要言简意赅，从左至右读起来要像个日常用语中的句子才好。
-方法名利不要使用缩略后的类型名称。
-给方法吗起名时的第一要务就是确保其风格与你自己的代码或所要集成的框架相符。
-
-
-20.为私有方法名加前缀
-
-
-给私有方法的名称加上前缀，这样可以很容易的将其通公共方法区分开。
-不要单用一个下划线做私有方法的前缀，因为这种做法的预留给苹果公司用的。
-
-
-21.理解Objective-C错误模型
-
-
-只有发生了可使整个应用程序崩溃的严重错误时，才使用异常。
-在错误不那么严重的情况下，可以指派委托方法来处理错误，也可把错误信息放在NSError对象里，经由输出参数返回给调用者。
-
-
-22.理解NSCopying协议
-
-
-若想令自己所写的对象具有拷贝功能，则需实现NSCopying协议。
-如果自定义的对象分为可变版本与不可变版本，那么就要同时实现NSCopying与NSMutableCopying协议。
-复制对象时需决定采用浅拷贝还是深拷贝，一般情况下应该尽量执行浅拷贝。
-如果你所写的对象需要深拷贝，那么可考虑新增一个专门执行深拷贝的方法。
-
-### 协议与分类
-
-1.通过委托与数据源协议进行对象间通信
-
-
+## 协议与分类
+### 23.通过委托与数据源协议进行对象间通信
 委托模式为对象提供了一套接口，使其可由此将相关事件告知其他对象。
 将委托对象应该支持的接口定义成协议，在协议中把可能需要吃力的事件定义成方法。
 当某对象需要从另外一个对象中获取数据时，可使用委托模式。在这种情况下，该模式亦称数据源协议。
 若有必要，可实现含有位段的结构体，将委托对象是否能响应相关协议方法这一信息缓存至其中。
 
-
-2.将类的实现代码分散到便于管理的数个分类之中
-
-
+### 24.将类的实现代码分散到便于管理的数个分类之中
 使用分类机制把类的实现代码划分成易于管理的小块。
 将应该视为私有的方法归入名叫Private的分类中，以隐藏实现细节。
 
-
-3.总是为第三方类的分类名称加前缀
-
-
+### 25.总是为第三方类的分类名称加前缀
 向第三方类中添加分类时，总应给其名称加上你专用的前缀。
 向第三方类中添加分类时，总应给其中的方法名加上你专用的前缀。
-26.勿在分类中声明属性
+
+### 26.勿在分类中声明属性
 把封装数据所用的全部属性都定义在主接口里。
 在class-continuation分类之外的其他分类中，可以定义存取方法，但尽量不要定义属性。
 
-
-4.使用class-continuation分类隐藏实现细节
-
-
+### 27.使用class-continuation分类隐藏实现细节
 通过class-continuation分类向类中新增实例变量。
 如果某属性在主接口中声明为只读，而类的内部又要用设置方法修改此属性，那么就在class-continuation分类中将其扩展为可读写。
 把私有方法的原型声明在class-continuation分类里面。
 若想使类遵循的协议不为人所知，则可于class-continuation分类中声明。
 
-
-5.通过协议提供匿名对象
-
-
+### 28.通过协议提供匿名对象
 协议可在某种程度上提供匿名类型。具体的对象类型可以淡化成遵从某些一的id类型，协议里规定了对象所应实现的方法。
 使用匿名对象来隐藏类型名称或类名。
 如果具体类型不重要，重要的是对象能够响应（定义在协议里的）特定方法，那么可使用匿名对象来表示。
 
-### 内存管理
-
-1.理解引用计数
-
-
+## 内存管理
+### 29.理解引用计数
 引用计数机制通过可以递增递减的计数器来管理内存。对象创建好后，其保留计数至少为1.若保留计数为正，则对象继续存活。当保留计数降为0时，对象就被销毁了。
 在对象生命期中，其余对象通过引用来保留或释放此对象。保留与释放操作分别会递增及递减保留计数。
 
-
-2.以ARC简化引用计数
-
-
+### 30.以ARC简化引用计数
 在ARC之后，程序员就无须担心内存管理问题了。使用ARC来编程，可省去类中的许多样板代码。
 ARC管理对象生命期的办法基本上就是：在合适的地方插入保留及释放操作。在ARC环境下，变量的内存管理语义总是通过方法名来体现。ARC将此确定为开发者必须遵守的规则。
 ARC只负责管理Objective-C对象的内存。尤其要注意：CoreFoundation对象不归ARC管理，开发者必须适时调用CFRetain/CFRelease。
 
-
-3.在dealloc方法中只释放引用并解除监听
-
-
+### 31.在dealloc方法中只释放引用并解除监听
 在dealloc方法里，应该做的事情就是释放指向其它对象的引用，并取消原来订阅的键值观测或NSNotificationCenter等通知，不要做其他事情。
 如果对象持有文件描述符等系统资源，那么应该专门编写一个方法来释放此种资源。这样的类要和其使用者约定“用完资源后必须调用close方法。
 执行异步任务的方法不应在dealloc里调用；只能在正常状态下执行的那些方法也不应在dealloc里调用，因为此时对象已处于正在回收的状态了。
 
-
-4.编写异常安全代码时留意内存管理问题
-
-
+### 32.编写异常安全代码时留意内存管理问题
 捕获异常时，一定要注意将try块内所创立的对象清理干净。
 在默认情况下，ARC不生成安全处理异常所需的清理代码。开启编译器标志后，可生成这种代码，不过会导致应用程序变大，而且会降低运行效率。
 
-
-5.以弱引用避免重复引用
-
-
+### 33.以弱引用避免重复引用
 将某些引用设为weak，可避免出现重复引用。
 weak引用可以自动清空，也可以不自动清空。自动清空是随着ARC而引入的新特性，由runtime来实现，在具备自动清空功能的弱引用上，可以随意读取其数据，因为这种引用不会指向已经回收过的对象。
 
-
-6.以自动释放池块降低内存峰值
-
-
+### 34.以自动释放池块降低内存峰值
 自动释放池排布在栈中，对象收到autorelease消息后，系统将其放入最顶端的池里。
 合理运用自动释放池，可降低应用程序的内存峰值。
 @autoreleasepool这种新式写法能创建出更为轻便的自动释放池。
 
-
-7.用“僵尸对象”调试内存管理问题
-
-
+### 35.用“僵尸对象”调试内存管理问题
 系统在回收对象时，可以不将其真的回收，而是把它转化为僵尸对象。通过环境变量NSZombieEnabled可开启此功能。
 系统会修改对象的isa指针，令其指向特殊的僵尸类，从而使该对象变为僵尸对象。僵尸类能够响应所有的selector响应方式为：打印一条包含消息内容及其接受者的消息，然后终止应用程序。
 
-
-8.不要使用retainCount
-
-
+### 36.不要使用retainCount
 对象的保留计数看似有用，实则不然，因为任何给定时间点上的绝对保留计数都无法反映对象生命期的全貌。
 引入ARC后，retainCount方法就正式废止了，在ARC下调用该方法会导致编译器报错。
 
-### block与GCD
-
-1.理解block的概念
-
-
+## block与GCD
+### 37.理解block的概念
 block是C、C++、Objective-C中的词法闭包。
 block可接收参数，也可返回值。
 block可以分配在栈或堆上，也可以是全局的。分配在栈上的block可拷贝到堆里，这样的话，就和标准的Objective-C对象一样，具备引用计数了。
 
-
-2.为常用的block类型创建typedef
-
-
+### 38.为常用的block类型创建typedef
 以typedef重新定义block类型，可以令block变量用起来更加简单。
 定义新类型时应遵循现有的命名习惯，勿使其名称与别的的类型相冲突。
 不妨为同一个block签名定义多个类型别名。如果要重构的代码使用了block类型的某个别名，那么只需修改相应的typedef中的block签名即可，无需改动其他typedef。
 
-
-3.用handler块降低代码分散程度
-
-
+### 39.用handler块降低代码分散程度
 在创建对象时，使用内联的handler块将相关业务逻辑一并声明。
 在有多个实例需要监控时，如果采用委托模式，那么经常需要根据传入的对象来切换，而若改用handler块来实现，则可直接将block与相关对象放在一起。
 设计API时如果用到了handler块，那么可以增加一个参数，使调用者可通过此参数来决定应该把block安排在哪个队列上执行。
 
-
-4.用block引用其所属对象时不要出现循环引用
-
-
+### 40.用block引用其所属对象时不要出现循环引用
 如果block所捕获的对象直接或间接的保留了block本身，那么就得当心循环引用的问题。
 一定要找个适当的时机解除循环引用，而不能把责任推给API的调用者。
 
-
-5.多用派发队列，少用同步锁
-
-
+### 41.多用派发队列，少用同步锁
 派发队列可用来表述同步语义，这种做法要比使用@synchronized块或NSLock对象更简单。
 将同步与异步派发结合起来，可以实现与普通加锁机制一样的同步行为，而这么做却不会阻塞执行异步派发的线程。
 使用同步队列及栅栏块，可以领同步行为更加高效。
 
-
-6.多用GCD，少用performSelector系列方法
-
-
+### 42.多用GCD，少用performSelector系列方法
 performSelector系列方法在内存管理方面容易有疏失。它无法确定将要执行的selector具体是什么，因而ARC编译器就无法插入适当的内存管理方法。
 performSelector系列方法所能处理的selector太过局限了，selector的返回值类型及发送给方法的参数个数都受到限制。
 如果想把人物放在另一个线程上执行，那么最好不要用performSelector系列方法而是应该把任务封装到block里然后调用GCD机制的相关方法来实现。
 
-
-7.掌握GCD及操作队列的使用时机
-
-
+### 43.掌握GCD及操作队列的使用时机
 在解决多线程与任务管理问题时，派发队列并非唯一方案。
 操作队列提供了一套高层的Objective-C API，能实现纯GCD所具备的绝大部分功能，而且还能完成一些更为复杂的操作，那些操作若改用GCD来实现，则需另外编写代码。
 
-
-8.通过Dispatch Group机制根据系统资源状况来执行任务
-
-
+### 44.通过Dispatch Group机制根据系统资源状况来执行任务
 一系列任务可贵如一个dispatch group之中。开发者可以在这组任务执行完毕时获得通知。
 通过dispatch group，可以在并发式派发队列里同时执行多项任务。此时GCD会根据系统资源状况来调度这些并发执行的任务。开发者若自己来实现此功能，则需编写大量代码。
 
-
-9.使用dispatch_once来执行只需运行一次的线程安全代码
-
-
+### 45.使用dispatch_once来执行只需运行一次的线程安全代码
 经常需要编写只需执行一次的线程安全代码。通过GCD所提供的dispatch_once函数，很容易就能实现此功能。
 标记应该声明在static或global作用域中，这样的话，在把只需执行一次的block传给dispatch_once函数时，传进去的标记也是相同的。
 
-
-10.不要使用dispatch_get_current_queue
-
-
+### 46.不要使用dispatch_get_current_queue
 dispatch_get_current_queue函数的行为常常与开发者所预期的不同。此函数已废弃，只应做调试之用。
 由于派发队列是按层级来组织的，所以无法单用某个队列对象来描述当前队列这一概念。
 dispatch_get_current_queue函数用于解决由不可重入的代码所引发的死锁，然而能用此函数解决的问题，通常也能改用“队列特定数据”来解决。
 
-### 系统框架
-
-1.熟悉系统框架
-
-
+## 系统框架
+### 47.熟悉系统框架
 许多系统框架都可以直接使用。其中最重要的是Foundation与CoreFoundation，这两个框架提供了构建应用程序所需的许多核心功能。
 很多常见任务都能用框架来做，例如音频与视频处理、网络通信
 数据管理等。
 请记住，用纯C写成的框架与用Objective-C写成的一样重要，若想成为优秀的Objective-C开发者，应该掌握C语言的核心概念。
 
-
-2.多用块枚举，少用for循环
-
-
+### 48.多用块枚举，少用for循环
 遍历collection有4种方式。最基本的办法是for循环，其次是NSEnumerator遍历方法及快速遍历方法，最新、最先进的方式则是块枚举法。
 块枚举法本身就能通过GCD来并发执行遍历操作，无需另行编写代码。而采用其他遍历方式则无法轻易实现这一点。
 若提前知道待遍历的collection含有何种对象，则应修改块签名，指出对象的具体类型。
 
-
-3.队自定义其内存管理语义的collection使用无缝桥接
-
-
+### 49.队自定义其内存管理语义的collection使用无缝桥接
 通过无缝桥接技术，可以在Foundation框架中的Objective-C对象与CoreFoundation框架中的C语言数据结构之前来回转换。
 在CoreFoundation层面创建collection时，可以指定许多回调函数，这些函数表示此collection应如何处理其元素。然后，可运用无缝桥接技术，将其转换成具备特殊内存管理语义的Objective-C collection。
 
-
-4.构建缓存是选用NSCachae而非NSDictionary
-
-
+### 50.构建缓存是选用NSCachae而非NSDictionary
 实现缓存时应选用NSCache而非NSDictionary对象。因为NSCache可以提供优雅的自动删减功能，而且是线程安全的，此外，它与字典不同，并不会拷贝键。
 可以给NSCache对象设置上限，用以限制缓存中的对象总个数及总成本，而这些尺度则定义了缓存删减其中对象的时机。但是绝对不要把这些尺度当成可靠的硬限制，他们仅对NSCache起指导作用。
 将NSPurgeableData与NSCache搭配使用，可实现自动清除数据的功能，也就是说，当NSPurgeableData对象所占内存为系统丢弃时，该对象自身也会从缓存中移除4.
 如果缓存使用得当。那么应用程序的响应速度就能提高。只有那种重新计算起来很费事的数据，才值得放入缓存，比如那些需要从网络获取或从磁盘读取的数据。
 
-
-5.精简initialize与load的实现代码
-
-
+### 51.精简initialize与load的实现代码
 在加载阶段，如果实现了load方法，那么系统就会调用它。分类里也可以定义此方法，类load方法要比分类中的先调用。与其他方法不同，load方法不参与覆写机制。
 首次使用某个类之前，系统会向其发送initialize消息。由于此方法遵从普通的复写规则，所以通常应该在里面判断当前要初始化的是哪个类。
 load与initialize方法都应该实现的精简一些，这有助于保持应用程序的响应能力，也能减少引入依赖环的几率。
 无法在编译期设定的全局常量，可以放在initialize方法里初始化。
 
-
-6.别忘了NSTimer会保留其目标对象
-
-
+### 52.别忘了NSTimer会保留其目标对象
 NSTimer对象会保留其目标，直到计时器本身失效为止，调用invalidate方法可令计时器失效，另外，一次性的计时器在触发完任务之后也会失效。
 反复执行任务的计时器，很容易引入循环引用，进入过这种计时器的目标对象又保留了计时器本身，那肯定会导致循环引用。这种循环引用，可能是直接发生的，也可能是通过对象图里的其他对象间接发生的。
 可以扩充NSTimer的功能，用块来打破循环引用。不过，除非NSTimer将来在公共接口里提供此功能，否则必须创建分类，将相关实现代码加入其中。
 
 
-## 《Objective-C高级编程：iOS与OS X多线程和内存管理》
+# 《Objective-C高级编程：iOS与OS X多线程和内存管理》
