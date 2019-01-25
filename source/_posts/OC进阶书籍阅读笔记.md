@@ -274,41 +274,110 @@ if (ret){
 ### 22.理解NSCopying协议
 * 若想令自己所写的对象具有拷贝功能，则需实现NSCopying协议。该协议只有一个方法：
 ```
-- (id)copyWithZone:(NSZone *)zone;
+-(id)copyWithZone:(NSZone *)zone{
+    // 全能初始化方法
+    EOCPerson *copy = [[[self class]allocWithZone:zone]initWithFirstName:_firstName andLastName:_lastName];
+    // 
+    copy->_internalFriends = [_internalFriends mutableCopy];
+    return copy;
+}
 ```
 * 如果自定义的对象分为可变版本与不可变版本，那么就要同时实现NSCopying与NSMutableCopying协议。
-* 复制对象时需决定采用浅拷贝还是深拷贝，一般情况下应该尽量执行浅拷贝。
+对于不可变的NSArray 与可变的NSMutableArray 来说，下列关系总是成立的：
+- [NSMutableArray copy] => NSArray
+- [NSArray mutableCopy] => NSMutableArray
+`无论当前对象是否可变，若需获取其可变版本的拷贝，均应调用mutableCopy 方法，若需不可变的拷贝，则总应通过copy 方法来获取。`
+* 复制对象时需决定采用浅拷贝还是深拷贝，一般情况下应该尽量执行浅拷贝。Foudation框架中的所有collection类在默认情况下都执行浅拷贝。
+深拷贝：在拷贝对象自身时，将底层数据也一并复制过去。
+浅拷贝：只拷贝容器对象本身，而不复制其中数据。
 * 如果你所写的对象需要深拷贝，那么可考虑新增一个专门执行深拷贝的方法。
+```
+-(id)copyWithZone:(NSZone *)zone{
+    // 全能初始化方法
+    EOCPerson *copy = [[[self class]allocWithZone:zone]initWithFirstName:_firstName andLastName:_lastName];
+    // 
+    copy->_internalFriends = [[NSMutableSet alloc]initWithSet:_internalFriends copyItems:YES];
+    return copy;
+}
+```
 
 ## 协议与分类
 ### 23.通过委托与数据源协议进行对象间通信
-委托模式为对象提供了一套接口，使其可由此将相关事件告知其他对象。
-将委托对象应该支持的接口定义成协议，在协议中把可能需要吃力的事件定义成方法。
-当某对象需要从另外一个对象中获取数据时，可使用委托模式。在这种情况下，该模式亦称数据源协议。
-若有必要，可实现含有位段的结构体，将委托对象是否能响应相关协议方法这一信息缓存至其中。
+* 存放委托对象的属性要么定义成weak，要么定义成unsafe_unretained，前者在相关对象销毁时自动清空，后者不需要清空。
+* 在委托对象上调用可选方法，必须提前使用类型信息查询方法判断这个委托对象是否响应相关方法。
+```
+if ([_delegate respondsToSelector:@selector(fetchData)]){
+    [_delegate fetchData];
+}
+```
+* 在调用delegate对象中的方法时，总是应该把发起委托的实例也一并传入方法中，这样，delegate对象再实现相关方法时，就能根据传入的实例分别执行不同的代码了。
+* 若有必要，可实现含有位段的结构体，将委托对象是否能响应相关协议方法这一信息缓存至其中。
+```
+//define
+struct {
+    unsigned int didReceiveData      : 1;
+    unsigned int didFailWithError    : 1;
+    unsigned int didUpdateProgressTo : 1;
+} _delegateFlags;
+//set flag
+- (void)setDelegate:(id<EOCNetworkFetcher>)delegate{
+    _delegate = delegate;
+    _delegate.didReceiveData = [delegate respondsToSelector:@selector(networkFetcher:didReceiveData:)];
+}
+//check flag
+if (_delegateFlags.didReceiveData){
+    [_delegate networkFetcher:self didReceiveData:data];
+}
+```
 
 ### 24.将类的实现代码分散到便于管理的数个分类之中
-使用分类机制把类的实现代码划分成易于管理的小块。
-将应该视为私有的方法归入名叫Private的分类中，以隐藏实现细节。
+* 使用分类机制把类的实现代码划分成易于管理的小块。类的基本要素（诸如属性和初始化方法等）都声明在主实现里，执行不同类型的操作所用的另外几套方法则归入各个分类中。`需要引入分类的头文件`
+* 将应该视为私有的方法归入名叫Private的分类中，以隐藏实现细节。
 
 ### 25.总是为第三方类的分类名称加前缀
-向第三方类中添加分类时，总应给其名称加上你专用的前缀。
-向第三方类中添加分类时，总应给其中的方法名加上你专用的前缀。
+* 向第三方类中添加分类时，总应给其名称加上你专用的前缀。
+* 向第三方类中添加分类时，总应给其中的方法名加上你专用的前缀。
 
 ### 26.勿在分类中声明属性
-把封装数据所用的全部属性都定义在主接口里。
-在class-continuation分类之外的其他分类中，可以定义存取方法，但尽量不要定义属性。
+* 把封装数据所用的全部属性都定义在主接口里。分类机制，目标在于扩展累的功能，而非封装数据。`属性只是定义实例变量及相关存取方法所用的语法糖`
+* 在class-continuation分类之外的其他分类中，可以定义存取方法，但尽量不要定义属性。应该直接声明一个方法，用以获取数据。
 
 ### 27.使用class-continuation分类隐藏实现细节
-通过class-continuation分类向类中新增实例变量。
-如果某属性在主接口中声明为只读，而类的内部又要用设置方法修改此属性，那么就在class-continuation分类中将其扩展为可读写。
-把私有方法的原型声明在class-continuation分类里面。
-若想使类遵循的协议不为人所知，则可于class-continuation分类中声明。
+`OC动态消息系统的工作方式决定了其不可能实现真正的私有方法或私有实例变量`
+* 通过class-continuation分类向类中新增实例变量。必须定义在其所续接的那个类的实现文件里，是唯一能声明实例变量的分类，而且此分类没有特定的实现文件，其中的方法都应该定义在类的主实现文件里。
+* 如果某属性在主接口中声明为只读，而类的内部又要用设置方法修改此属性，那么就在class-continuation分类中将其扩展为可读写。
+* 把私有方法的原型声明在class-continuation分类里面。
+* 若想使类遵循的协议不为人所知，则可于class-continuation分类中声明。
 
 ### 28.通过协议提供匿名对象
-协议可在某种程度上提供匿名类型。具体的对象类型可以淡化成遵从某些一的id类型，协议里规定了对象所应实现的方法。
-使用匿名对象来隐藏类型名称或类名。
-如果具体类型不重要，重要的是对象能够响应（定义在协议里的）特定方法，那么可使用匿名对象来表示。
+* 协议可在某种程度上提供匿名类型。具体的对象类型可以淡化成遵从某些一的id类型，协议里规定了对象所应实现的方法。
+* 使用匿名对象来隐藏类型名称或类名。
+* 如果具体类型不重要，重要的是对象能够响应（定义在协议里的）特定方法，那么可使用匿名对象来表示。
+
+`NSDictionary 建的标准内存管理语义是 设置时拷贝，值得语义是 设置时保留。`
+> setValue和setObject的区别：
+```
+@interface NSMutableDictionary<KeyType, ObjectType> : NSDictionary<KeyType, ObjectType>
+
+/* Send -setObject:forKey: to the receiver, unless the value is nil, in which case send -removeObjectForKey:.
+*/
+- (void)setValue:(nullable ObjectType)value forKey:(NSString *)key;
+@end
+```
+
+```
+@interface NSObject(NSKeyValueCoding)
+- (void)setObject:(ObjectType)anObject forKey:(KeyType <NSCopying>)aKey;
+@end
+```
+1.
+setObject：forkey：中value是不能够为nil的，不然会报错。
+setValue：forKey：中value能够为nil，但是当value为nil的时候，会自动调用removeObject：forKey方法
+2.
+setObject:forKey:方法NSMutabledictionary特有的,而
+setValue:forKey:方法是KVC（键-值编码）的主要方法。
+3.
+
 
 ## 内存管理
 ### 29.理解引用计数
