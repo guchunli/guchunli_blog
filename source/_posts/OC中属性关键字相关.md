@@ -13,6 +13,7 @@ toc:
 
 3.NSString *name，非ARC下重写setter,getter方法
 `一旦重写了getter,setter方法,必须使用@synthesize variable = _variable来区分属性名与方法名.`
+<!--more-->
 ```
 -(void)setName:(NSString *)name{
     if (_name != name) {    //首先判断要赋值的变量和当前成员变量是不是同一个变量
