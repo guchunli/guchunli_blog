@@ -6,6 +6,18 @@ tags:
 toc:
 ---
 
+MVVM MVC MVP
+copy retain strong dealloc(ARC)
+hit-test
+awakefromnib initwithcoder
+通知/代理/KVO/block/apns
+sqlite 多线程（opration GCD）
+消息发送 消息转发 runtime runloop
+OC JS 交互
+LLDB
+整数反转
+react native
+
 工厂模式
 
 UITableView滑动不加载，滑动停止加载
@@ -16,7 +28,6 @@ operation和GCD区别
 工厂模式
 AsyncDisplayKit
 ComponentKit
-MVVM
 RESTFUL API
 jenkins 阿里云 自动化测试
 
