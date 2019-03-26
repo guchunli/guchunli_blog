@@ -7,13 +7,13 @@ tags: [list]
 toc:
 ---
 
-<center>!["抽象画"](/assets/imgs/xiaosi.png)</center> 
+<center>!["抽象画"](/assets/imgs/change.png)</center> 
+<!--more-->
 
 # todo list
 ## 2019 todo list
 体重105
 耳洞/美甲/隐形眼镜
-<!--more-->
 驾照/护照
 崇礼滑雪
 北京：欢乐谷/大观园，世界公园，杜莎蜡像
