@@ -6,6 +6,11 @@ tags:
 toc:
 ---
 
+
+<center>!["抽象画"](/assets/imgs/tostudy.jpeg
+)</center> 
+<!--more-->
+
 MVVM MVC MVP
 copy retain strong dealloc(ARC)
 hit-test
