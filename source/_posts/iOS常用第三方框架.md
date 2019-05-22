@@ -96,6 +96,7 @@ tags: [第三方]
 
 ## 视频播放
 * VIMVideoPlayer
+* CLPlayer（tableViewCell、自动播放、全屏播放）
 
 ## VR播放器
 * MDVRLibrary
