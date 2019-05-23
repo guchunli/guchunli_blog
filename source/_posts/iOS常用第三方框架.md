@@ -106,6 +106,8 @@ tags: [第三方]
 * AxcUIKit
 * [BigShow1949](https://github.com/BigShow1949/BigShow1949)
 
-待补充
+
+参考资料：
+(iOS及Mac开源项目和学习资料【超级全面】)[http://www.open-open.com/lib/view/open1442664670352.html]
 
 
