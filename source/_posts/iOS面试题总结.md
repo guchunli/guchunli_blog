@@ -39,3 +39,22 @@ toc:
 ### 对于语句NSString *obj =[[NSData alloc] init]; obj在编译时和运行时分别是什么类型的对象?
 答:编译时是NSString的类型；运行时是NSData类型的对象
 
+### setObject:ForKey: setValue:ForKey: setValue:forKeyPath: 
+```
+[muDict setValue:<#(nullable id)#> forKey:<#(nonnull NSString *)#>];
+[muDict setValue:<#(nullable id)#> forKeyPath:<#(nonnull NSString *)#>];
+[muDict setObject:<#(nonnull id)#> forKey:<#(nonnull id<NSCopying>)#>];
+```
+一、setObject:ForKey:与setValue:ForKey:存值区别与联系
+1.setObject:ForKey: 是NSMutableDictionary特有的；setValue:ForKey:是KVC的主要方法；
+2.setObject:ForKey:中key的参数只要是对象就可以，并不局限于 NSString；key，object对象不能为nil,不然会报错；
+setValue:ForKey:中key 的参数只能是NSString类型；Value值可以为nil，此时会自动调用removeObject:forKey:方法；
+3.nil与null是不同的,[NSNull null]表示是一个空的对象,并不是nil；
+4.setValue:ForKey:是在NSObject对象中创建的,即所有的对象都有这个方法，可以用于任何类(方法调用者是对象的时候);
+二、objectForKey:和valueForKey:取值区别与联系
+NSDictioary取值的时候有两个方法,objectForKey:和valueForKey:(建议用objectForKey:)
+1.若key值不是以@符合开头, 两者是相同的；若key值是以@开头, 例如：@“@aKey”,则valueForKey:会去掉@,然后用剩下的部分执行[super valueForKey];
+2.valueForKey：取值是找和指定key同名的property accessor(属性访问)没有找到的时候执行valueForUndefinedKey:方法，而valueForUndefinedKey:方法默认是抛出crash异常；
+三、valueForKey:和valueForKeyPath:
+setValue:forKey: valueForKey:用于简单路径； 
+setValue:forKeyPath: valueForKeyPath:用于复合路径

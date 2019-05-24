@@ -1,0 +1,1476 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #FFFF00; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="ReactNative,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="JSX Browser.js:作用是将 JSX 语法转为 JavaScript 语法 JSX 中不能使用 if else 语句，但可以使用 conditional (三元运算) 表达式来替代 注释需要写在花括号中:{/*注释...*/}">
+<meta name="keywords" content="ReactNative">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactNative基础知识学习笔记">
+<meta property="og:url" content="https://guchunli.github.io/2017/07/06/ReactNative基础知识学习笔记/index.html">
+<meta property="og:site_name" content="guchunli">
+<meta property="og:description" content="JSX Browser.js:作用是将 JSX 语法转为 JavaScript 语法 JSX 中不能使用 if else 语句，但可以使用 conditional (三元运算) 表达式来替代 注释需要写在花括号中:{/*注释...*/}">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-29T03:13:54.776Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactNative基础知识学习笔记">
+<meta name="twitter:description" content="JSX Browser.js:作用是将 JSX 语法转为 JavaScript 语法 JSX 中不能使用 if else 语句，但可以使用 conditional (三元运算) 表达式来替代 注释需要写在花括号中:{/*注释...*/}">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://guchunli.github.io/2017/07/06/ReactNative基础知识学习笔记/">
+
+
+
+
+
+  <title>ReactNative基础知识学习笔记 | guchunli</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">guchunli</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">努力把生活折腾成自己喜欢的样子~</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photos">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-image"></i> <br>
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://guchunli.github.io/2017/07/06/ReactNative基础知识学习笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谷春丽">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="guchunli">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">ReactNative基础知识学习笔记</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-06T11:30:28+08:00">
+                2017-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/note/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  5.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  24
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h2><ul>
+<li>Browser.js:作用是将 JSX 语法转为 JavaScript 语法</li>
+<li>JSX 中不能使用 if else 语句，但可以使用 conditional (三元运算) 表达式来替代</li>
+<li>注释需要写在花括号中:<code>{/*注释...*/}</code><a id="more"></a></li>
+<li>JSX 允许在模板中插入数组，数组会自动展开所有成员</li>
+<li>要渲染 HTML 标签，只需在 JSX 里使用小写字母的标签名,要渲染 React 组件，只需创建一个大写字母开头的本地变量</li>
+<li>class-&gt;className  for-&gt;htmlFor</li>
+<li>使用<code>{}</code>的情况：表达式，变量，对象，字典<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">style=&#123;styles.mainStyle&#125;</span><br><span class="line">var str = &apos;hello&apos;</span><br><span class="line">&lt;Text&gt;&#123;str&#125;&lt;/Text&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象</span><br><span class="line">&lt;View style=&#123;&#123;flex:1&#125;&#125;&gt;&lt;/View&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用()的情况：返回组件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">render()&#123;</span><br><span class="line">return (</span><br><span class="line">&lt;View&gt;</span><br><span class="line">&lt;/View&gt;</span><br><span class="line">)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="判断平台进行不同操作"><a href="#判断平台进行不同操作" class="headerlink" title="判断平台进行不同操作"></a>判断平台进行不同操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const instructions = Platform.select(&#123;</span><br><span class="line">ios: &apos;Press Cmd+R to reload,\n&apos; + &apos;Cmd+D or shake for dev menu&apos;,</span><br><span class="line">android:</span><br><span class="line">&apos;Double tap R on your keyboard to reload,\n&apos; +</span><br><span class="line">&apos;Shake or press menu button for dev menu&apos;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="CSS布局"><a href="#CSS布局" class="headerlink" title="CSS布局"></a>CSS布局</h2><ul>
+<li>使用驼峰命名法</li>
+<li>style属性可以是一个普通的 JavaScript 对象</li>
+<li>建议使用StyleSheet.create来集中定义组件的样式</li>
+<li>后声明的属性会覆盖先声明的同名属性</li>
+</ul>
+<h3 id="创建一个样式表"><a href="#创建一个样式表" class="headerlink" title="创建一个样式表"></a>创建一个样式表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const styles = StyleSheet.create(&#123;</span><br><span class="line">container: &#123;</span><br><span class="line">borderRadius: 4,</span><br><span class="line">borderWidth: 0.5,</span><br><span class="line">borderColor: &apos;#d6d7da&apos;,</span><br><span class="line">&#125;,</span><br><span class="line">title: &#123;</span><br><span class="line">fontSize: 19,</span><br><span class="line">fontWeight: &apos;bold&apos;,</span><br><span class="line">&#125;,</span><br><span class="line">activeTitle: &#123;</span><br><span class="line">color: &apos;red&apos;,</span><br><span class="line">&#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="使用一个样式表"><a href="#使用一个样式表" class="headerlink" title="使用一个样式表"></a>使用一个样式表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;View style=&#123;styles.container&#125;&gt;</span><br><span class="line">&lt;Text style=&#123;[styles.title, this.props.isActive &amp;&amp; styles.activeTitle]&#125; /&gt;</span><br><span class="line">&lt;/View&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>margin：第一个组件比较特殊，参照父组件，与父控件之间的间距。其他组件间距，相对于上一个组件</li>
+<li>padding：设置子控件与当前控件的位置，想设置自己的子控件相对自己的位置的时候使用</li>
+<li>注意marginRight和width冲突，如果设置了width，marginRight无效<br>position</li>
+<li>absolute:绝对定位，相对父组件<blockquote>
+<p>使用：当想把一个已经设置了宽度的控件快速的放在左下角，右下角的时候</p>
+</blockquote>
+</li>
+<li>relative: 相对定位，相对自己的原始位置<blockquote>
+<p>使用：当想相对自己做出一些改变的时候，采用相对定位,比如相对自己，往下移动一点</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="FlexBox布局"><a href="#FlexBox布局" class="headerlink" title="FlexBox布局"></a>FlexBox布局</h2><p>1.flexDirection：row | row-reverse | column | column-reverse<br>决定了子元素在主轴方向的排列方式（此样式设置在父元素上），默认值是column<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;View style=&#123;&#123;flex: 1, flexDirection: &apos;column&apos;&#125;&#125;&gt;</span><br><span class="line">&lt;View style=&#123;&#123;width: 50, height: 50, backgroundColor: &apos;powderblue&apos;&#125;&#125; /&gt;</span><br><span class="line">&lt;View style=&#123;&#123;width: 50, height: 50, backgroundColor: &apos;skyblue&apos;&#125;&#125; /&gt;</span><br><span class="line">&lt;View style=&#123;&#123;width: 50, height: 50, backgroundColor: &apos;steelblue&apos;&#125;&#125; /&gt;</span><br><span class="line">&lt;/View&gt;</span><br></pre></td></tr></table></figure></p>
+<p>2.justifyContent（no flex:1）：flex-start | flex-end | center | space-between | space-around | space-evenly<br>决定了子元素在主轴方向的对齐方式（此样式设置在父元素上），默认值是flex-start<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;View style=&#123;&#123;</span><br><span class="line">flex: 1,</span><br><span class="line">flexDirection: &apos;column&apos;,</span><br><span class="line">justifyContent: &apos;space-between&apos;,</span><br><span class="line">&#125;&#125;&gt;</span><br><span class="line">&lt;View style=&#123;&#123;width: 50, height: 50, backgroundColor: &apos;powderblue&apos;&#125;&#125; /&gt;</span><br><span class="line">&lt;View style=&#123;&#123;width: 50, height: 50, backgroundColor: &apos;skyblue&apos;&#125;&#125; /&gt;</span><br><span class="line">&lt;View style=&#123;&#123;width: 50, height: 50, backgroundColor: &apos;steelblue&apos;&#125;&#125; /&gt;</span><br><span class="line">&lt;/View&gt;</span><br></pre></td></tr></table></figure></p>
+<p>3.alignItems（nowrap,align-self）：flex-start | flex-end | center | stretch<br>决定了子元素在次轴方向的排列方式（此样式设置在父元素上），默认值为 stretch，子组件在侧轴方向被拉伸到与容器相同的高度或宽度<br><code>次轴：与主轴垂直的轴，若主轴方向为row，则次轴方向为column</code><br><code>要使stretch选项生效的话，子元素在次轴方向上不能有固定的尺寸</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;View style=&#123;&#123;</span><br><span class="line">flex: 1,</span><br><span class="line">flexDirection: &apos;column&apos;,</span><br><span class="line">justifyContent: &apos;center&apos;,</span><br><span class="line">alignItems: &apos;stretch&apos;,</span><br><span class="line">&#125;&#125;&gt;</span><br><span class="line">&lt;View style=&#123;&#123;width: 50, height: 50, backgroundColor: &apos;powderblue&apos;&#125;&#125; /&gt;</span><br><span class="line">&lt;View style=&#123;&#123;height: 50, backgroundColor: &apos;skyblue&apos;&#125;&#125; /&gt;</span><br><span class="line">&lt;View style=&#123;&#123;height: 100, backgroundColor: &apos;steelblue&apos;&#125;&#125; /&gt;</span><br><span class="line">&lt;/View&gt;</span><br></pre></td></tr></table></figure></p>
+<p>4.alignSelf：auto | flex-start | flex-end | center | stretch<br>决定了元素在父元素的次轴方向的排列方式（此样式设置在子元素上），其值会覆盖父元素的alignItems的值。默认值为 auto，继承它的父容器的alignItems属性。如果没有父容器则为 “stretch”。</p>
+<p>5.aligncontent（wrap）：stretch | flex-start | flex-end | center | space-between | space-around<br>6.flexWrap：wrap | no-wrap<br>决定子控件在父视图内是否允许多行排列，显示不全时是否自动换行。默认为nowrap<br>7.flex:子控件在主轴中占据几等分，任意数字，所有子控件flex相加，自己flex占总共多少，就有多少宽度.</p>
+<h2 id="props-state"><a href="#props-state" class="headerlink" title="props,state"></a>props,state</h2><ul>
+<li>props：一般用于自定义组件，大多数组件在创建时就可以使用各种参数来进行定制，用于定制的这些参数就称为props（属性）。</li>
+<li>在父组件中指定，而且一经指定，在整个组件的生命周期中都不再改变。通过this.props.name访问。</li>
+<li><p>this.props.children表示组件的所有子节点</p>
+</li>
+<li><p>state：以后想修改某个属性，就修改界面，就需要用state。</p>
+</li>
+<li>constructor中声明(ES6)，在setState中修改数据</li>
+</ul>
+<blockquote>
+<p>this.props 表示那些一旦定义，就不再改变的特性，而 this.state 是会随着用户互动而产生变化的特性。<br>通过state 来更新和修改数据，而子组件只能通过 props 来传递数据</p>
+</blockquote>
+<p>定义state:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.state = &#123;</span><br><span class="line">num:1,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>修改state:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.setState(&#123;</span><br><span class="line">num : number</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.setState(&#123;name: e.target.value&#125;, function()&#123;</span><br><span class="line">console.log(this.state.name);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>一切界面变化都是状态state变化</li>
+<li>state的修改必须通过setState()方法</li>
+<li>this.state.likes = 100; // 这样的直接赋值修改无效！</li>
+<li>setState 是一个 merge 合并操作，只修改指定属性，不影响其他属性</li>
+<li>setState 是异步操作，修改不会马上生效</li>
+</ul>
+<h2 id="父子组件传值"><a href="#父子组件传值" class="headerlink" title="父子组件传值"></a>父子组件传值</h2><h3 id="父传子"><a href="#父传子" class="headerlink" title="父传子"></a>父传子</h3><ul>
+<li>props:this.props.name</li>
+<li>ref:this.refs.son.receiveMsg(“msg”)<h3 id="子传父"><a href="#子传父" class="headerlink" title="子传父"></a>子传父</h3></li>
+<li>方法回调<br>父组件：定义一个处理接收到值的方法，把这个方法传递给子组件，并且绑定this<br>子组件：通过this.props拿到这个方法调用<h3 id="无关联组件间传值"><a href="#无关联组件间传值" class="headerlink" title="无关联组件间传值"></a>无关联组件间传值</h3></li>
+<li>通知:组件1传值给组件2<br>组件1：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Text onPress=&#123;()=&gt;&#123;</span><br><span class="line">DeviceEventEmitter.emit(&apos;NotificationName&apos;,123);</span><br><span class="line">&#125;&#125;&gt;&lt;/Text&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>组件2：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line"></span><br><span class="line">this.age = 10;</span><br><span class="line">this.age = 20;</span><br><span class="line"></span><br><span class="line">console.log(this.age);</span><br><span class="line"></span><br><span class="line">// 定义属性,但是对这个属性的修改不会触发render</span><br><span class="line">this.lister = DeviceEventEmitter.addListener(&apos;NotificationName&apos;,(value)=&gt;&#123;</span><br><span class="line">this.setState(&#123;</span><br><span class="line">value:value</span><br><span class="line">&#125;);</span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">componentWillUnmount() &#123;</span><br><span class="line">this.lister.remove();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="组件生命周期"><a href="#组件生命周期" class="headerlink" title="组件生命周期"></a>组件生命周期</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">export default class RNDemo extends Component &#123;</span><br><span class="line">render() &#123;</span><br><span class="line">return (</span><br><span class="line">&lt;View /&gt;</span><br><span class="line">);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">AppRegistry.registerComponent(&apos;React&apos;, () =&gt; RNDemo);</span><br></pre></td></tr></table></figure>
+<h3 id="实例化"><a href="#实例化" class="headerlink" title="实例化"></a>实例化</h3><p>0.defaultProps:给props设置默认值<br>1.constructor:初始化state（只调用一次）<br>2.componentWillMount:即将加载组件调用，render前（只调用一次）<br>3.render:渲染组件<br>4.componentDidMount:组件加载完成调用，render后（只调用一次）</p>
+<ul>
+<li>除了 render ，其他方法只调用一次<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><code>props改变</code><br>5.componentWillReceiveProps:props改变调用<br><code>state改变</code><br>6.shouldComponentUpdate:props/state改变调用，可控制是否刷新界面<br>7.componentWillUpdate:组件即将更新调用（调用this.setState会循环）<br>8.render<br>9.componentDidUpdate:组件更新完成（调用this.setState会循环）</li>
+<li>绝对不要在componentWillUpdate，componentDidUpdate中调用this.setState方法，否则将导致无限循环调用，在componentWillReceiveProps，shouldComponentUpdate可以<h3 id="销毁"><a href="#销毁" class="headerlink" title="销毁"></a>销毁</h3>10.componentWillUnmount:组件即将销毁，可移除观察者，清空数据等</li>
+</ul>
+<h2 id="propTypes"><a href="#propTypes" class="headerlink" title="propTypes"></a>propTypes</h2><ul>
+<li>可以实现类型检查，当传入错误的属性值，会报警告，但是不会报错</li>
+<li>用PropTypes定义属性，外界使用的时候，会有提示。</li>
+<li>必须要用static修饰，否则无效</li>
+<li>static：用来定义类方法或者类属性，定义类的方法和属性，生成的对象就自动有这样的属性了。</li>
+<li>只能用于React框架的自定义组件，默认JS是没有的，因为它是React框架中的。<h3 id="类型检查：当传入错误的属性值，会报警告，但是不会报错"><a href="#类型检查：当传入错误的属性值，会报警告，但是不会报错" class="headerlink" title="类型检查：当传入错误的属性值，会报警告，但是不会报错"></a>类型检查：当传入错误的属性值，会报警告，但是不会报错</h3>导入：<code>import React, { Component,PropTypes } from &#39;react&#39;;</code></li>
+<li>定义属性<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static propTypes = &#123;</span><br><span class="line">name:PropTypes.string,</span><br><span class="line">age:PropTypes.number</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">propTypes: &#123;</span><br><span class="line">// 可以声明 prop 为指定的 JS 基本数据类型，默认情况，这些数据是可选的</span><br><span class="line">optionalArray: React.PropTypes.array,</span><br><span class="line">optionalBool: React.PropTypes.bool,</span><br><span class="line">optionalFunc: React.PropTypes.func,</span><br><span class="line">optionalNumber: React.PropTypes.number,</span><br><span class="line">optionalObject: React.PropTypes.object,</span><br><span class="line">optionalString: React.PropTypes.string,</span><br><span class="line"></span><br><span class="line">// 可以被渲染的对象 numbers, strings, elements 或 array</span><br><span class="line">optionalNode: React.PropTypes.node,</span><br><span class="line"></span><br><span class="line">//  React 元素</span><br><span class="line">optionalElement: React.PropTypes.element,</span><br><span class="line"></span><br><span class="line">// 用 JS 的 instanceof 操作符声明 prop 为类的实例。</span><br><span class="line">optionalMessage: React.PropTypes.instanceOf(Message),</span><br><span class="line"></span><br><span class="line">// 用 enum 来限制 prop 只接受指定的值。</span><br><span class="line">optionalEnum: React.PropTypes.oneOf([&apos;News&apos;, &apos;Photos&apos;]),</span><br><span class="line"></span><br><span class="line">// 可以是多个对象类型中的一个</span><br><span class="line">optionalUnion: React.PropTypes.oneOfType([</span><br><span class="line">React.PropTypes.string,</span><br><span class="line">React.PropTypes.number,</span><br><span class="line">React.PropTypes.instanceOf(Message)</span><br><span class="line">]),</span><br><span class="line"></span><br><span class="line">// 指定类型组成的数组</span><br><span class="line">optionalArrayOf: React.PropTypes.arrayOf(React.PropTypes.number),</span><br><span class="line"></span><br><span class="line">// 指定类型的属性构成的对象</span><br><span class="line">optionalObjectOf: React.PropTypes.objectOf(React.PropTypes.number),</span><br><span class="line"></span><br><span class="line">// 特定 shape 参数的对象</span><br><span class="line">optionalObjectWithShape: React.PropTypes.shape(&#123;</span><br><span class="line">color: React.PropTypes.string,</span><br><span class="line">fontSize: React.PropTypes.number</span><br><span class="line">&#125;),</span><br><span class="line"></span><br><span class="line">// 任意类型加上 `isRequired` 来使 prop 不可空。</span><br><span class="line">requiredFunc: React.PropTypes.func.isRequired,</span><br><span class="line"></span><br><span class="line">// 不可空的任意类型</span><br><span class="line">requiredAny: React.PropTypes.any.isRequired,</span><br><span class="line"></span><br><span class="line">// 自定义验证器。如果验证失败需要返回一个 Error 对象。不要直接使用 `console.warn` 或抛异常，因为这样 `oneOfType` 会失效。</span><br><span class="line">customProp: function(props, propName, componentName) &#123;</span><br><span class="line">if (!/matchme/.test(props[propName])) &#123;</span><br><span class="line">return new Error(&apos;Validation failed!&apos;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h3 id="设置初始化值"><a href="#设置初始化值" class="headerlink" title="设置初始化值"></a>设置初始化值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static defaultProps = &#123;</span><br><span class="line">name:&apos;xiaoming&apos;,</span><br><span class="line">age:20</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="基本组件"><a href="#基本组件" class="headerlink" title="基本组件"></a>基本组件</h2><h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><p>###TouchableOpacity：默认点击区域是所有子控件的区域,因为默认一个组件的尺寸由子控件决定</p>
+<ul>
+<li>activeOpacity:0-1 1-不透明</li>
+<li>点击事件：onPress|onLongPress|onPressIn|onPressOut</li>
+<li>disabled:true|false<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;TouchableOpacity activeOpacity=&#123;0.7&#125;&gt;</span><br><span class="line">&lt;View style=&#123;styles.childSytle&#125;&gt;</span><br><span class="line">&lt;/View&gt;</span><br><span class="line">&lt;/TouchableOpacity&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h3><ul>
+<li>numberOfLines</li>
+<li>selectable:true|false 是否允许长按选择文本</li>
+<li>suppressHighlighting:true|false 是否允许按下时有灰色阴影</li>
+<li>onPress:文字点击事件  onPress={()=&gt;{}}</li>
+<li>color/fontSize/fontWeight/lineHeight/textAlign<h3 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h3></li>
+<li>不可设置样式，一般用text自定义</li>
+<li>color/disabled/onPress/title<h3 id="TextInput"><a href="#TextInput" class="headerlink" title="TextInput"></a>TextInput</h3></li>
+<li>默认无边框</li>
+<li>autoFocus/blurOnSubmit/editable/maxLength/multiline/placeholder</li>
+<li>keyboardType/returnKeyType/clearButtonMode</li>
+<li>clearTextOnFocus/enablesReturnKeyAutomatically</li>
+<li>clear()</li>
+<li>事件：onBlur/onFocus/onChange/onChangeText/onEndEditing/onKeyPress/onSubmitEditing<h3 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h3>iOS中的2x,3x图片同样适用，如果存在<a href="mailto:a@2x.png" target="_blank" rel="noopener">a@2x.png</a>与<a href="mailto:a@3x.png" target="_blank" rel="noopener">a@3x.png</a>，写a.png即可。<br>同时兼容iOS和安卓平台的图片，如果存在a.ios.png与a.android.png，同样写a.png即可。</li>
+<li>source/defaultSource<h4 id="本地资源加载"><a href="#本地资源加载" class="headerlink" title="本地资源加载"></a>本地资源加载</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Image source=&#123;require(&apos;./images/add.png&apos;)&#125;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="通过url的方式加载图片，必须设置图片尺寸，否则不显示，iOS端可以添加缓存策略-default-reload-force-cache-only-if-cached"><a href="#通过url的方式加载图片，必须设置图片尺寸，否则不显示，iOS端可以添加缓存策略-default-reload-force-cache-only-if-cached" class="headerlink" title="通过url的方式加载图片，必须设置图片尺寸，否则不显示，iOS端可以添加缓存策略(default/reload/force-cache/only-if-cached)"></a>通过url的方式加载图片，必须设置图片尺寸，否则不显示，iOS端可以添加缓存策略(default/reload/force-cache/only-if-cached)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Image source=&#123;&#123;uri:&apos;http://xxxxxxxx&apos;&#125;&#125; style=&#123;&#123;width: 90, height: 90&#125;&#125;/&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="本地图片存放路径"><a href="#本地图片存放路径" class="headerlink" title="本地图片存放路径"></a>本地图片存放路径</h4><p>1.放在与index.ios.js同目录下的Img文件夹<br>2.iOS：可以存放到iOS项目中，打开iOS项目，存入到assets文件中<br>Android：可以存放到安卓项目中,必须放入drawable目录</p>
+<ul>
+<li>blurRadius</li>
+<li>resizeMode:cover|contain|stretch|repeat|center</li>
+<li>事件：onLoad/onLoadStart/onLoadEnd/onProgress/onError<h3 id="ScrollView"><a href="#ScrollView" class="headerlink" title="ScrollView"></a>ScrollView</h3></li>
+<li>horizontal/showsHorizontalScrollIndicator/showsVerticalScrollIndicator/alwaysBounceHorizontal/alwaysBounceVertical</li>
+<li>automaticallyAdjustContentInsets</li>
+<li>bounces/bouncesZoom/contentInset</li>
+<li>scrollEventThrottle/stickyHeaderIndices(与horizontal={true}冲突)</li>
+<li>事件：onScrollBeginDrag/End/onMomentumScrollBegin/End/onScrollAnimationEnd/onScroll/scrollEventThrottle</li>
+</ul>
+<h2 id="自定义类"><a href="#自定义类" class="headerlink" title="自定义类"></a>自定义类</h2><p>1.自定义类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export default class Person&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.继承extends<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class HomeView extends Component</span><br></pre></td></tr></table></figure></p>
+<p>3.使用：var p = new Person();</p>
+<h2 id="ScrollView-1"><a href="#ScrollView-1" class="headerlink" title="ScrollView"></a>ScrollView</h2><ul>
+<li>不能通过scrollView获取,因为在RN中,滚动的时候,不会给scrollView组件的contentOffset属性赋值,只能通过nativeEvent事件获取<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">_onScroll(e) &#123;</span><br><span class="line">// console.log(&apos;滚动的时候调用&apos;);</span><br><span class="line">//  var scrollView = this.refs.scrollView;</span><br><span class="line">//  console.log(scrollView.props.contentOffset);</span><br><span class="line"></span><br><span class="line">var nativeEvent = e.nativeEvent;</span><br><span class="line">console.log(nativeEvent.contentOffset);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="ListView"><a href="#ListView" class="headerlink" title="ListView"></a>ListView</h2><p>0.ListViewDataSource<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">构造函数可以接受下列四种参数（都是可选）：</span><br><span class="line"></span><br><span class="line">getRowData(dataBlob, sectionID, rowID);</span><br><span class="line">getSectionHeaderData(dataBlob, sectionID);</span><br><span class="line">rowHasChanged(prevRowData, nextRowData);</span><br><span class="line">sectionHeaderHasChanged(prevSectionData, nextSectionData);</span><br></pre></td></tr></table></figure></p>
+<p>1.创建数据源，给数据源设置数据<br>使用state保存数据源</p>
+<h3 id="不分组使用：cloneWithRows"><a href="#不分组使用：cloneWithRows" class="headerlink" title="不分组使用：cloneWithRows"></a>不分组使用：cloneWithRows</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">constructor(props) &#123;</span><br><span class="line">super(props);</span><br><span class="line">var data = new ListView.DataSource(&#123;rowHasChanged: (r1, r2) =&gt; r1 !== r2&#125;);</span><br><span class="line"></span><br><span class="line">this.state = &#123;</span><br><span class="line">// 给数据源设置数据,创建新的数据,不过保存了之前的行改变方法属性</span><br><span class="line">dataSource: data.cloneWithRows([&apos;row 1&apos;, &apos;row 2&apos;]),</span><br><span class="line">&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="分组使用：cloneWithRowsAndSections"><a href="#分组使用：cloneWithRowsAndSections" class="headerlink" title="分组使用：cloneWithRowsAndSections"></a>分组使用：cloneWithRowsAndSections</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">constructor(props) &#123;</span><br><span class="line">super(props);</span><br><span class="line">var data = new ListView.DataSource(&#123;</span><br><span class="line">rowHasChanged:(r1,r2)=&gt;r1 !== r2,</span><br><span class="line">sectionHeaderHasChanged:(s1,s2)=&gt;s1 !== s2</span><br><span class="line">&#125;);</span><br><span class="line">var sectionData = &#123;&#125;;</span><br><span class="line">this.state = &#123;</span><br><span class="line">dataSource : data.cloneWithRowsAndSections(sectionData)</span><br><span class="line">&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.实现数据源方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;ListView dataSource=&#123;this.state.dataSource&#125;</span><br><span class="line">renderRow=&#123;this._renderRow.bind(this)&#125;</span><br><span class="line">renderHeader=&#123;this._renderHeader.bind(this)&#125;</span><br><span class="line">renderFooter=&#123;this._renderFooter.bind(this)&#125;</span><br><span class="line">renderSeparator=&#123;this._renderSeparator.bind(this)&#125;</span><br><span class="line">//renderSectionHeader=&#123;this._renderSectionHeader.bind(this)&#125;</span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line">_renderRow(rowData, sectionID, rowID, highlightRow) &#123;</span><br><span class="line">return (</span><br><span class="line">&lt;View&gt;</span><br><span class="line">&lt;Text&gt;&#123;rowData&#125;&lt;/Text&gt;</span><br><span class="line">&lt;/View&gt;</span><br><span class="line">);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">_renderHeader() &#123;</span><br><span class="line">return (</span><br><span class="line">&lt;View&gt;</span><br><span class="line">&lt;Text&gt;头部视图&lt;/Text&gt;</span><br><span class="line">&lt;/View&gt;</span><br><span class="line">)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">_renderFooter() &#123;</span><br><span class="line">return (</span><br><span class="line">&lt;View&gt;</span><br><span class="line">&lt;Text&gt;尾部视图&lt;/Text&gt;</span><br><span class="line">&lt;/View&gt;</span><br><span class="line">)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">_renderSeparator(sectionID, rowID, adjacentRowHighlighted)  &#123;</span><br><span class="line">console.log(sectionID,rowID,adjacentRowHighlighted);</span><br><span class="line">return (</span><br><span class="line">&lt;View style=&#123;&#123;height:1,backgroundColor:&apos;black&apos;&#125;&#125;&gt;&lt;/View&gt;</span><br><span class="line">)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//如果是组视图，设置组数据</span><br><span class="line">_renderSectionHeader(sectionData, sectionID) &#123;</span><br><span class="line">return (</span><br><span class="line">&lt;View&gt;</span><br><span class="line">&lt;Text&gt;&#123;sectionID&#125;&lt;/Text&gt;</span><br><span class="line">&lt;/View&gt;</span><br><span class="line">)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="FlatList"><a href="#FlatList" class="headerlink" title="FlatList"></a>FlatList</h2><h2 id="SectionList"><a href="#SectionList" class="headerlink" title="SectionList"></a>SectionList</h2><p>默认情况下每行都需要提供一个不重复的key属性。你也可以提供一个keyExtractor函数来生成key。<br>把这个属性添加到 <sectionlist> 里面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">keyExtractor = &#123;this._extraUniqueKey&#125;   </span><br><span class="line"></span><br><span class="line">_extraUniqueKey(item ,index)&#123;</span><br><span class="line">return &quot;index&quot;+index+item;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></sectionlist></p>
+<h2 id="导航Navigator"><a href="#导航Navigator" class="headerlink" title="导航Navigator"></a>导航Navigator</h2><p>如果找不到Navigator，安装Navigator所在的库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install react-native-deprecated-custom-components --save</span><br><span class="line">//yarn add react-native-deprecated-custom-components</span><br></pre></td></tr></table></figure></p>
+<p>项目导入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123;Navigator&#125; from &apos;react-native-deprecated-custom-components&apos;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Tabbar"><a href="#Tabbar" class="headerlink" title="Tabbar"></a>Tabbar</h2><h3 id="TabBarIOS"><a href="#TabBarIOS" class="headerlink" title="TabBarIOS"></a>TabBarIOS</h3><ul>
+<li>只可用于iOS平台</li>
+<li>badge可设置未读消息数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;TabBarIOS style=&#123;&#123;flex:1,alignItems:&apos;flex-end&apos;&#125;&#125;&gt;</span><br><span class="line">&lt;TabBarIOS.Item </span><br><span class="line">title=&apos;消息&apos;</span><br><span class="line">icon=&#123;require(&apos;./Img/home.png&apos;)&#125;</span><br><span class="line">badge=&#123;3&#125;</span><br><span class="line">onPress=&#123;()=&gt;&#123;</span><br><span class="line">this.setState(&#123;</span><br><span class="line">selectIndex:0</span><br><span class="line">&#125;)</span><br><span class="line">&#125;&#125;</span><br><span class="line">selected=&#123;0==this.state.selectIndex&#125;</span><br><span class="line">&gt;</span><br><span class="line">&lt;View&gt;</span><br><span class="line">&lt;Text&gt;首页&lt;/Text&gt;</span><br><span class="line">&lt;/View&gt;</span><br><span class="line">&lt;/TabBarIOS.Item&gt;</span><br><span class="line">&lt;/TabBarIOS&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="TabNavigator"><a href="#TabNavigator" class="headerlink" title="TabNavigator"></a>TabNavigator</h3><ul>
+<li>可用于iOS和安卓<br>1.安装<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-native-tab-navigator --save</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>2.导入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import TabNavigator from &apos;react-native-tab-navigator&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>3.使用</p>
+<ul>
+<li>TabBarIOS: <code>icon={require(&#39;./Img/home.png&#39;)}</code></li>
+<li>TabNavigator: renderIcon是传入一个函数，这个函数返回一个Image组件,如果是通过url加载，一定要记得设置尺寸，否则不显示<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">renderIcon=&#123;() =&gt; &lt;Image source=&#123;require(&apos;./Img/indexicon_hone_after@3x.png&apos;)&#125; style=&#123;styles.iconStyle&#125;/&gt;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;TabNavigator&#125;&gt;</span><br><span class="line">&lt;TabNavigator.Item title=&apos;消息&apos;</span><br><span class="line">renderIcon=&#123;() =&gt; &lt;Image source=&#123;require(&apos;./Img/indexicon_hone_after@3x.png&apos;)&#125; style=&#123;styles.iconStyle&#125;/&gt;&#125;</span><br><span class="line">// renderBadge=&#123;3&#125;</span><br><span class="line">onPress=&#123;()=&gt;&#123;</span><br><span class="line">this.setState(&#123;</span><br><span class="line">selectIndex:0</span><br><span class="line">&#125;)</span><br><span class="line">&#125;&#125;</span><br><span class="line">selected=&#123;0==this.state.selectIndex&#125;</span><br><span class="line">&gt;</span><br><span class="line">&lt;View style=&#123;&#123;flex:1,justifyContent:&apos;center&apos;,alignItems:&apos;center&apos;&#125;&#125;&gt;</span><br><span class="line">&lt;Text&gt;首页&lt;/Text&gt;</span><br><span class="line">&lt;/View&gt;</span><br><span class="line">&lt;/TabNavigator.Item&gt;</span><br><span class="line">&lt;/TabNavigator&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="主流架构搭建"><a href="#主流架构搭建" class="headerlink" title="主流架构搭建"></a>主流架构搭建</h2><h3 id="ReactNavigation"><a href="#ReactNavigation" class="headerlink" title="ReactNavigation"></a>ReactNavigation</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//推荐yarn</span><br><span class="line">yarn add react-navigation</span><br><span class="line"># or with npm</span><br><span class="line"># npm install --save react-navigation</span><br></pre></td></tr></table></figure>
+<p>安装图片组件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save react-native-vector-icons</span><br></pre></td></tr></table></figure></p>
+<p>如果报错 Unrecognized font family ‘Ionicons’：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">react-native link</span><br></pre></td></tr></table></figure></p>
+<h3 id="createStackNavigator"><a href="#createStackNavigator" class="headerlink" title="createStackNavigator"></a>createStackNavigator</h3><p><code>createStackNavigator(RouteConfigs, StackNavigatorConfig);</code><br>createStackNavigator函数返回一个React组件，我们可以直接从App.js导出它以用作我们App的根组件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import &#123;createStackNavigator&#125; from &apos;react-navigation&apos;;</span><br><span class="line">import Tabbar from &apos;./Tabbar&apos;</span><br><span class="line">import LoginPage from &apos;./LoginPage&apos;</span><br><span class="line"></span><br><span class="line">const RootStack = createStackNavigator(&#123;</span><br><span class="line">//底部导航页面</span><br><span class="line">Tabbar: &#123;</span><br><span class="line">screen: Tabbar,</span><br><span class="line">navigationOptions: &#123;</span><br><span class="line">header: null  //顶部导航很多都会自己自定义，这里就为空</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">//登录页面</span><br><span class="line">Login: &#123;</span><br><span class="line">screen: LoginPage,</span><br><span class="line">&#125;,</span><br><span class="line">Details: &#123;</span><br><span class="line">screen: DetailsPage</span><br><span class="line">navigationOptions: &#123;</span><br><span class="line">title: &apos;详情&apos;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">export default RootStack;</span><br></pre></td></tr></table></figure></p>
+<h4 id="切换路由："><a href="#切换路由：" class="headerlink" title="切换路由："></a>切换路由：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">this.props.navigation.navigate(&apos;Details&apos;) 将新路由推送到堆栈导航器（如果它尚未在堆栈中），否则它将跳转到该屏幕</span><br><span class="line">this.props.navigation.push(&apos;Details&apos;) 继续推送新路由</span><br><span class="line">this.props.navigation.goBack() 返回到上层路由</span><br><span class="line">this.props.navigation.popToTop() 返回到堆栈中的第一个屏幕</span><br></pre></td></tr></table></figure>
+<h5 id="传递参数"><a href="#传递参数" class="headerlink" title="传递参数"></a>传递参数</h5><p>通过将params放入一个对象作为navigation.navigate函数的第二个参数。</p>
+<ul>
+<li>将参数传递给下一个路由：<code>this.props.navigation.navigate（&#39;RouteName&#39;，{/ * params go here * /}）</code></li>
+<li>获取前一个路由传递的参数：<code>this.props.navigation.getParam（paramName，defaultValue）</code>，还可以使用this.props.navigation.state.params直接访问params对象。 </li>
+<li>更新navigationOptions：this.props.navigation.setParams({name: params})<h4 id="配置标题栏"><a href="#配置标题栏" class="headerlink" title="配置标题栏"></a>配置标题栏</h4></li>
+<li><p>设置标题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static navigationOptions = &#123;</span><br><span class="line">title: &apos;Home&apos;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在标题中使用params</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">static navigationOptions = (&#123;navigation,navigationOptions &#125;) =&gt; &#123;</span><br><span class="line">console.log(navigation)</span><br><span class="line">return &#123;</span><br><span class="line">title: navigation.getParam(&apos;name&apos;, &apos;A Nested Details Screen&apos;),</span><br><span class="line">&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调整标题样式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">static navigationOptions = &#123;</span><br><span class="line">title: &apos;Home&apos;,</span><br><span class="line">headerStyle: &#123;            //标题栏样式</span><br><span class="line">backgroundColor: &apos;red&apos;,  </span><br><span class="line">&#125;,</span><br><span class="line">headerTintColor: &apos;#fff&apos;,  //标题文字和按钮颜色</span><br><span class="line">headerTitleStyle: &#123;       //标题文字样式</span><br><span class="line">fontWeight: &apos;bold&apos;,</span><br><span class="line">// color:&apos;blue&apos; 如果这里也写了标题文字的颜色，那么会覆盖headerTintColor的颜色，即标题为蓝色</span><br><span class="line">&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>跨屏幕共享通用navigationOptions</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">export default class HomeScreen extends React.Component &#123;</span><br><span class="line">static navigationOptions = &#123;</span><br><span class="line">title: &apos;Home&apos;,</span><br><span class="line">/* No more header config here! */</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">/* render function, etc */</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">------------------分割线-------------------</span><br><span class="line"></span><br><span class="line">const Tabbar = createStackNavigator(&#123;</span><br><span class="line">Home: &#123;</span><br><span class="line">screen: HomePage</span><br><span class="line">&#125;,</span><br><span class="line">Mine: &#123;</span><br><span class="line">screen: MinePage</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br><span class="line">Details: &#123;</span><br><span class="line">screen: DetailsPage</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;, &#123;</span><br><span class="line">/* 主屏幕的标题配置现在在这里 */</span><br><span class="line">navigationOptions: &#123;</span><br><span class="line">headerStyle: &#123;</span><br><span class="line">backgroundColor: &apos;#f4511e&apos;,</span><br><span class="line">&#125;,</span><br><span class="line">headerTintColor: &apos;#fff&apos;,</span><br><span class="line">headerTitleStyle: &#123;</span><br><span class="line">fontWeight: &apos;bold&apos;,</span><br><span class="line">&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>titleView，navigationItem，back</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">static navigationOptions = &#123;</span><br><span class="line">//用自定义组件替换标题</span><br><span class="line">headerTitle: &lt;LogoTitle/&gt;,</span><br><span class="line"></span><br><span class="line">//navigationItem</span><br><span class="line">headerRight: (</span><br><span class="line">&lt;Button</span><br><span class="line">onPress=&#123;() =&gt; alert(&apos;This is a button!&apos;)&#125;</span><br><span class="line">title=&quot;Info&quot;</span><br><span class="line">color=&quot;blue&quot;</span><br><span class="line">/&gt;</span><br><span class="line">),</span><br><span class="line"></span><br><span class="line">//back</span><br><span class="line">headerBackImage: &lt;Image</span><br><span class="line">source=&#123;require(&apos;../../image/title.png&apos;)&#125;</span><br><span class="line">style=&#123;&#123;width: 30, height: 30&#125;&#125;</span><br><span class="line">/&gt;</span><br><span class="line">//</span><br><span class="line">//headerBackTitle: &quot;title&quot; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="createBottomTabNavigator"><a href="#createBottomTabNavigator" class="headerlink" title="createBottomTabNavigator"></a>createBottomTabNavigator</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createBottomTabNavigator &#125; from &apos;react-navigation&apos;;</span><br></pre></td></tr></table></figure>
+<h2 id="网络请求"><a href="#网络请求" class="headerlink" title="网络请求"></a>网络请求</h2><ul>
+<li>fetch: 发送请求</li>
+<li>then: 回调函数</li>
+<li>response: 请求到的json数据</li>
+<li>catch: 捕获异常<br>发送GET请求：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fetch(&apos;http://192.168.1.143:8080&apos;) // 发送GET请求</span><br><span class="line">.then((response)=&gt;response.json()) // 请求成功，把请求数据转换为 JSON</span><br><span class="line">.then((json)=&gt;&#123;                    // 获取JSON数据做事情</span><br><span class="line">console.log(json)</span><br><span class="line">&#125;)</span><br><span class="line">.catch((error)=&gt;&#123;                // 请求失败或者处理JSON数据失败，调用</span><br><span class="line">console.log(error)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>发送POST请求有三种方式：</p>
+<ul>
+<li>application/x-www-form-urlencoded: 参数是普通的参数拼接</li>
+<li>application/json: 参数是json格式</li>
+<li>application/form-data: 文件上传</li>
+</ul>
+<h3 id="request模块"><a href="#request模块" class="headerlink" title="request模块"></a>request模块</h3><h2 id="本地存储-AsyncStorage"><a href="#本地存储-AsyncStorage" class="headerlink" title="本地存储 AsyncStorage"></a>本地存储 AsyncStorage</h2><ul>
+<li>异步的</li>
+<li>只能存储字符串</li>
+<li>把数据保存到沙盒中的Documents中,并生成manifest.json文件</li>
+<li>save/read/delete<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AsyncStorage.setItem(&apos;object&apos;,JSON.stringify(object),(error)=&gt;&#123;&#125;);</span><br><span class="line">AsyncStorage.getItem(&apos;object&apos;,(error,result)=&gt;&#123;&#125;);</span><br><span class="line">AsyncStorage.removeItem(&apos;object&apos;,(error)=&gt;&#123;&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="引导页"><a href="#引导页" class="headerlink" title="引导页"></a>引导页</h2><p>1.第一次进入界面，写个属性，记录下第一次加载。<br>2.每次启动，获取之前是否保存过第一次加载的属性，如果加载过，就显示主页，没加载过，就显示引导页</p>
+<h2 id="模块导出"><a href="#模块导出" class="headerlink" title="模块导出"></a>模块导出</h2><ul>
+<li>自定义组件：继承自Component，必须使用class定义类</li>
+<li>自定义类：可以不使用class定义</li>
+</ul>
+<h3 id="自定义组件导出"><a href="#自定义组件导出" class="headerlink" title="自定义组件导出"></a>自定义组件导出</h3><p>1.ES6/5</p>
+<ul>
+<li>ES6:一般使用默认组件，支持import导出</li>
+<li>ES5:一般使用非默认组件，支持require导出<br>2.默认组件/非默认组件</li>
+<li><p>默认组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//定义</span><br><span class="line">export default class XXX extends Component&#123;&#125;</span><br><span class="line">//外部使用</span><br><span class="line">import XXX from &apos;../Custom/XXX&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>非默认组件<br>非默认组件：需要加入{}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//定义</span><br><span class="line">export class XXX extends Component</span><br><span class="line">//外部使用</span><br><span class="line">import &#123;XXX&#125; from &apos;../Custom/XXX&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="自定义类-1"><a href="#自定义类-1" class="headerlink" title="自定义类"></a>自定义类</h3><h4 id="没有对象属性的自定义类，同组件的定义和导出方式"><a href="#没有对象属性的自定义类，同组件的定义和导出方式" class="headerlink" title="没有对象属性的自定义类，同组件的定义和导出方式"></a>没有对象属性的自定义类，同组件的定义和导出方式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//定义</span><br><span class="line">export default class XXX&#123;&#125;</span><br><span class="line">//外部使用</span><br><span class="line">import XXX from &apos;../Custom/XXX&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="有对象属性的自定义类"><a href="#有对象属性的自定义类" class="headerlink" title="有对象属性的自定义类"></a>有对象属性的自定义类</h4><p><code>一般用function定义类，用module.exports(也可以export default)导出</code></p>
+<p>1.定义类的两种方式</p>
+<ul>
+<li><p>class定义类：在类中声明任何属性和方法，都会自动生成对象的属性和方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export default class XXX &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>function定义类：要想定义属性和方法，属性和方法前面必须添加this</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function XXX(data) &#123;</span><br><span class="line">this.data = data;</span><br><span class="line">this.func = function () &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>2.导出自定义类的两种方式</p>
+<ul>
+<li><p>module.exports</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">module.exports = XXX;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>export default</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export default function XXX() &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>3.外部引用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import XXX from &apos;../Custom/XXX&apos;</span><br></pre></td></tr></table></figure></p>
+<h3 id="自定义类的继承–call方法"><a href="#自定义类的继承–call方法" class="headerlink" title="自定义类的继承–call方法"></a>自定义类的继承–call方法</h3><p>call方法<br>1.交换方法调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func1.call(func2);  //调用func1</span><br></pre></td></tr></table></figure></p>
+<p>2.交换方法调用者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c1.log.call(c2);    //c2调用c1的log方法</span><br></pre></td></tr></table></figure></p>
+<p>3.通过function自定义类没有继承功能，需要通过call方法自己实现<br>本质：交换方法调用者</p>
+<h2 id="项目中经常遇到的问题"><a href="#项目中经常遇到的问题" class="headerlink" title="项目中经常遇到的问题"></a>项目中经常遇到的问题</h2><h3 id="主头文件问题"><a href="#主头文件问题" class="headerlink" title="主头文件问题"></a>主头文件问题</h3><p>1.创建主头文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import Common from &apos;../Common/GroupListView&apos;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">// 这句话的意思：把当前文件作为一个模块导出，模块里面有这些子组件</span><br><span class="line">// 以后导入这个模块的时候，就能获取了这个模块里面的东西.</span><br><span class="line">module.exports = &#123;</span><br><span class="line">GroupListView,</span><br><span class="line">...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>2.使用头文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import Common from &apos;Common&apos;</span><br><span class="line">// 创建行模型</span><br><span class="line">var item0 = new Common.GroupListView();</span><br></pre></td></tr></table></figure></p>
+<h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><h3 id="Animated"><a href="#Animated" class="headerlink" title="Animated"></a>Animated</h3><p>Animated封装了四个可以动画的组件：View、Text、Image和ScrollView。</p>
+<ul>
+<li>配置动画</li>
+<li>组合动画<br>parallel<br>sequence<br>stagger<br>delay</li>
+<li>联动多个动画值</li>
+<li>插值：interpolate({inputRange:[0,1],outputRange:[0,100],})</li>
+<li>跟踪动态值:leader,follower,ValueXY</li>
+<li>输入事件：Animated.event</li>
+<li>使用原生动画驱动：<code>useNativeDriver:true</code></li>
+</ul>
+<h3 id="LayoutAnimation"><a href="#LayoutAnimation" class="headerlink" title="LayoutAnimation"></a>LayoutAnimation</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LayoutAnimation.spring();</span><br><span class="line">this.setState(&#123;w: this.state.w + 15, h: this.state.h + 15&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><ul>
+<li>setTimeout,clearTimeout</li>
+<li>setInterval,clearInterval</li>
+<li>setImmediate,clearImmediate</li>
+<li>requestAnimationFrame,cancelAnimationFrame</li>
+</ul>
+<p>requestAnimationFrame():用来执行在一段时间内控制视图动画的代码<br>setTimeout/setInterval/setImmediate:稍后执行代码，可能会延迟当前正在进行的动画<br>runAfterInteractions():稍后执行代码，不会延迟当前进行的动画<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">InteractionManager.runAfterInteractions(() =&gt; &#123;</span><br><span class="line">// ...需要长时间同步执行的任务...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>*** 注意：在unmount方法中清除定时器</p>
+</blockquote>
+<h2 id="setNativeProps"><a href="#setNativeProps" class="headerlink" title="setNativeProps"></a>setNativeProps</h2><h2 id="微信登录"><a href="#微信登录" class="headerlink" title="微信登录"></a>微信登录</h2><p><a href="https://github.com/yorkie/react-native-wechat" target="_blank" rel="noopener">文档</a></p>
+<h3 id="安装react-native-wechat"><a href="#安装react-native-wechat" class="headerlink" title="安装react-native-wechat"></a>安装react-native-wechat</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-native-wechat --save</span><br></pre></td></tr></table></figure>
+<h3 id="自动关联"><a href="#自动关联" class="headerlink" title="自动关联"></a>自动关联</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">react-native link</span><br><span class="line">//rnpm link react-native-wechat</span><br></pre></td></tr></table></figure>
+<h3 id="配置项目"><a href="#配置项目" class="headerlink" title="配置项目"></a>配置项目</h3><ul>
+<li><p><a href="https://github.com/yorkie/react-native-wechat/blob/master/docs/build-setup-ios.md" target="_blank" rel="noopener">iOS</a></p>
+</li>
+<li><p><a href="https://github.com/yorkie/react-native-wechat/blob/master/docs/build-setup-android.md" target="_blank" rel="noopener">Android</a></p>
+</li>
+</ul>
+<h3 id="导入react-native-wechat"><a href="#导入react-native-wechat" class="headerlink" title="导入react-native-wechat"></a>导入react-native-wechat</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import * as WeChat from &apos;react-native-wechat&apos;;//首先导入react-native-wechat</span><br></pre></td></tr></table></figure>
+<h3 id="从微信开放平台申请"><a href="#从微信开放平台申请" class="headerlink" title="从微信开放平台申请"></a>从微信开放平台申请</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">try &#123;</span><br><span class="line">WeChat.registerApp(&apos;xxxx&apos;);</span><br><span class="line">&#125; catch (e) &#123;</span><br><span class="line">console.error(e);</span><br><span class="line">&#125;</span><br><span class="line">console.log(WeChat);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="在需要触发登录的时候调用"><a href="#在需要触发登录的时候调用" class="headerlink" title="在需要触发登录的时候调用"></a>在需要触发登录的时候调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WeChat.sendAuthRequest(&quot;snsapi_userinfo&quot;);</span><br></pre></td></tr></table></figure>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>iOS模拟器上，<code>cmd+D</code>为摇晃手势<br><!--启动模拟器：--><br><!--<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--react-native run-ios --simulator &quot;iPhone 7&quot;--&gt;</span><br><span class="line">&lt;!--```--&gt;</span><br><span class="line"></span><br><span class="line">* Reload:刷新JS文件</span><br><span class="line">* Debug JS Remotely：在Chrome中调试JS代码</span><br><span class="line">会自动打开`http://localhost:8081/debugger-ui`，打开开发者工具可以查看console输出，以及打断点调试JS脚本。</span><br><span class="line">* Enable Live Reload：自动刷新，实时加载，应用更新时需要刷新当前页面，可以看到明显的全局刷新效果。</span><br><span class="line">* Enable Hot Reloading：热加载，基本上看不出刷新的效果，类似于局部刷新。</span><br><span class="line">* Start Systrace</span><br><span class="line">* Show Inspector</span><br><span class="line">* Show Pert Monitor</span><br><span class="line"></span><br><span class="line">必须重新编译应用才能生效：</span><br><span class="line">* 增加了新的资源，如图片</span><br><span class="line">* 更改了原生代码</span><br><span class="line"></span><br><span class="line">* console.error()可触发红屏报错</span><br><span class="line">* 屏蔽指定警告：ignoreWarnings([&apos;Warning:&apos;]);</span><br><span class="line"></span><br><span class="line">* 访问控制台日志：</span><br></pre></td></tr></table></figure></p>
+<p>react-native log-ios<br>react-native log-android<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">还可以通过Debug-&gt;Open System Log查看日志</span><br><span class="line"></span><br><span class="line">* React Developer Tools</span><br></pre></td></tr></table></figure></p>
+<p>npm install -g react-devtools  //安装<br>react-devtools  //启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 真机调试</span><br><span class="line">(1)退出所有终端打开的页面</span><br><span class="line">(2)手机与电脑连到同一无线网下</span><br><span class="line">(3)将AppDelegate中jsCodeLocation的URL地址中的`localhost`改成电脑的IP地址，然后打开`Debug JS Remotely`</span><br><span class="line">`设置-&gt;网络`或者终端输入`ifconfig | grep &quot;inet &quot; | grep -v 127.0.0.1`查看电脑的IP地址。</span><br><span class="line">(4)解决https问题</span><br><span class="line">(5)更新node,npm版本到最新</span><br><span class="line">(6)关闭防火墙</span><br><span class="line"></span><br><span class="line">* 解决连接真机报错`No account for team &quot;QMP96B5DPW&quot;. Add a new account in the Accounts preference pane or verify that your accounts have valid credentials.`：build settings中搜索`DEVELOPMENT_TEAM`，修改team。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 自动化测试</span><br></pre></td></tr></table></figure></p>
+<p>$ cd react-native<br>$ npm test<br>$ npm run flow<br>$ ./scripts/objc-test-ios.sh<br>$ ./scripts/test-manual-e2e.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 性能</span><br><span class="line">只在开发环境时打印日志</span><br></pre></td></tr></table></figure></p>
+<p>if (!<strong>DEV</strong>) {<br>global.console = {<br>info: () =&gt; {},<br>log: () =&gt; {},<br>warn: () =&gt; {},<br>debug: () =&gt; {},<br>error: () =&gt; {},<br>};<br>}<br><code>`</code></p>
+<h2 id="发布应用"><a href="#发布应用" class="headerlink" title="发布应用"></a>发布应用</h2><p>1.edit scheme-&gt;Run-&gt;release release版本会自动禁用开发者菜单，同时将JS文件和静态图片打包压缩后放到包中<br>2.热更新：<a href="https://github.com/reactnativecn/react-native-pushy/blob/master/docs/guide.md">pushy</a></p>
+<p>[React Native中文网]<a href="https://reactnative.cn/docs/sample-application-movies/">https://reactnative.cn/docs/sample-application-movies/</a><br><a href="http://www.jianshu.com/p/504a26d094b2">袁峥讲ReactNative-系列</a><br><a href="http://blog.xieliqun.com/2016/11/06/react-study/#more">React学习资源汇总</a><br><a href="http://www.jianshu.com/p/98c8f2a970eb">React Native开发错误警告处理总结（已解决 ！持续更新</a></p>
+--></p>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ReactNative/" rel="tag"># ReactNative</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/05/iOS动画学习笔记/" rel="next" title="iOS动画学习笔记">
+                <i class="fa fa-chevron-left"></i> iOS动画学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/11/ES6学习笔记/" rel="prev" title="ES6学习笔记">
+                ES6学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="谷春丽">
+          <p class="site-author-name" itemprop="name">谷春丽</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">114</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        <div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("05/27/2017 15:13:14");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSX"><span class="nav-number">1.</span> <span class="nav-text">JSX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断平台进行不同操作"><span class="nav-number">2.</span> <span class="nav-text">判断平台进行不同操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS布局"><span class="nav-number">3.</span> <span class="nav-text">CSS布局</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个样式表"><span class="nav-number">3.1.</span> <span class="nav-text">创建一个样式表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用一个样式表"><span class="nav-number">3.2.</span> <span class="nav-text">使用一个样式表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FlexBox布局"><span class="nav-number">4.</span> <span class="nav-text">FlexBox布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#props-state"><span class="nav-number">5.</span> <span class="nav-text">props,state</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#父子组件传值"><span class="nav-number">6.</span> <span class="nav-text">父子组件传值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#父传子"><span class="nav-number">6.1.</span> <span class="nav-text">父传子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子传父"><span class="nav-number">6.2.</span> <span class="nav-text">子传父</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无关联组件间传值"><span class="nav-number">6.3.</span> <span class="nav-text">无关联组件间传值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件生命周期"><span class="nav-number">7.</span> <span class="nav-text">组件生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化"><span class="nav-number">7.1.</span> <span class="nav-text">实例化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行"><span class="nav-number">7.2.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#销毁"><span class="nav-number">7.3.</span> <span class="nav-text">销毁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#propTypes"><span class="nav-number">8.</span> <span class="nav-text">propTypes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类型检查：当传入错误的属性值，会报警告，但是不会报错"><span class="nav-number">8.1.</span> <span class="nav-text">类型检查：当传入错误的属性值，会报警告，但是不会报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置初始化值"><span class="nav-number">8.2.</span> <span class="nav-text">设置初始化值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本组件"><span class="nav-number">9.</span> <span class="nav-text">基本组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#View"><span class="nav-number">9.1.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Text"><span class="nav-number">9.2.</span> <span class="nav-text">Text</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Button"><span class="nav-number">9.3.</span> <span class="nav-text">Button</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TextInput"><span class="nav-number">9.4.</span> <span class="nav-text">TextInput</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Image"><span class="nav-number">9.5.</span> <span class="nav-text">Image</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#本地资源加载"><span class="nav-number">9.5.1.</span> <span class="nav-text">本地资源加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过url的方式加载图片，必须设置图片尺寸，否则不显示，iOS端可以添加缓存策略-default-reload-force-cache-only-if-cached"><span class="nav-number">9.5.2.</span> <span class="nav-text">通过url的方式加载图片，必须设置图片尺寸，否则不显示，iOS端可以添加缓存策略(default/reload/force-cache/only-if-cached)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地图片存放路径"><span class="nav-number">9.5.3.</span> <span class="nav-text">本地图片存放路径</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ScrollView"><span class="nav-number">9.6.</span> <span class="nav-text">ScrollView</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义类"><span class="nav-number">10.</span> <span class="nav-text">自定义类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ScrollView-1"><span class="nav-number">11.</span> <span class="nav-text">ScrollView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ListView"><span class="nav-number">12.</span> <span class="nav-text">ListView</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不分组使用：cloneWithRows"><span class="nav-number">12.1.</span> <span class="nav-text">不分组使用：cloneWithRows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分组使用：cloneWithRowsAndSections"><span class="nav-number">12.2.</span> <span class="nav-text">分组使用：cloneWithRowsAndSections</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FlatList"><span class="nav-number">13.</span> <span class="nav-text">FlatList</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SectionList"><span class="nav-number">14.</span> <span class="nav-text">SectionList</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导航Navigator"><span class="nav-number">15.</span> <span class="nav-text">导航Navigator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tabbar"><span class="nav-number">16.</span> <span class="nav-text">Tabbar</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TabBarIOS"><span class="nav-number">16.1.</span> <span class="nav-text">TabBarIOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TabNavigator"><span class="nav-number">16.2.</span> <span class="nav-text">TabNavigator</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主流架构搭建"><span class="nav-number">17.</span> <span class="nav-text">主流架构搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ReactNavigation"><span class="nav-number">17.1.</span> <span class="nav-text">ReactNavigation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createStackNavigator"><span class="nav-number">17.2.</span> <span class="nav-text">createStackNavigator</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#切换路由："><span class="nav-number">17.2.1.</span> <span class="nav-text">切换路由：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#传递参数"><span class="nav-number">17.2.1.1.</span> <span class="nav-text">传递参数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置标题栏"><span class="nav-number">17.2.2.</span> <span class="nav-text">配置标题栏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createBottomTabNavigator"><span class="nav-number">17.3.</span> <span class="nav-text">createBottomTabNavigator</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络请求"><span class="nav-number">18.</span> <span class="nav-text">网络请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#request模块"><span class="nav-number">18.1.</span> <span class="nav-text">request模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地存储-AsyncStorage"><span class="nav-number">19.</span> <span class="nav-text">本地存储 AsyncStorage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引导页"><span class="nav-number">20.</span> <span class="nav-text">引导页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块导出"><span class="nav-number">21.</span> <span class="nav-text">模块导出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义组件导出"><span class="nav-number">21.1.</span> <span class="nav-text">自定义组件导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义类-1"><span class="nav-number">21.2.</span> <span class="nav-text">自定义类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#没有对象属性的自定义类，同组件的定义和导出方式"><span class="nav-number">21.2.1.</span> <span class="nav-text">没有对象属性的自定义类，同组件的定义和导出方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有对象属性的自定义类"><span class="nav-number">21.2.2.</span> <span class="nav-text">有对象属性的自定义类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义类的继承–call方法"><span class="nav-number">21.3.</span> <span class="nav-text">自定义类的继承–call方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目中经常遇到的问题"><span class="nav-number">22.</span> <span class="nav-text">项目中经常遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主头文件问题"><span class="nav-number">22.1.</span> <span class="nav-text">主头文件问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动画"><span class="nav-number">23.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Animated"><span class="nav-number">23.1.</span> <span class="nav-text">Animated</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LayoutAnimation"><span class="nav-number">23.2.</span> <span class="nav-text">LayoutAnimation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时器"><span class="nav-number">24.</span> <span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setNativeProps"><span class="nav-number">25.</span> <span class="nav-text">setNativeProps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信登录"><span class="nav-number">26.</span> <span class="nav-text">微信登录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装react-native-wechat"><span class="nav-number">26.1.</span> <span class="nav-text">安装react-native-wechat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动关联"><span class="nav-number">26.2.</span> <span class="nav-text">自动关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置项目"><span class="nav-number">26.3.</span> <span class="nav-text">配置项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入react-native-wechat"><span class="nav-number">26.4.</span> <span class="nav-text">导入react-native-wechat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从微信开放平台申请"><span class="nav-number">26.5.</span> <span class="nav-text">从微信开放平台申请</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在需要触发登录的时候调用"><span class="nav-number">26.6.</span> <span class="nav-text">在需要触发登录的时候调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调试"><span class="nav-number">27.</span> <span class="nav-text">调试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谷春丽</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共166.3k字</span>
+</div>
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+  <!--  -->
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>
