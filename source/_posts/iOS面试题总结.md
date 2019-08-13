@@ -10,17 +10,17 @@ toc:
 * OC基础
 <!--more-->
 [OC基础](https://guchunli.github.io/2018/03/01/OC基础/)
-[iOS中的多线程]()
+* [iOS中的多线程](https://www.jianshu.com/p/7d42c6fe2d3b#!/xh#!/xh)
 [http网络请求过程](https://guchunli.github.io/2018/02/26/http网络请求过程/)
-[iOS中数据存储]()
+* [iOS中数据存储]()
 [iOS中CoreData的使用](https://guchunli.github.io/2018/07/03/iOS中CoreData的使用/)
 [iOS runtime与runloop](https://guchunli.github.io/2017/03/22/iOS-runtime学习笔记/)
-[消息转发机制]()
-[反射]()
-[week实现原理]()
-[KVC与KVO实现原理]()
-[iOS响应者链和事件传递]()
-[通知实现原理]()
+* [消息转发机制]()
+* [反射]()
+* [weak实现原理](https://www.jianshu.com/p/f331bd5ce8f8)
+* [KVC与KVO实现原理](https://www.jianshu.com/p/b9f020a8b4c9)
+* [iOS响应者链和事件传递](https://www.jianshu.com/p/410ca78faa98)
+* [通知实现原理](https://www.jianshu.com/p/f9528148e9f8)
 [iOS中的通知/KVO/代理/block/APNs](https://guchunli.github.io/2018/06/21/iOS中的通知:KVO:代理:block:APNs学习笔记/)
 [OC中的设计模式](https://guchunli.github.io/2018/12/14/OC中的设计模式/)
 [MVC/MVP/MVVM](https://guchunli.github.io/2017/05/20/MVVM学习笔记/)
@@ -54,8 +54,8 @@ toc:
 ## 面试题
 [iOS经典面试题总结](https://guchunli.github.io/2018/06/25/iOS经典面试题总结/)
 [iOS面试实战总结](https://guchunli.github.io/2017/06/30/iOS面试实战总结/)
-* 参考
-[一篇整理的很全面的IOS面试题](https://blog.csdn.net/wujakf/article/details/80229148)
+* [一篇整理的很全面的IOS面试题](https://blog.csdn.net/wujakf/article/details/80229148)
+* [iOS面试题最全梳理](https://www.cnblogs.com/jukaiit/p/7932259.html)
 
 ## 进阶书籍
 [进阶书籍](https://guchunli.github.io/2019/01/03/OC进阶书籍阅读笔记/)
