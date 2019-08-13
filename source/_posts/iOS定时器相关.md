@@ -9,6 +9,7 @@ toc: true
 
 # NSTimer
 ## NSTimer 创建定时器
+<!--more-->
 1.timer分为invocation和selector两种调用方式，其实这两种区别不大，一般我们用selector方式较为方便。
 ```
 NSMethodSignature  *signature = [[self class] instanceMethodSignatureForSelector:@selector(Timered:)];
@@ -19,11 +20,35 @@ NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 invocation:invocation
 
 NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(Timered:) userInfo:nil repeats:YES];
 ```
-2.scheduledTimerWith和timerWith这是因为NSTimer是加到runloop中执行的。看scheduledTimerWith的函数说明，创建并安排到runloop的default mode中。
+2.scheduledTimerWith/timerWith/initWithFireDate
+NSTimer是加到runloop中执行的，scheduledTimerWith创建并安排到runloop的default mode中。
+* 添加到runloop，必须保证runloop存在
 ```
 NSTimer *timer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(Timered:) userInfo:nil repeats:YES];
 [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
 ```
+
+## 移除timer
+invalidate作用：
+* 1.将timer从runloop中移除
+* 2.timer本身也会释放它持有资源，比如target、userinfo、block
+
+timer移除时机：viewController的dealloc不可以，互相持有，不会调用
+```
+- (void)ViewWillDisappear{
+    if (_timer)
+        [_timer invalidate]; // 真正销毁NSTimer对象的地方
+        _timer = nil; // 对象置nil是一种规范和习惯
+    }
+}
+```
+
+
+## fire
+系统提供了一个- (void)fire;方法，调用它可以触发一次：
+* 对于重复定时器，它不会影响正常的定时触发
+* 对于非重复定时器，触发后就调用了invalidate方法，既使正常的还没有触发
+
 
 ## NSTimer 坑
 ### 坑一：子线程启动定时器问题
@@ -55,11 +80,12 @@ UITrackingRunLoopMode和NSDefaultRunLoopMode都被标记为了common模式，所
 }];
 ```
 
-强调：不是解决了循环引用，target就可以释放了，别忘了在持有timer的类dealloc的时候执行invalidate。
-
+* 强调：不是解决了循环引用，target就可以释放了，别忘了在持有timer的类dealloc的时候执行invalidate。
 NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(Timered:) userInfo:nil repeats:YES];
-如上面代码，这个timer并没有被self引用，那么为什么self不会被释放呢？因为timer被加到了runloop中，timer又强引用了self，所以timer一直存在的话，self也不会释放
-解决:打破timer对target的强引用。
+如上面代码，这个timer并没有被self引用，那么为什么self不会被释放呢？因为timer被加到了runloop中，timer又强引用了self，所以timer一直存在的话，self也不会释放。
+`runloop会对timer有强引用，timer会对目标对象进行强引用`
+
+解决循环引用：打破timer对target的强引用。
 
 解决方式一：NSTimer会保留其目标对象
 解释：将强引用的target变成了NSTimer的类对象。类对象本身是单例的，是不会释放的，所以强引用也无所谓。执行的block通过userInfo传递给定时器的响应函数timered:。循环引用被打破的结果是：
@@ -141,11 +167,11 @@ return timer;
 解决方式三：封装timer，弱引用target
 类似NSProxy的方式，建立一个桥接timer的实例，弱引用target，让timer强引用这个实例
 ```
-.h
 NSTimer *timer = [NSTimer scheduledWeakTimerWithTimeInterval:1 target:self selector:@selector(Timered:) userInfo:nil repeats:YES];
 ```
 
 ```
+.h
 @interface WeakTimer : NSObject
 
 @property (nonatomic, weak) id target;
@@ -184,6 +210,10 @@ return timer;
 GCD定时器的好处是，他并不是加入runloop执行的，因此子线程也可以使用。也不会引起循环引用的问题。
 注意:需要把timer声明为属性，否则，由于这种timer并不是添加到runloop中的，直接就被释放了。
 ```
+{
+dispatch_source_t timer;
+}
+
 __weak id weakSelf = self;
 timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
 dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC, 1 * NSEC_PER_SEC);
@@ -211,7 +241,7 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), di
 ```
 
 # 延时操作
-延时一次操作的选择：
+* 延时一次操作的选择
 几种方式都是定时器，都可以实现延时操作。综合相比：如果只是单独一次的延时操作，NSTimer和GCD的定时器都显得有些笨重。performSelector方式比较合适，但是又收到了子线程runloop的限制。因此，dispatch_after是最优的选择。
 
 ## 取消延时操作：
