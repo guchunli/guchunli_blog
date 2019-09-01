@@ -33,6 +33,49 @@ Block只捕获Block中会用到的变量。由于只捕获了自动变量(自动
 * OC中的多继承用委托代理实现
 
 ### 单例
+以下两种方法都是线程安全的.不过苹果官方现在提倡方法二.
+1.@synchronized
+```
+static Myclass _instance;
++(id)shareInstance{ 
+@synchronized(self){
+if(_instance == nil)
+_instance = [MyClass alloc] init]; 
+}
+return _instance;
+}
+```
+
+2.dispatch_once
+```
++(id)shareInstance{
+static dispatch_once_t onceToken;
+dispatch_once(&onceToken, ^{
+if(_instance == nil)
+_instance = [MyClass alloc] init]; 
+});
+return _instance;
+}
+```
+
+```
+//This method exists for historical reasons; memory zones are no longer used by Objective-C. You should not override this method.
+//重写allocWithZone,里面实现跟方法一,方法二一致就行.
++(id)allocWithZone:(struct _NSZone *)zone{
+static dispatch_once_t onceToken;
+dispatch_once(&onceToken, ^{
+if(_instance == nil)
+_instance = [MyClass alloc] init]; 
+});
+return _instance;
+} 这个函数重写，是错误的。请读者注意。
+
+//保证copy时相同
+//遵守NSCopying协议,以及在copyWithZone中,直接返回self;
+-(id)copyWithZone:(NSZone *)zone{  
+return _instance;  
+} 
+```
 
 ### MVC/MVP/MVVM
 1.MVC
