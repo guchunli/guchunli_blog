@@ -1,15 +1,25 @@
 ---
-title: iOS常用第三方框架
+title: iOS常用框架源码分析
+copyright: true
 date: 2017-07-21 10:26:37
 categories: 笔记
-tags: [第三方]
+tags:
+toc:
 ---
 
+# 源码分析
+## SDWebImage
+### NSCache
+* 类似可变字典，线程安全，使用可变字典自定义实现缓存时需要考虑加锁和释放锁
+* 在内存不足时NSCache会自动释放存储的对象，不需要手动干预
+* NSCache的key不会被复制，所以key不需要实现NSCopying协议
+<!--more-->
+
+# 第三方框架
 ## 网络
 1.PPNetworkHelper
 * 对AFNetworking 3.x 与YYCache的二次封装
 * 简单易用，包含了缓存机制，控制台可以直接打印json中文字符
-<!--more-->
 
 2..YTKNetwork
 * 猿题库研发团队基于AFNetworking封装的iOS网络库
@@ -109,5 +119,3 @@ tags: [第三方]
 
 参考资料：
 (iOS及Mac开源项目和学习资料【超级全面】)[http://www.open-open.com/lib/view/open1442664670352.html]
-
-

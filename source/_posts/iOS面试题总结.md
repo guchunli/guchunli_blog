@@ -19,7 +19,7 @@ toc:
 * [反射]()
 * [weak实现原理](https://www.jianshu.com/p/f331bd5ce8f8)
 * [KVC与KVO实现原理](https://www.jianshu.com/p/b9f020a8b4c9)
-* [iOS响应者链和事件传递](https://www.jianshu.com/p/410ca78faa98)
+* [iOS响应链和事件传递](https://guchunli.github.io/2019/09/07/iOS事件传递与响应链/)
 * [通知实现原理](https://www.jianshu.com/p/f9528148e9f8)
 [iOS中的通知/KVO/代理/block/APNs](https://guchunli.github.io/2018/06/21/iOS中的通知:KVO:代理:block:APNs学习笔记/)
 [OC中的设计模式](https://guchunli.github.io/2018/12/14/OC中的设计模式/)
@@ -34,6 +34,7 @@ toc:
 
 * 第三方框架源码
 * [iOS缓存 NSCache详解及SDWebImage缓存策略源码分析](https://www.jianshu.com/p/239226822bc6)
+* [iOS常用框架源码分析]()
 
 * 实战
 [iOS调试与优化技巧](https://guchunli.github.io/2017/06/05/iOS调试与优化技巧/)
