@@ -522,6 +522,30 @@ class可以继承 值拷贝/指针拷贝
 14.设计模式是什么，你知道哪些设计模式，并简要叙述
 15.MVC和MVVM的区别
 
+# aigelasi
+1.想让被引入的framework只在需要时才被载入内存，应该将framework的属性设置（optional）
+2.info.plist里添加白名单时，涉及到的字段名：(LSApplicationQueriesSchemes)
+3.声明一个类要用到的编译指令：@interface SomeClass
+4.Navigaition controllers should be presented and ViewControllers should be pushed.
+简答
+1.HTTPS有关的ATS指的什么
+2..cer .p12 .mobileprovision文件都是什么
+3.iOS动态库与静态库区别
+4.描述以下代码的含义
+self.timer = [NSTimer scheduledTimer...];
+5.用OC代码实现
+（1）字符串拼接 （2）字符串比较 （3）将OC字符串转化为C字符串 （4）获取应用的cache目录 （5）打印一个bool值
+6.[UIScreen mainScreen].bounds 与 [UIScreen mainScreen].applicationFrame 区别
+7.responseToSelector什么时候用
+8.-all-load含义
+9.weak什么时候用
+10.项目配置里：Achitectures、build Active Achitectures、valid Achitectures分别什么含义
+11.bitcode时候enable，什么区别
+12.CFBundleShortVersionString 与 CFBundleVersion ，build与version 如何对应
+编程
+1.用OC代码实现一个单例
+2.写出一个简单的洗扑克牌的算法
+
 # other
 * 热修复
 JSPatch ReactNative Lua+Wax
